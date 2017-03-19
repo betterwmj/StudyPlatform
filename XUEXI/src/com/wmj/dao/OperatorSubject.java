@@ -55,6 +55,27 @@ public class OperatorSubject {
 				JDBCUtil.close(conn, pmt);
 			}
 		}
+		if( type.equals("判断题") ){
+			sql="select a.title,a.answer from truefalsetitle as a,subjects as b  where a.SubjectID=b.SubjectID and SubjectName= ?";
+			try {
+				ResultSet rs = null;
+				pmt=JDBCUtil.getPreparedStatement(conn, sql);
+				pmt.setString(1, subject);
+				rs = pmt.executeQuery();
+				 while (rs.next()) { 
+				   Map<String,String> title = new HashMap<String,String>();
+				   title.put("title", rs.getString("title"));
+				   title.put("answer", rs.getString("answer"));
+	               list.add(title);
+		         }
+				 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				// 关闭连接
+				JDBCUtil.close(conn, pmt);
+			}
+		}
 		
 		return list;
 	}
