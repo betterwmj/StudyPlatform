@@ -5,13 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.wmj.bean.TestPaper;
 import com.wmj.util.JDBCUtil;
-
 public class OperatorTestPaper {
 	/*
 	 * 获取该老师所创建的所有试卷
@@ -49,4 +45,5 @@ public class OperatorTestPaper {
 		}
 		return list;
 	}
+	
 }

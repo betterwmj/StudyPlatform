@@ -8,7 +8,7 @@
 			
 			<a href="/XUEXI/onlineAnswer.jsp" >问题答疑</a>
 			
-			<a href="/XUEXI/singleUsermanage.jsp">个人中心</a>
+			<a href="/XUEXI/teacherselfmanage.jsp">个人中心</a>
 	        
 	　</div>
 　　</div>
