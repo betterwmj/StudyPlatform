@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wmj.bean.Classes;
 import com.wmj.bean.students;
 import com.wmj.util.JDBCUtil;
 
@@ -38,6 +39,41 @@ public class OperatorClass {
 			   student.setUserID(rs.getInt("UserID"));
 			   student.setName(rs.getString("RealName"));
                list.add(student);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+ }
+	/*
+	 * 获取所有班级信息
+	 */
+	public static List<Classes> getClasses(int teacherId){
+		Connection conn = null;
+		List<Classes> list = new ArrayList<Classes>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		sql="select * from Classes where UserID=? ";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, teacherId);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+				 Classes classes=new Classes();
+				 classes.setClassId(rs.getInt("ClassID"));
+				 classes.setClassName(rs.getString("ClassName"));
+               list.add(classes);
 	         }
 			 
 		} catch (SQLException e) {

@@ -9,23 +9,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.wmj.bean.students;
+import com.wmj.bean.Classes;
 import com.wmj.dao.OperatorClass;
+
 import net.sf.json.JSONArray;
 
 /**
- * Servlet implementation class GetStudent
- * 获取所有未分配班级学生信息
+ * Servlet implementation class GetClasses
  */
-@WebServlet("/GetStudent")
-public class GetStudent extends HttpServlet {
+@WebServlet("/GetClasses")
+public class GetClasses extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetStudent() {
+    public GetClasses() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,7 +38,10 @@ public class GetStudent extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		List<students> list = OperatorClass.getStudent();
+		 HttpSession session = request.getSession();
+        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
+        String teacherId= userInfo.get("id");
+		List<Classes> list = OperatorClass.getClasses(Integer.parseInt(teacherId));
 	    response.getWriter().append(JSONArray.fromObject(list).toString());
 	}
 
