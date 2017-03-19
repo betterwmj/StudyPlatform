@@ -21,20 +21,41 @@
 	<select ng-model="currSubject">
 		<option ng-repeat="item in subjects">{{item.SubjectName}}</option>
 	</select>
-	<div ng-repeat="item in titles">
-	  {{item.title}}<br>
-	  A {{item.optionA}}
-	  B {{item.optionB}}
-	  C {{item.optionC}}
-	  D {{item.optionD}}
+	<div></div>
+	<div ng-if="currType === '选择题'">
+		<div ng-repeat="item in titles">
+		  {{item.title}} <input type="checkbox" ng-model="item.isChecked" ng-click="putTitle($event,item)"><br>
+		  A {{item.optionA}}
+		  B {{item.optionB}}
+		  C {{item.optionC}}
+		  D {{item.optionD}}
+		  
+		</div>
 	</div>
-	 
+	<div ng-if="currType === '判断题'">
+		<div ng-repeat="item in titles">
+		  {{$index+1}}
+		  {{item.title}}
+		  {{item.answer}}<br>
+		  <input type="checkbox" ng-model="item.isChecked" ng-click="putTitle($event,item)">
+		</div>
+	</div>
+	<hr>
+	选择的题目,共{{selectedTitle.length}}道题,试卷名称:<input type="text" ng-model="paperTitle">
+	<div ng-repeat="item in selectedTitle">
+		类型:{{item.type}}
+		题目:{{item.title}}
+	</div>
+	<button ng-click="submitPaper()">提交试卷</button>
   <script>
     var app = angular.module("app",[]);
     app.controller("teacherController",["$scope","$http",function($scope,$http){
+    	$scope.paperTitle = "";
     	$scope.subjects = [];
     	$scope.currSubject = null;
     	$scope.titles = [];
+    	$scope.currType = "";
+    	$scope.selectedTitle = [];
     	$http({
     		url:"/XUEXI/GetAllSubject",method:"GET"
     	}).then(function(response){
@@ -44,6 +65,7 @@
     		
     	});
     	$scope.getTitle = function(type){
+    		$scope.currType = type;
     		$http({
         		url:"/XUEXI/GetTitle",method:"GET",params:{
         			"subject":$scope.currSubject,
@@ -51,9 +73,60 @@
         		}
         	}).then(function(response){
         		$scope.titles = response.data;
+        		$scope.titles.forEach(function(item){
+        			item.isChecked = false;
+        		});
+        		mergeData();
         	},function(response){
         		
         	});
+    	}
+    	/**
+    	*添加或者移除一个题目
+    	*/
+    	$scope.putTitle = function($event,title){
+    		if( $event.target.checked === true){
+    			var data = {};
+        		angular.copy(title, data);
+        		data.type = $scope.currType;
+        		$scope.selectedTitle.push(data);
+    		}else{
+    			$scope.selectedTitle = $scope.selectedTitle.filter(function(item){
+    				return item.title !== title.title;
+    			});
+    		}
+    	}
+    	
+    	$scope.submitPaper = function(){
+    		if($scope.paperTitle === ""){
+    			window.alert("请填写试卷名称");
+    			return;
+    		}
+    		var paper = {
+  				papername:$scope.paperTitle,
+  				papertitles:[]
+    		};
+    		var papertitles = [];
+    		angular.copy($scope.selectedTitle, papertitles);
+    		paper.papertitles = papertitles;
+    		$http({
+    			url:"/XUEXI/GetTitle",method:"POST",data:paper
+    		}).then(function(response){
+    			response;
+    		},function(error){
+    			window.alert(error)
+    		});
+    	}
+    	//重新选中已经选择过的题目
+    	function mergeData(){
+    		$scope.selectedTitle.forEach(function(item){
+    			var find = $scope.titles.find( function(oneTitle){
+    				return oneTitle.title === item.title;
+    			});
+    			if(find){
+    				find.isChecked = true;	
+    			}
+    		});
     	}
     }]);
   </script>
