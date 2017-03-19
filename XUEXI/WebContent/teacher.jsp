@@ -3,9 +3,9 @@
 <head>
 	<meta  charset="utf-8" />
 	<title>无标题文档</title>
-	<script src="js/angular.js"></script>
-	<script src="js/jquery-3.2.0.min.js"></script>
-	<link href="style/teacherpage.css" rel="stylesheet" type="text/css" />
+	<script src="/XUEXI/js/angular.js"></script>
+	<script src="/XUEXI/js/jquery-3.2.0.min.js"></script>
+	<link href="/XUEXI/style/teacherpage.css" rel="stylesheet" type="text/css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body ng-app="app" ng-controller="teacherController">
@@ -41,7 +41,7 @@
 		</div>
 	</div>
 	<hr>
-	选择的题目,共{{selectedTitle.length}}道题,试卷名称:<input type="text" ng-model="paperTitle">
+	选择的题目,共{{selectedTitle.length}}道题,试卷名称:<input type="text" ng-model="paperTitle">,共{{score}}分
 	<div ng-repeat="item in selectedTitle">
 		类型:{{item.type}}
 		题目:{{item.title}}
@@ -56,6 +56,7 @@
     	$scope.titles = [];
     	$scope.currType = "";
     	$scope.selectedTitle = [];
+    	$scope.score = 0;
     	$http({
     		url:"/XUEXI/GetAllSubject",method:"GET"
     	}).then(function(response){
@@ -64,6 +65,17 @@
     	},function(response){
     		
     	});
+    	$scope.$watch("selectedTitle",function(){
+    		var score = 0;
+    		$scope.selectedTitle.forEach( function(item){
+    			if(item.type === "判断题"){
+    				score+=6;
+    			}else if(item.type === "选择题"){
+    				score+=8;
+    			}
+    		});
+    		$scope.score = score;
+    	},true);
     	$scope.getTitle = function(type){
     		$scope.currType = type;
     		$http({
@@ -102,6 +114,10 @@
     			window.alert("请填写试卷名称");
     			return;
     		}
+    		if($scope.score !== 100){
+    			window.alert("请确保试卷总分为100分");
+    			return;
+    		}
     		var paper = {
   				papername:$scope.paperTitle,
   				papertitles:[]
@@ -110,9 +126,11 @@
     		angular.copy($scope.selectedTitle, papertitles);
     		paper.papertitles = papertitles;
     		$http({
-    			url:"/XUEXI/GetTitle",method:"POST",data:paper
+    			url:"/XUEXI/InsertTestPaper",method:"POST",data:paper
     		}).then(function(response){
-    			response;
+    			if( response.data === "true" ){
+    				window.alert("添加试卷成功");
+    			}
     		},function(error){
     			window.alert(error)
     		});

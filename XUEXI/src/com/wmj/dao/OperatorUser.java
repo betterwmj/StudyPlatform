@@ -159,7 +159,7 @@ public class OperatorUser {
 			/* 如果查询结果不为空，则登陆成功；否则，登陆失败 */
 			if (rs.next()) {
 				
-				userInfo.put("id", rs.getInt("id")+"");
+				userInfo.put("id", rs.getInt("UserID")+"");
 				userInfo.put("userName", rs.getString("RealName"));
 				userInfo.put("type", number+"");
 				userInfo.put("subjectId", rs.getInt("subjectID")+"");

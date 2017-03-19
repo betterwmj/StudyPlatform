@@ -138,24 +138,38 @@ public class OperatorSubject {
 	    
 		PreparedStatement pmt = null; 
 		try {
+			int testpaperID = 0;
 			ResultSet rs = null;
 			String sql="insert into testpaper (TestName,SubjectID,UserID) values(?,?,?)";
-			pmt=JDBCUtil.getPreparedStatement(conn, sql); 	
+			pmt=JDBCUtil.getPreparedStatement(conn, sql,Statement.RETURN_GENERATED_KEYS); 	
 			pmt.setString(1, paper.getTestName());
 			pmt.setInt(2, paper.getSubjectID());
 			pmt.setInt(3, paper.getUserId());
 			if(pmt.executeUpdate()>0){
+				rs = pmt.getGeneratedKeys(); //获取结果   
+				if (rs.next()) {
+					testpaperID = rs.getInt(1);//取得ID
+				} else {
+					result = false;
+					return result;
+				}
+				int resultCount = 0;
 				for(int i=0;i<list.size();i++){
 					PaperTitle paperTitle=list.get(i);
 					String sqls="insert into papertitle (TitleID,Type,TestpaperID) values(?,?,?)";
+					pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
 					pmt.setInt(1, paperTitle.getTitleId());
 					pmt.setString(2, paperTitle.getType());
-					pmt.setInt(3, paper.getTestpaperID());
-					pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
+					pmt.setInt(3, testpaperID);
 					if(pmt.executeUpdate()>0){
-					    result = true;
+						resultCount++;
 					}
-			  }
+				}
+				if( resultCount == list.size() ){
+					return true;
+				}else{
+					return false;
+				}
 			}
 			 
 		} catch (SQLException e) {

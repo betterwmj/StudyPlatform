@@ -73,7 +73,7 @@ public class InsertTestPaper extends HttpServlet {
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
         	PaperTitle p = new PaperTitle();
-        	p.setTitleId((int) t.get("itemId"));
+        	p.setTitleId(Integer.parseInt(t.get("itemId").toString()));
         	p.setType((String) t.get("type"));
         	list.add(p);
         }
