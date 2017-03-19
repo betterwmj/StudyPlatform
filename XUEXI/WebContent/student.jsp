@@ -8,9 +8,10 @@
 	<link href="/XUEXI/style/teacherpage.css" rel="stylesheet" type="text/css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body ng-app="app" ng-controller="teacherController">
+<body ng-app="app" ng-controller="studentController" ng-init="init()">
 	 <div id="container"><!--页面层容器-->
 	   <jsp:include page="head.jsp"/>
 	 </div>   
 </body>
+
 </html>
