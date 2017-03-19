@@ -87,4 +87,12 @@
     <servlet-name>GetAllClassStudent</servlet-name>
     <url-pattern>/servlet/GetAllClassStudent</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>GetTeacherTestPaper</servlet-name>
+    <servlet-class>com.wmj.servlet.GetTeacherTestPaper</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetTeacherTestPaper</servlet-name>
+    <url-pattern>/servlet/GetTeacherTestPaper</url-pattern>
+  </servlet-mapping>
 </web-app>
