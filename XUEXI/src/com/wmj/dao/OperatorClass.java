@@ -73,18 +73,61 @@ public class OperatorClass {
 				 Classes classes=new Classes();
 				 classes.setClassId(rs.getInt("ClassID"));
 				 classes.setClassName(rs.getString("ClassName"));
-               list.add(classes);
+                 list.add(classes);
 	         }
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
 		}
 	return list;
 }
-	
+	/*
+	 * 更新学生班级id
+	 */
+	public static boolean updateClassId(List<students> list,int classId){
+		
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		int resultCount = 0;
+		try {
+			ResultSet rs = null;
+			
+			for(int i=0;i<list.size();i++){
+				students student=list.get(i);
+				sql="update Classes set classid=? where UserID=? ";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql);
+				pmt.setInt(1, classId);
+				pmt.setInt(2, student.getUserID());
+				if(pmt.executeUpdate()>0){
+					resultCount++;
+				}
+			}
+			if( resultCount == list.size() ){
+				return true;
+			}else{
+				return false;
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+     return false;
+}
 	/*
 	 * 得到所有学科下拉框
 	 */

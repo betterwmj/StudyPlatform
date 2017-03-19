@@ -38,7 +38,7 @@ public class GetClasses extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		 HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String teacherId= userInfo.get("id");
 		List<Classes> list = OperatorClass.getClasses(Integer.parseInt(teacherId));
