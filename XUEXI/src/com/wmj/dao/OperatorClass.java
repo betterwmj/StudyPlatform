@@ -1,7 +1,6 @@
 package com.wmj.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,20 +10,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wmj.bean.PaperTitle;
-import com.wmj.bean.Person;
-import com.wmj.bean.TestPaper;
 import com.wmj.bean.students;
-import com.wmj.bean.teachers;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorClass {
 	/*
-	 * 根据学科和题目类型从数据库获取相应的题目
+	 * 获取所有学生信息
 	 */
-	public static List<Map> getTitle(String subject,String type){
+	public static List<students> getStudent(){
 		Connection conn = null;
-		List<Map> list = new ArrayList<Map>();
+		List<students> list = new ArrayList<students>();
 		try {
 			conn = JDBCUtil.getConnection();
 		} catch (SQLException e1) {
@@ -33,57 +28,26 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		if( type.equals("选择题") ){
-			sql="select a.ItemID,a.title,a.optionA,a.optionB,a.optionC,a.optionD,a.answer from choicetitle as a,subjects as b  where a.SubjectID=b.SubjectID and SubjectName= ?";
-			try {
-				ResultSet rs = null;
-				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setString(1, subject);
-				rs = pmt.executeQuery();
-				 while (rs.next()) { 
-				   Map<String,String> title = new HashMap<String,String>();
-				   title.put("itemId", rs.getInt("ItemID")+"");
-				   title.put("title", rs.getString("title"));
-				   title.put("optionA", rs.getString("optionA"));
-				   title.put("optionB", rs.getString("optionB"));
-				   title.put("optionC", rs.getString("optionC"));
-				   title.put("optionD", rs.getString("optionD"));
-				   title.put("answer", rs.getString("answer"));
-	               list.add(title);
-		         }
-				 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				// 关闭连接
-				JDBCUtil.close(conn, pmt);
-			}
+		sql="select * from students where classid=null ";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+			   students student=new students();
+			   student.setUserID(rs.getInt("UserID"));
+			   student.setName(rs.getString("RealName"));
+               list.add(student);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
 		}
-		if( type.equals("判断题") ){
-			sql="select a.ItemID,a.title,a.answer from truefalsetitle as a,subjects as b  where a.SubjectID=b.SubjectID and SubjectName= ?";
-			try {
-				ResultSet rs = null;
-				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setString(1, subject);
-				rs = pmt.executeQuery();
-				 while (rs.next()) { 
-				   Map<String,String> title = new HashMap<String,String>();
-				   title.put("itemId", rs.getInt("ItemID")+"");
-				   title.put("title", rs.getString("title"));
-				   title.put("answer", rs.getString("answer"));
-	               list.add(title);
-		         }
-				 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				// 关闭连接
-				JDBCUtil.close(conn, pmt);
-			}
-		}
-		
-		return list;
-	}
+	return list;
+}
 	
 	/*
 	 * 得到所有学科下拉框

@@ -47,4 +47,20 @@
     <servlet-name>InsertTestPaper</servlet-name>
     <url-pattern>/servlet/InsertTestPaper</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CreateClass</servlet-name>
+    <servlet-class>com.wmj.servlet.CreateClass</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateClass</servlet-name>
+    <url-pattern>/servlet/CreateClass</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetStudent</servlet-name>
+    <servlet-class>com.wmj.servlet.GetStudent</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetStudent</servlet-name>
+    <url-pattern>/servlet/GetStudent</url-pattern>
+  </servlet-mapping>
 </web-app>
