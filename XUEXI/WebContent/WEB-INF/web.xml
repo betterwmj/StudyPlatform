@@ -63,12 +63,20 @@
     <servlet-name>GetStudent</servlet-name>
     <url-pattern>/servlet/GetStudent</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>GetClasses</servlet-name>
     <servlet-class>com.wmj.servlet.GetClasses</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GetClasses</servlet-name>
     <url-pattern>/servlet/GetClasses</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>UpdateStudentClassId</servlet-name>
+    <servlet-class>com.wmj.servlet.UpdateStudentClassId</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateStudentClassId</servlet-name>
+    <url-pattern>/servlet/UpdateStudentClassId</url-pattern>
   </servlet-mapping>
 </web-app>
