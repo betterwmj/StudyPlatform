@@ -105,7 +105,7 @@ public class OperatorClass {
 			
 			for(int i=0;i<list.size();i++){
 				students student=list.get(i);
-				sql="update Classes set classid=? where UserID=? ";
+				sql="update students set classid=? where UserID=? ";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql);
 				pmt.setInt(1, classId);
 				pmt.setInt(2, student.getUserID());
