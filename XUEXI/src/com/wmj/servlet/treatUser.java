@@ -18,7 +18,7 @@ import com.wmj.bean.teachers;
 import com.wmj.dao.OperatorUser;
 public class treatUser  extends HttpServlet{
 	 /**
-	 * 
+	 * 登录注册判断
 	 */
 	private static final long serialVersionUID = 1L;
 	public void doGet(HttpServletRequest request,
