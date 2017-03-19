@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.4">
   <servlet>
     <servlet-name>treatUser</servlet-name>
     <servlet-class>com.wmj.servlet.treatUser</servlet-class>
@@ -31,12 +31,20 @@
     <servlet-name>GetTitle</servlet-name>
     <url-pattern>/servlet/GetTitle</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>GetAllSubject</servlet-name>
     <servlet-class>com.wmj.servlet.GetAllSubject</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GetAllSubject</servlet-name>
     <url-pattern>/servlet/GetAllSubject</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>InsertTestPaper</servlet-name>
+    <servlet-class>com.wmj.servlet.InsertTestPaper</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertTestPaper</servlet-name>
+    <url-pattern>/servlet/InsertTestPaper</url-pattern>
   </servlet-mapping>
 </web-app>
