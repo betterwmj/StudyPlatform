@@ -126,7 +126,7 @@ public class OperatorUser {
 		}
 		return result;
 	}
-	// 判断用户名密码是否正确，如果正确，返回用户姓名。
+	// 判断用户名密码是否正确，如果正确，返回用户姓名。number标志是老师还是学生
 	public Map<String,String> isUserPasswordCorrect(String userName, String userPassword,int number) {
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -162,6 +162,7 @@ public class OperatorUser {
 				userInfo.put("id", rs.getInt("id")+"");
 				userInfo.put("userName", rs.getString("RealName"));
 				userInfo.put("type", number+"");
+				userInfo.put("subjectId", rs.getInt("subjectID")+"");
 			}
 			System.out.println(result);
 		} catch (SQLException e) {
