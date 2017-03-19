@@ -29,7 +29,7 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from students where classid=null ";
+		sql="select * from students where classid is NULL ";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
@@ -144,7 +144,7 @@ public class OperatorClass {
 			
 			for(int i=0;i<list.size();i++){
 				students student=list.get(i);
-				sql="update Classes set classid=? where UserID=? ";
+				sql="update students set classid=? where UserID=? ";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql);
 				pmt.setInt(1, classId);
 				pmt.setInt(2, student.getUserID());
@@ -184,8 +184,8 @@ public class OperatorClass {
 		PreparedStatement pmt = null; 
 		try {
 		
-			String sql="insert into classes (ClassName,UserID) values(?,?,?)";
-			pmt=JDBCUtil.getPreparedStatement(conn, sql,Statement.RETURN_GENERATED_KEYS); 	
+			String sql="insert into classes (ClassName,UserID) values(?,?)";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 	
 			pmt.setString(1, className);
 			pmt.setInt(2, UserID);
 			if(pmt.executeUpdate()>0){
