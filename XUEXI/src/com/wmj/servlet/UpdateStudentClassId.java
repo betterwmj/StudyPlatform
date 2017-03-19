@@ -65,9 +65,9 @@ public class UpdateStudentClassId extends HttpServlet {
         JSONArray array=jo.getJSONArray("studentIds");
         List<students> list = new ArrayList<>();
         for(int i=0;i<array.size();i++){
-        	JSONObject t = JSONObject.fromObject( array.get(i));
+       
         	students student=new students();
-        	student.setUserID(Integer.parseInt(t.toString()));
+        	student.setUserID(array.getInt(i));
         	list.add(student);
         	
         }
