@@ -2,7 +2,7 @@
 
  　　<div id="Header"><!--页面头部-->
      <div id="menu">
-		  <a href="#" >出试卷</a>
+		  <a href="/XUEXI/teacher.jsp" >出试卷</a>
 		    
 		    <a href="/XUEXI/takehomework.jsp" >布置作业</a>
 			

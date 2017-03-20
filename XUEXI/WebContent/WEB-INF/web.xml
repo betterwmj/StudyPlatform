@@ -95,4 +95,12 @@
     <servlet-name>GetTeacherTestPaper</servlet-name>
     <url-pattern>/servlet/GetTeacherTestPaper</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>InsertHomeWork</servlet-name>
+    <servlet-class>com.wmj.servlet.InsertHomeWork</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertHomeWork</servlet-name>
+    <url-pattern>/servlet/InsertHomeWork</url-pattern>
+  </servlet-mapping>
 </web-app>

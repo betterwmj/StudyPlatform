@@ -3,22 +3,30 @@ package com.wmj.bean;
 import java.util.Date;
 public class HomeWork {
    private int homeId;
-   private  Date time;
+   private String homeWorkName;
+   private  String time;
    private int userId;
    private int subjectId;
    private int classId;
-   private Date finishTime;
+   private String finishTime;
    private int status;
+	public String getHomeWorkName() {
+		return homeWorkName;
+	}
+	public void setHomeWorkName(String homeWorkName) {
+		this.homeWorkName = homeWorkName;
+	}
+
 	public int getHomeId() {
 		return homeId;
 	}
 	public void setHomeId(int homeId) {
 		this.homeId = homeId;
 	}
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 	public int getUserId() {
@@ -39,10 +47,10 @@ public class HomeWork {
 	public void setClassId(int classId) {
 		this.classId = classId;
 	}
-	public Date getFinishTime() {
+	public String getFinishTime() {
 		return finishTime;
 	}
-	public void setFinishTime(Date finishTime) {
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
 	public int getStatus() {
