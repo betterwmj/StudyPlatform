@@ -36,11 +36,6 @@ public class Teachers {
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-	public int getSubject() {
-		return subjectId;
-	}
-	public void setSubject(int subjectId) {
-		this.subjectId = subjectId;
-	}
+
 	
 }

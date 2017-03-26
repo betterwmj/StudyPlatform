@@ -11,24 +11,10 @@ import com.wmj.util.JDBCUtil;
  * 对用户信息进行操作的数据库类
  */
 public class OperatorUser {
-	public ResultSet queryData(Connection con, String sSQL) {
-
-		ResultSet rResult = null;
-		try {
-
-			Statement stmt = con.createStatement();
-			rResult = stmt.executeQuery(sSQL);
-		} catch (Exception e) {
-
-		} finally {
-			return rResult;
-		}
-	}
-
 	/*
 	 * 用户的插入，若插入成功，返回true，否则返回false //user为需要插入的用户
 	 */
-	public boolean insertStudent(Students student){
+	public static Object getUserInfo(String userName,int type) throws Exception{
 		boolean result = false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -37,36 +23,87 @@ public class OperatorUser {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		try {
+            String sql=null;
+			if(type==0)
+				sql ="select * from students where userName = ? ";
+			else 
+				sql ="select * from teachers where userName = ? ";
 			ResultSet rs = null;
-			String sqlstudentSelect="select * from students ";
-			pmt=JDBCUtil.getPreparedStatement(conn, sqlstudentSelect);
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setString(1, userName);
 			rs = pmt.executeQuery();
 			 if (rs.next()) {
-				result = false;
-			 }else{
-	            String sql="insert into students (userName,RealName,password,school,telephone) values(?,?,?,?,?)";
-				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-				System.out.print("operatorUser--班级:"+student.getClassId());
-				pmt.setString(1, student.getUserName());
-				pmt.setString(2, student.getRealName());
-				pmt.setString(3, student.getPass());
-				pmt.setString(4, student.getSchool());
-				pmt.setString(5, student.getTelephone());
-				if(pmt.executeUpdate()>0)
-				   result = true;
-		    }
+				if(type==0){
+					Students student=new Students();
+					student.setUserID(rs.getInt("UserID"));
+					student.setUserName(rs.getString("userName"));
+					student.setRealName(rs.getString("RealName"));
+					student.setSchool(rs.getString("school"));
+					student.setTelephone(rs.getString("telephone"));
+					student.setClassId(rs.getInt("classid"));
+					return student;
+				}		
+				else {
+					Teachers teacher=new Teachers();
+					teacher.setUserID(rs.getInt("UserID"));
+					teacher.setUserName(rs.getString("userName"));
+					teacher.setRealName(rs.getString("RealName"));
+					teacher.setSubjectId(rs.getInt("subjectID"));
+					return teacher;
+					
+				}
+					
+			 }
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return null;
+	}
+	/*
+	 * 用户的插入，若插入成功，返回true，否则返回false //user为需要插入的用户
+	 */
+	public static boolean insertStudent(Students student) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			
+            String sql="insert into students (userName,RealName,password,school,telephone) values(?,?,?,?,?)";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setString(1, student.getUserName());
+			pmt.setString(2, student.getRealName());
+			pmt.setString(3, student.getPass());
+			pmt.setString(4, student.getSchool());
+			pmt.setString(5, student.getTelephone());
+			if(pmt.executeUpdate()>0)
+			   result = true;
+		    
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
 		}
 		return result;
 	}
-	public boolean insertTeacher(Teachers teacher){
+	public static boolean insertTeacher (Teachers teacher) throws Exception{
 		boolean result = false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -75,48 +112,24 @@ public class OperatorUser {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		try {
-			ResultSet rs = null;
-			int subjectId = 0;
-			//String subjectName=teacher.getSubjectId();
-			String teacherName=teacher.getUserName();
-			String sqlteacherSelect="select * from teachers where RealName='"+teacherName+"'";
-			pmt=JDBCUtil.getPreparedStatement(conn, sqlteacherSelect); 
-			rs = pmt.executeQuery();
-			 if (rs.next()) {
-				result = false;
-			 }else{
-					//System.out.print("学科"+subjectName);
-					rs = pmt.executeQuery();
-					String sqlsubjectSelect="select SubjectID from subjects";
-					String sqlsubjectInsert="insert into subjects(SubjectName) values(0)";
-					pmt=JDBCUtil.getPreparedStatement(conn, sqlsubjectSelect); 
-					rs = pmt.executeQuery();
-					if (rs.next()) {
-						subjectId = rs.getInt(1);
-					}else{
-						pmt=JDBCUtil.getPreparedStatement(conn, sqlsubjectInsert); 
-						pmt.executeUpdate();
-						//String sqlsubjectSelects="select SubjectID from subjects where SubjectName='"+subjectName+"'";
-						//pmt=JDBCUtil.getPreparedStatement(conn, sqlsubjectSelects);
-						rs = pmt.executeQuery();
-						if (rs.next()) {
-							subjectId = rs.getInt(1);
-						}
-					}
-		            String sql="insert into teachers (RealName,password,subjectID) values(?,?,?)";
-					pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-					//System.out.print("operatorUser"+subjectName+subjectId);
-					pmt.setString(1, teacher.getUserName());
-					pmt.setString(2, teacher.getPassword());
-					pmt.setInt(3, subjectId);
-					if(pmt.executeUpdate()>0)
-					   result = true;
-			 }
+		
+            String sql="insert into teachers (userName,RealName,password,subjectID) values(?,?,?,?)";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			//System.out.print("operatorUser"+subjectName+subjectId);
+			pmt.setString(1, teacher.getUserName());
+			pmt.setString(2, teacher.getRealName());
+			pmt.setString(3, teacher.getPassword());
+			pmt.setInt(4, teacher.getSubjectId());
+			if(pmt.executeUpdate()>0)
+			   result = true;
+			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
