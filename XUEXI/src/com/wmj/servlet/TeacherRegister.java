@@ -13,6 +13,7 @@ import com.wmj.bean.Teachers;
 import com.wmj.dao.OperatorUser;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class TeacherRegister
@@ -60,14 +61,14 @@ public class TeacherRegister extends HttpServlet {
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(resultCode);
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			ApiResult result = new ApiResult();
 			result.setCode(-1);
 			result.setMessage(e.getMessage());
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		}
 		
 	}
