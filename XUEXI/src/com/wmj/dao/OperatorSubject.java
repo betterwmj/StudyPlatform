@@ -1,7 +1,6 @@
 package com.wmj.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.wmj.bean.PaperTitle;
-import com.wmj.bean.Person;
-import com.wmj.bean.TestPaper;
-import com.wmj.bean.students;
-import com.wmj.bean.teachers;
+import com.wmj.bean.Paper;
+import com.wmj.bean.PaperDetail;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorSubject {
@@ -125,7 +120,7 @@ public class OperatorSubject {
 	/*
 	 * 添加试卷到数据库,type为题目类型，选择题还是判断题
 	 */
-	public static boolean insertTestPaper(List<PaperTitle> list,TestPaper paper){
+	public static boolean insertTestPaper(List<PaperDetail> list,Paper paper){
 		boolean result=false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -140,7 +135,7 @@ public class OperatorSubject {
 		try {
 			int testpaperID = 0;
 			ResultSet rs = null;
-			String sql="insert into testpaper (TestName,SubjectID,UserID) values(?,?,?)";
+			String sql="insert into paper (TestName,SubjectID,UserID) values(?,?,?)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql,Statement.RETURN_GENERATED_KEYS); 	
 			pmt.setString(1, paper.getTestName());
 			pmt.setInt(2, paper.getSubjectID());
@@ -155,8 +150,8 @@ public class OperatorSubject {
 				}
 				int resultCount = 0;
 				for(int i=0;i<list.size();i++){
-					PaperTitle paperTitle=list.get(i);
-					String sqls="insert into papertitle (TitleID,Type,TestpaperID) values(?,?,?)";
+					PaperDetail paperTitle=list.get(i);
+					String sqls="insert into paper_detail (TitleID,Type,TestpaperID) values(?,?,?)";
 					pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
 					pmt.setInt(1, paperTitle.getTitleId());
 					pmt.setString(2, paperTitle.getType());

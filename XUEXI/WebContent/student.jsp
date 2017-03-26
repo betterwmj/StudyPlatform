@@ -10,7 +10,7 @@
 </head>
 <body ng-app="app" ng-controller="studentController" ng-init="init()">
 	 <div id="container"><!--页面层容器-->
-	   <jsp:include page="head.jsp"/>
+	   <jsp:include page="studenthead.jsp"/>
 	 </div>   
 </body>
 

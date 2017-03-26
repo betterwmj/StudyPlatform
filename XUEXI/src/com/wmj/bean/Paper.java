@@ -1,12 +1,29 @@
 package com.wmj.bean;
+
+import java.util.Date;
+
 /*
  * 试卷
  */
-public class TestPaper {
+public class Paper {
    private int testpaperID;
    private String testName;
    private int subjectID;
    private int userId;
+   private int status;
+   private Date createTime;
+	public int getStatus() {
+	return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 	public int getTestpaperID() {
 		return testpaperID;
 	}

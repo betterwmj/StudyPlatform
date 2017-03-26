@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.Classes;
-import com.wmj.bean.TestPaper;
-import com.wmj.bean.students;
+import com.wmj.bean.Paper;
+import com.wmj.bean.Students;
 import com.wmj.dao.OperatorClass;
 import com.wmj.dao.OperatorTestPaper;
 
@@ -43,7 +43,7 @@ public class GetTeacherTestPaper extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		String teacherId=request.getParameter("teacherId");
 		int id=Integer.parseInt(teacherId);
-		List<TestPaper> list = OperatorTestPaper.getTestPaper(id);
+		List<Paper> list = OperatorTestPaper.getTestPaper(id);
 	    response.getWriter().append(JSONArray.fromObject(list).toString());
 	}
 

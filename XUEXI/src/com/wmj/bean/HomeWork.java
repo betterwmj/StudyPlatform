@@ -1,13 +1,13 @@
 package com.wmj.bean;
-
-import java.util.Date;
+/*
+ * 老师发布作业实体类
+ */
 public class HomeWork {
    private int homeId;
    private String homeWorkName;
    private  String time;
-   private int userId;
+   private int teacherId;
    private int subjectId;
-   private int classId;
    private String finishTime;
    private int status;
 	public String getHomeWorkName() {
@@ -29,11 +29,11 @@ public class HomeWork {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public int getUserId() {
-		return userId;
+	public int getTeacherId() {
+		return teacherId;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setTeacherId(int teacherId) {
+		this.teacherId = teacherId;
 	}
 	public int getSubjectId() {
 		return subjectId;
@@ -41,12 +41,7 @@ public class HomeWork {
 	public void setSubjectId(int subjectId) {
 		this.subjectId = subjectId;
 	}
-	public int getClassId() {
-		return classId;
-	}
-	public void setClassId(int classId) {
-		this.classId = classId;
-	}
+	
 	public String getFinishTime() {
 		return finishTime;
 	}

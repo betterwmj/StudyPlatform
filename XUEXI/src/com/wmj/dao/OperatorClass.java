@@ -4,23 +4,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import com.wmj.bean.Classes;
-import com.wmj.bean.students;
+import com.wmj.bean.Students;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorClass {
 	/*
 	 * 获取所有学生信息
 	 */
-	public static List<students> getStudent(){
+	public static List<Students> getStudent(){
 		Connection conn = null;
-		List<students> list = new ArrayList<students>();
+		List<Students> list = new ArrayList<Students>();
 		try {
 			conn = JDBCUtil.getConnection();
 		} catch (SQLException e1) {
@@ -35,9 +33,10 @@ public class OperatorClass {
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
-			   students student=new students();
+			   Students student=new Students();
 			   student.setUserID(rs.getInt("UserID"));
-			   student.setName(rs.getString("RealName"));
+			   student.setUserName(rs.getString("userName"));
+			   student.setRealName(rs.getString("RealName"));
                list.add(student);
 	         }
 			 
@@ -52,9 +51,9 @@ public class OperatorClass {
 	/*
 	 * 老师获取该班级所有学生信息
 	 */
-	public static List<students> getClassStudent(int classid){
+	public static List<Students> getClassStudent(int classid){
 		Connection conn = null;
-		List<students> list = new ArrayList<students>();
+		List<Students> list = new ArrayList<Students>();
 		try {
 			conn = JDBCUtil.getConnection();
 		} catch (SQLException e1) {
@@ -70,12 +69,11 @@ public class OperatorClass {
 			pmt.setInt(1, classid);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
-			   students student=new students();
+			   Students student=new Students();
 			   student.setUserID(rs.getInt("UserID"));
-			   student.setName(rs.getString("RealName"));
-			   student.setStudentNo(rs.getString("StudentNo"));
+			   student.setUserName(rs.getString("userName"));
+			   student.setRealName(rs.getString("RealName"));
 			   student.setSchool(rs.getString("school"));
-			   student.setClassNum(rs.getString("class"));
 			   student.setTelephone(rs.getString("telephone"));
                list.add(student);
 	         }
@@ -102,7 +100,7 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from Classes where UserID=? ";
+		sql="select * from classes  ";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
@@ -127,7 +125,7 @@ public class OperatorClass {
 	/*
 	 * 更新学生班级id
 	 */
-	public static boolean updateClassId(List<students> list,int classId){
+	public static boolean updateClassId(List<Students> list,int classId){
 		
 		Connection conn = null;
 		try {
@@ -143,7 +141,7 @@ public class OperatorClass {
 			ResultSet rs = null;
 			
 			for(int i=0;i<list.size();i++){
-				students student=list.get(i);
+				Students student=list.get(i);
 				sql="update students set classid=? where UserID=? ";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql);
 				pmt.setInt(1, classId);
@@ -183,16 +181,27 @@ public class OperatorClass {
 	    
 		PreparedStatement pmt = null; 
 		try {
-		
-			String sql="insert into classes (ClassName,UserID) values(?,?)";
+			
+			String sql="select * from classes where ClassName = ?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 	
 			pmt.setString(1, className);
-			pmt.setInt(2, UserID);
-			if(pmt.executeUpdate()>0){
-				return true;
-			}else{
+			ResultSet rs=null;
+			rs = pmt.executeQuery();
+			if(rs.next()){
 				return false;
+			}else{
+				
+				String sqls="insert into classes (ClassName,UserID) values(?,?)";
+				pmt=JDBCUtil.getPreparedStatement(conn, sqls); 	
+				pmt.setString(1, className);
+				pmt.setInt(2, UserID);
+				if(pmt.executeUpdate()>0){
+					return true;
+				}else{
+					return false;
+				}
 			}
+			
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();

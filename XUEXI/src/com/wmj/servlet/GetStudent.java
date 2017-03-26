@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wmj.bean.students;
+import com.wmj.bean.Students;
 import com.wmj.dao.OperatorClass;
 import net.sf.json.JSONArray;
 
@@ -37,7 +37,7 @@ public class GetStudent extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		List<students> list = OperatorClass.getStudent();
+		List<Students> list = OperatorClass.getStudent();
 	    response.getWriter().append(JSONArray.fromObject(list).toString());
 	}
 

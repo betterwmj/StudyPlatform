@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.wmj.bean.Person;
-import com.wmj.bean.students;
-import com.wmj.bean.teachers;
+
+import com.wmj.bean.Students;
+import com.wmj.bean.Teachers;
 import com.wmj.dao.OperatorUser;
 public class treatUser  extends HttpServlet{
 	 /**
@@ -76,13 +76,13 @@ public class treatUser  extends HttpServlet{
 						 if(!password.equals(passwords))
 							 out.println("密码不一致");
 						 else{
-							 students student = null;
-							 student = new students();
-							 student.setName(name);
-							 student.setPassword(password);
-							 student.setStudentNo(studentNo);
+							 Students student = null;
+							 student = new Students();
+							 student.setUserName(name);
+							 student.setPass(password);
+							
 							 student.setSchool(school);
-							 student.setClassNum(classes);
+							
 							 student.setTelephone(telephone);
 							 result=db.insertStudent(student);
 							 if(result){
@@ -103,11 +103,12 @@ public class treatUser  extends HttpServlet{
 						 if(!tpassword.equals(tpasswords))
 							 out.println("密码不一致");
 						 else{
-							 teachers teacher = null;
-							 teacher = new teachers();
-							 teacher.setName(tname);
+							 Teachers teacher = null;
+							 teacher = new Teachers();
+							 teacher.setUserName(tname);
 							 teacher.setPassword(tpassword);
-							 teacher.setSubject(Subject);
+							
+							 //teacher.setSubject(Subject);
 							 result=db.insertTeacher(teacher);
 							 if(result){
 									out.println("注册成功");

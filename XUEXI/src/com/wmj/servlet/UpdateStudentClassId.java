@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-import com.wmj.bean.students;
+import com.wmj.bean.Students;
 import com.wmj.dao.OperatorClass;
 
 
@@ -63,10 +63,10 @@ public class UpdateStudentClassId extends HttpServlet {
         JSONObject jo = JSONObject.fromObject(acceptjson);
         int classid=(int) jo.get("classId");
         JSONArray array=jo.getJSONArray("studentIds");
-        List<students> list = new ArrayList<>();
+        List<Students> list = new ArrayList<>();
         for(int i=0;i<array.size();i++){
        
-        	students student=new students();
+        	Students student=new Students();
         	student.setUserID(array.getInt(i));
         	list.add(student);
         	

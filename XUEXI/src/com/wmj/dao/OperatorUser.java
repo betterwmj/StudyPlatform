@@ -3,9 +3,8 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.wmj.bean.Person;
-import com.wmj.bean.students;
-import com.wmj.bean.teachers;
+import com.wmj.bean.Students;
+import com.wmj.bean.Teachers;
 import com.wmj.util.JDBCUtil;
 
 /*
@@ -29,7 +28,7 @@ public class OperatorUser {
 	/*
 	 * 用户的插入，若插入成功，返回true，否则返回false //user为需要插入的用户
 	 */
-	public boolean insertStudent(students student){
+	public boolean insertStudent(Students student){
 		boolean result = false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -42,22 +41,20 @@ public class OperatorUser {
 		PreparedStatement pmt = null; 
 		try {
 			ResultSet rs = null;
-			String studentNo=student.getStudentNo();
-			String sqlstudentSelect="select * from students where StudentNo='"+studentNo+"'";
+			String sqlstudentSelect="select * from students ";
 			pmt=JDBCUtil.getPreparedStatement(conn, sqlstudentSelect);
 			rs = pmt.executeQuery();
 			 if (rs.next()) {
 				result = false;
 			 }else{
-	            String sql="insert into students (RealName,password,StudentNo,school,class,telephone) values(?,?,?,?,?,?)";
+	            String sql="insert into students (userName,RealName,password,school,telephone) values(?,?,?,?,?)";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-				System.out.print("operatorUser--班级:"+student.getClassNum());
-				pmt.setString(1, student.getName());
-				pmt.setString(2, student.getPassword());
-				pmt.setString(3, student.getStudentNo());
+				System.out.print("operatorUser--班级:"+student.getClassId());
+				pmt.setString(1, student.getUserName());
+				pmt.setString(2, student.getRealName());
+				pmt.setString(3, student.getPass());
 				pmt.setString(4, student.getSchool());
-				pmt.setString(5, student.getClassNum());
-				pmt.setString(6, student.getTelephone());
+				pmt.setString(5, student.getTelephone());
 				if(pmt.executeUpdate()>0)
 				   result = true;
 		    }
@@ -69,7 +66,7 @@ public class OperatorUser {
 		}
 		return result;
 	}
-	public boolean insertTeacher(teachers teacher){
+	public boolean insertTeacher(Teachers teacher){
 		boolean result = false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -83,18 +80,18 @@ public class OperatorUser {
 		try {
 			ResultSet rs = null;
 			int subjectId = 0;
-			String subjectName=teacher.getSubject();
-			String teacherName=teacher.getName();
+			//String subjectName=teacher.getSubjectId();
+			String teacherName=teacher.getUserName();
 			String sqlteacherSelect="select * from teachers where RealName='"+teacherName+"'";
 			pmt=JDBCUtil.getPreparedStatement(conn, sqlteacherSelect); 
 			rs = pmt.executeQuery();
 			 if (rs.next()) {
 				result = false;
 			 }else{
-					System.out.print("学科"+subjectName);
+					//System.out.print("学科"+subjectName);
 					rs = pmt.executeQuery();
-					String sqlsubjectSelect="select SubjectID from subjects where SubjectName='"+subjectName+"'";
-					String sqlsubjectInsert="insert into subjects(SubjectName) values('"+subjectName+"')";
+					String sqlsubjectSelect="select SubjectID from subjects";
+					String sqlsubjectInsert="insert into subjects(SubjectName) values(0)";
 					pmt=JDBCUtil.getPreparedStatement(conn, sqlsubjectSelect); 
 					rs = pmt.executeQuery();
 					if (rs.next()) {
@@ -102,8 +99,8 @@ public class OperatorUser {
 					}else{
 						pmt=JDBCUtil.getPreparedStatement(conn, sqlsubjectInsert); 
 						pmt.executeUpdate();
-						String sqlsubjectSelects="select SubjectID from subjects where SubjectName='"+subjectName+"'";
-						pmt=JDBCUtil.getPreparedStatement(conn, sqlsubjectSelects);
+						//String sqlsubjectSelects="select SubjectID from subjects where SubjectName='"+subjectName+"'";
+						//pmt=JDBCUtil.getPreparedStatement(conn, sqlsubjectSelects);
 						rs = pmt.executeQuery();
 						if (rs.next()) {
 							subjectId = rs.getInt(1);
@@ -111,8 +108,8 @@ public class OperatorUser {
 					}
 		            String sql="insert into teachers (RealName,password,subjectID) values(?,?,?)";
 					pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-					System.out.print("operatorUser"+subjectName+subjectId);
-					pmt.setString(1, teacher.getName());
+					//System.out.print("operatorUser"+subjectName+subjectId);
+					pmt.setString(1, teacher.getUserName());
 					pmt.setString(2, teacher.getPassword());
 					pmt.setInt(3, subjectId);
 					if(pmt.executeUpdate()>0)
@@ -162,7 +159,10 @@ public class OperatorUser {
 				userInfo.put("id", rs.getInt("UserID")+"");
 				userInfo.put("userName", rs.getString("RealName"));
 				userInfo.put("type", number+"");
-				userInfo.put("subjectId", rs.getInt("subjectID")+"");
+				if(number==0)
+				   userInfo.put("classId", rs.getInt("classid")+"");
+				if(number==1)
+				  userInfo.put("subjectId", rs.getInt("subjectID")+"");
 			}
 			System.out.println(result);
 		} catch (SQLException e) {
@@ -176,55 +176,7 @@ public class OperatorUser {
 		return userInfo;
 	}
 
-	/* 根据用户姓名获得用户的信息。 */
-	public Person getUserByName(String userName) {
-		Person user = new Person();
-		/* 设置所需变量 */
-		Connection con = null;
-		ResultSet rs = null;
-		PreparedStatement pmt = null;
-		try {
-			String url = "jdbc:mysql://localhost:3306/xipt";
-			String users = "root";
-			String userpassword = "123456";
-			/* 建立连接 */
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(url, users, userpassword);
-
-			/* 完成查询 */
-			pmt = con.prepareStatement("select * from userinfo where name= ?");
-			pmt.setString(1, userName);
-			rs = pmt.executeQuery();
-
-			/* 如果查询结果不为空，设置用户信息 */
-			if (rs.next()) {
-				user.setName(rs.getString(1));
-				user.setPassword(rs.getString(2));
-				//user.setEmail(rs.getString(3));
-				
-			}
-		} catch (ClassNotFoundException e) {
-			// 声明驱动程序时报错
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// 数据库操作出错
-			e.printStackTrace();
-		} finally {
-			// 关闭连接
-			try {
-				if (rs != null)
-					rs.close();
-				if (pmt != null)
-					pmt.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return user;
-	}
-
+	
 	// 修改用户信息
 	public int updata(String sql) {
 		Connection con = null;

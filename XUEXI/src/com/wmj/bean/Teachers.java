@@ -1,10 +1,23 @@
 package com.wmj.bean;
 
-public class teachers extends Person{
+public class Teachers {
 	private int userID;
 	private String realName;
-	private String subject;
+	private String userName;
+	private int subjectId;
 	private String password;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public int getSubjectId() {
+		return subjectId;
+	}
+	public void setSubjectId(int subjectId) {
+		this.subjectId = subjectId;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -23,11 +36,11 @@ public class teachers extends Person{
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-	public String getSubject() {
-		return subject;
+	public int getSubject() {
+		return subjectId;
 	}
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setSubject(int subjectId) {
+		this.subjectId = subjectId;
 	}
 	
 }

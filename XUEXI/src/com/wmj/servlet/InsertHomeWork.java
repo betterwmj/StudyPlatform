@@ -15,24 +15,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.wmj.bean.Paper;
-import com.wmj.bean.PaperDetail;
-import com.wmj.dao.OperatorSubject;
+import com.wmj.bean.HomeWork;
+import com.wmj.bean.HomeWorkDetail;
+
+
+import com.wmj.dao.OperatorHomeWork;
+
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-/**
- * Servlet implementation class InsertTestPaper
+/**老师提交作业api
+ * Servlet implementation class InsertHomeWork
  */
-@WebServlet("/InsertTestPaper")
-public class InsertTestPaper extends HttpServlet {
+@WebServlet("/InsertHomeWork")
+public class InsertHomeWork extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertTestPaper() {
+    public InsertHomeWork() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,7 +45,7 @@ public class InsertTestPaper extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -51,7 +54,7 @@ public class InsertTestPaper extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String acceptjson="";
-	
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(  (ServletInputStream) request.getInputStream(), "utf-8"));  
         StringBuffer sb = new StringBuffer("");  
         String temp;  
@@ -66,24 +69,27 @@ public class InsertTestPaper extends HttpServlet {
         String suId=userInfo.get("subjectId");
         int userId=Integer.parseInt(id);
         int subjectId=Integer.parseInt(suId);
-        Paper paper=new Paper(); 
+        HomeWork home=new HomeWork(); 
         JSONObject jo = JSONObject.fromObject(acceptjson);
-        JSONArray array=jo.getJSONArray("papertitles");
-        List<PaperDetail> list = new ArrayList<>();
+        JSONArray array=jo.getJSONArray("homeworktitles");
+        List<HomeWorkDetail> list = new ArrayList<>();
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
-        	PaperDetail p = new PaperDetail();
-        	p.setTitleId(Integer.parseInt(t.get("itemId").toString()));
-        	p.setType((String) t.get("type"));
+        	HomeWorkDetail p = new HomeWorkDetail();
+        	p.setItemId(Integer.parseInt(t.get("itemId").toString()));
+        	p.setItemType((String) t.get("type"));
         	list.add(p);
         }
-        paper.setTestName(jo.getString("papername"));
-        paper.setSubjectID(subjectId);
-        paper.setUserId(userId);
-        boolean result=OperatorSubject.insertTestPaper(list,paper);
+        home.setHomeWorkName(jo.getString("homeworkname"));
+        home.setTime(jo.getString("time"));
+        home.setFinishTime(jo.getString("finishtime"));
+        home.setSubjectId(subjectId);
+        home.setTeacherId(userId);
+        boolean result=OperatorHomeWork.insertHomeWork(list,home);
     	response.getWriter().write(result+"");
         
               
+	
 	}
 
 }

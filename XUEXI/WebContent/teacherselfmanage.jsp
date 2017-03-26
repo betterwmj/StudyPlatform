@@ -56,7 +56,10 @@ app.controller("teacherController",["$scope","$http",function($scope,$http){
     	}).then(function(response){
     		if( response.data === "true"){
     			window.alert("添加班级成功");
+    		}else{
+    			window.alert("该班级已存在");
     		}
+    		
     	},function(response){
     		window.alert(response);
     	});
