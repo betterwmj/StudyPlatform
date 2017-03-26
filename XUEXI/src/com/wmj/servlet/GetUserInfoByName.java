@@ -32,6 +32,9 @@ public class GetUserInfoByName extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
 		String name=request.getParameter("userName");
 		String typeString=request.getParameter("type");
 		int type=Integer.parseInt(typeString);

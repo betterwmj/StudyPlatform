@@ -137,7 +137,7 @@ public class OperatorUser {
 		return result;
 	}
 	// 判断用户名密码是否正确，如果正确，返回用户姓名。number标志是老师还是学生
-	public Map<String,String> isUserPasswordCorrect(String userName, String userPassword,int number) {
+	public static Map<String,String> isUserPasswordCorrect(String userName, String userPassword,int number) {
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
 		try {
@@ -156,9 +156,9 @@ public class OperatorUser {
 			String sql="";
 			System.out.println("teacher or students"+number+userName);
 			if(number==0)
-				sql ="select * from students where RealName = ? and password = ?";
+				sql ="select * from students where userName = ? and password = ?";
 			else 
-				sql ="select * from teachers where RealName = ? and password = ?";
+				sql ="select * from teachers where userName = ? and password = ?";
 			/* 完成查询 */
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);   
 			pmt.setString(1, userName);
@@ -170,7 +170,7 @@ public class OperatorUser {
 			if (rs.next()) {
 				
 				userInfo.put("id", rs.getInt("UserID")+"");
-				userInfo.put("userName", rs.getString("RealName"));
+				userInfo.put("userName", rs.getString("userName"));
 				userInfo.put("type", number+"");
 				if(number==0)
 				   userInfo.put("classId", rs.getInt("classid")+"");

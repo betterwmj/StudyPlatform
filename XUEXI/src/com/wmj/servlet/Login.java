@@ -1,7 +1,6 @@
 package com.wmj.servlet;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,23 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import com.wmj.bean.ApiResult;
-import com.wmj.dao.OperatorSubject;
 import com.wmj.dao.OperatorUser;
 
+import net.sf.json.JSONArray;
+
 /**
- * Servlet implementation class GetAllSubject
+ * Servlet implementation class Login
  */
-@WebServlet("/GetAllSubject")
-public class GetAllSubject extends HttpServlet {
+@WebServlet("/Login")
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetAllSubject() {
+    public Login() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,14 +34,25 @@ public class GetAllSubject extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		String name=request.getParameter("userName");
+		String password=request.getParameter("password");
+		String typeString=request.getParameter("type");
+		int type=Integer.parseInt(typeString);
 		try {
-			List<Map> list = OperatorSubject.getSubject();
+			Map<String,String> userInfo =OperatorUser.isUserPasswordCorrect(name, password, type);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(list);
+			result.setData(userInfo);
 			response.getWriter().append(JSONArray.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -53,14 +62,6 @@ public class GetAllSubject extends HttpServlet {
 			result.setMessage(e.getMessage());
 			response.getWriter().append(JSONArray.fromObject(result).toString());
 		}
-	
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

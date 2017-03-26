@@ -17,7 +17,7 @@ public class OperatorSubject {
 	/*
 	 * 根据学科和题目类型从数据库获取相应的题目
 	 */
-	public static List<Map> getTitle(String subject,String type){
+	public static List<Map> getTitle(String subject,String type) throws Exception{
 		Connection conn = null;
 		List<Map> list = new ArrayList<Map>();
 		try {
@@ -25,6 +25,7 @@ public class OperatorSubject {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
@@ -49,6 +50,7 @@ public class OperatorSubject {
 				 
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw e;
 			} finally {
 				// 关闭连接
 				JDBCUtil.close(conn, pmt);
@@ -71,6 +73,7 @@ public class OperatorSubject {
 				 
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw e;
 			} finally {
 				// 关闭连接
 				JDBCUtil.close(conn, pmt);
@@ -83,7 +86,7 @@ public class OperatorSubject {
 	/*
 	 * 得到所有学科下拉框
 	 */
-	public static  List<Map> getSubject(){
+	public static  List<Map> getSubject() throws Exception{
 		
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -93,6 +96,7 @@ public class OperatorSubject {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		try {
@@ -110,6 +114,7 @@ public class OperatorSubject {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
@@ -120,7 +125,7 @@ public class OperatorSubject {
 	/*
 	 * 添加试卷到数据库,type为题目类型，选择题还是判断题
 	 */
-	public static boolean insertTestPaper(List<PaperDetail> list,Paper paper){
+	public static boolean insertTestPaper(List<PaperDetail> list,Paper paper) throws Exception{
 		boolean result=false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -129,6 +134,7 @@ public class OperatorSubject {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 	    
 		PreparedStatement pmt = null; 
@@ -169,6 +175,7 @@ public class OperatorSubject {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
