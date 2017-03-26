@@ -86,7 +86,7 @@ public class OperatorSubject {
 	/*
 	 * 得到所有学科下拉框
 	 */
-	public static  List<Map> getSubject() throws Exception{
+	public static  List<Map> getSubject(int spencialtiesId) throws Exception{
 		
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -101,8 +101,9 @@ public class OperatorSubject {
 		PreparedStatement pmt = null; 
 		try {
 			ResultSet rs = null;
-			String sqlSelect="select SubjectID,SubjectName from subjects";
+			String sqlSelect="select a.SubjectID,SubjectName from subjects as a,subject_spencialities_relationship as b where a.SubjectID=b.subjectId and b.Spencialities_id=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sqlSelect); 
+			pmt.setInt(1, spencialtiesId);
 			rs = pmt.executeQuery();
 			 while (rs.next()) {
 			   Map<String,String> title = new HashMap<String,String>();
@@ -120,6 +121,45 @@ public class OperatorSubject {
 			JDBCUtil.close(conn, pmt);
 		}
 		System.out.print("operatorsubject"+list.size());
+		return list;
+	}
+	/*
+	 * 得到所有专业下拉框
+	 */
+	public static  List<Map> getSpecities() throws Exception{
+		
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		List<Map> list = new ArrayList<Map>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			ResultSet rs = null;
+			String sqlSelect="select * from specialities";
+			pmt=JDBCUtil.getPreparedStatement(conn, sqlSelect); 
+			rs = pmt.executeQuery();
+			 while (rs.next()) {
+			   Map<String,String> title = new HashMap<String,String>();
+			   title.put("specialitiesId", rs.getString("id"));
+			   title.put("specialitiesName", rs.getString("name"));
+               list.add(title);
+          
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		System.out.print("operatorspecialities"+list.size());
 		return list;
 	}
 	/*

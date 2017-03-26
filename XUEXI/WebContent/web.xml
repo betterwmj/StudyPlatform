@@ -40,6 +40,24 @@
     <url-pattern>/servlet/TeacherRegister</url-pattern>
   </servlet-mapping>
   <servlet>
+   <servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>com.wmj.servlet.Login</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/servlet/Login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+   <servlet>
+    <servlet-name>GetSpecialities</servlet-name>
+    <servlet-class>com.wmj.servlet.GetSpecialities</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetSpecialities</servlet-name>
+    <url-pattern>/servlet/GetSpecialities</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>treatUser</servlet-name>
     <servlet-class>com.wmj.servlet.treatUser</servlet-class>
   </servlet>

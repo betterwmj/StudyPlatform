@@ -10,23 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorSubject;
-import com.wmj.dao.OperatorUser;
+
+import net.sf.json.JSONArray;
 
 /**
- * Servlet implementation class GetAllSubject
+ * Servlet implementation class GetSpecialities
  */
-@WebServlet("/GetAllSubject")
-public class GetAllSubject extends HttpServlet {
+@WebServlet("/GetSpecialities")
+public class GetSpecialities extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetAllSubject() {
+    public GetSpecialities() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,13 +35,10 @@ public class GetAllSubject extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String spencialties=request.getParameter("spencialties");
-		int spencialtiesId=Integer.parseInt(spencialties);
 		try {
-			List<Map> list = OperatorSubject.getSubject(spencialtiesId);
+			List<Map> list = OperatorSubject.getSpecities();
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);
@@ -63,6 +59,7 @@ public class GetAllSubject extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
