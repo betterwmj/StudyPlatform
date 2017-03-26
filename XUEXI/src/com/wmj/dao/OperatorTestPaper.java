@@ -12,7 +12,7 @@ public class OperatorTestPaper {
 	/*
 	 * 获取该老师所创建的所有试卷
 	 */
-	public static  List<Paper> getTestPaper(int teacherId){
+	public static  List<Paper> getTestPaper(int teacherId) throws Exception{
 		
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -22,6 +22,7 @@ public class OperatorTestPaper {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		try {
@@ -39,6 +40,7 @@ public class OperatorTestPaper {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);

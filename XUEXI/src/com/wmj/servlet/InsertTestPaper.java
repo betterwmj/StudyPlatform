@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.wmj.bean.ApiResult;
 import com.wmj.bean.Paper;
 import com.wmj.bean.PaperDetail;
 import com.wmj.dao.OperatorSubject;
@@ -80,8 +81,21 @@ public class InsertTestPaper extends HttpServlet {
         paper.setTestName(jo.getString("papername"));
         paper.setSubjectID(subjectId);
         paper.setUserId(userId);
-        boolean result=OperatorSubject.insertTestPaper(list,paper);
-    	response.getWriter().write(result+"");
+        boolean resultCode;
+		try {
+			resultCode = OperatorSubject.insertTestPaper(list,paper);
+			ApiResult result = new ApiResult();
+			result.setCode(0);
+			result.setData(resultCode);
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage(e.getMessage());
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		}
+    	
         
               
 	}

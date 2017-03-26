@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorClass;
+import com.wmj.dao.OperatorUser;
+
+import net.sf.json.JSONArray;
 
 /**
  * Servlet implementation class CreateClass
@@ -37,8 +41,21 @@ public class CreateClass extends HttpServlet {
 	     Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
 	     String userid= userInfo.get("id");
 	     int id=Integer.parseInt(userid);
-	     boolean result=OperatorClass.insertClass(cname, id);
-	 	response.getWriter().write(result+"");
+	     try {
+	    	    boolean resultCode=OperatorClass.insertClass(cname, id);
+				ApiResult result = new ApiResult();
+				result.setCode(0);
+				result.setData(resultCode);
+				response.getWriter().append(JSONArray.fromObject(result).toString());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				ApiResult result = new ApiResult();
+				result.setCode(-1);
+				result.setMessage(e.getMessage());
+				response.getWriter().append(JSONArray.fromObject(result).toString());
+			}
+	    
 	}
 
 	/**

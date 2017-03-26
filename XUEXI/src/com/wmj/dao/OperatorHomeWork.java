@@ -18,7 +18,7 @@ public class OperatorHomeWork {
 	/*
 	 * 添加作业到数据库,type为题目类型，选择题还是判断题
 	 */
-	public static boolean insertHomeWork(List<HomeWorkDetail> list,HomeWork home){
+	public static boolean insertHomeWork(List<HomeWorkDetail> list,HomeWork home) throws Exception{
 		boolean result=false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -27,6 +27,7 @@ public class OperatorHomeWork {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 	    
 		PreparedStatement pmt = null; 
@@ -69,6 +70,7 @@ public class OperatorHomeWork {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
@@ -78,7 +80,7 @@ public class OperatorHomeWork {
 	/*
 	 * 学生界面获取该学生所有应写的作业
 	 */
-	public static List<HomeWork> getHomeWork(int classId){
+	public static List<HomeWork> getHomeWork(int classId) throws Exception{
 		Connection conn = null;
 		List<HomeWork> list = new ArrayList<HomeWork>();
 		try {
@@ -86,6 +88,7 @@ public class OperatorHomeWork {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
@@ -104,6 +107,7 @@ public class OperatorHomeWork {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			// 关闭连接

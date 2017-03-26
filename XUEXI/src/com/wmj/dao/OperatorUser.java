@@ -137,7 +137,7 @@ public class OperatorUser {
 		return result;
 	}
 	// 判断用户名密码是否正确，如果正确，返回用户姓名。number标志是老师还是学生
-	public static Map<String,String> isUserPasswordCorrect(String userName, String userPassword,int number) {
+	public static Map<String,String> isUserPasswordCorrect(String userName, String userPassword,int number) throws Exception {
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
 		try {
@@ -145,6 +145,7 @@ public class OperatorUser {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		String result = "";
 		Map<String,String> userInfo = new HashMap<>();
@@ -181,6 +182,7 @@ public class OperatorUser {
 		} catch (SQLException e) {
 			// 数据库操作出错
 			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			//资源的释放的操作

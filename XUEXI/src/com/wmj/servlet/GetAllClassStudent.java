@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.wmj.bean.ApiResult;
 import com.wmj.bean.Students;
 import com.wmj.dao.OperatorClass;
 import net.sf.json.JSONArray;
@@ -33,8 +35,20 @@ public class GetAllClassStudent extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		String classid=request.getParameter("classid");
 		int id=Integer.parseInt(classid);
-		List<Students> list = OperatorClass.getClassStudent(id);
-	    response.getWriter().append(JSONArray.fromObject(list).toString());
+	  try {
+		    List<Students> list = OperatorClass.getClassStudent(id);
+			ApiResult result = new ApiResult();
+			result.setCode(0);
+			result.setData(list);
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage(e.getMessage());
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		}
 	}
 
 	/**

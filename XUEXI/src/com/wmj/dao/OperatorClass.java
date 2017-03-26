@@ -16,7 +16,7 @@ public class OperatorClass {
 	/*
 	 * 获取所有学生信息
 	 */
-	public static List<Students> getStudent(){
+	public static List<Students> getStudent() throws Exception{
 		Connection conn = null;
 		List<Students> list = new ArrayList<Students>();
 		try {
@@ -24,6 +24,7 @@ public class OperatorClass {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
@@ -42,6 +43,7 @@ public class OperatorClass {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
@@ -51,7 +53,7 @@ public class OperatorClass {
 	/*
 	 * 老师获取该班级所有学生信息
 	 */
-	public static List<Students> getClassStudent(int classid){
+	public static List<Students> getClassStudent(int classid) throws Exception{
 		Connection conn = null;
 		List<Students> list = new ArrayList<Students>();
 		try {
@@ -59,6 +61,7 @@ public class OperatorClass {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
@@ -80,6 +83,7 @@ public class OperatorClass {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
@@ -89,7 +93,7 @@ public class OperatorClass {
 	/*
 	 * 获取所有班级信息
 	 */
-	public static List<Classes> getClasses(int teacherId){
+	public static List<Classes> getClasses(int teacherId) throws Exception{
 		Connection conn = null;
 		List<Classes> list = new ArrayList<Classes>();
 		try {
@@ -97,6 +101,7 @@ public class OperatorClass {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
@@ -115,6 +120,7 @@ public class OperatorClass {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			// 关闭连接
@@ -125,7 +131,7 @@ public class OperatorClass {
 	/*
 	 * 更新学生班级id
 	 */
-	public static boolean updateClassId(List<Students> list,int classId){
+	public static boolean updateClassId(List<Students> list,int classId) throws Exception{
 		
 		Connection conn = null;
 		try {
@@ -133,6 +139,7 @@ public class OperatorClass {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
@@ -158,17 +165,17 @@ public class OperatorClass {
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
 		}
-     return false;
 }
 	/*
 	 * 老师创建班级
 	 */
-	public static boolean insertClass(String className,int UserID){
+	public static boolean insertClass(String className,int UserID) throws Exception{
 		boolean result=false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -177,6 +184,7 @@ public class OperatorClass {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 	    
 		PreparedStatement pmt = null; 
@@ -205,10 +213,11 @@ public class OperatorClass {
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
 		}
-		return result;
+		
 	}
 }

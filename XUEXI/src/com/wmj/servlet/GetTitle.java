@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorSubject;
 
 /**
@@ -38,9 +39,22 @@ public class GetTitle extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		String subject= request.getParameter("subject");
 	    String type= request.getParameter("type");
-	    List<Map> list = OperatorSubject.getTitle(subject, type);
-	    response.getWriter().append(JSONArray.fromObject(list).toString());
-	    
+	    try {
+			List<Map> list =  OperatorSubject.getTitle(subject, type);
+			ApiResult result = new ApiResult();
+			result.setCode(0);
+			result.setData(list);
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage(e.getMessage());
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		}
+	
+	 
 	}
 
 	/**

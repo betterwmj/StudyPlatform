@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.wmj.bean.ApiResult;
 import com.wmj.bean.Classes;
+import com.wmj.bean.Students;
 import com.wmj.dao.OperatorClass;
 
 import net.sf.json.JSONArray;
@@ -41,8 +43,20 @@ public class GetClasses extends HttpServlet {
 		HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String teacherId= userInfo.get("id");
-		List<Classes> list = OperatorClass.getClasses(Integer.parseInt(teacherId));
-	    response.getWriter().append(JSONArray.fromObject(list).toString());
+        try {
+        	List<Classes> list = OperatorClass.getClasses(Integer.parseInt(teacherId));
+			ApiResult result = new ApiResult();
+			result.setCode(0);
+			result.setData(list);
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage(e.getMessage());
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		}
 	}
 
 	/**
