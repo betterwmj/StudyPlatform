@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@page contentType="text/html;charset=gbk"%>
-<%@page import="com.wmj.bean.Person"%>
+
 <%@page import="java.util.*"%>
 <jsp:useBean id="db" class="com.wmj.dao.OperatorUser" scope="session" />
 <html>
@@ -23,9 +23,9 @@
 				 out.println("ÃÜÂë²»Ò»ÖÂ");
 			else{
 				dnumber= Integer.parseInt(rank);
-				Person user = new Person();
-		   		 user.setName(name);
-		    	user.setPassword(password);
+				//Person user = new Person();
+		   		// user.setName(name);
+		    	//user.setPassword(password);
 			//	user.setRank(dnumber);
 		   		//user.setEmail(email);
 		   		 //if(db.insertUser(user)){

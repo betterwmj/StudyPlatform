@@ -84,7 +84,7 @@ public class treatUser  extends HttpServlet{
 							 student.setSchool(school);
 							
 							 student.setTelephone(telephone);
-							 result=db.insertStudent(student);
+							// result=db.insertStudent(student);
 							 if(result){
 								out.println("注册成功");
 								out.println("<a href='../login.html' target=_red>返回登录页面</a>");
@@ -109,7 +109,7 @@ public class treatUser  extends HttpServlet{
 							 teacher.setPassword(tpassword);
 							
 							 //teacher.setSubject(Subject);
-							 result=db.insertTeacher(teacher);
+							// result=db.insertTeacher(teacher);
 							 if(result){
 									out.println("注册成功");
 									out.println("<a href='../login.html' target=_red>返回登录页面</a>");

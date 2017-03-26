@@ -7,6 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wmj.bean.ApiResult;
+import com.wmj.bean.Students;
+import com.wmj.bean.Teachers;
+import com.wmj.dao.OperatorUser;
+
+import net.sf.json.JSONArray;
+
 /**
  * Servlet implementation class TeacherRegister
  */
@@ -35,7 +42,30 @@ public class TeacherRegister extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String name=request.getParameter("userName");
+		String realName=request.getParameter("realName");
+		String password=request.getParameter("password");
+		String subjectIdString=request.getParameter("subjectID");
+		int subjectId=Integer.parseInt(subjectIdString);
+		Teachers teacher=new Teachers();
+		teacher.setUserName(name);
+		teacher.setRealName(realName);
+		teacher.setPassword(password);
+		teacher.setSubjectId(subjectId);
+		try {
+			boolean resultCode=OperatorUser.insertTeacher(teacher);
+			ApiResult result = new ApiResult();
+			result.setCode(0);
+			result.setData(resultCode);
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage(e.getMessage());
+			response.getWriter().append(JSONArray.fromObject(result).toString());
+		}
+		
 	}
-
 }
