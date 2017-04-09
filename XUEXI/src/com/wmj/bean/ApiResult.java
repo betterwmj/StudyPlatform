@@ -22,5 +22,17 @@ public class ApiResult {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+   public static ApiResult success(Object data){
+	   ApiResult result = new ApiResult();
+	   result.setCode(0);
+	   result.setData(data);
+	   return result;
+   }
    
+   public static ApiResult fail(String msg){
+	   ApiResult result = new ApiResult();
+	   result.setCode(-1);
+	   result.setMessage(msg);
+	   return result;
+   }
 }

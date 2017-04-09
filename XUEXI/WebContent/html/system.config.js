@@ -21,8 +21,9 @@ SystemJS.config({
     "angular":"./jslib/angular.js",
     "angular-ui-router":"./jslib/angular-ui-router.js",
     "angular-ui-bootstrap":"./jslib/ui-bootstrap-tpls.js",
+    "bootstrap":"XUEXI/html/bootstrap.js"
   },
   transpiler: 'plugin-babel'
 });
 
-SystemJS.import("bootstrap.js");
+SystemJS.import("bootstrap");
