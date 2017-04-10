@@ -39,12 +39,7 @@
     <servlet-name>TeacherRegister</servlet-name>
     <url-pattern>/servlet/TeacherRegister</url-pattern>
   </servlet-mapping>
-<<<<<<< HEAD
-  
-   <servlet>
-=======
   <servlet>
->>>>>>> 391d2d150e20956c990d50fc512aee334666ab61
     <servlet-name>Login</servlet-name>
     <servlet-class>com.wmj.servlet.Login</servlet-class>
   </servlet>
@@ -52,13 +47,7 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/servlet/Login</url-pattern>
   </servlet-mapping>
-<<<<<<< HEAD
-  
-
-   <servlet>
-=======
   <servlet>
->>>>>>> 391d2d150e20956c990d50fc512aee334666ab61
     <servlet-name>GetSpecialities</servlet-name>
     <servlet-class>com.wmj.servlet.GetSpecialities</servlet-class>
   </servlet>

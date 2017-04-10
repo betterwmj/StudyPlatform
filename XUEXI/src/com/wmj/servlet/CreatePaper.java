@@ -21,6 +21,7 @@ import com.wmj.bean.ApiResult;
 import com.wmj.bean.Paper;
 import com.wmj.bean.PaperDetail;
 import com.wmj.dao.OperatorSubject;
+import com.wmj.util.JSONUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -53,16 +54,13 @@ public class CreatePaper extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String acceptjson="";
-	
-		BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream(), "utf-8"));  
-        StringBuffer sb = new StringBuffer("");  
-        String temp;  
-        while ((temp = br.readLine()) != null) {  
-            sb.append(temp);  
-        }  
-        br.close();  
-        acceptjson = sb.toString();
+		JSONObject json = null;
+		try {
+			json = JSONUtil.parse(request);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("无效的登录参数")).toString());
+		}
         HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String id= userInfo.get("id");
@@ -70,7 +68,7 @@ public class CreatePaper extends HttpServlet {
         int userId=Integer.parseInt(id);
         int subjectId=Integer.parseInt(suId);
         Paper paper=new Paper(); 
-        JSONObject jo = JSONObject.fromObject(acceptjson);
+        JSONObject jo = JSONObject.fromObject(json);
         JSONArray array=jo.getJSONArray("papertitles");
         List<PaperDetail> list = new ArrayList<>();
         Timestamp time = new Timestamp(System.currentTimeMillis());
@@ -83,8 +81,8 @@ public class CreatePaper extends HttpServlet {
         	list.add(p);
         }
         paper.setTestName(jo.getString("papername"));
-        paper.setSubjectID(subjectId);
-        paper.setUserId(userId);
+        paper.setSubjectID(3);
+        paper.setUserId(2);
         paper.setCreateTime(time);
         boolean resultCode;
 		try {
