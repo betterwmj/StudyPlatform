@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorUser;
+import com.wmj.util.JSONUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -45,23 +46,27 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String name=request.getParameter("userName");
-		String password=request.getParameter("password");
-		String typeString=request.getParameter("type");
-		int type=Integer.parseInt(typeString);
+		JSONObject json = null;
+		try {
+			json = JSONUtil.parse(request);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("无效的登录参数")).toString());
+		}
+		String name = json.getString("userName");
+		String password = json.getString("password");
+		int type=json.getInt("type");
 		try {
 			Map<String,String> userInfo =OperatorUser.isUserPasswordCorrect(name, password, type);
-			ApiResult result = new ApiResult();
-			result.setCode(0);
-			result.setData(userInfo);
-			response.getWriter().append(JSONObject.fromObject(result).toString());
+			if( userInfo.size() == 0 ){
+				response.getWriter().append( JSONObject.fromObject(ApiResult.fail("账户或密码错误")).toString());
+			}else{
+				response.getWriter().append( JSONObject.fromObject(ApiResult.success(userInfo)).toString());
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			ApiResult result = new ApiResult();
-			result.setCode(-1);
-			result.setMessage(e.getMessage());
-			response.getWriter().append(JSONObject.fromObject(result).toString());
+			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("登录失败")).toString());
 		}
 	}
 
