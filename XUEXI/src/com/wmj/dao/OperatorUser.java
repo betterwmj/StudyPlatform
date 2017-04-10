@@ -12,7 +12,7 @@ import com.wmj.util.JDBCUtil;
  */
 public class OperatorUser {
 	/*
-	 * 用户的插入，若插入成功，返回true，否则返回false //user为需要插入的用户
+	 * 查询用户名是否重复，返回true，否则返回false //user为需要插入的用户
 	 */
 	public static Object getUserInfo(String userName,int type) throws Exception{
 		boolean result = false;
@@ -176,7 +176,7 @@ public class OperatorUser {
 				if(number==0)
 				   userInfo.put("classId", rs.getInt("classid")+"");
 				if(number==1)
-				  userInfo.put("subjectId", rs.getInt("subjectID")+"");
+				   userInfo.put("subjectId", rs.getInt("subjectID")+"");
 			}
 			System.out.println(result);
 		} catch (SQLException e) {

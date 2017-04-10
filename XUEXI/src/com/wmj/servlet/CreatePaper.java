@@ -3,6 +3,8 @@ package com.wmj.servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +28,14 @@ import net.sf.json.JSONObject;
 /**
  * Servlet implementation class InsertTestPaper
  */
-@WebServlet("/InsertTestPaper")
-public class InsertTestPaper extends HttpServlet {
+@WebServlet("/CreatePaper")
+public class CreatePaper extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertTestPaper() {
+    public CreatePaper() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,7 +55,7 @@ public class InsertTestPaper extends HttpServlet {
 		// TODO Auto-generated method stub
 		String acceptjson="";
 	
-		BufferedReader br = new BufferedReader(new InputStreamReader(  (ServletInputStream) request.getInputStream(), "utf-8"));  
+		BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream(), "utf-8"));  
         StringBuffer sb = new StringBuffer("");  
         String temp;  
         while ((temp = br.readLine()) != null) {  
@@ -71,16 +73,19 @@ public class InsertTestPaper extends HttpServlet {
         JSONObject jo = JSONObject.fromObject(acceptjson);
         JSONArray array=jo.getJSONArray("papertitles");
         List<PaperDetail> list = new ArrayList<>();
+        Timestamp time = new Timestamp(System.currentTimeMillis());
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
         	PaperDetail p = new PaperDetail();
         	p.setTitleId(Integer.parseInt(t.get("itemId").toString()));
+        	p.setScore(Integer.parseInt(t.get("score").toString()));
         	p.setType((String) t.get("type"));
         	list.add(p);
         }
         paper.setTestName(jo.getString("papername"));
         paper.setSubjectID(subjectId);
         paper.setUserId(userId);
+        paper.setCreateTime(time);
         boolean resultCode;
 		try {
 			resultCode = OperatorSubject.insertTestPaper(list,paper);

@@ -39,7 +39,7 @@
     <servlet-name>TeacherRegister</servlet-name>
     <url-pattern>/servlet/TeacherRegister</url-pattern>
   </servlet-mapping>
-  <servlet>
+  
    <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>com.wmj.servlet.Login</servlet-class>
@@ -48,7 +48,8 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/servlet/Login</url-pattern>
   </servlet-mapping>
-  <servlet>
+  
+
    <servlet>
     <servlet-name>GetSpecialities</servlet-name>
     <servlet-class>com.wmj.servlet.GetSpecialities</servlet-class>
@@ -58,20 +59,12 @@
     <url-pattern>/servlet/GetSpecialities</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>treatUser</servlet-name>
-    <servlet-class>com.wmj.servlet.treatUser</servlet-class>
+    <servlet-name>GetQuestions</servlet-name>
+    <servlet-class>com.wmj.servlet.GetQuestions</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>treatUser</servlet-name>
-    <url-pattern>/servlet/treatUser</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>GetTitle</servlet-name>
-    <servlet-class>com.wmj.servlet.GetTitle</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GetTitle</servlet-name>
-    <url-pattern>/servlet/GetTitle</url-pattern>
+    <servlet-name>GetQuestions</servlet-name>
+    <url-pattern>/servlet/GetQuestions</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>GetAllSubject</servlet-name>
@@ -82,12 +75,12 @@
     <url-pattern>/servlet/GetAllSubject</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>InsertTestPaper</servlet-name>
-    <servlet-class>com.wmj.servlet.InsertTestPaper</servlet-class>
+    <servlet-name>CreatePaper</servlet-name>
+    <servlet-class>com.wmj.servlet.CreatePaper</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>InsertTestPaper</servlet-name>
-    <url-pattern>/servlet/InsertTestPaper</url-pattern>
+    <servlet-name>CreatePaper</servlet-name>
+    <url-pattern>/servlet/CreatePaper</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>CreateClass</servlet-name>

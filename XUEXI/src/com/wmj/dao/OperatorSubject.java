@@ -1,6 +1,7 @@
 package com.wmj.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,9 +16,9 @@ import com.wmj.util.JDBCUtil;
 
 public class OperatorSubject {
 	/*
-	 * 根据学科和题目类型从数据库获取相应的题目
+	 * 根据学科id(默认为老师的学科id)和题目类型从数据库获取相应的题目
 	 */
-	public static List<Map> getTitle(String subject,String type) throws Exception{
+	public static List<Map> getTitle(int subjectId,String type) throws Exception{
 		Connection conn = null;
 		List<Map> list = new ArrayList<Map>();
 		try {
@@ -30,11 +31,11 @@ public class OperatorSubject {
 		PreparedStatement pmt = null; 
 		String sql = "";
 		if( type.equals("选择题") ){
-			sql="select a.ItemID,a.title,a.optionA,a.optionB,a.optionC,a.optionD,a.answer from choicetitle as a,subjects as b  where a.SubjectID=b.SubjectID and SubjectName= ?";
+			sql="select a.ItemID,a.title,a.optionA,a.optionB,a.optionC,a.optionD,a.answer from choicetitle as a,subjects as b  where a.SubjectID=b.SubjectID and a.SubjectID= ?";
 			try {
 				ResultSet rs = null;
 				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setString(1, subject);
+				pmt.setInt(1, subjectId);
 				rs = pmt.executeQuery();
 				 while (rs.next()) { 
 				   Map<String,String> title = new HashMap<String,String>();
@@ -57,11 +58,11 @@ public class OperatorSubject {
 			}
 		}
 		if( type.equals("判断题") ){
-			sql="select a.ItemID,a.title,a.answer from truefalsetitle as a,subjects as b  where a.SubjectID=b.SubjectID and SubjectName= ?";
+			sql="select a.ItemID,a.title,a.answer from truefalsetitle as a,subjects as b  where a.SubjectID=b.SubjectID and a.SubjectID= ?";
 			try {
 				ResultSet rs = null;
 				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setString(1, subject);
+				pmt.setInt(1, subjectId);
 				rs = pmt.executeQuery();
 				 while (rs.next()) { 
 				   Map<String,String> title = new HashMap<String,String>();
@@ -84,7 +85,7 @@ public class OperatorSubject {
 	}
 	
 	/*
-	 * 得到所有学科下拉框
+	 * 得到对应专业所有学科下拉框
 	 */
 	public static  List<Map> getSubject(int spencialtiesId) throws Exception{
 		
@@ -181,11 +182,13 @@ public class OperatorSubject {
 		try {
 			int testpaperID = 0;
 			ResultSet rs = null;
-			String sql="insert into paper (TestName,SubjectID,UserID) values(?,?,?)";
+			String sql="insert into paper (TestName,SubjectID,UserID,status,create_time) values(?,?,?,0,?)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql,Statement.RETURN_GENERATED_KEYS); 	
 			pmt.setString(1, paper.getTestName());
 			pmt.setInt(2, paper.getSubjectID());
 			pmt.setInt(3, paper.getUserId());
+			pmt.setTimestamp(4, paper.getCreateTime());
+			//pmt.setDate(4, (Date) paper.getCreateTime());
 			if(pmt.executeUpdate()>0){
 				rs = pmt.getGeneratedKeys(); //获取结果   
 				if (rs.next()) {
@@ -197,11 +200,12 @@ public class OperatorSubject {
 				int resultCount = 0;
 				for(int i=0;i<list.size();i++){
 					PaperDetail paperTitle=list.get(i);
-					String sqls="insert into paper_detail (TitleID,Type,TestpaperID) values(?,?,?)";
+					String sqls="insert into paper_detail (questionID,Type,TestpaperID,score) values(?,?,?,?)";
 					pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
 					pmt.setInt(1, paperTitle.getTitleId());
 					pmt.setString(2, paperTitle.getType());
 					pmt.setInt(3, testpaperID);
+					pmt.setInt(4, paperTitle.getScore());
 					if(pmt.executeUpdate()>0){
 						resultCount++;
 					}

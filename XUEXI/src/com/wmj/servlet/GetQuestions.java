@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -18,14 +19,14 @@ import com.wmj.dao.OperatorSubject;
 /**
  * Servlet implementation class GetTitle
  */
-@WebServlet("/GetTitle")
-public class GetTitle extends HttpServlet {
+@WebServlet("/GetQuestions")
+public class GetQuestions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetTitle() {
+    public GetQuestions() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,10 +38,13 @@ public class GetTitle extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String subject= request.getParameter("subject");
+		HttpSession session = request.getSession();
+		Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
+        String suId=userInfo.get("subjectId");
+        int id=Integer.parseInt(suId);
 	    String type= request.getParameter("type");
 	    try {
-			List<Map> list =  OperatorSubject.getTitle(subject, type);
+			List<Map> list =  OperatorSubject.getTitle(4, type);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);
@@ -62,6 +66,7 @@ public class GetTitle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
