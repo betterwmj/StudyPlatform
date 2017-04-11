@@ -2,9 +2,10 @@ package com.wmj.bean;
 /*
  * 选择题实体类
  */
-public class ChoiceTitle {
+public class Title {
    private int itemId;
    private String title;
+   private int type;
    private String optionA;
    private String optionB;
    private String optionC;
@@ -12,6 +13,12 @@ public class ChoiceTitle {
    private String answer;
    private int subjectId;
    private int teacherId;
+   public int getType() {
+	return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
    public int getItemId() {
 	return itemId;
    }

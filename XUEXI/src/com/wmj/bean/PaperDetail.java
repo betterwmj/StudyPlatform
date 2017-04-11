@@ -5,7 +5,6 @@ package com.wmj.bean;
 public class PaperDetail {
     private int id;
     private int titleId;
-    private String type;
     private int testPaperId;
     private int score;
     public int getId() {
@@ -20,12 +19,7 @@ public class PaperDetail {
 	public void setTitleId(int titleId) {
 		this.titleId = titleId;
 	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 	public int getTestPaperId() {
 		return testPaperId;
 	}

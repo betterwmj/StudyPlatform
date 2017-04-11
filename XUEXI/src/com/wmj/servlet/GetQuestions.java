@@ -43,8 +43,9 @@ public class GetQuestions extends HttpServlet {
         String suId=userInfo.get("subjectId");
         int id=Integer.parseInt(suId);
 	    String type= request.getParameter("type");
+	    int typeid=Integer.parseInt(type);
 	    try {
-			List<Map> list =  OperatorSubject.getTitle(id, type);
+			List<Map> list =  OperatorSubject.getTitle(id, typeid);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

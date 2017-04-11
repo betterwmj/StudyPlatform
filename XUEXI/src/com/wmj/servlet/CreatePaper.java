@@ -77,12 +77,11 @@ public class CreatePaper extends HttpServlet {
         	PaperDetail p = new PaperDetail();
         	p.setTitleId(Integer.parseInt(t.get("itemId").toString()));
         	p.setScore(Integer.parseInt(t.get("score").toString()));
-        	p.setType((String) t.get("type"));
         	list.add(p);
         }
         paper.setTestName(jo.getString("papername"));
-        paper.setSubjectID(3);
-        paper.setUserId(2);
+        paper.setSubjectID(subjectId);
+        paper.setUserId(userId);
         paper.setCreateTime(time);
         boolean resultCode;
 		try {

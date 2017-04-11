@@ -18,7 +18,7 @@ public class OperatorSubject {
 	/*
 	 * 根据学科id(默认为老师的学科id)和题目类型从数据库获取相应的题目
 	 */
-	public static List<Map> getTitle(int subjectId,String type) throws Exception{
+	public static List<Map> getTitle(int subjectId,int type) throws Exception{
 		Connection conn = null;
 		List<Map> list = new ArrayList<Map>();
 		try {
@@ -30,12 +30,12 @@ public class OperatorSubject {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		if( type.equals("选择题") ){
-			sql="select a.ItemID,a.title,a.optionA,a.optionB,a.optionC,a.optionD,a.answer from choicetitle as a,subjects as b  where a.SubjectID=b.SubjectID and a.SubjectID= ?";
-			try {
+		try {
+			    sql="select ItemID,title,optionA,optionB,optionC,optionD,answer from title where SubjectID=? and type=?";
 				ResultSet rs = null;
 				pmt=JDBCUtil.getPreparedStatement(conn, sql);
 				pmt.setInt(1, subjectId);
+				pmt.setInt(2, type);
 				rs = pmt.executeQuery();
 				 while (rs.next()) { 
 				   Map<String,String> title = new HashMap<String,String>();
@@ -49,37 +49,37 @@ public class OperatorSubject {
 	               list.add(title);
 		         }
 				 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-			} finally {
-				// 关闭连接
-				JDBCUtil.close(conn, pmt);
-			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
 		}
-		if( type.equals("判断题") ){
-			sql="select a.ItemID,a.title,a.answer from truefalsetitle as a,subjects as b  where a.SubjectID=b.SubjectID and a.SubjectID= ?";
-			try {
-				ResultSet rs = null;
-				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setInt(1, subjectId);
-				rs = pmt.executeQuery();
-				 while (rs.next()) { 
-				   Map<String,String> title = new HashMap<String,String>();
-				   title.put("itemId", rs.getInt("ItemID")+"");
-				   title.put("title", rs.getString("title"));
-				   title.put("answer", rs.getString("answer"));
-	               list.add(title);
-		         }
-				 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-			} finally {
-				// 关闭连接
-				JDBCUtil.close(conn, pmt);
-			}
-		}
+		
+//		if( type.equals("判断题") ){
+//			sql="select a.ItemID,a.title,a.answer from truefalsetitle as a,subjects as b  where a.SubjectID=b.SubjectID and a.SubjectID= ?";
+//			try {
+//				ResultSet rs = null;
+//				pmt=JDBCUtil.getPreparedStatement(conn, sql);
+//				pmt.setInt(1, subjectId);
+//				rs = pmt.executeQuery();
+//				 while (rs.next()) { 
+//				   Map<String,String> title = new HashMap<String,String>();
+//				   title.put("itemId", rs.getInt("ItemID")+"");
+//				   title.put("title", rs.getString("title"));
+//				   title.put("answer", rs.getString("answer"));
+//	               list.add(title);
+//		         }
+//				 
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//				throw e;
+//			} finally {
+//				// 关闭连接
+//				JDBCUtil.close(conn, pmt);
+//			}
+//		}
 		
 		return list;
 	}
@@ -200,12 +200,11 @@ public class OperatorSubject {
 				int resultCount = 0;
 				for(int i=0;i<list.size();i++){
 					PaperDetail paperTitle=list.get(i);
-					String sqls="insert into paper_detail (questionID,Type,TestpaperID,score) values(?,?,?,?)";
+					String sqls="insert into paper_detail (TitleID,TestpaperID,score) values(?,?,?)";
 					pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
-					pmt.setInt(1, paperTitle.getTitleId());
-					pmt.setString(2, paperTitle.getType());
-					pmt.setInt(3, testpaperID);
-					pmt.setInt(4, paperTitle.getScore());
+					pmt.setInt(1, paperTitle.getTitleId());;
+					pmt.setInt(2, testpaperID);
+					pmt.setInt(3, paperTitle.getScore());
 					if(pmt.executeUpdate()>0){
 						resultCount++;
 					}
