@@ -13,7 +13,14 @@ public class Title {
    private String answer;
    private int subjectId;
    private int teacherId;
-   public int getType() {
+   private int score;
+   public int getScore() {
+	return score;
+}
+public void setScore(int score) {
+	this.score = score;
+}
+public int getType() {
 	return type;
 	}
 	public void setType(int type) {

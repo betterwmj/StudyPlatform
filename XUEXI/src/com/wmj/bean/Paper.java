@@ -1,7 +1,7 @@
 package com.wmj.bean;
 
 import java.sql.Timestamp;
-import java.util.Date;
+
 
 /*
  * 试卷
