@@ -11,7 +11,7 @@ import java.util.List;
 import com.wmj.bean.Classes;
 import com.wmj.bean.HomeWork;
 import com.wmj.bean.HomeWorkDetail;
-
+import com.wmj.bean.Paper;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorHomeWork {
@@ -40,7 +40,7 @@ public class OperatorHomeWork {
 			pmt.setTimestamp(2, home.getTime());
 			pmt.setInt(3, home.getTeacherId());
 			pmt.setInt(4, home.getSubjectId());
-			pmt.setString(5, home.getFinishTime());
+			pmt.setTimestamp(5, home.getFinishTime());
 			if(pmt.executeUpdate()>0){
 				rs = pmt.getGeneratedKeys(); //获取结果   
 				if (rs.next()) {
@@ -109,6 +109,94 @@ public class OperatorHomeWork {
 	    }
 	    return result;
 	  }
+		/*
+		 * 获取该老师所创建的所有作业根据老师id
+		 */
+		public static  List<HomeWork> getHomeWorkByTeacherId(int teacherId) throws Exception{
+			
+			 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+			Connection conn = null;
+			List<HomeWork> list = new ArrayList<HomeWork>();
+			try {
+				conn = JDBCUtil.getConnection();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				throw e1;
+			}
+			PreparedStatement pmt = null; 
+			try {
+				ResultSet rs = null;
+				String sql="select * from  homeworks where teacherID=?";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+				pmt.setInt(1, teacherId);
+				rs = pmt.executeQuery();
+				 while (rs.next()) {
+				   HomeWork home=new HomeWork();
+				   home.setHomeId(rs.getInt("HomeworkID"));
+				   home.setHomeWorkName(rs.getString("homeworkname"));
+				   home.setTeacherId(rs.getInt("teacherID"));
+				   home.setSubjectId(rs.getInt("SubjectID"));
+				   home.setFinishTime(rs.getTimestamp("Finishtime"));
+				   home.setStatus(rs.getInt("status"));
+				   home.setTime(rs.getTimestamp("time"));
+	               list.add(home);
+	         
+		         }
+				 
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				// 关闭连接
+				JDBCUtil.close(conn, pmt);
+			}
+			return list;
+		}
+		/*
+		 * 获取该科目的所有作业
+		 */
+		public static  List<HomeWork> getHomeWorkBySubjectId(int subjectId) throws Exception{
+			
+			 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+			Connection conn = null;
+			List<HomeWork> list = new ArrayList<HomeWork>();
+			try {
+				conn = JDBCUtil.getConnection();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				throw e1;
+			}
+			PreparedStatement pmt = null; 
+			try {
+				ResultSet rs = null;
+				String sql="select * from  homeworks where SubjectID=? and status=1";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+				pmt.setInt(1, subjectId);
+				rs = pmt.executeQuery();
+				 while (rs.next()) {
+					 HomeWork home=new HomeWork();
+					   home.setHomeId(rs.getInt("HomeworkID"));
+					   home.setHomeWorkName(rs.getString("homeworkname"));
+					   home.setTeacherId(rs.getInt("teacherID"));
+					   home.setSubjectId(rs.getInt("SubjectID"));
+					   home.setFinishTime(rs.getTimestamp("Finishtime"));
+					   home.setStatus(rs.getInt("status"));
+					   home.setTime(rs.getTimestamp("time"));
+		               list.add(home);
+	         
+		         }
+				 
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				// 关闭连接
+				JDBCUtil.close(conn, pmt);
+			}
+			return list;
+		}
 	/*
 	 * 学生界面获取该学生所有应写的作业
 	 */

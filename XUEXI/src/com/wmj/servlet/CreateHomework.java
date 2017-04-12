@@ -79,7 +79,7 @@ public class CreateHomework extends HttpServlet {
         }
         home.setHomeWorkName(json.getString("name"));
         home.setTime(time);
-        home.setFinishTime(json.getString("finishTime"));
+        home.setFinishTime(Timestamp.valueOf(json.getString("finishTime")));
         home.setSubjectId(subjectId);
         home.setTeacherId(teacherId);
         boolean resultCode;

@@ -11,7 +11,7 @@ public class HomeWork {
    private  Timestamp time;
    private int teacherId;
    private int subjectId;
-   private String finishTime;
+   private Timestamp finishTime;
    private int status;
 	public String getHomeWorkName() {
 		return homeWorkName;
@@ -45,11 +45,11 @@ public class HomeWork {
 		this.subjectId = subjectId;
 	}
 	
-	public String getFinishTime() {
+	public Timestamp getFinishTime() {
 		return finishTime;
 	}
-	public void setFinishTime(String finishTime) {
-		this.finishTime = finishTime;
+	public void setFinishTime(Timestamp time) {
+		this.finishTime = time;
 	}
 	public int getStatus() {
 		return status;
