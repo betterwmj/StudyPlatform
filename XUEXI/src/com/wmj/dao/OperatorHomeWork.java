@@ -76,6 +76,39 @@ public class OperatorHomeWork {
 		}
 		return result;
 	}
+	  /*
+	   * 老师发布作业，更新作业状态为1
+	   */
+	  public static  boolean updateHomeWork(int homeworkID) throws Exception{
+	    
+	     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+	    boolean result=false;
+	    Connection conn = null;
+	    try {
+	      conn = JDBCUtil.getConnection();
+	    } catch (SQLException e1) {
+	      // TODO Auto-generated catch block
+	      e1.printStackTrace();
+	      throw e1;
+	    }
+	    PreparedStatement pmt = null; 
+	    try {
+	      
+	      String sql="update homeworks set status=1 where HomeworkID=?";
+	      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+	      pmt.setInt(1, homeworkID);
+	      if(pmt.executeUpdate()>0)
+	           result = true;
+	       
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	      throw e;
+	    } finally {
+	      // 关闭连接
+	      JDBCUtil.close(conn, pmt);
+	    }
+	    return result;
+	  }
 	/*
 	 * 学生界面获取该学生所有应写的作业
 	 */
