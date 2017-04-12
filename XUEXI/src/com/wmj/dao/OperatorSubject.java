@@ -164,7 +164,7 @@ public class OperatorSubject {
 		return list;
 	}
 	/*
-	 * 添加试卷到数据库,type为题目类型，选择题还是判断题
+	 * 老师添加试卷到数据库
 	 */
 	public static boolean insertTestPaper(List<PaperDetail> list,Paper paper) throws Exception{
 		boolean result=false;

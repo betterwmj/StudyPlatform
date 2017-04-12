@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.wmj.bean.Paper;
+import com.wmj.bean.PaperDetail;
+import com.wmj.bean.PaperResult;
+import com.wmj.bean.PaperResultDetail;
 import com.wmj.bean.Title;
 import com.wmj.util.JDBCUtil;
 public class OperatorTestPaper {
@@ -177,4 +181,66 @@ public class OperatorTestPaper {
 		    }
 		    return list;
 		  }
+		/*
+		 * 学生做完试卷提交到数据库
+		 */
+		public static boolean submitTestPaper(List<PaperResultDetail> list,PaperResult paper) throws Exception{
+			boolean result=false;
+			 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+			Connection conn = null;
+			try {
+				conn = JDBCUtil.getConnection();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				throw e1;
+			}
+		    
+			PreparedStatement pmt = null; 
+			try {
+				int paperResultId = 0;
+				ResultSet rs = null;
+				String sql="insert into paper_result (paper_id,student_id,time,score) values(?,?,?,?)";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql,Statement.RETURN_GENERATED_KEYS); 	
+				pmt.setInt(1, paper.getPaperId());
+				pmt.setInt(2, paper.getStudentId());
+				pmt.setTimestamp(3, paper.getTime());
+				pmt.setInt(4, paper.getScore());
+				//pmt.setDate(4, (Date) paper.getCreateTime());
+				if(pmt.executeUpdate()>0){
+					rs = pmt.getGeneratedKeys(); //获取结果   
+					if (rs.next()) {
+						paperResultId = rs.getInt(1);//取得ID
+					} else {
+						result = false;
+						return result;
+					}
+					int resultCount = 0;
+					for(int i=0;i<list.size();i++){
+						PaperResultDetail paperTitle=list.get(i);
+						String sqls="insert into paper_result_detail (paper_result_id,question_id,answer) values(?,?,?)";
+						pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
+						pmt.setInt(1, paperResultId);;
+						pmt.setInt(2, paperTitle.getQuestionId());
+						pmt.setString(3, paperTitle.getAnswer());
+						if(pmt.executeUpdate()>0){
+							resultCount++;
+						}
+					}
+					if( resultCount == list.size() ){
+						return true;
+					}else{
+						return false;
+					}
+				}
+				 
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				// 关闭连接
+				JDBCUtil.close(conn, pmt);
+			}
+			return result;
+		}
 }
