@@ -1,16 +1,12 @@
 package com.wmj.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import com.wmj.bean.ApiResult;
 import com.wmj.bean.Paper;
 import com.wmj.bean.PaperDetail;
+import com.wmj.bean.Title;
+import com.wmj.dao.OperatorQuestion;
 import com.wmj.dao.OperatorSubject;
 import com.wmj.util.JSONUtil;
 
@@ -27,16 +25,16 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class InsertTestPaper
+ * Servlet implementation class AddQuestion
  */
-@WebServlet("/CreatePaper")
-public class CreatePaper extends HttpServlet {
+@WebServlet("/AddQuestion")
+public class AddQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreatePaper() {
+    public AddQuestion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +44,7 @@ public class CreatePaper extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -65,27 +63,28 @@ public class CreatePaper extends HttpServlet {
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String id= userInfo.get("id");
         String suId=userInfo.get("subjectId");
-        int userId=Integer.parseInt(id);
+        int teacherId=Integer.parseInt(id);
         int subjectId=Integer.parseInt(suId);
-        Paper paper=new Paper(); 
-       // JSONObject jo = JSONObject.fromObject(json);
-        JSONArray array=json.getJSONArray("papertitles");
-        List<PaperDetail> list = new ArrayList<>();
-        Timestamp time = new Timestamp(System.currentTimeMillis());
+        JSONArray array=json.getJSONArray("options");
+        String titles = json.getString("title");
+		String answer = json.getString("answer");
+		int type=json.getInt("type");
+        Title title=new Title();
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
-        	PaperDetail p = new PaperDetail();
-        	p.setTitleId(Integer.parseInt(t.get("itemId").toString()));
-        	p.setScore(Integer.parseInt(t.get("score").toString()));
-        	list.add(p);
+        	title.setOptionA(t.get("optionA").toString());
+        	title.setOptionB(t.get("optionB").toString());
+        	title.setOptionC(t.get("optionC").toString());
+        	title.setOptionD(t.get("optionD").toString());
         }
-        paper.setTestName(json.getString("papername"));
-        paper.setSubjectID(subjectId);
-        paper.setUserId(userId);
-        paper.setCreateTime(time);
+        title.setTitle(titles);
+        title.setType(type);
+        title.setSubjectId(subjectId);
+        title.setTeacherId(teacherId);
+        title.setAnswer(answer);
         boolean resultCode;
 		try {
-			resultCode = OperatorSubject.insertTestPaper(list,paper);
+			resultCode = OperatorQuestion.AddQuestion(title);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(resultCode);
@@ -99,7 +98,6 @@ public class CreatePaper extends HttpServlet {
 		}
     	
         
-              
 	}
 
 }
