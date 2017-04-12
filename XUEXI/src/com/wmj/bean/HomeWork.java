@@ -1,11 +1,14 @@
 package com.wmj.bean;
+
+import java.sql.Timestamp;
+
 /*
  * 老师发布作业实体类
  */
 public class HomeWork {
    private int homeId;
    private String homeWorkName;
-   private  String time;
+   private  Timestamp time;
    private int teacherId;
    private int subjectId;
    private String finishTime;
@@ -23,10 +26,10 @@ public class HomeWork {
 	public void setHomeId(int homeId) {
 		this.homeId = homeId;
 	}
-	public String getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
-	public void setTime(String time) {
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 	public int getTeacherId() {

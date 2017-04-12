@@ -16,7 +16,7 @@ import com.wmj.util.JDBCUtil;
 
 public class OperatorHomeWork {
 	/*
-	 * 添加作业到数据库,type为题目类型，选择题还是判断题
+	 * 添加作业到数据库
 	 */
 	public static boolean insertHomeWork(List<HomeWorkDetail> list,HomeWork home) throws Exception{
 		boolean result=false;
@@ -34,10 +34,10 @@ public class OperatorHomeWork {
 		try {
 			int homeworkID = 0;
 			ResultSet rs = null;
-			String sql="insert into homeworks (homeworkname,time,teacherID,SubjectID,Finishtime) values(?,?,?,?,?)";
+			String sql="insert into homeworks (homeworkname,time,teacherID,SubjectID,Finishtime,status) values(?,?,?,?,?,0)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql,Statement.RETURN_GENERATED_KEYS); 	
 			pmt.setString(1, home.getHomeWorkName());
-			pmt.setString(2, home.getTime());
+			pmt.setTimestamp(2, home.getTime());
 			pmt.setInt(3, home.getTeacherId());
 			pmt.setInt(4, home.getSubjectId());
 			pmt.setString(5, home.getFinishTime());
@@ -52,11 +52,10 @@ public class OperatorHomeWork {
 				int resultCount = 0;
 				for(int i=0;i<list.size();i++){
 					HomeWorkDetail homeTitle=list.get(i);
-					String sqls="insert into homeworks_detail (ItemID,ItemType,HomeworkID) values(?,?,?)";
+					String sqls="insert into homeworks_detail (ItemID,HomeworkID) values(?,?)";
 					pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
 					pmt.setInt(1, homeTitle.getItemId());
-					pmt.setString(2, homeTitle.getItemType());
-					pmt.setInt(3, homeworkID);
+					pmt.setInt(2, homeworkID);
 					if(pmt.executeUpdate()>0){
 						resultCount++;
 					}
