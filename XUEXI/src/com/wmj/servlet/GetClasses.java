@@ -2,18 +2,17 @@ package com.wmj.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import com.wmj.bean.ApiResult;
 import com.wmj.bean.Classes;
-import com.wmj.bean.Students;
 import com.wmj.dao.OperatorClass;
 
 import net.sf.json.JSONArray;
@@ -40,11 +39,10 @@ public class GetClasses extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		HttpSession session = request.getSession();
-        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
-        String teacherId= userInfo.get("id");
+		String spencialitiesID=request.getParameter("spencialitiesID");
+		int spencialitiesId=Integer.parseInt(spencialitiesID);
         try {
-        	List<Classes> list = OperatorClass.getClasses(Integer.parseInt(teacherId));
+        	List<Classes> list = OperatorClass.getClasses(spencialitiesId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

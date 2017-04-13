@@ -91,9 +91,9 @@ public class OperatorClass {
 	return list;
  }
 	/*
-	 * 获取所有班级信息
+	 * 根据专业id获取所有班级信息
 	 */
-	public static List<Classes> getClasses(int teacherId) throws Exception{
+	public static List<Classes> getClasses(int spencialitiesID) throws Exception{
 		Connection conn = null;
 		List<Classes> list = new ArrayList<Classes>();
 		try {
@@ -105,16 +105,17 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from classes  ";
+		sql="select * from classes where Spencialities_id=? ";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, teacherId);
+			pmt.setInt(1, spencialitiesID);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
 				 Classes classes=new Classes();
 				 classes.setClassId(rs.getInt("ClassID"));
 				 classes.setClassName(rs.getString("ClassName"));
+				 classes.setSpencialities_id(rs.getInt("Spencialities_id"));
                  list.add(classes);
 	         }
 			 
@@ -145,7 +146,6 @@ public class OperatorClass {
 		String sql = "";
 		int resultCount = 0;
 		try {
-			ResultSet rs = null;
 			
 			for(int i=0;i<list.size();i++){
 				Students student=list.get(i);
@@ -204,9 +204,9 @@ public class OperatorClass {
 				pmt.setString(1, className);
 				pmt.setInt(2, UserID);
 				if(pmt.executeUpdate()>0){
-					return true;
+					result =true;
 				}else{
-					return false;
+					result= false;
 				}
 			}
 			
@@ -218,6 +218,6 @@ public class OperatorClass {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
 		}
-		
+		return result;
 	}
 }
