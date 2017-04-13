@@ -15,7 +15,7 @@ import com.wmj.util.JDBCUtil;
 
 public class OperatorClass {
 	/*
-	 * 获取所有学生信息
+	 * 获取所有未分配班级学生信息
 	 */
 	public static List<Students> getStudent() throws Exception{
 		Connection conn = null;
