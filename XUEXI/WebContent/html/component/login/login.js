@@ -3,10 +3,10 @@ export let name = "login";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/login/login.html",
-    controller:["$scope","$element","$state","http",controller]
+    controller:["$scope","$element","$state",'$cookies',"http",controller]
   });
 }
-function controller($scope,$element,$state,http){
+function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.userInfo = {
     userName:"",
@@ -29,6 +29,14 @@ function controller($scope,$element,$state,http){
       result = await http.post("Login",userData);
     } catch (error) {
       vm.loginResultMsg = error;
+      $scope.$applyAsync(null);
+      return;
+    }
+    $cookies.putObject("userInfo",result);
+    if(userData.type === 0 ){
+      $state.go("student.test");
+    }else{
+      $state.go("teacher.paper");
     }
     $scope.$applyAsync(null);
   }
