@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,7 +176,7 @@ public class OperatorClass {
 	/*
 	 * 老师创建班级
 	 */
-	public static boolean insertClass(String className,int UserID) throws Exception{
+	public static boolean insertClass(Classes classes,int teacherID) throws Exception{
 		boolean result=false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -190,23 +191,37 @@ public class OperatorClass {
 		PreparedStatement pmt = null; 
 		try {
 			
-			String sql="select * from classes where ClassName = ?";
+			String sql="select * from classes where ClassName = ? and Spencialities_id=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 	
-			pmt.setString(1, className);
+			pmt.setString(1, classes.getClassName());
+			pmt.setInt(2, classes.getSpencialities_id());
 			ResultSet rs=null;
 			rs = pmt.executeQuery();
 			if(rs.next()){
 				return false;
 			}else{
-				
-				String sqls="insert into classes (ClassName,UserID) values(?,?)";
-				pmt=JDBCUtil.getPreparedStatement(conn, sqls); 	
-				pmt.setString(1, className);
-				pmt.setInt(2, UserID);
+				int classId=0;
+				String sql2="insert into classes (ClassName,Spencialities_id) values(?,?)";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql2,Statement.RETURN_GENERATED_KEYS); 
+				pmt.setString(1, classes.getClassName());
+				pmt.setInt(2, classes.getSpencialities_id());
 				if(pmt.executeUpdate()>0){
-					result =true;
-				}else{
-					result= false;
+					rs = pmt.getGeneratedKeys(); //获取结果   
+					if (rs.next()) {
+						classId = rs.getInt(1);//取得ID
+						String sql3="insert into teacherclass_relation (classID,teacherId) values(?,?)";
+						pmt=JDBCUtil.getPreparedStatement(conn, sql3); 
+						pmt.setInt(1, classId);
+						pmt.setInt(2, teacherID);
+						if(pmt.executeUpdate()>0){
+							result=true;
+						}
+						 
+					} else {
+						result = false;
+						
+					}
+					
 				}
 			}
 			
