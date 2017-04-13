@@ -68,7 +68,6 @@ public class CreatePaper extends HttpServlet {
         int userId=Integer.parseInt(id);
         int subjectId=Integer.parseInt(suId);
         Paper paper=new Paper(); 
-       // JSONObject jo = JSONObject.fromObject(json);
         JSONArray array=json.getJSONArray("papertitles");
         List<PaperDetail> list = new ArrayList<>();
         Timestamp time = new Timestamp(System.currentTimeMillis());

@@ -131,7 +131,7 @@ public class OperatorClass {
 	return list;
 }
 	/*
-	 * 更新学生班级id
+	 * 更新学生班级id(老师给学生分班)
 	 */
 	public static boolean updateClassId(List<Students> list,int classId) throws Exception{
 		
