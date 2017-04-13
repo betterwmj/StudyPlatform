@@ -6,6 +6,10 @@ SystemJS.config({
       exports: 'angular', // the global property to take as the module value
       deps: []
     },
+    './jslib/angular-cookies.min.js': {
+      format: 'global', // load this module as a global
+      deps: ['angular']
+    },
     './jslib/angular-ui-router.js': {
       format: 'amd', // load this module as a global
       deps: ['angular']
@@ -19,6 +23,7 @@ SystemJS.config({
     'plugin-babel': './jslib/plugin-babel.js',
     'systemjs-babel-build': './jslib/systemjs-babel-browser.js',
     "angular":"./jslib/angular.js",
+    "angular-cookies":"./jslib/angular-cookies.min.js",
     "angular-ui-router":"./jslib/angular-ui-router.js",
     "angular-ui-bootstrap":"./jslib/ui-bootstrap-tpls.js",
     "bootstrap":"XUEXI/html/bootstrap.js"
