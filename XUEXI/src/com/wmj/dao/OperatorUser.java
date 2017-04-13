@@ -192,38 +192,37 @@ public class OperatorUser {
 	}
 
 	
-	// 修改用户信息
-	public int updata(String sql) {
-		Connection con = null;
-		Statement smt = null;
-		int result = 0;
+	// 老师个人中心修改个人信息
+	public static boolean updateTeacher(Teachers teacher) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
 		try {
-			String url = "jdbc:sqlserver://127.0.0.1:1433;DatabaseName=DYP";
-			String users = "sa";
-			String userpassword = "9659";
-			/* 建立连接 */
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			con = DriverManager.getConnection(url, users, userpassword);
-			smt = con.createStatement();
-			result = smt.executeUpdate(sql);
-
-		} catch (ClassNotFoundException e) {
-			// 声明驱动程序时报错
-			e.printStackTrace();
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			
+           String sql="update teachers set userName=? ,realName=?,password=? , subjectID=? where userID=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setString(1, teacher.getUserName());
+			pmt.setString(2, teacher.getRealName());
+			pmt.setString(3, teacher.getPassword());
+			pmt.setInt(4, teacher.getSubjectId());
+			pmt.setInt(5, teacher.getUserID());
+			if(pmt.executeUpdate()>0)
+			   result = true;
+			 
 		} catch (SQLException e) {
-			// 数据库操作出错
 			e.printStackTrace();
+			throw e;
 		} finally {
 			// 关闭连接
-			try {
-
-				if (smt != null)
-					smt.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			JDBCUtil.close(conn, pmt);
 		}
 		return result;
 	}

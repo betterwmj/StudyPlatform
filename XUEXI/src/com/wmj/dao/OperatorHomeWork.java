@@ -12,6 +12,7 @@ import com.wmj.bean.Classes;
 import com.wmj.bean.HomeWork;
 import com.wmj.bean.HomeWorkDetail;
 import com.wmj.bean.Paper;
+import com.wmj.bean.Title;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorHomeWork {
@@ -197,6 +198,53 @@ public class OperatorHomeWork {
 			}
 			return list;
 		}
+		  /*
+		   * 获取作业详情
+		   */
+		  public static  List<Title> getHomeWorkDetail(int homeworkID) throws Exception{
+			    
+			     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+			    Connection conn = null;
+			    List<Title> list = new ArrayList<Title>();
+			    try {
+			      conn = JDBCUtil.getConnection();
+			    } catch (SQLException e1) {
+			      // TODO Auto-generated catch block
+			      e1.printStackTrace();
+			      throw e1;
+			    }
+			    PreparedStatement pmt = null; 
+			    try {
+			      ResultSet rs = null;
+			      String sql="select b.* from homeworks_detail as a,title as b  where a.ItemID=b.ItemID and a.HomeworkID=?;";
+			      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			      pmt.setInt(1, homeworkID);
+			      rs = pmt.executeQuery();
+			       while (rs.next()) {
+			         Title title=new Title();
+			         title.setItemId(rs.getInt("ItemID"));
+			         title.setTitle(rs.getString("title"));
+			         title.setType(rs.getInt("type"));
+			         title.setOptionA(rs.getString("optionA"));
+			         title.setOptionB(rs.getString("optionB"));
+			         title.setOptionC(rs.getString("optionC"));
+			         title.setOptionD(rs.getString("optionD"));
+			         title.setAnswer(rs.getString("answer"));
+			         title.setSubjectId(rs.getInt("SubjectID"));
+			         title.setTeacherId(rs.getInt("teacherid"));
+			         list.add(title);
+			        
+			         }
+			       
+			    } catch (SQLException e) {
+			      e.printStackTrace();
+			      throw e;
+			    } finally {
+			      // 关闭连接
+			      JDBCUtil.close(conn, pmt);
+			    }
+			    return list;
+			  }
 	/*
 	 * 学生界面获取该学生所有应写的作业
 	 */
