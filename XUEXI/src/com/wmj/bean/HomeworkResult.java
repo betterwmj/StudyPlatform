@@ -1,6 +1,7 @@
 package com.wmj.bean;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
 /*
  * 学生写的作业实体类
  */
@@ -8,7 +9,7 @@ public class HomeworkResult {
 	private int id;
 	private int homeworkId;
 	private int studentId;
-	private Date time;
+	private Timestamp time;
 	private String evaluation;
 	public int getId() {
 		return id;
@@ -28,10 +29,10 @@ public class HomeworkResult {
 	public void setStudentId(int studentId) {
 		this.studentId = studentId;
 	}
-	public Date getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 	public String getEvaluation() {

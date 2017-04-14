@@ -12,7 +12,6 @@ import java.util.List;
 import com.wmj.bean.HomeWork;
 import com.wmj.bean.HomeWorkDetail;
 import com.wmj.bean.HomeworkResult;
-
 import com.wmj.bean.Title;
 import com.wmj.bean.homeworkResultDetail;
 import com.wmj.util.JDBCUtil;
@@ -352,4 +351,45 @@ public class OperatorHomeWork {
 		}
 		return list;
 	}
+	  /*
+	   * 获取作业结果
+	   */
+	  public static  List<HomeworkResult> getHomeWorkResult(int homeworkID) throws Exception{
+		    
+		     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		    Connection conn = null;
+		    List<HomeworkResult> list = new ArrayList<HomeworkResult>();
+		    try {
+		      conn = JDBCUtil.getConnection();
+		    } catch (SQLException e1) {
+		      // TODO Auto-generated catch block
+		      e1.printStackTrace();
+		      throw e1;
+		    }
+		    PreparedStatement pmt = null; 
+		    try {
+		      ResultSet rs = null;
+		      String sql="select * from homework_result where  homeworkId=?;";
+		      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+		      pmt.setInt(1, homeworkID);
+		      rs = pmt.executeQuery();
+		       while (rs.next()) {
+		    	 HomeworkResult homework=new HomeworkResult();
+		    	 homework.setId(rs.getInt("id"));
+		    	 homework.setHomeworkId(rs.getInt("homeworkId"));
+		    	 homework.setStudentId(rs.getInt("student_id"));
+		    	 homework.setTime(rs.getTimestamp("time"));
+		    	 homework.setEvaluation(rs.getString("Evaluation"));;
+		         list.add(homework);    
+		         }
+		       
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		      throw e;
+		    } finally {
+		      // 关闭连接
+		      JDBCUtil.close(conn, pmt);
+		    }
+		    return list;
+		  }
 }
