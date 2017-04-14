@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.wmj.bean.Paper;
-import com.wmj.bean.PaperDetail;
 import com.wmj.bean.PaperResult;
 import com.wmj.bean.PaperResultDetail;
 import com.wmj.bean.Title;
@@ -117,7 +116,6 @@ public class OperatorTestPaper {
 	    }
 	    PreparedStatement pmt = null; 
 	    try {
-	      ResultSet rs = null;
 	      String sql="update paper set status=1 where TestpaperID=?";
 	      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 	      pmt.setInt(1, paperID);
@@ -243,4 +241,45 @@ public class OperatorTestPaper {
 			}
 			return result;
 		}
+		  /*
+		   * 获取试卷结果
+		   */
+		  public static  List<PaperResult> getPaperResult(int paperID) throws Exception{
+			    
+			     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+			    Connection conn = null;
+			    List<PaperResult> list = new ArrayList<PaperResult>();
+			    try {
+			      conn = JDBCUtil.getConnection();
+			    } catch (SQLException e1) {
+			      // TODO Auto-generated catch block
+			      e1.printStackTrace();
+			      throw e1;
+			    }
+			    PreparedStatement pmt = null; 
+			    try {
+			      ResultSet rs = null;
+			      String sql="select * from paper_result where  paper_id=?;";
+			      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			      pmt.setInt(1, paperID);
+			      rs = pmt.executeQuery();
+			       while (rs.next()) {
+			    	 PaperResult paper=new PaperResult();
+			    	 paper.setId(rs.getInt("id"));
+			    	 paper.setPaperId(rs.getInt("paper_id"));
+			    	 paper.setStudentId(rs.getInt("student_id"));
+			    	 paper.setTime(rs.getTimestamp("time"));
+			    	 paper.setScore(rs.getInt("score"));
+			         list.add(paper);    
+			         }
+			       
+			    } catch (SQLException e) {
+			      e.printStackTrace();
+			      throw e;
+			    } finally {
+			      // 关闭连接
+			      JDBCUtil.close(conn, pmt);
+			    }
+			    return list;
+			  }
 }
