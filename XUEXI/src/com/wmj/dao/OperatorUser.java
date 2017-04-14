@@ -15,7 +15,6 @@ public class OperatorUser {
 	 * 查询用户名是否重复，返回true，否则返回false //user为需要插入的用户
 	 */
 	public static Object getUserInfo(String userName,int type) throws Exception{
-		boolean result = false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
 		try {
@@ -68,7 +67,7 @@ public class OperatorUser {
 		return null;
 	}
 	/*
-	 * 用户的插入，若插入成功，返回true，否则返回false //user为需要插入的用户
+	 * 学生用户的插入，若插入成功，返回true，否则返回false //user为需要插入的用户
 	 */
 	public static boolean insertStudent(Students student) throws Exception{
 		boolean result = false;
@@ -190,7 +189,6 @@ public class OperatorUser {
 		}
 		return userInfo;
 	}
-
 	
 	// 老师个人中心修改个人信息
 	public static boolean updateTeacher(Teachers teacher) throws Exception{
@@ -214,6 +212,41 @@ public class OperatorUser {
 			pmt.setString(3, teacher.getPassword());
 			pmt.setInt(4, teacher.getSubjectId());
 			pmt.setInt(5, teacher.getUserID());
+			if(pmt.executeUpdate()>0)
+			   result = true;
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return result;
+	}
+	// 学生个人中心修改个人信息
+	public static boolean updateStudent(Students student) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+		
+            String sql="update students set userName=? ,RealName=?,password=?,school=?,telephone=? where UserID=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setString(1, student.getUserName());
+			pmt.setString(2, student.getRealName());
+			pmt.setString(3, student.getPass());
+			pmt.setString(4, student.getSchool());
+			pmt.setString(5, student.getTelephone());
+			pmt.setInt(6, student.getUserID());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 			 
