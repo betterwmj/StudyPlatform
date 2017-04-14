@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wmj.bean.OnlineAnswer;
 import com.wmj.bean.OnlineQuestion;
-import com.wmj.bean.Students;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorOnline {
@@ -82,6 +82,41 @@ public class OperatorOnline {
 			pmt.setString(3, question.getQuestionContent());
 			pmt.setInt(4, question.getAnswerId());
 			pmt.setTimestamp(5, question.getCreateTime());
+			if(pmt.executeUpdate()>0)
+			   result = true;
+		    
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return result;
+	}
+	/*
+	 * 在线答疑，若提交成功，返回true，否则返回false 
+	 */
+	public static boolean insertAnswer(OnlineAnswer answers) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			
+            String sql="insert into online_answer (online_question_id,answer_id,answer,answertime) values(?,?,?,?)";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setInt(1, answers.getOnlineQuestionId());
+			pmt.setInt(2, answers.getAnswerId());
+			pmt.setString(3, answers.getAnswer());
+			pmt.setTimestamp(4, answers.getAnswerTime());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 		    

@@ -1,4 +1,5 @@
 package com.wmj.bean;
+import java.sql.Timestamp;
 /*
  * 在线问答
  */
@@ -9,7 +10,7 @@ public class OnlineAnswer {
   private int onlineQuestionId;
   private int answerId;
   private String answer;
-  private Date answerTime;
+  private Timestamp answerTime;
 	public int getId() {
 		return id;
 	}
@@ -34,11 +35,12 @@ public class OnlineAnswer {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public Date getAnswerTime() {
+	public Timestamp getAnswerTime() {
 		return answerTime;
 	}
-	public void setAnswerTime(Date answerTime) {
+	public void setAnswerTime(Timestamp answerTime) {
 		this.answerTime = answerTime;
 	}
+	
 	  
 }
