@@ -15,7 +15,6 @@ import com.wmj.bean.ApiResult;
 import com.wmj.bean.HomeworkResult;
 import com.wmj.bean.homeworkResultDetail;
 import com.wmj.dao.OperatorHomeWork;
-import com.wmj.dao.OperatorTestPaper;
 import com.wmj.util.JSONUtil;
 
 import net.sf.json.JSONArray;

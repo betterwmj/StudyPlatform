@@ -1,5 +1,6 @@
 package com.wmj.bean;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class OnlineQuestion {
@@ -8,7 +9,7 @@ public class OnlineQuestion {
   private String questionTitle;
   private String questionContent;
   private int answerId;
-  private Date createTime;
+  private Timestamp createTime;
 	public int getId() {
 		return id;
 	}
@@ -39,10 +40,10 @@ public class OnlineQuestion {
 	public void setAnswerId(int answerId) {
 		this.answerId = answerId;
 	}
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 	  
