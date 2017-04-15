@@ -174,7 +174,7 @@ public class OperatorHomeWork {
 	/*
 	 * 获取该科目的所有作业
 	 */
-	public static List<HomeWork> getHomeWorkBySubjectId(int subjectId) throws Exception {
+	public static List<HomeWork> getHomeWorkBySubjectId(int subjectId,int classId) throws Exception {
 
 		// 数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -189,9 +189,10 @@ public class OperatorHomeWork {
 		PreparedStatement pmt = null;
 		try {
 			ResultSet rs = null;
-			String sql = "select * from  homeworks where SubjectID=? and status=1";
+			String sql = "select a.* from  homeworks as a, homework_class_relation as b where a.HomeworkID=b.HomeworkID and a.SubjectID=? and a.status=1 and b.classID=?";
 			pmt = JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, subjectId);
+			pmt.setInt(2, classId);
 			rs = pmt.executeQuery();
 			while (rs.next()) {
 				HomeWork home = new HomeWork();

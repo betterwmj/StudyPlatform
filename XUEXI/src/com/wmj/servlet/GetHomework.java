@@ -40,16 +40,19 @@ public class GetHomework extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		HttpSession session = request.getSession();
-        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
+        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
         String type= userInfo.get("type");
-		//String type=request.getParameter("type");
+        String classId= userInfo.get("classId");
+//		 String type=request.getParameter("type");
+//         String classId=request.getParameter("classId");
+         int classid=Integer.parseInt(classId);
          int typeId=Integer.parseInt(type);
          try {
         	 List<HomeWork> list=null;
         	 if(typeId==0){
              	String subjectId=request.getParameter("subjectId");
              	int Id=Integer.parseInt(subjectId);
-             	list = OperatorHomeWork.getHomeWorkBySubjectId(Id);
+             	list = OperatorHomeWork.getHomeWorkBySubjectId(Id,classid);
              }
              else{
              	String teacherId= userInfo.get("id");
