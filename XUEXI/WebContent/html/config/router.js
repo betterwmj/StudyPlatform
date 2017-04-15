@@ -49,7 +49,55 @@ export function routerConfig($stateProvider){
 					},
 					"sidebar@":{
 						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherPaper"
 					}
+				}
+			},
+			{
+				name:"teacher.center",
+				url: '/center',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherCenter"
+					}
+				}
+			},
+			{
+				name:"teacher.teacherManagerClassCreate",
+				url: '/teacherManagerClassCreate',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherManagerClassCreate"
+					},
+				}
+			},
+			{
+				name:"teacher.teacherAssignStudent",
+				url: '/teacherAssignStudent',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherAssignStudent"
+					},
 				}
 			},
   	];
