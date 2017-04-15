@@ -14,7 +14,7 @@ import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorUser;
 import com.wmj.util.JSONUtil;
 
-import net.sf.json.JSONArray;
+
 import net.sf.json.JSONObject;
 
 /**

@@ -1,16 +1,13 @@
 package com.wmj.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.Date;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -88,13 +85,13 @@ public class CreatePaper extends HttpServlet {
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(resultCode);
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			ApiResult result = new ApiResult();
 			result.setCode(-1);
 			result.setMessage(e.getMessage());
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		}
     	
         

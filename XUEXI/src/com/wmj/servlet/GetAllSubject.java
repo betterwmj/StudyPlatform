@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
+
 import net.sf.json.JSONObject;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorSubject;
-import com.wmj.dao.OperatorUser;
+
 
 /**
  * Servlet implementation class GetAllSubject

@@ -12,12 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.Classes;
 import com.wmj.bean.HomeWork;
-import com.wmj.dao.OperatorClass;
 import com.wmj.dao.OperatorHomeWork;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**学生获取所有老师布置的作业
  * Servlet implementation class GetHomeWork
@@ -49,14 +48,14 @@ public class GetHomeWorkName extends HttpServlet {
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			ApiResult result = new ApiResult();
 			result.setCode(-1);
 			result.setMessage(e.getMessage());
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		}
 	}
 

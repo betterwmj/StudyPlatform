@@ -16,11 +16,9 @@ import javax.servlet.http.HttpSession;
 import com.wmj.bean.ApiResult;
 import com.wmj.bean.HomeWork;
 import com.wmj.bean.HomeWorkDetail;
-import com.wmj.bean.Paper;
-import com.wmj.bean.PaperDetail;
+
 import com.wmj.dao.OperatorHomeWork;
-import com.wmj.dao.OperatorQuestion;
-import com.wmj.dao.OperatorSubject;
+
 import com.wmj.util.JSONUtil;
 
 import net.sf.json.JSONArray;
@@ -88,13 +86,13 @@ public class CreateHomework extends HttpServlet {
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(resultCode);
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			ApiResult result = new ApiResult();
 			result.setCode(-1);
 			result.setMessage(e.getMessage());
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		}
     	
 	}

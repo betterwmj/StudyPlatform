@@ -12,13 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.Classes;
+
 import com.wmj.bean.Paper;
-import com.wmj.bean.Students;
-import com.wmj.dao.OperatorClass;
 import com.wmj.dao.OperatorTestPaper;
 
-import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class GetStudentTestPaper
@@ -63,14 +61,14 @@ public class GetPaper extends HttpServlet {
 				ApiResult result = new ApiResult();
 				result.setCode(0);
 				result.setData(list);
-				response.getWriter().append(JSONArray.fromObject(result).toString());
+				response.getWriter().append(JSONObject.fromObject(result).toString());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				ApiResult result = new ApiResult();
 				result.setCode(-1);
 				result.setMessage(e.getMessage());
-				response.getWriter().append(JSONArray.fromObject(result).toString());
+				response.getWriter().append(JSONObject.fromObject(result).toString());
 			}
 	
 	}

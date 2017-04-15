@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorSubject;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**

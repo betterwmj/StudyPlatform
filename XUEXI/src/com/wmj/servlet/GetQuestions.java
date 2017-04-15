@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONArray;
+
+import net.sf.json.JSONObject;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorSubject;
@@ -49,14 +50,14 @@ public class GetQuestions extends HttpServlet {
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			ApiResult result = new ApiResult();
 			result.setCode(-1);
 			result.setMessage(e.getMessage());
-			response.getWriter().append(JSONArray.fromObject(result).toString());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
 		}
 	
 	 

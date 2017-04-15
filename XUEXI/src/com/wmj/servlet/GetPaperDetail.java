@@ -2,7 +2,7 @@ package com.wmj.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.bean.Title;
-import com.wmj.dao.OperatorSubject;
 import com.wmj.dao.OperatorTestPaper;
 
 import net.sf.json.JSONObject;
