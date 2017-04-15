@@ -41,7 +41,7 @@ public class PublishPaper extends HttpServlet {
 		      ApiResult result = new ApiResult();
 		      result.setCode(0);
 		      result.setData(responseData);
-		      response.getWriter().append(JSONObject.fromObject(responseData).toString());
+		      response.getWriter().append(JSONObject.fromObject(result).toString());
 		    } catch (Exception e) {
 		      // TODO Auto-generated catch block
 		      e.printStackTrace();

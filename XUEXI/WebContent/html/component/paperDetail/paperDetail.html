@@ -1,0 +1,18 @@
+<div>
+  <a ui-sref="teacher.publishPaper">返回</a>
+  <p ng-bind="vm.paper.testName"></p>
+  <div ng-repeat="question in $ctrl.paperDetail">
+    <p>题号:<span ng-bind="$index+1"></span></p>
+    <p ng-bind="question.title"></p>
+    <div ng-if="question.type === 1">
+      <p>A.<span ng-bind="question.optionA"></span></p>
+      <p>B.<span ng-bind="question.optionB"></span></p>
+      <p>C.<span ng-bind="question.optionC"></span></p>
+      <p>D.<span ng-bind="question.optionD"></span></p>
+      <p>答案:<span ng-bind="question.answer"></span></p>
+    </div>
+    <div ng-if="question.type === 2">
+      <p>答案:<span ng-bind="question.answer"></span></p>
+    </div>
+  </div>
+</div>

@@ -81,6 +81,75 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.publishPaper",
+				url: '/publishPaper',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"publishPaper"
+					}
+				}
+			},
+			{
+				name:"teacher.paperDetail",
+				url: '/paperDetail',
+				params:{
+					paper:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"paperDetail"
+					}
+				}
+			},
+			{
+				name:"teacher.paperResult",
+				url: '/paperResult',
+				params:{
+					paper:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"paperResult"
+					}
+				}
+			},
+			{
+				name:"teacher.paperResultDetail",
+				url: '/paperResultDetail',
+				params:{
+					paperResult:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"paperResultDetail"
+					}
+				}
+			},
+			{
 				name:"teacher.center",
 				url: '/center',
 				views:{

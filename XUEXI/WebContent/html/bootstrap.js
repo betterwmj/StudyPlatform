@@ -14,6 +14,10 @@ import teacherManagerClassCreate from "./component/teacherManagerClassCreate/tea
 import teacherAssignStudent from "./component/teacherAssignStudent/teacherAssignStudent.js";
 import teacherPaper from "./component/teacherPaper/teacherPaper.js";
 import teacherPaperNavigation from "./component/teacherPaperNavigation/teacherPaperNavigation.js";
+import publishPaper from "./component/publishPaper/publishPaper.js";
+import paperDetail from "./component/paperDetail/paperDetail.js";
+import paperResult from "./component/paperResult/paperResult.js";
+import paperResultDetail from "./component/paperResultDetail/paperResultDetail.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -34,7 +38,11 @@ teacherManagerClassCreate(app);
 teacherAssignStudent(app);
 teacherPaper(app);
 teacherPaperNavigation(app);
+publishPaper(app);
+paperResult(app);
 httpService(app);
+paperDetail(app);
+paperResultDetail(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 

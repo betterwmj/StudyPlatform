@@ -1,0 +1,26 @@
+<div>
+  <a ui-sref="teacher.publishPaper">返回</a>
+  <table class="table table-striped">
+      <caption>试卷成绩列表</caption>
+      <thead>
+        <tr>
+          <th>学生</th>
+          <th>得分</th>
+          <th>详情</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in $ctrl.paperResultList">
+          <td ng-bind="item.studentId">
+            
+          </td>
+          <td>
+            <span ng-bind="item.score"></span>分
+          </td>
+          <td>
+            <a ui-sref="teacher.paperResultDetail({paperResult:item})">查看</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
