@@ -48,7 +48,7 @@ public class StudentRegister extends HttpServlet {
 		String realName=request.getParameter("realName");
 		String password=request.getParameter("password");
 		String school=request.getParameter("school");
-		String phone=request.getParameter("phone");
+		String phone=request.getParameter("telephone");
 		Students student=new Students();
 		student.setUserName(name);
 		student.setRealName(realName);

@@ -7,6 +7,7 @@ import login from "./component/login/login.js";
 import tophead from "./component/tophead/tophead.js";
 import studentSidebar from "./component/studentSidebar/studentSidebar.js";
 import teacherSidebar from "./component/teacherSidebar/teacherSidebar.js";
+import registerStudent from "./component/registerStudent/registerStudent.js"
 import registerTeacher from "./component/registerTeacher/registerTeacher.js";
 import teacherCenter from "./component/teacherCenter/teacherCenter.js";
 import teacherManagerClassCreate from "./component/teacherManagerClassCreate/teacherManagerClassCreate.js";
@@ -26,6 +27,7 @@ tophead(app);
 studentSidebar(app);
 teacherSidebar(app);
 registerTeacher(app);
+registerStudent(app);
 teacherCenter(app);
 teacherManagerClassCreate(app);
 teacherAssignStudent(app);

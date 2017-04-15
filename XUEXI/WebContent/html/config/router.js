@@ -15,6 +15,16 @@ export function routerConfig($stateProvider){
 				abstract:true,
 			},
 			{
+				name:"student.register",
+				url: '/register',
+				views:{
+					"content@":{
+						component:"registerStudent"
+					}
+				}
+			},
+			
+			{
 				name:"student.test",
 				url: '/test',
 				views:{
@@ -40,6 +50,7 @@ export function routerConfig($stateProvider){
 					}
 				}
 			},
+			
 			{
 				name:"teacher.paper",
 				url: '/paper',
