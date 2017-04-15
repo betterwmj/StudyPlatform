@@ -11,14 +11,14 @@
       </thead>
       <tbody>
         <tr ng-repeat="item in $ctrl.paperResultList">
-          <td ng-bind="item.studentId">
+          <td ng-bind="item.studentName">
             
           </td>
           <td>
-            <span ng-bind="item.score"></span>分
+            <span ng-bind="item.paper.score"></span>分
           </td>
           <td>
-            <a ui-sref="teacher.paperResultDetail({paperResult:item})">查看</a>
+            <a ui-sref="teacher.paperResultDetail({paperResult:item.paper})">查看</a>
           </td>
         </tr>
       </tbody>
