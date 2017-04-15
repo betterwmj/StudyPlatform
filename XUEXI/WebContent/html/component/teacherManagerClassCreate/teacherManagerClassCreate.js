@@ -21,6 +21,7 @@ function controller($scope,$element,$state,$cookies,http){
   }
 
   vm.create = async function(){
+    vm.msg = "";
     let result = await http.get("CreateClass",{
       className:vm.classInfo.className,
       spencialitiesID:vm.currentSpecialities.specialitiesId

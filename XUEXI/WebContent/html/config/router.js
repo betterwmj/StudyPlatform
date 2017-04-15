@@ -50,10 +50,24 @@ export function routerConfig($stateProvider){
 					}
 				}
 			},
-			
 			{
 				name:"teacher.paper",
 				url: '/paper',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherPaperNavigation"
+					}
+				}
+			},
+			{
+				name:"teacher.paperCreate",
+				url: '/paperCreate',
 				views:{
 					"head@":{
 						component:"tophead"
