@@ -187,7 +187,7 @@ public class OperatorSubject {
 			pmt.setString(1, paper.getTestName());
 			pmt.setInt(2, paper.getSubjectID());
 			pmt.setInt(3, paper.getUserId());
-			pmt.setTimestamp(4, paper.getCreateTime());
+			pmt.setTimestamp(4, paper.getCreateTime());		
 			//pmt.setDate(4, (Date) paper.getCreateTime());
 			if(pmt.executeUpdate()>0){
 				rs = pmt.getGeneratedKeys(); //获取结果   

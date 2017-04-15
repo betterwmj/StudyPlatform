@@ -9,9 +9,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wmj.bean.Classes;
 import com.wmj.bean.HomeWork;
 import com.wmj.bean.HomeWorkDetail;
 import com.wmj.bean.HomeworkResult;
+import com.wmj.bean.PaperDetail;
 import com.wmj.bean.Title;
 import com.wmj.bean.homeworkResultDetail;
 import com.wmj.util.JDBCUtil;
@@ -80,9 +82,9 @@ public class OperatorHomeWork {
 	}
 
 	/*
-	 * 老师发布作业，更新作业状态为1
+	 * 老师发布作业，更新作业状态为1,并且把班级id插入到班级作业表中
 	 */
-	public static boolean updateHomeWork(int homeworkID) throws Exception {
+	public static boolean updateHomeWork(int homeworkID,List<Classes> list) throws Exception {
 
 		// 数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		boolean result = false;
@@ -100,9 +102,20 @@ public class OperatorHomeWork {
 			String sql = "update homeworks set status=1 where HomeworkID=?";
 			pmt = JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, homeworkID);
-			if (pmt.executeUpdate() > 0)
-				result = true;
-
+			if (pmt.executeUpdate() > 0){
+			
+				for(int i=0;i<list.size();i++){
+					Classes classes=list.get(i);
+					String sqls="insert into homework_class_relation (HomeworkID,classID) values (?,?)";
+					pmt=JDBCUtil.getPreparedStatement(conn, sqls); 
+					pmt.setInt(1, homeworkID);
+					pmt.setInt(2, classes.getClassId());
+					if(pmt.executeUpdate()>0){
+						result = true;
+					}
+				}
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;

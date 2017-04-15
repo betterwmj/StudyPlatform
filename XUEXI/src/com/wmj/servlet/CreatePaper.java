@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -61,9 +62,9 @@ public class CreatePaper extends HttpServlet {
         HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String id= userInfo.get("id");
-        String suId=userInfo.get("subjectId");
+        String suid=userInfo.get("subjectId");
         int userId=Integer.parseInt(id);
-        int subjectId=Integer.parseInt(suId);
+        int subjectId=Integer.parseInt(suid);
         Paper paper=new Paper(); 
         JSONArray array=json.getJSONArray("papertitles");
         List<PaperDetail> list = new ArrayList<>();
@@ -75,6 +76,8 @@ public class CreatePaper extends HttpServlet {
         	p.setScore(Integer.parseInt(t.get("score").toString()));
         	list.add(p);
         }
+//        int userId=json.getInt("id");
+//        int subjectId=json.getInt("suid");
         paper.setTestName(json.getString("papername"));
         paper.setSubjectID(subjectId);
         paper.setUserId(userId);
