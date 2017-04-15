@@ -9,6 +9,6 @@ export default function root(app){
 function controller($scope,$element,$state){
   let vm = this;
   vm.$onInit = function(){
-    //$state.go("login");
+    $state.go("login");
   }
 }

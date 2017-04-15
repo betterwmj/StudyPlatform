@@ -235,4 +235,48 @@ public class OperatorClass {
 		}
 		return result;
 	}
+	/*
+	 * 老师加入班级
+	 */
+	public static boolean insertClass(int classId,int teacherID) throws Exception{
+		boolean result=false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+					
+			    String sql1="select * from  teacherclass_relation where teacherId=? and classID=?" ;
+			    pmt=JDBCUtil.getPreparedStatement(conn, sql1); 
+			    pmt.setInt(1, teacherID);
+				pmt.setInt(2, classId);
+				ResultSet rs=null;
+				rs = pmt.executeQuery();
+				if(rs.next()){
+					result =false;
+				}else{
+					String sql2="insert into  teacherclass_relation (teacherId,classID) values(?,?)" ;
+					pmt=JDBCUtil.getPreparedStatement(conn, sql2); 
+					pmt.setInt(1, teacherID);
+					pmt.setInt(2, classId);
+					if(pmt.executeUpdate()>0){	
+						result=true;
+					}	 
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				// 关闭连接
+				JDBCUtil.close(conn, pmt);
+			}
+			return result;
+	}
 }
