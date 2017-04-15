@@ -1,5 +1,12 @@
 eclipse.preferences.version=1
 encoding//WebContent/admin.jsp=UTF-8
+encoding//WebContent/html/component/login=UTF-8
+encoding//WebContent/html/component/login/login.html=UTF-8
+encoding//WebContent/html/component/registerTeacher/registerTeacher.html=UTF-8
+encoding//WebContent/html/component/studentSidebar/studentSidebar.html=UTF-8
+encoding//WebContent/html/component/teacherPaper/teacherPaper.html=UTF-8
+encoding//WebContent/html/component/teacherSidebar/teacherSidebar.html=UTF-8
+encoding//WebContent/html/component/tophead/tophead.html=UTF-8
 encoding//WebContent/login.html=UTF-8
 encoding//WebContent/register.jsp=UTF-8
 encoding//WebContent/student.jsp=UTF-8

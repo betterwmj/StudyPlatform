@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorUser;
@@ -56,12 +57,14 @@ public class Login extends HttpServlet {
 		String name = json.getString("userName");
 		String password = json.getString("password");
 		int type=json.getInt("type");
+		HttpSession session = request.getSession();
 		try {
 			Map<String,String> userInfo =OperatorUser.isUserPasswordCorrect(name, password, type);
 			if( userInfo.size() == 0 ){
 				response.getWriter().append( JSONObject.fromObject(ApiResult.fail("账户或密码错误")).toString());
 			}else{
 				response.getWriter().append( JSONObject.fromObject(ApiResult.success(userInfo)).toString());
+				session.setAttribute("userInfo", userInfo);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
