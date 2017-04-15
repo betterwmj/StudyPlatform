@@ -30,9 +30,7 @@ public class GetClasses extends HttpServlet {
      */
     public GetClasses() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -49,7 +47,7 @@ public class GetClasses extends HttpServlet {
 			result.setData(list);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			ApiResult result = new ApiResult();
 			result.setCode(-1);

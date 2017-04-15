@@ -2,6 +2,7 @@ package com.wmj.servlet;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,10 +41,10 @@ public class GetPaperResult extends HttpServlet {
 		String paperID=request.getParameter("paperID");
 		int paperId=Integer.parseInt(paperID);
 		try {
-			List<PaperResult> list = OperatorTestPaper.getPaperResult(paperId);
+			List<Map<String,Object>> paperResultMap = OperatorTestPaper.getPaperResult(paperId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(list);
+			result.setData(paperResultMap);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

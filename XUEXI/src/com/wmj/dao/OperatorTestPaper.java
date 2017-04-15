@@ -247,11 +247,10 @@ public class OperatorTestPaper {
 		  /*
 		   * 获取试卷结果
 		   */
-		  public static  List<PaperResult> getPaperResult(int paperID) throws Exception{
+		  public static  List<Map<String,Object>> getPaperResult(int paperID) throws Exception{
 			    
 			     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 			    Connection conn = null;
-			    List<PaperResult> list = new ArrayList<PaperResult>();
 			    try {
 			      conn = JDBCUtil.getConnection();
 			    } catch (SQLException e1) {
@@ -259,21 +258,25 @@ public class OperatorTestPaper {
 			      e1.printStackTrace();
 			      throw e1;
 			    }
+			    List<Map<String,Object>> list=new ArrayList();
 			    PreparedStatement pmt = null; 
 			    try {
 			      ResultSet rs = null;
-			      String sql="select * from paper_result where  paper_id=?;";
+			      String sql="select a.*, b.RealName from paper_result as a,students as b where  a.student_id=b.UserID and paper_id=?;";
 			      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			      pmt.setInt(1, paperID);
 			      rs = pmt.executeQuery();
 			       while (rs.next()) {
+			    	 Map<String,Object> paperResultMap = new HashMap<>();
 			    	 PaperResult paper=new PaperResult();
 			    	 paper.setId(rs.getInt("id"));
 			    	 paper.setPaperId(rs.getInt("paper_id"));
 			    	 paper.setStudentId(rs.getInt("student_id"));
 			    	 paper.setTime(rs.getTimestamp("time"));
 			    	 paper.setScore(rs.getInt("score"));
-			         list.add(paper);    
+			    	 paperResultMap.put("paper", paper);
+			    	 paperResultMap.put("studentName", rs.getString("RealName"));
+			    	 list.add(paperResultMap);
 			         }
 			       
 			    } catch (SQLException e) {
