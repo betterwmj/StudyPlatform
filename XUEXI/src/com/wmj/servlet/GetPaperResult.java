@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.PaperResult;
 import com.wmj.dao.OperatorTestPaper;
 
 import net.sf.json.JSONObject;

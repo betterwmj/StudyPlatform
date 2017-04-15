@@ -15,7 +15,7 @@ import com.wmj.bean.Classes;
 import com.wmj.bean.HomeWork;
 import com.wmj.bean.HomeWorkDetail;
 import com.wmj.bean.HomeworkResult;
-import com.wmj.bean.PaperDetail;
+import com.wmj.bean.PaperResultDetail;
 import com.wmj.bean.Title;
 import com.wmj.bean.homeworkResultDetail;
 import com.wmj.util.JDBCUtil;
@@ -400,6 +400,61 @@ public class OperatorHomeWork {
 		    	 HomeWorkResultMap.put("homework", homework);
 		    	 HomeWorkResultMap.put("studentName", rs.getString("RealName"));
 		         list.add(HomeWorkResultMap);    
+		         }
+		       
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		      throw e;
+		    } finally {
+		      // 关闭连接
+		      JDBCUtil.close(conn, pmt);
+		    }
+		    return list;
+		  }
+	  /*
+	   * 获取试卷结果详情
+	   */
+	  public static List<Map<String,Object>> getHomeWorkResultDetail(int HomeWorkResultDetailID) throws Exception{
+		    
+		     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		    Connection conn = null;
+		    try {
+		      conn = JDBCUtil.getConnection();
+		    } catch (SQLException e1) {
+		      // TODO Auto-generated catch block
+		      e1.printStackTrace();
+		      throw e1;
+		    }
+		    List<Map<String,Object>> list=new ArrayList();
+		    
+		    PreparedStatement pmt = null; 
+		    try {
+		      ResultSet rs = null;
+		      String sql="select b.*,c.* from homework_result as a,homework_result_detail as b,title as c where a.id=b.homework_result_id and b.question_id=c.ItemID and b.homework_result_id=?;";
+		      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+		      pmt.setInt(1, HomeWorkResultDetailID);
+		      rs = pmt.executeQuery();
+		       while (rs.next()) {
+	    	     Map<String,Object> HomeWorkResultDetailMap = new HashMap<>();
+	    	     homeworkResultDetail HomeResultDetail=new homeworkResultDetail();
+	    	     HomeResultDetail.setId(rs.getInt("id"));
+	    	     HomeResultDetail.setHomeworkResultId(rs.getInt("homework_result_id"));
+	    	     HomeResultDetail.setQuestionId(rs.getInt("question_id"));
+	    	     HomeResultDetail.setAnswer(rs.getString("answer"));
+		         Title title=new Title();
+		         title.setItemId(rs.getInt("ItemID"));
+		         title.setTitle(rs.getString("title"));
+		         title.setType(rs.getInt("type"));
+		         title.setOptionA(rs.getString("optionA"));
+		         title.setOptionB(rs.getString("optionB"));
+		         title.setOptionC(rs.getString("optionC"));
+		         title.setOptionD(rs.getString("optionD"));
+		         title.setAnswer(rs.getString("answer"));
+		         title.setSubjectId(rs.getInt("SubjectID"));
+		         title.setTeacherId(rs.getInt("teacherid"));    
+		         HomeWorkResultDetailMap.put("HomeResultDetail", HomeResultDetail);
+		         HomeWorkResultDetailMap.put("title", title);
+		         list.add(HomeWorkResultDetailMap);
 		         }
 		       
 		    } catch (SQLException e) {
