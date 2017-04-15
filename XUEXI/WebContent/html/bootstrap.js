@@ -13,6 +13,7 @@ import teacherCenter from "./component/teacherCenter/teacherCenter.js";
 import teacherManagerClassCreate from "./component/teacherManagerClassCreate/teacherManagerClassCreate.js";
 import teacherAssignStudent from "./component/teacherAssignStudent/teacherAssignStudent.js";
 import teacherPaper from "./component/teacherPaper/teacherPaper.js";
+import teacherPaperNavigation from "./component/teacherPaperNavigation/teacherPaperNavigation.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -32,6 +33,7 @@ teacherCenter(app);
 teacherManagerClassCreate(app);
 teacherAssignStudent(app);
 teacherPaper(app);
+teacherPaperNavigation(app);
 httpService(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
