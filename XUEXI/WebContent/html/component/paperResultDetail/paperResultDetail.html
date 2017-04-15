@@ -1,4 +1,19 @@
 <div>
   <a ui-sref="teacher.paperResult({paper:{testpaperID:$ctrl.paperResult.paperId}})">返回</a>
-  查看学生答题详情
+  <p>查看学生答题详情</p>
+  <div ng-repeat="item in $ctrl.paperResultList">
+    <p>题目:<span ng-bind="item.title.title"></span></p>
+    <div ng-if="item.title.type === 1">
+      <p>A.<span ng-bind="item.title.optionA"></span></p>
+      <p>B.<span ng-bind="item.title.optionB"></span></p>
+      <p>C.<span ng-bind="item.title.optionC"></span></p>
+      <p>D.<span ng-bind="item.title.optionD"></span></p>
+      <p>答案:<span ng-bind="item.title.answer"></span></p>
+      <p>学生答案:<span ng-bind="item.paperResultDetail.answer"></span></p>
+    </div>
+    <div ng-if="item.title === 2">
+      <p>答案:<span ng-bind="item.title.answer"></span></p>
+      <p>学生答案:<span ng-bind="item.paperResultDetail.answer"></span></p>
+    </div>
+  </div>
 </div>

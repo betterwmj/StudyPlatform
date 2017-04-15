@@ -43,16 +43,16 @@ public class GetPaper extends HttpServlet {
 		HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String type= userInfo.get("type");
-        String classId= userInfo.get("classId");
 //		String type=request.getParameter("type");
 //        String classId=request.getParameter("classId");
          int typeId=Integer.parseInt(type);
-         int classid=Integer.parseInt(classId);
          try {
         	 List<Paper> list=null;
         	 if(typeId==0){
              	String subjectId=request.getParameter("subjectId");
              	int Id=Integer.parseInt(subjectId);
+             	String classId= userInfo.get("classId");
+             	int classid=Integer.parseInt(classId);
              	list = OperatorTestPaper.getTestPaperBySubjectId(Id,classid);
              }
              else{
