@@ -2,6 +2,7 @@ package com.wmj.servlet;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.HomeworkResult;
 
 import com.wmj.dao.OperatorHomeWork;
 
@@ -42,10 +42,10 @@ public class GetHomeworkResult extends HttpServlet {
 		String homeworkID=request.getParameter("homeworkID");
 		int homeworkId=Integer.parseInt(homeworkID);
 		try {
-			List<HomeworkResult> list = OperatorHomeWork.getHomeWorkResult(homeworkId);
+			List<Map<String,Object>> HomeWorkResultMap = OperatorHomeWork.getHomeWorkResult(homeworkId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(list);
+			result.setData(HomeWorkResultMap);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
