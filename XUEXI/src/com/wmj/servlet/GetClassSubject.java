@@ -9,23 +9,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.dao.OperatorTestPaper;
+import com.wmj.dao.OperatorSubject;
 
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class GetPaperResultDetail
+ * Servlet implementation class GetClassSubject
  */
-@WebServlet("/GetPaperResultDetail")
-public class GetPaperResultDetail extends HttpServlet {
+@WebServlet("/GetClassSubject")
+public class GetClassSubject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetPaperResultDetail() {
+    public GetClassSubject() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,13 +38,16 @@ public class GetPaperResultDetail extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String paperResultID=request.getParameter("paperResultID");
-		int paperResultId=Integer.parseInt(paperResultID);
+	    HttpSession session = request.getSession();
+        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
+        String classId= userInfo.get("classId");
+        //String classId=request.getParameter("classId");
+        int id=Integer.parseInt(classId);
 		try {
-			List<Map<String,Object>> paperResultMap = OperatorTestPaper.getPaperResultDetail(paperResultId);
+			List<Map> list = OperatorSubject.getSubjectByClassId(id);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(paperResultMap);
+			result.setData(list);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

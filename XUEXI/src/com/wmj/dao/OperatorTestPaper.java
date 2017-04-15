@@ -288,7 +288,7 @@ public class OperatorTestPaper {
 		  /*
 		   * 获取试卷结果详情
 		   */
-		  public static Map<String,Object> getPaperResultDetail(int paperResultID) throws Exception{
+		  public static List<Map<String,Object>> getPaperResultDetail(int paperResultID) throws Exception{
 			    
 			     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 			    Connection conn = null;
@@ -299,7 +299,8 @@ public class OperatorTestPaper {
 			      e1.printStackTrace();
 			      throw e1;
 			    }
-			    Map<String,Object> paperResultMap = new HashMap<>();
+			    List<Map<String,Object>> list=new ArrayList();
+			    
 			    PreparedStatement pmt = null; 
 			    try {
 			      ResultSet rs = null;
@@ -308,6 +309,7 @@ public class OperatorTestPaper {
 			      pmt.setInt(1, paperResultID);
 			      rs = pmt.executeQuery();
 			       while (rs.next()) {
+		    	     Map<String,Object> paperResultMap = new HashMap<>();
 			    	 PaperResultDetail paperResultDetail=new PaperResultDetail();
 			    	 paperResultDetail.setId(rs.getInt("id"));
 			    	 paperResultDetail.setPaperResultId(rs.getInt("paper_result_id"));
@@ -323,12 +325,10 @@ public class OperatorTestPaper {
 			         title.setOptionD(rs.getString("optionD"));
 			         title.setAnswer(rs.getString("answer"));
 			         title.setSubjectId(rs.getInt("SubjectID"));
-			         title.setTeacherId(rs.getInt("teacherid"));
-			         int i=0;
+			         title.setTeacherId(rs.getInt("teacherid"));    
 			         paperResultMap.put("paperResultDetail", paperResultDetail);
-			         paperResultMap.put("title"+i, title);
-			         i++;
-			        
+			         paperResultMap.put("title", title);
+			         list.add(paperResultMap);
 			         }
 			       
 			    } catch (SQLException e) {
@@ -338,6 +338,6 @@ public class OperatorTestPaper {
 			      // 关闭连接
 			      JDBCUtil.close(conn, pmt);
 			    }
-			    return paperResultMap;
+			    return list;
 			  }
 }

@@ -125,6 +125,46 @@ public class OperatorSubject {
 		return list;
 	}
 	/*
+	 * 得到对应该学生所在班级所有学科
+	 */
+	public static  List<Map> getSubjectByClassId(int classId) throws Exception{
+		
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		List<Map> list = new ArrayList<Map>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			ResultSet rs = null;
+			String sqlSelect="select  distinct(a.SubjectName), a.SubjectID from subjects as a,students as b,subject_spencialities_relationship as c,classes as d" 
+            +" where b.classid=d.ClassID and d.Spencialities_id=c.Spencialities_id and a.SubjectID=c.subjectId and  b.ClassID=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sqlSelect); 
+			pmt.setInt(1, classId);
+			rs = pmt.executeQuery();
+			 while (rs.next()) {
+			   Map<String,String> title = new HashMap<String,String>();
+			   title.put("SubjectName", rs.getString("SubjectName"));
+			   title.put("SubjectID", rs.getString("SubjectID"));
+               list.add(title);
+          
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return list;
+	}
+	/*
 	 * 得到所有专业下拉框
 	 */
 	public static  List<Map> getSpecities() throws Exception{

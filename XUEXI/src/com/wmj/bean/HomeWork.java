@@ -2,6 +2,7 @@ package com.wmj.bean;
 
 import java.sql.Timestamp;
 
+
 /*
  * 老师发布作业实体类
  */
