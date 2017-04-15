@@ -279,4 +279,43 @@ public class OperatorClass {
 			}
 			return result;
 	}
+	/*
+	 * 根据老师id获取该老师创建的所有班级
+	 */
+	public static List<Classes> getTeacherClasses(int teacherID) throws Exception{
+		Connection conn = null;
+		List<Classes> list = new ArrayList<Classes>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		sql="select b.* from teacherclass_relation as  a,classes as b where a.classID=b.ClassID and a.teacherId=? ";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, teacherID);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+				 Classes classes=new Classes();
+				 classes.setClassId(rs.getInt("ClassID"));
+				 classes.setClassName(rs.getString("ClassName"));
+				 classes.setSpencialities_id(rs.getInt("Spencialities_id"));
+                 list.add(classes);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+  }
 }

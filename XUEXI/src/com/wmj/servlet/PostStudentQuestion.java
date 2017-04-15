@@ -13,8 +13,6 @@ import com.wmj.bean.ApiResult;
 import com.wmj.bean.OnlineQuestion;
 import com.wmj.dao.OperatorOnline;
 import com.wmj.util.JSONUtil;
-
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**

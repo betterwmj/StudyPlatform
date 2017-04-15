@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.HomeWork;
-import com.wmj.dao.OperatorHomeWork;
+import com.wmj.bean.Classes;
+import com.wmj.dao.OperatorClass;
 
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class GetHomework
+ * Servlet implementation class GetTeacherClasses
  */
-@WebServlet("/GetHomework")
-public class GetHomework extends HttpServlet {
+@WebServlet("/GetTeacherClasses")
+public class GetTeacherClasses extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetHomework() {
+    public GetTeacherClasses() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,35 +41,23 @@ public class GetHomework extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
-        String type= userInfo.get("type");
-		//String type=request.getParameter("type");
-         int typeId=Integer.parseInt(type);
-         try {
-        	 List<HomeWork> list=null;
-        	 if(typeId==0){
-             	String subjectId=request.getParameter("subjectId");
-             	int Id=Integer.parseInt(subjectId);
-             	list = OperatorHomeWork.getHomeWorkBySubjectId(Id);
-             }
-             else{
-             	String teacherId= userInfo.get("id");
-            	//String teacherId=request.getParameter("teacherId");
-             	int Id=Integer.parseInt(teacherId);
-                list = OperatorHomeWork.getHomeWorkByTeacherId(Id);
-             }
-				ApiResult result = new ApiResult();
-				result.setCode(0);
-				result.setData(list);
-				response.getWriter().append(JSONObject.fromObject(result).toString());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				ApiResult result = new ApiResult();
-				result.setCode(-1);
-				result.setMessage(e.getMessage());
-				response.getWriter().append(JSONObject.fromObject(result).toString());
-			}
-	
+        String teacherID= userInfo.get("id");
+		//String teacherID=request.getParameter("teacherID");
+         int teacherId=Integer.parseInt(teacherID);
+        try {
+        	List<Classes> list = OperatorClass.getTeacherClasses(teacherId);
+			ApiResult result = new ApiResult();
+			result.setCode(0);
+			result.setData(list);
+			response.getWriter().append(JSONObject.fromObject(result).toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage(e.getMessage());
+			response.getWriter().append(JSONObject.fromObject(result).toString());
+		}
 	}
 
 	/**

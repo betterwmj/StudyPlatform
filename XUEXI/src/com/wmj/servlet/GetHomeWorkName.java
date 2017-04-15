@@ -15,7 +15,6 @@ import com.wmj.bean.ApiResult;
 import com.wmj.bean.HomeWork;
 import com.wmj.dao.OperatorHomeWork;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**学生获取所有老师布置的作业

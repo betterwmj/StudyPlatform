@@ -14,8 +14,6 @@ import com.wmj.bean.OnlineAnswer;
 
 import com.wmj.dao.OperatorOnline;
 import com.wmj.util.JSONUtil;
-
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
