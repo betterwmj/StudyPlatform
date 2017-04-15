@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.wmj.bean.Classes;
 import com.wmj.bean.HomeWork;
@@ -368,11 +370,10 @@ public class OperatorHomeWork {
 	  /*
 	   * 获取作业结果
 	   */
-	  public static  List<HomeworkResult> getHomeWorkResult(int homeworkID) throws Exception{
+	  public static  List<Map<String,Object>> getHomeWorkResult(int homeworkID) throws Exception{
 		    
 		     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		    Connection conn = null;
-		    List<HomeworkResult> list = new ArrayList<HomeworkResult>();
 		    try {
 		      conn = JDBCUtil.getConnection();
 		    } catch (SQLException e1) {
@@ -380,21 +381,25 @@ public class OperatorHomeWork {
 		      e1.printStackTrace();
 		      throw e1;
 		    }
+		    List<Map<String,Object>> list=new ArrayList();
 		    PreparedStatement pmt = null; 
 		    try {
 		      ResultSet rs = null;
-		      String sql="select * from homework_result where  homeworkId=?;";
+		      String sql="select a.*, b.RealName from homework_result as a,students as b where  a.student_id=b.UserID and a.homeworkId=?;";
 		      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 		      pmt.setInt(1, homeworkID);
 		      rs = pmt.executeQuery();
 		       while (rs.next()) {
+		    	 Map<String,Object> HomeWorkResultMap = new HashMap<>();
 		    	 HomeworkResult homework=new HomeworkResult();
 		    	 homework.setId(rs.getInt("id"));
 		    	 homework.setHomeworkId(rs.getInt("homeworkId"));
 		    	 homework.setStudentId(rs.getInt("student_id"));
 		    	 homework.setTime(rs.getTimestamp("time"));
-		    	 homework.setEvaluation(rs.getString("Evaluation"));;
-		         list.add(homework);    
+		    	 homework.setEvaluation(rs.getString("Evaluation"));
+		    	 HomeWorkResultMap.put("homework", homework);
+		    	 HomeWorkResultMap.put("studentName", rs.getString("RealName"));
+		         list.add(HomeWorkResultMap);    
 		         }
 		       
 		    } catch (SQLException e) {
