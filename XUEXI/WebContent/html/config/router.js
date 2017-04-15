@@ -32,6 +32,15 @@ export function routerConfig($stateProvider){
 				abstract:true,
 			},
 			{
+				name:"teacher.register",
+				url: '/register',
+				views:{
+					"content@":{
+						component:"registerTeacher"
+					}
+				}
+			},
+			{
 				name:"teacher.paper",
 				url: '/paper',
 				views:{

@@ -7,6 +7,7 @@ import login from "./component/login/login.js";
 import tophead from "./component/tophead/tophead.js";
 import studentSidebar from "./component/studentSidebar/studentSidebar.js";
 import teacherSidebar from "./component/teacherSidebar/teacherSidebar.js";
+import registerTeacher from "./component/registerTeacher/registerTeacher.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -20,6 +21,7 @@ login(app);
 tophead(app);
 studentSidebar(app);
 teacherSidebar(app);
+registerTeacher(app);
 httpService(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
