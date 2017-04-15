@@ -19,7 +19,7 @@ import com.wmj.dao.OperatorTestPaper;
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class GetStudentTestPaper
+ * Servlet implementation class GetPaper
  */
 @WebServlet("/GetPaper")
 public class GetPaper extends HttpServlet {
@@ -43,14 +43,17 @@ public class GetPaper extends HttpServlet {
 		HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String type= userInfo.get("type");
-		//String type=request.getParameter("type");
+        String classId= userInfo.get("classId");
+//		String type=request.getParameter("type");
+//        String classId=request.getParameter("classId");
          int typeId=Integer.parseInt(type);
+         int classid=Integer.parseInt(classId);
          try {
         	 List<Paper> list=null;
         	 if(typeId==0){
              	String subjectId=request.getParameter("subjectId");
              	int Id=Integer.parseInt(subjectId);
-             	list = OperatorTestPaper.getTestPaperBySubjectId(Id);
+             	list = OperatorTestPaper.getTestPaperBySubjectId(Id,classid);
              }
              else{
              	String teacherId= userInfo.get("id");
