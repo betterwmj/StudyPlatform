@@ -435,7 +435,7 @@ public class OperatorHomeWork {
 		    PreparedStatement pmt = null; 
 		    try {
 		      ResultSet rs = null;
-		      String sql="select b.*,c.* from homework_result as a,homework_result_detail as b,title as c where a.id=b.homework_result_id and b.question_id=c.ItemID and b.homework_result_id=?;";
+		      String sql="select b.id,b.homework_result_id,b.question_id,b.answer as studentAnswer,c.* from homework_result as a,homework_result_detail as b,title as c where a.id=b.homework_result_id and b.question_id=c.ItemID and b.homework_result_id=?;";
 		      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 		      pmt.setInt(1, HomeWorkResultDetailID);
 		      rs = pmt.executeQuery();
@@ -445,7 +445,7 @@ public class OperatorHomeWork {
 	    	     HomeResultDetail.setId(rs.getInt("id"));
 	    	     HomeResultDetail.setHomeworkResultId(rs.getInt("homework_result_id"));
 	    	     HomeResultDetail.setQuestionId(rs.getInt("question_id"));
-	    	     HomeResultDetail.setAnswer(rs.getString("answer"));
+	    	     HomeResultDetail.setAnswer(rs.getString("studentAnswer"));
 		         Title title=new Title();
 		         title.setItemId(rs.getInt("ItemID"));
 		         title.setTitle(rs.getString("title"));
