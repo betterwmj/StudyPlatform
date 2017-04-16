@@ -58,8 +58,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     });
     try {
       let rs = await http.post("SubmitPaper",result);
+      vm.msg = "提交答案成功";
     } catch (error) {
       vm.msg = "提交答案失败";
     }
+    $scope.$applyAsync(null);
   }
 }

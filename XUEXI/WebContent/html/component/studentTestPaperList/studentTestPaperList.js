@@ -28,7 +28,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     let paperResult = await http.get("GetPaperResult");
     vm.papers.forEach( (paper)=>{
       var findResult = paperResult.find( (result)=>{
-        return result.paper.paperId === paper.testpaperID;
+        if( result.paper.paperId === paper.testpaperID ){
+          paper.resultObj = result;
+          return true;
+        }
       });
       if( findResult !== undefined ){
         paper.isTest = true;

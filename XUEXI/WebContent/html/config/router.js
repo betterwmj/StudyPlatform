@@ -76,6 +76,24 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"student.studentTestPaperResultDetail",
+				url: '/studentTestPaperResultDetail',
+				params:{
+					paper:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentTestPaperResultDetail"
+					}
+				}
+			},
+			{
 				name:"teacher",
 				url: '/teacher',
 				abstract:true,
