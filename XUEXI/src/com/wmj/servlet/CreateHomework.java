@@ -2,6 +2,9 @@ package com.wmj.servlet;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +72,8 @@ public class CreateHomework extends HttpServlet {
         JSONArray array=json.getJSONArray("questions");
         List<HomeWorkDetail> list = new ArrayList<>();
         Timestamp time = new Timestamp(System.currentTimeMillis());
+        Timestamp finishTime = null;
+        DateFormat datFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");//"2017-04-16T15:03:00.000Z"
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
         	HomeWorkDetail homeDetail = new HomeWorkDetail();
@@ -77,7 +82,17 @@ public class CreateHomework extends HttpServlet {
         }
         home.setHomeWorkName(json.getString("name"));
         home.setTime(time);
-        home.setFinishTime(Timestamp.valueOf(json.getString("finishTime")));
+        try {
+			finishTime = new Timestamp(datFormat.parse(json.getString("finishTime")).getTime());
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage("时间转换异常");
+			response.getWriter().append(JSONObject.fromObject(result).toString());
+			return;
+		}
+        home.setFinishTime(finishTime);
         home.setSubjectId(subjectId);
         home.setTeacherId(teacherId);
         boolean resultCode;

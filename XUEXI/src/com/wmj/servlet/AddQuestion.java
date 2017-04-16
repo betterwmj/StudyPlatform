@@ -69,7 +69,7 @@ public class AddQuestion extends HttpServlet {
         	Title title=new Title();
         	String titles = t.getString("title");
        		String answer = t.getString("answer");
-       		int type=json.getInt("type");
+       		int type=t.getInt("type");
         	title.setOptionA(t.get("optionA").toString());
         	title.setOptionB(t.get("optionB").toString());
         	title.setOptionC(t.get("optionC").toString());

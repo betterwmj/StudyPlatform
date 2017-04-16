@@ -12,8 +12,63 @@ function controller($scope,$element,$state,$cookies,http){
     {label:"选择题",value:1},
     {label:"判断题",value:2},
     {label:"简答题",value:3}
-    
   ];
-  vm.currentType = vm.types[0];
+  let temp = {
+    "type":vm.types[0],
+    "title":"",
+    "answer":'',
+  };
+  vm.homework = {
+    name:"",
+    finishTime:null,
+    questions:[]
+  };
+  vm.questions = [];
+  vm.currentQuestion = Object.assign({},temp);
+  vm.currentQuestion.type = vm.types[0];
+  vm.questions.push( vm.currentQuestion );
+  vm.currIndex = 0;
+  vm.$onInit = function(){
 
+  };
+  vm.upItem = function(){
+    if( vm.currIndex === 0) {
+      return;
+    }
+    --vm.currIndex;
+    vm.currentQuestion = vm.questions[vm.currIndex];
+  };
+  vm.createNextQuestion = function(){
+    ++vm.currIndex;
+    if( vm.questions[vm.currIndex] ){
+      vm.currentQuestion = vm.questions[vm.currIndex];
+    }else{
+      let itemTemp = Object.assign({},temp);
+      itemTemp.type = vm.types[0];
+      vm.questions.push(itemTemp);
+      vm.currentQuestion = itemTemp;
+    }
+  };
+
+  vm.createHomework = async function(){
+    let questionList = {
+      titles:[]
+    };
+    vm.questions.forEach( (item)=>{
+      let temp = Object.assign({},item);
+      temp.type = temp.type.value;
+      questionList.titles.push(temp);
+    });
+    
+    let list = await http.post("AddQuestion",questionList);
+    list.forEach( (item)=>{
+      vm.homework.questions.push({
+        questionID:item.itemId
+      });
+    });
+    let rs = await http.post("CreateHomework",vm.homework)
+    if(rs === true){
+      window.alert("创建作业成功");
+    }
+  }
 }
