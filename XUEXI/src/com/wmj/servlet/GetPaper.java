@@ -44,7 +44,7 @@ public class GetPaper extends HttpServlet {
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String type= userInfo.get("type");
 //		String type=request.getParameter("type");
-//        String classId=request.getParameter("classId");
+//      String classId=request.getParameter("classId");
          int typeId=Integer.parseInt(type);
          try {
         	 List<Paper> list=null;
@@ -53,6 +53,9 @@ public class GetPaper extends HttpServlet {
              	int Id=Integer.parseInt(subjectId);
              	String classId= userInfo.get("classId");
              	int classid=Integer.parseInt(classId);
+//             	String isTest=request.getParameter("isTest");
+//             	// isTest -0 未做过 isTest -1做过
+//             	int istest=Integer.parseInt(isTest);
              	list = OperatorTestPaper.getTestPaperBySubjectId(Id,classid);
              }
              else{

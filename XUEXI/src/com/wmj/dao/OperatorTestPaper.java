@@ -77,7 +77,7 @@ public class OperatorTestPaper {
 		PreparedStatement pmt = null; 
 		try {
 			ResultSet rs = null;
-			String sql="select a.* from paper as a,teacherclass_relation as b where a.UserID=b.teacherId and a.status =1 and  a.SubjectID=? and b.classID=?";
+			String sql="select a.* from paper as a,teacherclass_relation as b where a.UserID=b.teacherId and a.status=1 and  a.SubjectID=? and b.classID=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, subjectId);
 			pmt.setInt(2, classId);
@@ -248,7 +248,7 @@ public class OperatorTestPaper {
 		  /*
 		   * 获取试卷结果
 		   */
-		  public static  List<Map<String,Object>> getPaperResult(int paperID) throws Exception{
+		  public static  List<Map<String,Object>> getPaperResult(int typeId,int paperID) throws Exception{
 			    
 			     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 			    Connection conn = null;
@@ -260,10 +260,17 @@ public class OperatorTestPaper {
 			      throw e1;
 			    }
 			    List<Map<String,Object>> list=new ArrayList();
-			    PreparedStatement pmt = null; 
+			    PreparedStatement pmt = null;
+			    String sql="";
 			    try {
 			      ResultSet rs = null;
-			      String sql="select a.*, b.RealName from paper_result as a,students as b where  a.student_id=b.UserID and paper_id=?;";
+			      if(typeId==0){
+			    	  sql="select a.*, b.RealName from paper_result as a,students as b where  a.student_id=b.UserID and b.UserID=?;";
+			      }else{
+			    	  sql="select a.*, b.RealName from paper_result as a,students as b where  a.student_id=b.UserID and a.paper_id=?;";
+					     
+			      }
+			     
 			      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			      pmt.setInt(1, paperID);
 			      rs = pmt.executeQuery();

@@ -9,9 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.PaperResult;
 import com.wmj.dao.OperatorTestPaper;
 
 import net.sf.json.JSONObject;
@@ -38,10 +38,23 @@ public class GetPaperResult extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String paperID=request.getParameter("paperID");
-		int paperId=Integer.parseInt(paperID);
+		HttpSession session = request.getSession();
+        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
+        String studentID= userInfo.get("id");
+        String typeID= userInfo.get("type");
+        int studentId=Integer.parseInt(studentID);
+        int typeId=Integer.parseInt(typeID);
+		
 		try {
-			List<Map<String,Object>> paperResultMap = OperatorTestPaper.getPaperResult(paperId);
+			List<Map<String,Object>> paperResultMap=null;
+			if(typeId==0){
+				paperResultMap= OperatorTestPaper.getPaperResult(typeId,studentId);
+			}else{
+				String paperID=request.getParameter("paperID");
+				int paperId=Integer.parseInt(paperID);
+				paperResultMap = OperatorTestPaper.getPaperResult(typeId,paperId);
+			}
+			
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(paperResultMap);

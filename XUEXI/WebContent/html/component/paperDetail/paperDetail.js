@@ -11,7 +11,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.msg = "";
   vm.paper = null;
   vm.paperDetail = null;
-  vm.$onInit = async function(){
+  vm.$onInit = async function(){ 
     vm.paper = $stateParams.paper;
     if( vm.paper === null || vm.paper.testpaperID === null ){
       return;
