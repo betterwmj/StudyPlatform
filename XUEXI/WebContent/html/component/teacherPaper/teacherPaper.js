@@ -23,7 +23,7 @@ function controller($scope,$element,$state,$cookies,http){
   vm.pageItem = 5;
   vm.msg = "";
   vm.$onInit = async function(){
-    let rs = vm.allQuestion = await getQuestions(1);
+    let rs = await getQuestions(1);
     $scope.$applyAsync(null);
   }
 
@@ -64,6 +64,7 @@ function controller($scope,$element,$state,$cookies,http){
     let start = (vm.currentPage-1)*vm.pageItem;
     for(let i = start; i < start+vm.pageItem; ++i){
       if( i >= vm.allQuestion.length ){
+        vm.questions = newData;
         return;
       }
       newData.push( vm.allQuestion[i]);
