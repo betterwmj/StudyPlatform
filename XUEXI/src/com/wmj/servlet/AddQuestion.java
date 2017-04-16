@@ -67,8 +67,8 @@ public class AddQuestion extends HttpServlet {
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
         	Title title=new Title();
-        	String titles = json.getString("title");
-       		String answer = json.getString("answer");
+        	String titles = t.getString("title");
+       		String answer = t.getString("answer");
        		int type=json.getInt("type");
         	title.setOptionA(t.get("optionA").toString());
         	title.setOptionB(t.get("optionB").toString());

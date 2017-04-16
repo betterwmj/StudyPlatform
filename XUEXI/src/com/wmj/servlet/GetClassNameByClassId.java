@@ -40,10 +40,10 @@ public class GetClassNameByClassId extends HttpServlet {
 		String classID=request.getParameter("classID");
 		int classId=Integer.parseInt(classID);
         try {
-        	List<Classes> list = OperatorClass.getClassesByclassId(classId);
+        	Classes classes = OperatorClass.getClassesByclassId(classId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(list);
+			result.setData(classes);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			
