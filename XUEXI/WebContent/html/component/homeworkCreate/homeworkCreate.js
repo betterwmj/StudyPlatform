@@ -17,14 +17,11 @@ function controller($scope,$element,$state,$cookies,http){
     "type":vm.types[0],
     "title":"",
     "answer":'',
-    "options":[
-      {
-        "optionA":'',
-        "optionB":'',
-        "optionC":'',
-        "optionD":''
-      }
-    ]
+  };
+  vm.homework = {
+    name:"",
+    finishTime:null,
+    questions:[]
   };
   vm.questions = [];
   vm.currentQuestion = Object.assign({},temp);
@@ -53,10 +50,25 @@ function controller($scope,$element,$state,$cookies,http){
     }
   };
 
-  vm.createHomework = function(){
-    let questionList = [];
-    vm.questions.forEach( ()=>{
-      
+  vm.createHomework = async function(){
+    let questionList = {
+      titles:[]
+    };
+    vm.questions.forEach( (item)=>{
+      let temp = Object.assign({},item);
+      temp.type = temp.type.value;
+      questionList.titles.push(temp);
     });
+    
+    let list = await http.post("AddQuestion",questionList);
+    list.forEach( (item)=>{
+      vm.homework.questions.push({
+        questionID:item.itemId
+      });
+    });
+    let rs = await http.post("CreateHomework",vm.homework)
+    if(rs === true){
+      window.alert("创建作业成功");
+    }
   }
 }
