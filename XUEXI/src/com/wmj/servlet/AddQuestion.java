@@ -1,6 +1,8 @@
 package com.wmj.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -61,6 +63,7 @@ public class AddQuestion extends HttpServlet {
         int subjectId=Integer.parseInt(suId);
         JSONArray array=json.getJSONArray("titles");
         int resultCount = 0;
+        List<Title> list=new ArrayList<>();
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
         	Title title=new Title();
@@ -77,10 +80,13 @@ public class AddQuestion extends HttpServlet {
             title.setSubjectId(subjectId);
             title.setTeacherId(teacherId);
             try {
-				boolean resultCode = OperatorQuestion.AddQuestion(title);
-				if( resultCode == true){
-					resultCount++;
+				title = OperatorQuestion.AddQuestion(title);
+				if(title!=null){
+				   resultCount++;	
+				   list.add(title);
 				}
+				
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,7 +96,7 @@ public class AddQuestion extends HttpServlet {
         if( array.size() == resultCount ){
         	ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(true);
+			result.setData(list);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
         }else{
         	ApiResult result = new ApiResult();
