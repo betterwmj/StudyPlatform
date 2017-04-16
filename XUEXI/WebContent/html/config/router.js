@@ -109,6 +109,36 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"student.onlineQuestion",
+				url: '/onlineQuestion',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"onlineQuestion"
+					}
+				}
+			},
+			{
+				name:"student.center",
+				url: '/center',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentCenter"
+					}
+				}
+			},
+			{
 				name:"teacher",
 				url: '/teacher',
 				abstract:true,

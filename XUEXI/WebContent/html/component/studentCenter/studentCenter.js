@@ -1,8 +1,8 @@
 import {app} from "../../bootstrap.js"
-export let name = "studentCeneter";
+export let name = "studentCenter";
 export default function root(app){
   app.component(name,{
-    templateUrl:"./component/StudentCenter/StudentCenter.html",
+    templateUrl:"./component/studentCenter/studentCenter.html",
     controller:["$scope","$element","$state",'$cookies',"http",'$httpParamSerializerJQLike',controller]
   });
 }
