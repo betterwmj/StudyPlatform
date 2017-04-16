@@ -370,7 +370,7 @@ public class OperatorHomeWork {
 	  /*
 	   * 获取作业结果
 	   */
-	  public static  List<Map<String,Object>> getHomeWorkResult(int homeworkID) throws Exception{
+	  public static  List<Map<String,Object>> getHomeWorkResult(int typeId,int homeworkID) throws Exception{
 		    
 		     //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		    Connection conn = null;
@@ -385,7 +385,12 @@ public class OperatorHomeWork {
 		    PreparedStatement pmt = null; 
 		    try {
 		      ResultSet rs = null;
-		      String sql="select a.*, b.RealName from homework_result as a,students as b where  a.student_id=b.UserID and a.homeworkId=?;";
+		      String sql="";
+		      if(typeId==0){
+		    	  sql="select a.*, b.RealName from homework_result as a,students as b where  a.student_id=b.UserID and b.UserID=?;";
+		      }else{
+		    	  sql="select a.*, b.RealName from homework_result as a,students as b where  a.student_id=b.UserID and a.homeworkId=?;";
+		      }     
 		      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 		      pmt.setInt(1, homeworkID);
 		      rs = pmt.executeQuery();

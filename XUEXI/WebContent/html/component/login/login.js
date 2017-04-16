@@ -32,10 +32,17 @@ function controller($scope,$element,$state,$cookies,http){
       $scope.$applyAsync(null);
       return;
     }
-    $cookies.putObject("userInfo",result);
+    
     if(userData.type === 0 ){
+      $cookies.putObject("userInfo",result);
       $state.go("student.test");
     }else{
+      vm.subjects.forEach( (subject)=>{
+        if( subject.SubjectID === result.subjectId){
+          result.subjectName = subject.SubjectName;
+        }
+      });
+      $cookies.putObject("userInfo",result);
       $state.go("teacher.paper");
     }
     $scope.$applyAsync(null);

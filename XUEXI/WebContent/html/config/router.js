@@ -234,6 +234,21 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.homework",
+				url: '/homework',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherHomeworkNavigation"
+					}
+				}
+			},
+			{
 				name:"teacher.homeworkCreate",
 				url: '/paperCreate',
 				views:{
@@ -245,6 +260,36 @@ export function routerConfig($stateProvider){
 					},
 					"content@":{
 						component:"homeworkCreate"
+					},
+				}
+			},
+			{
+				name:"teacher.homeWorkHistory",
+				url: '/homeWorkHistory',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"homeWorkHistory"
+					},
+				}
+			},
+			{
+				name:"teacher.onlineanswer",
+				url: '/onlineanswer',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"onlineAnswer"
 					},
 				}
 			},

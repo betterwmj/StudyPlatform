@@ -1,6 +1,7 @@
 <div>
   <p>登录用户:
     <span ng-bind="$ctrl.userInfo.userName"></span>
+    <span ng-if="$ctrl.userInfo.type === '1'">科目:<span ng-bind="$ctrl.userInfo.subjectName"></span></span>
     <button class="btn btn-default" type="button" ng-click="$ctrl.logout()">退出登录</button>
   </p>
 </div>

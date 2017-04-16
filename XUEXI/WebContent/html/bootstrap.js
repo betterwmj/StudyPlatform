@@ -21,7 +21,10 @@ import paperResultDetail from "./component/paperResultDetail/paperResultDetail.j
 import studentTest from "./component/studentTest/studentTest.js";
 import studentTestPaper from "./component/studentTestPaper/studentTestPaper.js";
 import studentTestPaperList from "./component/studentTestPaperList/studentTestPaperList.js";
-//import teacherHomeWorkNavigation from "./component/teacherHomeworkNavigation/teacherHomeworkNavigation.js";
+import teacherHomeWorkNavigation from "./component/teacherHomeworkNavigation/teacherHomeworkNavigation.js";
+import homeworkCreate from "./component/homeworkCreate/homeworkCreate.js";
+import homeWorkHistory from "./component/homeWorkHistory/homeWorkHistory.js";
+import onlineAnswer from "./component/onlineAnswer/onlineAnswer.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -50,7 +53,10 @@ paperResultDetail(app);
 studentTest(app);
 studentTestPaperList(app);
 studentTestPaper(app);
-//teacherHomeWorkNavigation(app);
+teacherHomeWorkNavigation(app);
+homeworkCreate(app);
+homeWorkHistory(app);
+onlineAnswer(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 
