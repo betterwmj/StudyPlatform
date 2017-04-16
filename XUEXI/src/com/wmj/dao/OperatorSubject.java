@@ -102,8 +102,13 @@ public class OperatorSubject {
 		PreparedStatement pmt = null; 
 		try {
 			ResultSet rs = null;
-			String sqlSelect="select a.SubjectID,SubjectName from subjects as a,subject_spencialities_relationship as b where a.SubjectID=b.subjectId and b.Spencialities_id=?";
-			pmt=JDBCUtil.getPreparedStatement(conn, sqlSelect); 
+			String sql="";
+			if(spencialtiesId==-1){
+				sql="select * from subjects";
+			}else{
+				sql="select a.SubjectID,SubjectName from subjects as a,subject_spencialities_relationship as b where a.SubjectID=b.subjectId and b.Spencialities_id=?";
+			}	
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, spencialtiesId);
 			rs = pmt.executeQuery();
 			 while (rs.next()) {

@@ -40,10 +40,18 @@ public class GetAllSubject extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String spencialties=request.getParameter("spencialties");
-		int spencialtiesId=Integer.parseInt(spencialties);
+		String spencialties=request.getParameter("spencialties");	
 		try {
-			List<Map> list = OperatorSubject.getSubject(spencialtiesId);
+			List<Map> list=null;
+			if(spencialties==null){
+				list= OperatorSubject.getSubject(-1);
+			}
+			else{
+			
+				int spencialtiesId=Integer.parseInt(spencialties);
+				list = OperatorSubject.getSubject(spencialtiesId);	
+			}
+			
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

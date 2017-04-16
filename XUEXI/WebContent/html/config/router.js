@@ -239,6 +239,21 @@ export function routerConfig($stateProvider){
 					},
 				}
 			},
+			{
+				name:"teacher.onlineanswer",
+				url: '/onlineanswer',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"onlineAnswer"
+					},
+				}
+			},
   	];
 	states.forEach( (state)=>{
 		$stateProvider.state(state);
