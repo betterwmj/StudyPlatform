@@ -41,6 +41,7 @@ public class OperatorUser {
 					student.setUserID(rs.getInt("UserID"));
 					student.setUserName(rs.getString("userName"));
 					student.setRealName(rs.getString("RealName"));
+					student.setPass(rs.getString("password"));
 					student.setSchool(rs.getString("school"));
 					student.setTelephone(rs.getString("telephone"));
 					student.setClassId(rs.getInt("classid"));
