@@ -194,6 +194,36 @@ export function routerConfig($stateProvider){
 					},
 				}
 			},
+			{
+				name:"teacher.homeworkCreate",
+				url: '/paperCreate',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"homeworkCreate"
+					},
+				}
+			},
+			{
+				name:"teacher.publishPaper",
+				url: '/publishPaper',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"homeWorkHistory"
+					},
+				}
+			},
   	];
 	states.forEach( (state)=>{
 		$stateProvider.state(state);
