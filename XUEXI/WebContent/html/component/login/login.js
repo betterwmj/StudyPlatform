@@ -13,11 +13,11 @@ function controller($scope,$element,$state,$cookies,http){
     password:"",
     type:"0"
   };
-  
+  vm.subjects = [];
   vm.loginResultMsg = "";
   vm.login = login;
-  vm.$onInit = function(){
-    
+  vm.$onInit = async function(){
+    vm.subjects = await http.get('GetAllSubject');
   }
 
   async function login(){

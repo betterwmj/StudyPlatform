@@ -58,6 +58,24 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"student.studentTestPaper",
+				url: '/studentTestPaper',
+				params:{
+					paper:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentTestPaper"
+					}
+				}
+			},
+			{
 				name:"teacher",
 				url: '/teacher',
 				abstract:true,
@@ -227,21 +245,6 @@ export function routerConfig($stateProvider){
 					},
 					"content@":{
 						component:"homeworkCreate"
-					},
-				}
-			},
-			{
-				name:"teacher.publishPaper",
-				url: '/publishPaper',
-				views:{
-					"head@":{
-						component:"tophead"
-					},
-					"sidebar@":{
-						component:"teacherSidebar"
-					},
-					"content@":{
-						component:"homeWorkHistory"
 					},
 				}
 			},

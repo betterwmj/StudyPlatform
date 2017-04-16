@@ -1,3 +1,30 @@
 <div>
-  学生做试卷
+  学生做试卷 <button class="btn btn-default" ng-click="$ctrl.submitResult()">提交答案</button>
+  <p ng-bind="$ctrl.msg"></p>
+  <div>
+    <p ng-bind="$ctrl.currQuestion.title"></p>
+    <div ng-if="$ctrl.currQuestion.type === 1">
+      <p>A.<span ng-bind="$ctrl.currQuestion.optionA"></span>&nbsp;&nbsp;</p>
+      <p>B.<span ng-bind="$ctrl.currQuestion.optionB"></span>&nbsp;&nbsp;</p>
+      <p>C.<span ng-bind="$ctrl.currQuestion.optionC"></span>&nbsp;&nbsp;</p>
+      <p>D.<span ng-bind="$ctrl.currQuestion.optionD"></span>&nbsp;&nbsp;</p>
+      <p>
+        A<input name="options" type="radio" value="A" ng-model="$ctrl.currQuestion.studentAnswer">
+        B<input name="options" type="radio" value="B" ng-model="$ctrl.currQuestion.studentAnswer">
+        C<input name="options" type="radio" value="C" ng-model="$ctrl.currQuestion.studentAnswer">
+        D<input name="options" type="radio" value="D" ng-model="$ctrl.currQuestion.studentAnswer">
+      </p>
+    </div>
+    <div ng-if="$ctrl.currQuestion.type === 2">
+      <p>
+        对<input name="options" type="radio" value="A" ng-model="$ctrl.currQuestion.studentAnswer">
+        错<input name="options" type="radio" value="B" ng-model="$ctrl.currQuestion.studentAnswer">
+      </p>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-default" ng-click="$ctrl.changeIndex('up')">上一题</button>
+    <button class="btn btn-default" ng-click="$ctrl.changeIndex('down')">下一题</button>
+    
+  </div>
 </div>

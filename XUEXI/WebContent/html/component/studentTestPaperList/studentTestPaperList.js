@@ -10,6 +10,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.subject = null;
+  vm.currShowIsTest = false;
   vm.$onInit = async function(){
     console.log($stateParams);
     vm.subject = $stateParams.subject;
@@ -24,11 +25,20 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     vm.papers.forEach( (paper)=>{
       paper.createTime = new Date(paper.createTime.time);
     });
-    
+    let paperResult = await http.get("GetPaperResult");
+    vm.papers.forEach( (paper)=>{
+      var findResult = paperResult.find( (result)=>{
+        return result.paper.paperId === paper.testpaperID;
+      });
+      if( findResult !== undefined ){
+        paper.isTest = true;
+      }else{
+        paper.isTest = false;
+      }
+    });
   }
 
-  function changePaperType(type){
-    let rs = await getPaper(0);
-    $scope.$applyAsync(null);
+  vm.changePaperType = function(type){
+    vm.currShowIsTest = type;
   }
 }
