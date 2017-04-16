@@ -53,7 +53,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       }
       result.paperresult.push({
         "questionID":item.itemId,
-   		  "answer":studentAnswer
+   		  "answer":studentAnswer||""
       });
       console.log(result);
     });

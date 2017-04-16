@@ -283,7 +283,7 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.homeworkCreate",
-				url: '/paperCreate',
+				url: '/homeworkCreate',
 				views:{
 					"head@":{
 						component:"tophead"
