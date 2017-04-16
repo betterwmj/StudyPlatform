@@ -33,7 +33,8 @@
           <br>
         </div>
       </div>
-      <ul uib-pagination total-items="$ctrl.allQuestion.length" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
+      <ul uib-pagination  items-per-page="$ctrl.pageItem"
+          total-items="$ctrl.allQuestion.length" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
     </div>
     <div ng-if="$ctrl.currentType.value === 2">
       <div ng-repeat="question in $ctrl.questions track by $index">

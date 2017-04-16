@@ -1,8 +1,10 @@
 <div>
   <h3>可选科目</h3>
   <div class="btn-group btn-group-justified" role="group">
-    <a ng-repeat="subject in $ctrl.subjects" 
-       type="button" class="btn btn-default" ng-bind="subject.SubjectName"
-       ui-sref="student.studentTestPaperList({subject:subject})"></a>
+    <div ng-repeat="group in $ctrl.subjects track by $index">
+      <a  ng-repeat="item in group track by $index"
+       type="button" class="btn btn-default" ng-bind="item.SubjectName"
+       ui-sref="student.studentTestPaperList({subject:item})"></a>
+    </div>
   </div>
 </div>
