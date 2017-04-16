@@ -1,0 +1,10 @@
+<div>
+  <h3><span ng-bind="$ctrl.subject.SubjectName"></span>的试卷列表</h3>
+  <button>未作答</button><button>已作答</button>
+  <div ng-repeat="paper in $ctrl.papers">
+    <p>试卷名称:
+      <span ng-bind="paper.testName"></span>&nbsp;
+      创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
+    </p>
+  </div>
+</div>

@@ -33,6 +33,27 @@ export function routerConfig($stateProvider){
 					},
 					"sidebar@":{
 						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentTest"
+					}
+				}
+			},
+			{
+				name:"student.studentTestPaperList",
+				url: '/studentTestPaperList',
+				params:{
+					subject:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentTestPaperList"
 					}
 				}
 			},

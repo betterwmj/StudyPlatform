@@ -18,6 +18,8 @@ import publishPaper from "./component/publishPaper/publishPaper.js";
 import paperDetail from "./component/paperDetail/paperDetail.js";
 import paperResult from "./component/paperResult/paperResult.js";
 import paperResultDetail from "./component/paperResultDetail/paperResultDetail.js";
+import studentTest from "./component/studentTest/studentTest.js";
+import studentTestPaperList from "./component/studentTestPaperList/studentTestPaperList.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -43,6 +45,8 @@ paperResult(app);
 httpService(app);
 paperDetail(app);
 paperResultDetail(app);
+studentTest(app);
+studentTestPaperList(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 
