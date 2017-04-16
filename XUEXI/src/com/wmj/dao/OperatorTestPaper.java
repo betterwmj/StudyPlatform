@@ -77,7 +77,7 @@ public class OperatorTestPaper {
 		PreparedStatement pmt = null; 
 		try {
 			ResultSet rs = null;
-			String sql="select a.* from paper as a,teacherclass_relation as b where a.UserID=b.teacherId and a.status=1 and  a.SubjectID=? and b.classID=?";
+			String sql="select distinct(a.TestpaperID), a.* from paper as a,teacherclass_relation as b where a.UserID=b.teacherId and a.status=1 and  a.SubjectID=? and b.classID=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, subjectId);
 			pmt.setInt(2, classId);
