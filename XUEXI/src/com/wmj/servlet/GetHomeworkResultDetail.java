@@ -9,26 +9,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
-
 import com.wmj.dao.OperatorHomeWork;
-import com.wmj.dao.OperatorTestPaper;
+
 
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class GetHomeworkResult
+ * Servlet implementation class GetHomeworkResultDetail
  */
-@WebServlet("/GetHomeworkResult")
-public class GetHomeworkResult extends HttpServlet {
+@WebServlet("/GetHomeworkResultDetail")
+public class GetHomeworkResultDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetHomeworkResult() {
+    public GetHomeworkResultDetail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,25 +38,13 @@ public class GetHomeworkResult extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		HttpSession session = request.getSession();
-        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
-        String studentID= userInfo.get("id");
-        String typeID= userInfo.get("type");
-        int studentId=Integer.parseInt(studentID);
-        int typeId=Integer.parseInt(typeID);
-	
+		String homeworkResultID=request.getParameter("paperResultID");
+		int homeworkResultId=Integer.parseInt(homeworkResultID);
 		try {
-			List<Map<String,Object>> HomeWorkResultMap=null;
-			if(typeId==0){
-				HomeWorkResultMap= OperatorHomeWork.getHomeWorkResult(typeId,studentId);
-			}else{
-				String homeworkID=request.getParameter("homeworkID");
-				int homeworkId=Integer.parseInt(homeworkID);
-				HomeWorkResultMap = OperatorHomeWork.getHomeWorkResult(typeId,homeworkId);
-			}
+			List<Map<String,Object>> HomeWorkResultDetailMap = OperatorHomeWork.getHomeWorkResultDetail(homeworkResultId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(HomeWorkResultMap);
+			result.setData(HomeWorkResultDetailMap);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

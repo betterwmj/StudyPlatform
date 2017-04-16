@@ -19,6 +19,8 @@ import paperDetail from "./component/paperDetail/paperDetail.js";
 import paperResult from "./component/paperResult/paperResult.js";
 import paperResultDetail from "./component/paperResultDetail/paperResultDetail.js";
 import teacherHomeWorkNavigation from "./component/teacherHomeworkNavigation/teacherHomeworkNavigation.js";
+import homeworkCreate from "./component/homeworkCreate/homeworkCreate.js";
+import homeWorkHistory from "./component/homeWorkHistory/homeWorkHistory.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -45,6 +47,8 @@ httpService(app);
 paperDetail(app);
 paperResultDetail(app);
 teacherHomeWorkNavigation(app);
+homeworkCreate(app);
+homeWorkHistory(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 

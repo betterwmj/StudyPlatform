@@ -195,6 +195,21 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.homework",
+				url: '/homework',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherHomeworkNavigation"
+					}
+				}
+			},
+			{
 				name:"teacher.homeworkCreate",
 				url: '/paperCreate',
 				views:{
@@ -210,8 +225,8 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
-				name:"teacher.publishPaper",
-				url: '/publishPaper',
+				name:"teacher.homeWorkHistory",
+				url: '/homeWorkHistory',
 				views:{
 					"head@":{
 						component:"tophead"
