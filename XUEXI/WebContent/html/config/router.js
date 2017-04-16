@@ -94,6 +94,21 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"student.homework",
+				url: '/homework',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentHomework"
+					}
+				}
+			},
+			{
 				name:"teacher",
 				url: '/teacher',
 				abstract:true,
