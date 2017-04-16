@@ -318,4 +318,43 @@ public class OperatorClass {
 		}
 	return list;
   }
+	/*
+	 * 根据班级id获取所有班级名字
+	 */
+	public static List<Classes> getClassesByclassId(int classID) throws Exception{
+		Connection conn = null;
+		List<Classes> list = new ArrayList<Classes>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		sql="select * from classes where ClassID=? ";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, classID);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+				 Classes classes=new Classes();
+				 classes.setClassId(rs.getInt("ClassID"));
+				 classes.setClassName(rs.getString("ClassName"));
+				 classes.setSpencialities_id(rs.getInt("Spencialities_id"));
+                 list.add(classes);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+}
 }

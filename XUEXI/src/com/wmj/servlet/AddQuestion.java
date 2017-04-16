@@ -59,39 +59,45 @@ public class AddQuestion extends HttpServlet {
         String suId=userInfo.get("subjectId");
         int teacherId=Integer.parseInt(id);
         int subjectId=Integer.parseInt(suId);
-        JSONArray array=json.getJSONArray("options");
-        String titles = json.getString("title");
-		String answer = json.getString("answer");
-		int type=json.getInt("type");
-        Title title=new Title();
+        JSONArray array=json.getJSONArray("titles");
+        int resultCount = 0;
         for(int i=0;i<array.size();i++){
         	JSONObject t = JSONObject.fromObject( array.get(i));
+        	Title title=new Title();
+        	String titles = json.getString("title");
+       		String answer = json.getString("answer");
+       		int type=json.getInt("type");
         	title.setOptionA(t.get("optionA").toString());
         	title.setOptionB(t.get("optionB").toString());
         	title.setOptionC(t.get("optionC").toString());
         	title.setOptionD(t.get("optionD").toString());
-        }
-        title.setTitle(titles);
-        title.setType(type);
-        title.setSubjectId(subjectId);
-        title.setTeacherId(teacherId);
-        title.setAnswer(answer);
-        boolean resultCode;
-		try {
-			resultCode = OperatorQuestion.AddQuestion(title);
-			ApiResult result = new ApiResult();
-			result.setCode(0);
-			result.setData(resultCode);
-			response.getWriter().append(JSONObject.fromObject(result).toString());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			ApiResult result = new ApiResult();
-			result.setCode(-1);
-			result.setMessage(e.getMessage());
-			response.getWriter().append(JSONObject.fromObject(result).toString());
-		}
-    	
+        	title.setTitle(titles);
+            title.setType(type);
+            title.setAnswer(answer);
+            title.setSubjectId(subjectId);
+            title.setTeacherId(teacherId);
+            try {
+				boolean resultCode = OperatorQuestion.AddQuestion(title);
+				if( resultCode == true){
+					resultCount++;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }  
         
+        if( array.size() == resultCount ){
+        	ApiResult result = new ApiResult();
+			result.setCode(0);
+			result.setData(true);
+			response.getWriter().append(JSONObject.fromObject(result).toString());
+        }else{
+        	ApiResult result = new ApiResult();
+			result.setCode(-1);
+			result.setMessage("添加试题失败");
+			response.getWriter().append(JSONObject.fromObject(result).toString());
+        }
 	}
 
 }
