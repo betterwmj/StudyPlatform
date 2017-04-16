@@ -315,7 +315,7 @@ public class OperatorTestPaper {
 			    PreparedStatement pmt = null; 
 			    try {
 			      ResultSet rs = null;
-			      String sql="select b.*,c.* from paper_result as a,paper_result_detail as b,title as c where a.id=b.paper_result_id and b.question_id=c.ItemID and b.paper_result_id=?;";
+			      String sql="select b.id,b.paper_result_id,b.question_id,b.answer as studentAnswer,c.* from paper_result as a,paper_result_detail as b,title as c where a.id=b.paper_result_id and b.question_id=c.ItemID and b.paper_result_id=?;";
 			      pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			      pmt.setInt(1, paperResultID);
 			      rs = pmt.executeQuery();
@@ -325,7 +325,7 @@ public class OperatorTestPaper {
 			    	 paperResultDetail.setId(rs.getInt("id"));
 			    	 paperResultDetail.setPaperResultId(rs.getInt("paper_result_id"));
 			    	 paperResultDetail.setQuestionId(rs.getInt("question_id"));
-			    	 paperResultDetail.setAnswer(rs.getString("answer"));
+			    	 paperResultDetail.setAnswer(rs.getString("studentAnswer"));
 			         Title title=new Title();
 			         title.setItemId(rs.getInt("ItemID"));
 			         title.setTitle(rs.getString("title"));

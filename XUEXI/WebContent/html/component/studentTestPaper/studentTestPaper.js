@@ -55,6 +55,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         "questionID":item.itemId,
    		  "answer":studentAnswer
       });
+      console.log(result);
     });
     try {
       let rs = await http.post("SubmitPaper",result);
