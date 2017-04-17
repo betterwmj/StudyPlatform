@@ -8,10 +8,13 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http){
   let vm = this;
-  vm.types = [
-    {label:"选择题",value:1},
-    {label:"判断题",value:2}
-  ];
-  vm.currentType = vm.types[0];
-
+  vm.$onInit = async function(){
+    vm.homeworks = await http.get("GetHomework");
+    vm.homeworks.forEach( (item)=>{
+      if( item.finishTime ){
+        item.finishTime = new Date(item.finishTime.time);
+      }
+    });
+    $scope.$applyAsync(null);
+  }
 }

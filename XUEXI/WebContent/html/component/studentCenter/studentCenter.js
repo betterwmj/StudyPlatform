@@ -16,6 +16,9 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
 	    $scope.$applyAsync(null);
 	  }
 	  async function getClassName(classId){
+			if(!classId){
+				return;
+			}
 		  let result = await http.get("GetClassNameByClassId",{"classID":classId});
 		  vm.userinfo.className=result.className;
 		  $scope.$applyAsync(null);

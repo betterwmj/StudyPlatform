@@ -35,8 +35,7 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
         'Content-Type': 'application/x-www-form-urlencoded'
       });
     if( result === true ){
-      $cookies.putObject("userInfo",vm.userInfo);
-      $state.go('teacher.paper');
+      $state.go('login');
     }
   }
 

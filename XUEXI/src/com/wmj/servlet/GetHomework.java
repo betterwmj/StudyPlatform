@@ -45,11 +45,12 @@ public class GetHomework extends HttpServlet {
         String classId= userInfo.get("classId");
 //		 String type=request.getParameter("type");
 //         String classId=request.getParameter("classId");
-         int classid=Integer.parseInt(classId);
+         
          int typeId=Integer.parseInt(type);
          try {
         	 List<HomeWork> list=null;
         	 if(typeId==0){
+    		    int classid=Integer.parseInt(classId);
              	String subjectId=request.getParameter("subjectId");
              	int Id=Integer.parseInt(subjectId);
              	list = OperatorHomeWork.getHomeWorkBySubjectId(Id,classid);
