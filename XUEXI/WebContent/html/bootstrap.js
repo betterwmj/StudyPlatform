@@ -10,6 +10,7 @@ import teacherSidebar from "./component/teacherSidebar/teacherSidebar.js";
 import registerStudent from "./component/registerStudent/registerStudent.js"
 import registerTeacher from "./component/registerTeacher/registerTeacher.js";
 import teacherCenter from "./component/teacherCenter/teacherCenter.js";
+import homeworkDetail from "./component/homeworkDetail/homeworkDetail.js";
 import teacherManagerClassCreate from "./component/teacherManagerClassCreate/teacherManagerClassCreate.js";
 import teacherAssignStudent from "./component/teacherAssignStudent/teacherAssignStudent.js";
 import teacherPaper from "./component/teacherPaper/teacherPaper.js";
@@ -46,6 +47,7 @@ teacherSidebar(app);
 registerTeacher(app);
 registerStudent(app);
 teacherCenter(app);
+homeworkDetail(app);
 teacherManagerClassCreate(app);
 teacherAssignStudent(app);
 teacherPaper(app);

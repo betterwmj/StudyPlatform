@@ -267,6 +267,24 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.homeworkDetail",
+				url: '/homeworkDetail',
+				params:{
+					homework:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"homeworkDetail"
+					}
+				}
+			},
+			{
 				name:"teacher.teacherManagerClassCreate",
 				url: '/teacherManagerClassCreate',
 				views:{

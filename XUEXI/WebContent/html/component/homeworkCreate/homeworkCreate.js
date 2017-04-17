@@ -17,6 +17,10 @@ function controller($scope,$element,$state,$cookies,http){
     "type":vm.types[0],
     "title":"",
     "answer":'',
+    "optionA":"",
+    "optionB":"",
+    "optionC":"",
+    "optionD":"",
   };
   vm.homework = {
     name:"",

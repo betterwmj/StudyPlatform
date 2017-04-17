@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<div>
+  <p>作业列表</p>
+  <ul>
+    <li ng-repeat="item in $ctrl.homeworks">
+      名称:<a ng-bind="item.homeWorkName" ui-sref="teacher.homeworkDetail({homework:item})"></a><br>
+      计划完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
+    </li>
+  </ul>
+</div>
