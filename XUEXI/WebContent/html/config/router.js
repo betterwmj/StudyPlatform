@@ -356,6 +356,21 @@ export function routerConfig($stateProvider){
 					},
 				}
 			},
+			{
+				name:"teacher.UserInfo",
+				url: '/UserInfo',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherUserInfo"
+					},
+				}
+			},
   	];
 	states.forEach( (state)=>{
 		$stateProvider.state(state);

@@ -52,6 +52,7 @@ public class OperatorUser {
 					teacher.setUserID(rs.getInt("UserID"));
 					teacher.setUserName(rs.getString("userName"));
 					teacher.setRealName(rs.getString("RealName"));
+					teacher.setPassword(rs.getString("password"));
 					teacher.setSubjectId(rs.getInt("subjectID"));
 					return teacher;
 					

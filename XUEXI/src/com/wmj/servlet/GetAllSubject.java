@@ -46,8 +46,7 @@ public class GetAllSubject extends HttpServlet {
 			if(spencialties==null){
 				list= OperatorSubject.getSubject(-1);
 			}
-			else{
-			
+			else{		
 				int spencialtiesId=Integer.parseInt(spencialties);
 				list = OperatorSubject.getSubject(spencialtiesId);	
 			}

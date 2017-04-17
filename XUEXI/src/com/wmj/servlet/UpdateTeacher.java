@@ -55,7 +55,9 @@ public class UpdateTeacher extends HttpServlet {
 		String userName = json.getString("userName");
 		String realName = json.getString("realName");
 		String password = json.getString("password");
-		int subjectId=json.getInt("subjectID");
+		String subjectID=json.getString("subjectID");
+		int subjectId=Integer.parseInt(subjectID);
+		//int subjectId=json.getInt("subjectID");
 		int teacherID=json.getInt("teacherID");
 		Teachers teacher=new Teachers();
 		teacher.setUserID(teacherID);

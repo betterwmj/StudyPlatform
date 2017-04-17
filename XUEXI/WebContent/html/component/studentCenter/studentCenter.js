@@ -31,12 +31,12 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
 	  
 	  vm.updateinfo=async function(){
 		  let data={
-					"userName" :vm.userinfo.userName,
-					"realName" :vm.userinfo.realName,
-					"password" :vm.userinfo.pass,
-					"school"   :vm.userinfo.school,
-					"telephone":vm.userinfo.telephone,
-					"studentID":vm.userinfo.userID		
+				"userName" :vm.userinfo.userName,
+				"realName" :vm.userinfo.realName,
+				"password" :vm.userinfo.pass,
+				"school"   :vm.userinfo.school,
+				"telephone":vm.userinfo.telephone,
+				"studentID":vm.userinfo.userID		
 		  };
 		  let result= await http.post("UpdateStudent",data);
 		  if(result==true){
