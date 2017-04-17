@@ -19,7 +19,7 @@ function controller($scope,$element,$state,$cookies,http){
     vm.currentSpecialities = vm.specialitiesList[0];
     $scope.$applyAsync(null);
   }
-
+   
   vm.create = async function(){
     vm.msg = "";
     let result = await http.get("CreateClass",{
@@ -30,8 +30,33 @@ function controller($scope,$element,$state,$cookies,http){
     if( result === true ){
       vm.msg = "班级创建成功";
     }else{
-      vm.msg = "班级创建失败";
+      vm.msg = "该班级已存在,您可选择加入该班级";
     }
     $scope.$applyAsync(null);
   }
+  $scope.$watch("$ctrl.currentSpecialities",async function(){
+	    if ( !vm.currentSpecialities ){
+	      return;
+	    }
+	    let classes = await http.get("GetClasses",{
+	      "spencialitiesID":vm.currentSpecialities.specialitiesId
+	    });
+	    vm.classes = classes;
+	    vm.currentClass = vm.classes[0];
+	    $scope.$applyAsync(null);
+  },true);
+  vm.addClass=async function(){
+	  let result = await http.get("AddClass",{
+		  "classID":vm.currentClass.classId
+	  });
+	  if( result == true){
+		   vm.msgadd="加入该班级成功";
+	  }else{
+		   vm.msgadd="你已加入该班";
+	  }
+	  
+	  
+	  $scope.$applyAsync(null);
+  }
+  
 }

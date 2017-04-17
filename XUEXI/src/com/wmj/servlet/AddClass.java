@@ -1,13 +1,14 @@
 package com.wmj.servlet;
 
 import java.io.IOException;
-
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.dao.OperatorClass;
@@ -36,9 +37,11 @@ public class AddClass extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		HttpSession session = request.getSession();
+        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
+        String teacherID= userInfo.get("id");
 		String classID=request.getParameter("classID");
 		int classId=Integer.parseInt(classID);
-		String teacherID=request.getParameter("teacherID");
 		int teacherId=Integer.parseInt(teacherID);
 		boolean resultCode;
         try {
