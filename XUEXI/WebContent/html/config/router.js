@@ -109,6 +109,24 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"student.studentHomeworkList",
+				url: '/studentHomeworkList',
+				params:{
+					subject:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentHomeworkList"
+					}
+				}
+			},
+			{
 				name:"student.onlineQuestion",
 				url: '/onlineQuestion',
 				views:{
@@ -356,6 +374,24 @@ export function routerConfig($stateProvider){
 					},
 					"content@":{
 						component:"homeWorkHistory"
+					},
+				}
+			},
+			{
+				name:"teacher.publishHomework",
+				url: '/publishHomework',
+				params:{
+					homework:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"publishHomework"
 					},
 				}
 			},
