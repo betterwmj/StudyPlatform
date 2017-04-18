@@ -1,3 +1,14 @@
 <div>
-答疑
+	学生疑问
+
+  <div class="form-group" ng-repeat="onlineQuesions in $ctrl.onlineQuesions">
+     <label>提问者</label>
+      <input type="text" class="form-control" ng-model="onlineQuesions.studentId">
+      <label>问题</label>
+      <input type="text" class="form-control" ng-model="onlineQuesions.questionTitle">
+  </div>
+   <div class="col-sm-offset-2 col-sm-10">
+     <button type="button" class="btn btn-default" ng-click="$ctrl.reply()">回复</button>
+   </div>
+   <p ng-bind="$ctrl.msg"></p>
 </div>

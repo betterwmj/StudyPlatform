@@ -7,6 +7,11 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http){
-  let vm = this;
-
+	let vm = this;
+	vm.$onInit = async function(){
+	    let result = await http.get("GetStudentQuestion");
+	    vm.onlineQuesions = result;
+	    console.log(result);
+	    $scope.$applyAsync(null);
+	}
 }
