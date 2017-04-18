@@ -28,9 +28,11 @@ import homeWorkHistory from "./component/homeWorkHistory/homeWorkHistory.js";
 import onlineAnswer from "./component/onlineAnswer/onlineAnswer.js";
 import studentTestPaperResultDetail from "./component/studentTestPaperResultDetail/studentTestPaperResultDetail.js";
 import studentHomework from "./component/studentHomework/studentHomework.js";
+import studentHomeworkList from "./component/studentHomeworkList/studentHomeworkList.js";
 import onlineQuestion from "./component/onlineQuestion/onlineQuestion.js";
 import studentCenter from "./component/studentCenter/studentCenter.js";
 import teacherUserInfo from "./component/teacherUserInfo/teacherUserInfo.js";
+import publishHomework from "./component/publishHomework/publishHomework.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -69,6 +71,8 @@ studentHomework(app);
 onlineQuestion(app);
 studentCenter(app);
 teacherUserInfo(app);
+studentHomeworkList(app);
+publishHomework(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 

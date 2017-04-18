@@ -3,7 +3,12 @@
   <ul>
     <li ng-repeat="item in $ctrl.homeworks">
       名称:<a ng-bind="item.homeWorkName" ui-sref="teacher.homeworkDetail({homework:item})"></a><br>
-      计划完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
+      计划完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span><br>
+      状态:
+      <span ng-show="item.status === 0">
+        <a ui-sref="teacher.publishHomework({homework:item})">发布</a>
+      </span>
+      <span ng-show="item.status === 1">已发布</span>
     </li>
   </ul>
 </div>

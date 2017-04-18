@@ -12,7 +12,17 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.subjects = [];
   vm.$onInit = async function(){
     let subjects = await http.get("GetClassSubject");
-    vm.subjects = subjects;
+    let group = [];
+    let temp = [];
+    let len = 3;
+    for(let i = 0 ; i<subjects.length; ++i){
+      temp.push(subjects[i]); 
+      if( temp.length ==3 || i === subjects.length-1){
+        group.push(temp);
+        temp = [];
+      }
+    }
+    vm.subjects = group;
     $scope.$applyAsync(null);
   }
 }
