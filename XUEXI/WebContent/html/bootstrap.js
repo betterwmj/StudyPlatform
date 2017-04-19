@@ -33,6 +33,7 @@ import onlineQuestion from "./component/onlineQuestion/onlineQuestion.js";
 import studentCenter from "./component/studentCenter/studentCenter.js";
 import teacherUserInfo from "./component/teacherUserInfo/teacherUserInfo.js";
 import publishHomework from "./component/publishHomework/publishHomework.js";
+import teacherOnlineAnswerDetail from "./component/teacherOnlineAnswerDetail/teacherOnlineAnswerDetail.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -73,6 +74,7 @@ studentCenter(app);
 teacherUserInfo(app);
 studentHomeworkList(app);
 publishHomework(app);
+teacherOnlineAnswerDetail(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 

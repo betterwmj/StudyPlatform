@@ -8,10 +8,16 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http){
 	let vm = this;
+	vm.onlineQuestions=null;
 	vm.$onInit = async function(){
 	    let result = await http.get("GetStudentQuestion");
 	    vm.onlineQuesions = result;
 	    console.log(result);
 	    $scope.$applyAsync(null);
+//		vm.onlineQuestions.forEach( (item)=>{
+//			item.createTime =new Date(item.createTime.time);
+//		});
+		$scope.$applyAsync(null);
 	}
+
 }

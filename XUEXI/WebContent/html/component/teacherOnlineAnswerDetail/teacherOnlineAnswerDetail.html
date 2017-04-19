@@ -1,0 +1,11 @@
+<div>
+      <p>标题:
+        <span ng-bind="$ctrl.onlineQuesionsDetail.questionTitle"></span>&nbsp;
+      <p>问题:<br>
+        <span ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></span><br>
+      <button type="button" class="btn btn-default" ng-click="$ctrl.reply()">回复</button><br>
+      <div ng-show="$ctrl.isShow">
+	      <textarea rows="8" cols="35"></textarea><br>
+	      <button type="button" class="btn btn-default" ng-click="$ctrl.sure()">确认</button>
+      </div>
+ </div>

@@ -411,6 +411,24 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.onlineAnswerDetail",
+				url: '/onlineAnswerDetail',
+				params:{
+					onlineQuestionsDetail:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherOnlineAnswerDetail"
+					},
+				}
+			},
+			{
 				name:"teacher.UserInfo",
 				url: '/UserInfo',
 				views:{
@@ -425,6 +443,7 @@ export function routerConfig($stateProvider){
 					},
 				}
 			},
+			
   	];
 	states.forEach( (state)=>{
 		$stateProvider.state(state);

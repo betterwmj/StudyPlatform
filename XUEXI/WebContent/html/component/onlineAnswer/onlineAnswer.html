@@ -1,14 +1,23 @@
 <div>
 	学生疑问
-
-  <div class="form-group" ng-repeat="onlineQuesions in $ctrl.onlineQuesions">
-     <label>提问者</label>
-      <input type="text" class="form-control" ng-model="onlineQuesions.studentId">
-      <label>问题</label>
-      <input type="text" class="form-control" ng-model="onlineQuesions.questionTitle">
-  </div>
-   <div class="col-sm-offset-2 col-sm-10">
-     <button type="button" class="btn btn-default" ng-click="$ctrl.reply()">回复</button>
-   </div>
+           <table class="table table-striped">
+                <caption>QuestionList</caption>
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    <th>学生</th>
+                    <th>时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="onlineQuesions in $ctrl.onlineQuesions ">
+                        <td ng-bind="onlineQuesions.studentId"></td>
+                      <!--   <td ng-bind="onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td> -->
+                        <td> 
+                        	<a class="btn btn-default" ui-sref="teacher.onlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions})">查看详情</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
    <p ng-bind="$ctrl.msg"></p>
 </div>
