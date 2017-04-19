@@ -2,7 +2,7 @@
   <a ui-sref="student.homework">返回</a>
   <p>作业列表:</p>
   <div ng-repeat="item in $ctrl.homeworkList">
-    <p ng-bind="item.homeWorkName"></p>
+    <a ng-bind="item.homeWorkName" ui-sref="student.studentHomeworkDetail({homework:item})"></a>
     <p>
       预定完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
     </p>
