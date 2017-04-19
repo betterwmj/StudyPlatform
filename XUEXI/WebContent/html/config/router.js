@@ -127,6 +127,24 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"student.studentHomeworkDetail",
+				url: '/studentHomeworkDetail',
+				params:{
+					homework:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentHomeworkDetail"
+					}
+				}
+			},
+			{
 				name:"student.onlineQuestion",
 				url: '/onlineQuestion',
 				views:{

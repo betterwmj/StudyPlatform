@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.bean.HomeworkResult;
@@ -55,6 +57,9 @@ public class SubmitHomework extends HttpServlet {
 			e1.printStackTrace();
 			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("无效的参数")).toString());
 		}
+		HttpSession session = request.getSession();
+		Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
+		String studentID = userInfo.get("id");
 		HomeworkResult homeWork=new HomeworkResult(); 
         JSONObject jo = JSONObject.fromObject(json);
         JSONArray array=jo.getJSONArray("homeworkResult");
@@ -68,7 +73,7 @@ public class SubmitHomework extends HttpServlet {
         	list.add(p);
         }
         homeWork.setHomeworkId(Integer.parseInt(jo.getString("homeworkID")));
-        homeWork.setStudentId(Integer.parseInt(jo.getString("studentID")));
+        homeWork.setStudentId(Integer.parseInt(studentID));
         homeWork.setEvaluation(jo.getString("evaluation"));
         homeWork.setTime(time);
         boolean resultCode;

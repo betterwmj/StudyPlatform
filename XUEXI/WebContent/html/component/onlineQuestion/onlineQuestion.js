@@ -7,6 +7,6 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
-  let vm = this;
-
+	let vm = this;
+	
 }
