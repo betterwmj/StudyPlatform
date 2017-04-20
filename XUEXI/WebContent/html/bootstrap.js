@@ -76,11 +76,8 @@ studentCenter(app);
 teacherUserInfo(app);
 studentHomeworkList(app);
 publishHomework(app);
-<<<<<<< HEAD
 teacherOnlineAnswerDetail(app);
-=======
 studentHomeworkDetail(app);
->>>>>>> bd45427945eae85065377b203be7d2d3452cc6c6
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 

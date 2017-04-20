@@ -5,7 +5,8 @@
         <span ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></span><br>
       <button type="button" class="btn btn-default" ng-click="$ctrl.reply()">回复</button><br>
       <div ng-show="$ctrl.isShow">
-	      <textarea rows="8" cols="35"></textarea><br>
+	      <textarea rows="8" cols="35" ng-model="$ctrl.answerContent"></textarea><br>
 	      <button type="button" class="btn btn-default" ng-click="$ctrl.sure()">确认</button>
+	      <p ng-bind="$ctrl.msg"></p>
       </div>
  </div>
