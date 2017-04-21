@@ -3,7 +3,10 @@
   <div class="list-group">
     <a ng-repeat="item in $ctrl.subjects track by $index" href="#"
        class="list-group-item" 
-       ng-bind="item.SubjectName" 
-       ui-sref="student.studentHomeworkList({subject:item})"></a>
+       ui-sref="student.studentHomeworkList({subject:item})"
+       style="position: relative;">
+       <span ng-bind="item.SubjectName" ></span>
+       <span class="glyphicon glyphicon-menu-right" aria-hidden="true" style="float: right;right: 2%;"></span>
+    </a>
   </div>
 </div>
