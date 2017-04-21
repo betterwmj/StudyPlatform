@@ -43,7 +43,11 @@ export let dependent = [
   'ngCookies','ui.router','ui.bootstrap','ng',
 ];
 export let app = angular.module(name,dependent);
-
+app.config(["$cookiesProvider",function($cookiesProvider){
+  let curr = new Date().getTime();
+  curr += 1000*60*60*24*120;//120天cookie过期
+  $cookiesProvider.defaults.expires = new Date(curr);
+}]);
 root(app);
 login(app);
 tophead(app);
