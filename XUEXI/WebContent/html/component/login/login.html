@@ -1,46 +1,48 @@
-<form>
-  <h3>登录</h3>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">用户名</label>
-    <span ng-bind="$ctrl.errorMsg.userName" ng-show="$ctrl.errorMsg.userName"
-          class="alert alert-warning" role="alert"></span>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" placeholder="用户名" ng-model="$ctrl.userInfo.userName">
+<div class="page-login">
+  <form>
+    <h3 class="text-center">登录</h3>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">用户名</label>
+      <span ng-bind="$ctrl.errorMsg.userName" ng-show="$ctrl.errorMsg.userName"
+            class="alert alert-warning" role="alert"></span>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" placeholder="用户名" ng-model="$ctrl.userInfo.userName">
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label class="col-sm-2 control-label">密码</label>
-    <span ng-bind="$ctrl.errorMsg.password" ng-show="$ctrl.errorMsg.password"
-          class="alert alert-warning" role="alert"></span>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" placeholder="密码" ng-model="$ctrl.userInfo.password">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">密码</label>
+      <span ng-bind="$ctrl.errorMsg.password" ng-show="$ctrl.errorMsg.password"
+            class="alert alert-warning" role="alert"></span>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" placeholder="密码" ng-model="$ctrl.userInfo.password">
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div class="radio">
-      <label>
-        <input type="radio" name="user_role" ng-value="1" ng-model="$ctrl.userInfo.type">老师
-      </label>
+    <div class="form-group">
+      <div class="radio">
+        <label>
+          <input type="radio" name="user_role" ng-value="1" ng-model="$ctrl.userInfo.type">老师
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="user_role" value="0" ng-model="$ctrl.userInfo.type">学生
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="$ctrl.remember">记住密码
+        </label>
+      </div>
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="user_role" value="0" ng-model="$ctrl.userInfo.type">学生
-      </label>
+    <div class="form-group">
+      <div class="alert alert-danger" role="alert" 
+          ng-show="$ctrl.loginResultMsg" ng-bind="$ctrl.loginResultMsg"></div>
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-default" ng-click="$ctrl.login()">登录</button>
+        <a type="button" class="btn btn-default" ui-sref="teacher.register">教师注册</a>
+        <a type="button" class="btn btn-default" ui-sref="student.register">学生注册</a>
+      </div>
     </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" ng-model="$ctrl.remember">记住密码
-      </label>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="alert alert-danger" role="alert" 
-         ng-show="$ctrl.loginResultMsg" ng-bind="$ctrl.loginResultMsg"></div>
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="button" class="btn btn-default" ng-click="$ctrl.login()">登录</button>
-      <a type="button" class="btn btn-default" ui-sref="teacher.register">教师注册</a>
-      <a type="button" class="btn btn-default" ui-sref="student.register">学生注册</a>
-    </div>
-  </div>
-</form>
+  </form>
+</div>
