@@ -3,10 +3,10 @@ export let name = "login";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/login/login.html",
-    controller:["$scope","$element","$state",'$cookies',"http",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http){
+function controller($scope,$element,$state,$cookies,http,$uibModal){
   let vm = this;
   vm.userInfo = {
     userName:"",
@@ -32,6 +32,7 @@ function controller($scope,$element,$state,$cookies,http){
 
   async function login(){
     if( false === loginCheck() ){
+      
       return;
     }
     
@@ -42,7 +43,14 @@ function controller($scope,$element,$state,$cookies,http){
     try {
       result = await http.post("Login",userData);
     } catch (error) {
-      vm.loginResultMsg = error;
+      //vm.loginResultMsg = error;
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return error;}
+        }
+      });
       $scope.$applyAsync(null);
       return;
     }

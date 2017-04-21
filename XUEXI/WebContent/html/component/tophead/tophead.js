@@ -14,7 +14,7 @@ function controller($scope,$element,$state,$cookies,http){
   }
 
   vm.logout = function(){
-    $cookies.remove("userInfo");
+    //$cookies.remove("userInfo");
     $state.go("login");
   }
 }

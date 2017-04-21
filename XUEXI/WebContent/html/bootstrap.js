@@ -3,6 +3,7 @@ import angularCookies from "angular-cookies";
 import angularUIRouter from "angular-ui-router";
 import angularUIBootstrap from "angular-ui-bootstrap";
 import root from "./component/root/root.js";
+import commonDialog from "./component/commonDialog/commonDialog.js";
 import login from "./component/login/login.js";
 import tophead from "./component/tophead/tophead.js";
 import studentSidebar from "./component/studentSidebar/studentSidebar.js";
@@ -48,6 +49,7 @@ app.config(["$cookiesProvider",function($cookiesProvider){
   curr += 1000*60*60*24*120;//120天cookie过期
   $cookiesProvider.defaults.expires = new Date(curr);
 }]);
+commonDialog(app);
 root(app);
 login(app);
 tophead(app);
