@@ -12,4 +12,7 @@ function controller($scope,$element,$state,$cookies,http){
   vm.$onInit = function(){
     
   }
+  vm.onActive = function($event){
+    $event;
+  }
 }
