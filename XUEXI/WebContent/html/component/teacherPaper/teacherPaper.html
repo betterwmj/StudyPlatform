@@ -1,54 +1,54 @@
-<form class="form-horizontal">
-    创建试卷
-  <div class="form-group">
-    <label class="col-sm-2 control-label">试卷名称</label><span ng-bind="errorMsg.papername"></span>
-    <div class="col-sm-10">
+<div>
+  <form>
+    <h3>创建试卷</h3>
+    <div class="form-group">
+      <label>试卷名称</label><span ng-bind="errorMsg.papername"></span>
       <input type="text" class="form-control" placeholder="试卷名称" ng-model="$ctrl.paper.papername">
     </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">选择题目类型</label>
-    <select class="form-control" ng-model="$ctrl.currentType"
-      ng-options="item as item.label for item in $ctrl.types">
-    </select>
-  </div>
-  <div class="form-group">
-    <label>题目</label>
-    <div ng-if="$ctrl.currentType.value === 1">
-      <div ng-repeat="question in $ctrl.questions track by $index">
-        <p>
-          <span ng-bind="$index"></span>&nbsp;&nbsp;
-          <span ng-bind="question.title"></span>
-        </p>
-        <div>
-          <p>A.<span ng-bind="question.optionA"></span>&nbsp;&nbsp;</p>
-          <p>B.<span ng-bind="question.optionB"></span>&nbsp;&nbsp;</p>
-          <p>C.<span ng-bind="question.optionC"></span>&nbsp;&nbsp;</p>
-          <p>D.<span ng-bind="question.optionD"></span>&nbsp;&nbsp;</p>
-          <p>正确答案:<span ng-bind="question.answer"></span></p>
+    <div class="form-group">
+      <label>选择题目类型</label>
+      <select class="form-control" ng-model="$ctrl.currentType"
+        ng-options="item as item.label for item in $ctrl.types">
+      </select>
+    </div>
+    <div class="form-group">
+      <label>备选题目:</label>
+      <div ng-if="$ctrl.currentType.value === 1">
+        <div ng-repeat="question in $ctrl.questions track by $index" class="box">
+          <p>
+            <span ng-bind="$index+1"></span>&nbsp;&nbsp;
+            <span ng-bind="question.title"></span>
+          </p>
+          <div>
+            <p>A.<span ng-bind="question.optionA"></span>&nbsp;&nbsp;</p>
+            <p>B.<span ng-bind="question.optionB"></span>&nbsp;&nbsp;</p>
+            <p>C.<span ng-bind="question.optionC"></span>&nbsp;&nbsp;</p>
+            <p>D.<span ng-bind="question.optionD"></span>&nbsp;&nbsp;</p>
+            <p>正确答案:<span ng-bind="question.answer"></span></p>
+            <p>
+              <input type="checkbox" ng-model="question.isChecked" ng-click="$ctrl.append(question)">
+              分数:<input type="number" ng-model="question.score">
+            </p>
+            <br>
+          </div>
+        </div>
+        
+      </div>
+      <div ng-if="$ctrl.currentType.value === 2" >
+        <div ng-repeat="question in $ctrl.questions track by $index" class="box">
+          <p ng-bind="question.title"></p>
+          <p ng-bind="question.answer"></p>
           <p>
             <input type="checkbox" ng-model="question.isChecked" ng-click="$ctrl.append(question)">
             分数:<input type="number" ng-model="question.score">
           </p>
-          <br>
         </div>
       </div>
-      
+      <ul uib-pagination  items-per-page="$ctrl.pageItem"
+            total-items="$ctrl.allQuestion.length" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
     </div>
-    <div ng-if="$ctrl.currentType.value === 2">
-      <div ng-repeat="question in $ctrl.questions track by $index">
-        <p ng-bind="question.title"></p>
-        <p ng-bind="question.answer"></p>
-        <p>
-          <input type="checkbox" ng-model="question.isChecked" ng-click="$ctrl.append(question)">
-          分数:<input type="number" ng-model="question.score">
-        </p>
-      </div>
-    </div>
-    <ul uib-pagination  items-per-page="$ctrl.pageItem"
-          total-items="$ctrl.allQuestion.length" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
-  </div>
-  
-  <button type="button" class="btn btn-default" ng-click="$ctrl.createPager()">创建试卷</button>
-  <p ng-bind="$ctrl.msg"></p>
-</form>
+    
+    <button type="button" class="btn btn-default" ng-click="$ctrl.createPager()">创建试卷</button>
+    <p ng-bind="$ctrl.msg"></p>
+  </form>
+</div>

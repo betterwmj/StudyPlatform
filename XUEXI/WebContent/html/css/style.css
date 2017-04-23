@@ -1,11 +1,22 @@
 body{
   background-color: #F5F5F5;
 }
+.top-head{
+  margin-top: 20px;
+}
 login div.page-login{
   background-color: white;
   width: 95%;
   margin-left: auto;
   margin-right: auto;
+}
+.box{
+  background-color: white;
+  box-shadow: 2px 2px 5px #888888;
+  padding-top: 10px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 }
 login form{
   padding-top: 20px;

@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
-  <li role="presentation" ui-sref="student.test" ui-sref-active="active"><a>测试</a></li>
-  <li role="presentation" ui-sref="student.homework" ui-sref-active="active"><a>作业</a></li>
-  <li role="presentation" ui-sref="student.onlineQuestion" ui-sref-active="active"><a>答疑</a></li>
-  <li role="presentation" ui-sref="student.center" ui-sref-active="active"><a>个人中心</a></li>
+  <li role="presentation" ui-sref="student.test" ng-class="{'active':$ctrl.isActive[0]}"><a>测试</a></li>
+  <li role="presentation" ui-sref="student.homework" ng-class="{'active':$ctrl.isActive[1]}"><a>作业</a></li>
+  <li role="presentation" ui-sref="student.onlineQuestion" ng-class="{'active':$ctrl.isActive[2]}"><a>答疑</a></li>
+  <li role="presentation" ui-sref="student.center" ng-class="{'active':$ctrl.isActive[3]}"><a>个人中心</a></li>
 </ul>

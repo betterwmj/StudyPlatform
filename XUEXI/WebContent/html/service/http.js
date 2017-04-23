@@ -12,7 +12,6 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike){
   async function post(url,data,headers){
     url = baseUrl + url;
     headers = headers || {};
-    console.log("http,post",url,data);
     let deferred = $q.defer();
     let response = null;
     try {
@@ -37,7 +36,6 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike){
 
   async function get(url,data){
     url = baseUrl + url;
-    console.log("http,get",url,data);
     let deferred = $q.defer();
     let response = null;
     try {
