@@ -1,7 +1,9 @@
 <div>
-  <p>作业列表</p>
-  <ul>
-    <li ng-repeat="item in $ctrl.homeworks">
+  <div class="box top-return">
+    <span>作业列表</span>
+    <a ui-sref="teacher.homework" class="btn btn-default">返回</a>
+  </div>
+  <div ng-repeat="item in $ctrl.homeworks" class="box-radius">
       名称:<a ng-bind="item.homeWorkName" ui-sref="teacher.homeworkDetail({homework:item})"></a><br>
       计划完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span><br>
       状态:
@@ -9,6 +11,5 @@
         <a ui-sref="teacher.publishHomework({homework:item})">发布</a>
       </span>
       <span ng-show="item.status === 1">已发布</span>
-    </li>
-  </ul>
+  </div>
 </div>

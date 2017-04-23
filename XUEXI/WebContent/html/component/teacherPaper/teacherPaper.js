@@ -9,7 +9,7 @@ export default function root(app){
 function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.paper = {
-    papername:"",
+    papername:new Date().toLocaleString(),
     papertitles:[]
   };
   vm.types = [
@@ -21,6 +21,7 @@ function controller($scope,$element,$state,$cookies,http){
   vm.allQuestion = [];
   vm.currentPage = 1;
   vm.pageItem = 5;
+  vm.maxSize = 5;
   vm.msg = "";
   vm.$onInit = async function(){
     let rs = await getQuestions(1);

@@ -14,7 +14,7 @@
     <div class="form-group">
       <label>备选题目:</label>
       <div ng-if="$ctrl.currentType.value === 1">
-        <div ng-repeat="question in $ctrl.questions track by $index" class="box">
+        <div ng-repeat="question in $ctrl.questions track by $index" class="box-radius">
           <p>
             <span ng-bind="$index+1"></span>&nbsp;&nbsp;
             <span ng-bind="question.title"></span>
@@ -35,7 +35,7 @@
         
       </div>
       <div ng-if="$ctrl.currentType.value === 2" >
-        <div ng-repeat="question in $ctrl.questions track by $index" class="box">
+        <div ng-repeat="question in $ctrl.questions track by $index" class="box-radius">
           <p ng-bind="question.title"></p>
           <p ng-bind="question.answer"></p>
           <p>
@@ -44,7 +44,9 @@
           </p>
         </div>
       </div>
-      <ul uib-pagination  items-per-page="$ctrl.pageItem"
+      <ul uib-pagination  items-per-page="$ctrl.pageItem" max-size="$ctrl.maxSize"
+            boundary-link-numbers="true" rotate="false" 
+            previous-text="上一页" next-text="下一页" 
             total-items="$ctrl.allQuestion.length" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
     </div>
     

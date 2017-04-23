@@ -10,13 +10,21 @@ login div.page-login{
   margin-left: auto;
   margin-right: auto;
 }
-.box{
+.box-radius{
   background-color: white;
   box-shadow: 2px 2px 5px #888888;
   padding-top: 10px;
   padding-left: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
+}
+.box{
+  background-color: white;
+  box-shadow: 2px 2px 5px #888888;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 5px;
+  margin-bottom: 10px;
 }
 login form{
   padding-top: 20px;
@@ -27,4 +35,8 @@ login form{
   border-top-width: 8px;
   border-top-style: inset;
   border-top-color: #00BFFF;
+}
+.top-return a{
+  margin-left: 80%;
+  margin-bottom: 10px
 }

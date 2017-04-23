@@ -1,6 +1,10 @@
-<div>
-  <a ui-sref="teacher.publishPaper">返回</a>
-  <table class="table table-striped">
+<div class="paper-result-page">
+  <div class="box top-return">
+    <span ng-bind="$ctrl.paper.testName"></span>
+    <a ui-sref="teacher.publishPaper" class="btn btn-default ">返回</a>
+  </div>
+  <div class="box">
+    <table class="table table-striped">
       <caption>试卷成绩列表</caption>
       <thead>
         <tr>
@@ -23,4 +27,5 @@
         </tr>
       </tbody>
     </table>
+  </div>
 </div>

@@ -1,7 +1,9 @@
 <div>
-  <a ui-sref="teacher.paperResult({paper:{testpaperID:$ctrl.paperResult.paperId}})">返回</a>
+  <div class="box top-return">
+    <a ui-sref="teacher.paperResult({paper:{testpaperID:$ctrl.paperResult.paperId}})" class="btn btn-default ">返回</a>
+  </div>
   <p>查看学生答题详情</p>
-  <div ng-repeat="item in $ctrl.paperResultList">
+  <div ng-repeat="item in $ctrl.paperResultList" class="box-radius">
     <p>题目:<span ng-bind="item.title.title"></span></p>
     <div ng-if="item.title.type === 1">
       <p>A.<span ng-bind="item.title.optionA"></span></p>

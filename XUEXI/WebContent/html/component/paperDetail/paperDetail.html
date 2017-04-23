@@ -1,7 +1,9 @@
-<div>
-  <a ui-sref="teacher.publishPaper">返回</a>
-  <p ng-bind="vm.paper.testName"></p>
-  <div ng-repeat="question in $ctrl.paperDetail">
+<div class="paper-detail-page">
+  <div class="box top-return">
+    <span ng-bind="$ctrl.paper.testName"></span>
+    <a ui-sref="teacher.publishPaper" class="btn btn-default">返回</a>
+  </div>
+  <div ng-repeat="question in $ctrl.paperDetail" class="box-radius">
     <p>题号:<span ng-bind="$index+1"></span></p>
     <p ng-bind="question.title"></p>
     <div ng-if="question.type === 1">

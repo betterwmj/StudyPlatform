@@ -23,7 +23,7 @@ function controller($scope,$element,$state,$cookies,http){
     "optionD":"",
   };
   vm.homework = {
-    name:"",
+    name:new Date().toLocaleString(),
     finishTime:null,
     questions:[]
   };
