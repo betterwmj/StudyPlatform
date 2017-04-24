@@ -32,7 +32,6 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
 
   async function login(){
     if( false === loginCheck() ){
-      
       return;
     }
     
@@ -58,6 +57,8 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       result.password = vm.userInfo.password;
     }
     if(userData.type === 0 ){
+      let classInfo = await http.get("GetClassNameByClassId",{classID:result.classId});
+      result.classInfo = classInfo;
       $cookies.putObject("userInfo",result);
       $state.go("student.test");
     }else{

@@ -1,8 +1,26 @@
-<div>
-  <p>教师个人中心</p>
-  <ul class="nav nav-tabs nav-stacked">
-    <li role="presentation"><a ui-sref="teacher.UserInfo">个人信息</a></li>
-    <li role="presentation"><a ui-sref="teacher.teacherManagerClassCreate">创建班级</a></li>
-    <li role="presentation"><a ui-sref="teacher.teacherAssignStudent">分配班级</a></li>
-  </ul>
+<div class="teacher-center-page">
+  <div class="panel panel-success" ui-sref="teacher.UserInfo">
+    <div class="panel-heading">
+      个人信息
+    </div>
+    <div class="panel-body">
+      查看和修改教师个人信息
+    </div>
+  </div>
+  <div class="panel panel-info" ui-sref="teacher.teacherManagerClassCreate">
+    <div class="panel-heading">
+      创建班级
+    </div>
+    <div class="panel-body">
+      为学生创建班级信息
+    </div>
+  </div>
+  <div class="panel panel-success" ui-sref="teacher.teacherAssignStudent">
+    <div class="panel-heading">
+      分配班级
+    </div>
+    <div class="panel-body">
+      管理学生班级的分配
+    </div>
+  </div>
 </div>

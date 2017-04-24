@@ -22,6 +22,7 @@ login div.page-login{
   background-color: white;
   box-shadow: 2px 2px 5px #888888;
   padding-top: 10px;
+  padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 5px;
   margin-bottom: 10px;
@@ -39,4 +40,7 @@ login form{
 .top-return a{
   margin-left: 80%;
   margin-bottom: 10px
+}
+.teacher-center-page{
+  margin-top: 5px;
 }

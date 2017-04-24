@@ -1,7 +1,7 @@
 <div>
-  学生做试卷 <button class="btn btn-default" ng-click="$ctrl.submitResult()">提交答案</button>
-  <p ng-bind="$ctrl.msg"></p>
-  <div>
+  <h3>学生做试卷</h3> 
+  <button class="btn btn-default" ng-click="$ctrl.submitResult()">提交答案</button>
+  <div class="box-radius">
     <p ng-bind="$ctrl.currQuestion.title"></p>
     <div ng-if="$ctrl.currQuestion.type === 1">
       <p>A.<span ng-bind="$ctrl.currQuestion.optionA"></span>&nbsp;&nbsp;</p>

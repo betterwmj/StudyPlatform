@@ -1,15 +1,23 @@
 <div>
   <h3><span ng-bind="$ctrl.subject.SubjectName"></span>的试卷列表</h3>
-  <button class="btn btn-default" ng-click="$ctrl.changePaperType(false)">未作答</button>
-  <button class="btn btn-default" ng-click="$ctrl.changePaperType(true)">已作答</button>
-  <div ng-repeat="paper in $ctrl.papers">
-    <div ng-show="$ctrl.currShowIsTest === paper.isTest">
-      <p>试卷名称:
-        <span ng-bind="paper.testName"></span>&nbsp;
-        创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
-        <a class="btn btn-default" ng-if="paper.isTest === false"
+  <div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default" ng-click="$ctrl.changePaperType(true)"
+        ng-bind-template="未作答({{$ctrl.paperUnfinish.length}})">
+      </button>
+      <button type="button" class="btn btn-default" ng-click="$ctrl.changePaperType(false)"
+        ng-bind-template="已作答({{$ctrl.paperFinish.length}})">
+      </button>
+    </div>
+  </div>
+  <div ng-repeat="paper in $ctrl.displayPaper" class="box-radius">
+    <div>
+      <p>试卷名称:<span ng-bind="paper.testName"></span></p>
+      <p>创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
+      <p>
+        <a class="btn btn-default" ng-show="$ctrl.showFlag === true"
           ui-sref="student.studentTestPaper({paper:paper})">进行考试</a>
-        <a class="btn btn-default" ng-if="paper.isTest === true"
+        <a class="btn btn-default" ng-show="$ctrl.showFlag === false"
           ui-sref="student.studentTestPaperResultDetail({paper:paper})">查看结果</a>
       </p>
     </div>

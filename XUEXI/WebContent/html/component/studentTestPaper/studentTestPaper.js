@@ -3,10 +3,10 @@ export let name = "studentTestPaper";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/studentTestPaper/studentTestPaper.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$uibModal",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams){
+function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
   let vm = this;
   vm.msg = "";
   vm.paper = null;
@@ -59,9 +59,21 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     });
     try {
       let rs = await http.post("SubmitPaper",result);
-      vm.msg = "提交答案成功";
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "提交答案成功";}
+        }
+      });
     } catch (error) {
-      vm.msg = "提交答案失败";
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "提交答案失败";}
+        }
+      });
     }
     $scope.$applyAsync(null);
   }

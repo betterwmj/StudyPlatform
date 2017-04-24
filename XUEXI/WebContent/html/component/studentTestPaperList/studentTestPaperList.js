@@ -10,14 +10,15 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.subject = null;
-  vm.currShowIsTest = false;
+  vm.paperUnfinish = [];
+  vm.paperFinish = [];
+  vm.displayPaper = [];
+  vm.showFlag = true;
   vm.$onInit = async function(){
-    console.log($stateParams);
     vm.subject = $stateParams.subject;
     let rs = await getPaper(0);
     $scope.$applyAsync(null);
   }
-
   async function  getPaper(isTest){
     vm.papers = await http.get("GetPaper",{
       subjectId:vm.subject.SubjectID,
@@ -34,14 +35,20 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         }
       });
       if( findResult !== undefined ){
-        paper.isTest = true;
+        vm.paperFinish.push(paper);
       }else{
-        paper.isTest = false;
+        vm.paperUnfinish.push(paper);
       }
     });
+    vm.displayPaper = vm.paperUnfinish;
   }
 
-  vm.changePaperType = function(type){
-    vm.currShowIsTest = type;
+  vm.changePaperType = function(flag){
+    vm.showFlag = flag;
+    if( flag ){
+      vm.displayPaper = vm.paperUnfinish;
+    }else{
+      vm.displayPaper = vm.paperFinish;
+    }
   }
 }

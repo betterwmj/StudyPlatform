@@ -10,11 +10,14 @@ function controller($scope,$element,$state,http){
 	let vm=this;
 	vm.$onInit=init();
 	vm.currentSubjectName=null;
+	vm.classes = [];//教授的班级信息
 	async function init(){
 		let userinfo = await http.get("GetUserInfoByName");
-	    vm.userinfo = userinfo;
-	    getSubjectName();
-	    $scope.$applyAsync(null);
+		let classes = await http.get("GetTeacherClasses");
+		vm.userinfo = userinfo;
+		vm.classes = classes;
+		getSubjectName();
+		$scope.$applyAsync(null);
 	}
 	async function getSubjectName(){
 		  let result = await http.get("GetAllSubject");
@@ -22,13 +25,13 @@ function controller($scope,$element,$state,http){
 		  vm.currentSubjectName = vm.subject[vm.userinfo.subjectId-1];
 		  $scope.$applyAsync(null);
 	}
-    vm.userinfo = {
-	    userName:"",
-	    realName:"",
-	    password:"",
-	    subjectID:"",
-	    teacherID:""
-	 };
+	vm.userinfo = {
+		userName:"",
+		realName:"",
+		password:"",
+		subjectID:"",
+		teacherID:""
+	};
 	vm.updateinfo=async function(){
 		let data={
 			"userName" :vm.userinfo.userName,
@@ -45,5 +48,4 @@ function controller($scope,$element,$state,http){
 		}
 		$scope.$applyAsync(null);	
 	}
-	
 }

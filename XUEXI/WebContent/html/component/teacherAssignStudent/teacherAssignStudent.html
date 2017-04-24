@@ -1,14 +1,14 @@
-<form class="form-horizontal">
-    分班
+<form class="box">
+  <h3>分班</h3>
   <div class="form-group">
-    <label class="col-sm-2 control-label">选择专业</label>
+    <label >选择专业</label>
     <select class="form-control" 
         ng-model="$ctrl.currentSpecialities"
         ng-options="item as item.specialitiesName for item in $ctrl.specialitiesList">
     </select>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label">选择班级</label>
+    <label >选择班级</label>
     <select class="form-control" 
         ng-model="$ctrl.currentClass"
         ng-options="item as item.className for item in $ctrl.classes">
@@ -22,7 +22,7 @@
     </span>
   </div>
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div>
       <button type="button" class="btn btn-default" ng-click="$ctrl.toAssign()">分配学生</button>
       <p ng-bind="$ctrl.msg"></p>
     </div>

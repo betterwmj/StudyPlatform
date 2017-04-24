@@ -3,10 +3,10 @@ export let name = "teacherPaper";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/teacherPaper/teacherPaper.html",
-    controller:["$scope","$element","$state",'$cookies',"http",controller]
+    controller:["$scope","$element","$state",'$cookies',"$uibModal","http",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http){
+function controller($scope,$element,$state,$cookies,$uibModal,http){
   let vm = this;
   vm.paper = {
     papername:new Date().toLocaleString(),
@@ -32,9 +32,21 @@ function controller($scope,$element,$state,$cookies,http){
     vm.msg = "";
     let result = await http.post("CreatePaper",vm.paper);
     if( result === true ){
-      vm.msg = "试卷创建成功";
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "创建试卷成功";}
+        }
+      });
     }else{
-      vm.msg = "试卷创建失败";
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "试卷创建失败";}
+        }
+      });
     }
     $scope.$applyAsync(null);
   };

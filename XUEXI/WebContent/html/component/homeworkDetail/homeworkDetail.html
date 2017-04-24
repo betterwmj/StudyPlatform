@@ -1,7 +1,9 @@
 <div>
-  <a ui-sref="teacher.homeWorkHistory">返回</a>
-  <p ng-bind="$ctrl.homework.homeWorkName"></p>
-  <div ng-repeat="item in $ctrl.homeworkDetail">
+  <div class="box top-return">
+    <span ng-bind="$ctrl.homework.homeWorkName"></span>
+    <a ui-sref="teacher.homeWorkHistory" class="btn btn-default ">返回</a>
+  </div>
+  <div ng-repeat="item in $ctrl.homeworkDetail" class="box-radius">
     <p ng-bind="item.title"></p>
     <div ng-if="item.type === 1">
       <p>A.<span ng-bind="item.optionA"></span>&nbsp;&nbsp;</p>
