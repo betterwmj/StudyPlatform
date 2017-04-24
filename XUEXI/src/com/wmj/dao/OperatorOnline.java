@@ -59,6 +59,47 @@ public class OperatorOnline {
 	return list;
    }
 	/*
+	 *根据问题id获取所有回复
+	 */
+	public static List<OnlineAnswer> getQuestionAnswer(int questionId) throws Exception{
+		Connection conn = null;
+		List<OnlineAnswer> list = new ArrayList<OnlineAnswer>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+	    sql="select * from online_answer where online_question_id=?   ";
+		
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, questionId);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+			   OnlineAnswer answer=new OnlineAnswer();
+			   answer.setId(rs.getInt("id"));
+			   answer.setOnlineQuestionId(rs.getInt("online_question_id"));
+			   answer.setAnswerId(rs.getInt("answer_id"));
+			   answer.setAnswer(rs.getString("answer"));
+			   answer.setAnswerTime(rs.getTimestamp("answertime"));
+               list.add(answer);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+   }
+	/*
 	 * 学生提问，若提交成功，返回true，否则返回false 
 	 */
 	public static boolean insertQuestion(OnlineQuestion question) throws Exception{
