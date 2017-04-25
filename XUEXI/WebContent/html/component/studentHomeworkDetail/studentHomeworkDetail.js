@@ -3,10 +3,10 @@ export let name = "studentHomeworkDetail";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/studentHomeworkDetail/studentHomeworkDetail.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$uibModal",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams){
+function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
   let vm = this;
   let index = 0;
   vm.msg = "";
@@ -45,12 +45,30 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     try {
       let result = await http.post("SubmitHomework",data);
       if( result === true ){
-        vm.msg = "提交作业成功";
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "提交作业成功";}
+          }
+        });
       }else{
-        vm.msg = "提交作业失败";
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "提交作业失败";}
+          }
+        });
       }
     } catch (error) {
-      vm.msg = "提交作业成功";
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "提交作业失败";}
+        }
+      });
     }finally{
       $scope.$applyAsync(null);
     }

@@ -1,11 +1,10 @@
 <div>
-  studentHomeworkDetail
-  <p>
+  <div class="box">
     <span ng-bind="$ctrl.homework.homeWorkName"></span>
     <button class="btn btn-default" ng-click="$ctrl.submit()">提交</button>
     <span ng-bind="$ctrl.msg"></span>
-  </p>
-  <div>
+  </div>
+  <div class="box-radius">
     <p ng-bind="$ctrl.curr.title"></p>
     <div ng-if="$ctrl.curr.type === 1">
       <p>A.<span ng-bind="$ctrl.curr.optionA"></span>&nbsp;&nbsp;</p>

@@ -30,6 +30,7 @@ import onlineAnswer from "./component/onlineAnswer/onlineAnswer.js";
 import studentTestPaperResultDetail from "./component/studentTestPaperResultDetail/studentTestPaperResultDetail.js";
 import studentHomework from "./component/studentHomework/studentHomework.js";
 import studentHomeworkList from "./component/studentHomeworkList/studentHomeworkList.js";
+import studentHomeworkResultDetail from "./component/studentHomeworkResultDetail/studentHomeworkResultDetail.js";
 import onlineQuestion from "./component/onlineQuestion/onlineQuestion.js";
 import studentCenter from "./component/studentCenter/studentCenter.js";
 import teacherUserInfo from "./component/teacherUserInfo/teacherUserInfo.js";
@@ -86,9 +87,12 @@ studentHomeworkList(app);
 publishHomework(app);
 teacherOnlineAnswerDetail(app);
 studentHomeworkDetail(app);
+
 studentOnlineNavigation(app);
 studentPostQuestion(app);
 studentQuestionHistory(app);
+
+studentHomeworkResultDetail(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 

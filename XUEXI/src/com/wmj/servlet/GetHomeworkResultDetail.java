@@ -38,7 +38,7 @@ public class GetHomeworkResultDetail extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String homeworkResultID=request.getParameter("paperResultID");
+		String homeworkResultID=request.getParameter("homeworkResultID");
 		int homeworkResultId=Integer.parseInt(homeworkResultID);
 		try {
 			List<Map<String,Object>> HomeWorkResultDetailMap = OperatorHomeWork.getHomeWorkResultDetail(homeworkResultId);
