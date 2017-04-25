@@ -145,6 +145,21 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"student.question",
+				url: '/question',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentOnlineNavigation"
+					}
+				}
+			},
+			{
 				name:"student.onlineQuestion",
 				url: '/onlineQuestion',
 				views:{
@@ -156,6 +171,36 @@ export function routerConfig($stateProvider){
 					},
 					"content@":{
 						component:"onlineQuestion"
+					}
+				}
+			},
+			{
+				name:"student.postQuestion",
+				url: '/postQuestion',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentPostQuestion"
+					}
+				}
+			},
+			{
+				name:"student.studentQuestionHistory",
+				url: '/studentQuestionHistory',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentQuestionHistory"
 					}
 				}
 			},
