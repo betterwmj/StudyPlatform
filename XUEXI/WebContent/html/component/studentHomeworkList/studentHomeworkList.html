@@ -1,10 +1,25 @@
 <div>
-  <a ui-sref="student.homework">返回</a>
-  <p>作业列表:</p>
-  <div ng-repeat="item in $ctrl.homeworkList">
-    <a ng-bind="item.homeWorkName" ui-sref="student.studentHomeworkDetail({homework:item})"></a>
-    <p>
-      预定完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span>
-    </p>
+  <h3><span ng-bind="$ctrl.subject.SubjectName"></span>的作业列表</h3>
+  <div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default" ng-click="$ctrl.changeHomeworkType(true)"
+        ng-bind-template="未作答({{$ctrl.homeworkListUnFinish.length}})">
+      </button>
+      <button type="button" class="btn btn-default" ng-click="$ctrl.changeHomeworkType(false)"
+        ng-bind-template="已作答({{$ctrl.homeworkListFinish.length}})">
+      </button>
+    </div>
+  </div>
+  <div ng-repeat="item in $ctrl.displayHomeworkList" class="box-radius">
+    <div>
+      <p>试卷名称:<span ng-bind="item.homeWorkName"></span></p>
+      <p>完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
+      <p>
+        <a class="btn btn-default" ng-show="$ctrl.showFlag === true"
+          ui-sref="student.studentHomeworkDetail({homework:item})">完成作业</a>
+        <a class="btn btn-default" ng-show="$ctrl.showFlag === false"
+          ui-sref="student.studentHomeworkResultDetail({homework:item})">查看结果</a>
+      </p>
+    </div>
   </div>
 </div>
