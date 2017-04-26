@@ -8,10 +8,15 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
+
   vm.$onInit = async function(){
-    vm.homework = $stateParams.homework;
+    console.log($stateParams);
+    vm.homework = {
+      homeWorkName:$stateParams.homeWorkName,
+      homeworkId:$stateParams.homeworkId,
+    };
     vm.homeworkDetail = await http.get("GetHomeworkDetail",{
-      homeworkID:vm.homework.homeId
+      homeworkID:vm.homework.homeworkId
     });
     $scope.$applyAsync(null);
   };

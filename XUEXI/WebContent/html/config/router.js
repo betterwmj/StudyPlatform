@@ -322,9 +322,10 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.homeworkDetail",
-				url: '/homeworkDetail',
+				url: '/homeworkDetail/{homeworkId}/{homeWorkName}',
 				params:{
-					homework:null
+					homeWorkName:null,
+					homeworkId:null
 				},
 				views:{
 					"head@":{

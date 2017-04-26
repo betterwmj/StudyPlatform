@@ -4,7 +4,7 @@
     <a ui-sref="teacher.homework" class="btn btn-default">返回</a>
   </div>
   <div ng-repeat="item in $ctrl.homeworks" class="box-radius">
-      名称:<a ng-bind="item.homeWorkName" ui-sref="teacher.homeworkDetail({homework:item})"></a><br>
+      名称:<a ng-bind="item.homeWorkName" ui-sref="teacher.homeworkDetail({homeworkId:item.homeId,homeWorkName:item.homeWorkName})"></a><br>
       计划完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span><br>
       状态:
       <span ng-show="item.status === 0">

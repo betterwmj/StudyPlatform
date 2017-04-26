@@ -1,60 +1,67 @@
-<form class="box" style="padding-bottom: 10px;">
-  <h3>创建作业</h3>
-  <div class="form-group">
-    <label>作业名称</label><span ng-bind="errorMsg.papername"></span>
-    <div>
-      <input type="text" class="form-control" placeholder="输入作业名称" ng-model="$ctrl.homework.name">
-    </div>
-    <label>完成时间</label><span ng-bind="errorMsg.papername"></span>
-    <div>
-      <input type="datetime-local" class="form-control" placeholder="输入作业完成时间" ng-model="$ctrl.homework.finishTime">
-    </div>
+<div>
+  <div class="box top-return">
+    <span ng-bind="$ctrl.homework.homeWorkName"></span>
+    <a ui-sref="teacher.homework" class="btn btn-default ">返回</a>
   </div>
-  <div>
+  <form class="box">
+    <h3>创建作业</h3>
     <div class="form-group">
-      <label>
-        <span ng-bind="$ctrl.currIndex+1"></span>题目
-      </label>
-      <div> 
-        <textarea  class="form-control" rows="3" ng-model="$ctrl.currentQuestion.title"></textarea >
+      <label>作业名称</label><span ng-bind="errorMsg.papername"></span>
+      <div>
+        <input type="text" class="form-control" placeholder="输入作业名称" ng-model="$ctrl.homework.name">
+      </div>
+      <label>完成时间</label><span ng-bind="errorMsg.papername"></span>
+      <div>
+        <input type="datetime-local" class="form-control" placeholder="输入作业完成时间" ng-model="$ctrl.homework.finishTime">
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label>
+          <span ng-bind="$ctrl.currIndex+1"></span>题目
+        </label>
+        <div> 
+          <textarea  class="form-control" rows="3" ng-model="$ctrl.currentQuestion.title"></textarea >
+        </div>
+      </div>
+      <div class="form-group">
+        <label >题目类型</label>
+        <select class="form-control" ng-model="$ctrl.currentQuestion.type"
+          ng-options="item as item.label for item in $ctrl.types">
+        </select>
+      </div>
+      <div class="form-group" ng-if="$ctrl.currentQuestion.type.value===1">
+        <label >选项A</label>
+        <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionA">
+        <label >选项B</label>
+        <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionB">
+        <label >选项C</label>
+        <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionC">
+        <label >选项D</label>
+        <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionD">
+        <label >答案</label>
+        <input type="radio" name="answer" value="A" ng-model="$ctrl.currentQuestion.answer">A
+        <input type="radio" name="answer" value="B" ng-model="$ctrl.currentQuestion.answer">B
+        <input type="radio" name="answer" value="C" ng-model="$ctrl.currentQuestion.answer">C
+        <input type="radio" name="answer" value="D" ng-model="$ctrl.currentQuestion.answer">D
+      </div>
+      <div class="form-group" ng-if="$ctrl.currentQuestion.type.value===2" >
+        <label >答案</label>
+        <input type="radio" name="answer" value="对" ng-model="$ctrl.currentQuestion.answer">对
+        <input type="radio" name="answer" value="错" ng-model="$ctrl.currentQuestion.answer">错
+      </div>
+      <div class="form-group" ng-if="$ctrl.currentQuestion.type.value===3">
+        <label >答案</label>
+        <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.answer">
       </div>
     </div>
     <div class="form-group">
-      <label >题目类型</label>
-      <select class="form-control" ng-model="$ctrl.currentQuestion.type"
-        ng-options="item as item.label for item in $ctrl.types">
-      </select>
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-default" ng-click="$ctrl.createHomework()">创建作业</button>
+        <button type="button" class="btn btn-default" ng-click="$ctrl.upItem()">上一题</button>
+        <button type="button" class="btn btn-default" ng-click="$ctrl.createNextQuestion()">创建下一题</button>
+      </div>
     </div>
-    <div class="form-group" ng-if="$ctrl.currentQuestion.type.value===1">
-      <label >选项A</label>
-      <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionA">
-      <label >选项B</label>
-      <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionB">
-      <label >选项C</label>
-      <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionC">
-      <label >选项D</label>
-      <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.optionD">
-      <label >答案</label>
-      <input type="radio" name="answer" value="A" ng-model="$ctrl.currentQuestion.answer">A
-      <input type="radio" name="answer" value="B" ng-model="$ctrl.currentQuestion.answer">B
-      <input type="radio" name="answer" value="C" ng-model="$ctrl.currentQuestion.answer">C
-      <input type="radio" name="answer" value="D" ng-model="$ctrl.currentQuestion.answer">D
-    </div>
-    <div class="form-group" ng-if="$ctrl.currentQuestion.type.value===2" >
-      <label >答案</label>
-      <input type="radio" name="answer" value="对" ng-model="$ctrl.currentQuestion.answer">对
-      <input type="radio" name="answer" value="错" ng-model="$ctrl.currentQuestion.answer">错
-    </div>
-    <div class="form-group" ng-if="$ctrl.currentQuestion.type.value===3">
-      <label >答案</label>
-      <input type="text" class="form-control"  ng-model="$ctrl.currentQuestion.answer">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="button" class="btn btn-default" ng-click="$ctrl.createHomework()">创建作业</button>
-      <button type="button" class="btn btn-default" ng-click="$ctrl.upItem()">上一题</button>
-      <button type="button" class="btn btn-default" ng-click="$ctrl.createNextQuestion()">创建下一题</button>
-    </div>
-  </div>
-</form>
+  </form>
+</div>
+

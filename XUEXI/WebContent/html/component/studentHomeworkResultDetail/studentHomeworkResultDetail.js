@@ -11,12 +11,14 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.msg = "";
   vm.$onInit = async function(){
    vm.homework = $stateParams.homework;
-   vm.homeworkResult = await http.get("GetHomeworkResult",{
-     homeworkID:vm.homework.homeId
+   console.log(vm.homework);
+   vm.homeworkResults = await http.get("GetHomeworkResult");
+   vm.homeworkResult = vm.homeworkResults.find((item)=>{
+      return item.homework.homeworkId === vm.homework.homeId;
    });
    vm.homeworkResultDetail = await http.get("GetHomeworkResultDetail",{
-     homeworkResultID:vm.homeworkResult.id
+     homeworkResultID:vm.homeworkResult.homework.id
    });
-
+   $scope.$applyAsync(null);
   } 
 }

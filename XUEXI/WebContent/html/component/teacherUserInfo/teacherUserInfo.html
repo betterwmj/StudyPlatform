@@ -1,43 +1,50 @@
-<form class="box">
-  <h3>老师信息</h3>
-  <div class="form-group">
-    <label >用户名</label>
-    <div >
-      <input type="text" class="form-control" ng-model="$ctrl.userinfo.userName">
+<div>
+  <div class="box top-return">
+    <span ng-bind="$ctrl.homework.homeWorkName"></span>
+    <a ui-sref="teacher.center" class="btn btn-default ">返回</a>
+  </div>
+  <form class="box">
+    <h3>老师信息</h3>
+    <div class="form-group">
+      <label >用户名</label>
+      <div >
+        <input type="text" class="form-control" ng-model="$ctrl.userinfo.userName">
+      </div>
     </div>
-  </div>
- <div class="form-group">
-    <label >真实名</label>
-    <div >
-      <input type="text" class="form-control" ng-model="$ctrl.userinfo.realName">
+  <div class="form-group">
+      <label >真实名</label>
+      <div >
+        <input type="text" class="form-control" ng-model="$ctrl.userinfo.realName">
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label >密码</label>
-    <div >
-      <input type="text" class="form-control" ng-model="$ctrl.userinfo.password">
+    <div class="form-group">
+      <label >密码</label>
+      <div >
+        <input type="text" class="form-control" ng-model="$ctrl.userinfo.password">
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label>所教学科</label>
-    <select class="form-control" 
-        ng-model="$ctrl.currentSubjectName"
-        ng-options="item as item.SubjectName for item in $ctrl.subject">
-    </select>  
-  </div>
-  <div class="form-group">
-    <label>教授的班级</label>
-    <div class="list-group">
-      <a ng-repeat="item in $ctrl.classes track by $index" href="#"
-        class="list-group-item">
-        <span ng-bind="item.className"></span>
-      </a>
-    </div> 
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="button" class="btn btn-default" ng-click="$ctrl.updateinfo()">确认修改</button>
+    <div class="form-group">
+      <label>所教学科</label>
+      <select class="form-control" 
+          ng-model="$ctrl.currentSubjectName"
+          ng-options="item as item.SubjectName for item in $ctrl.subject">
+      </select>  
     </div>
-  </div>
-   <p ng-bind="$ctrl.msg"></p>
-</form>
+    <div class="form-group">
+      <label>教授的班级</label>
+      <div class="list-group">
+        <a ng-repeat="item in $ctrl.classes track by $index" href="#"
+          class="list-group-item">
+          <span ng-bind="item.className"></span>
+        </a>
+      </div> 
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-default" ng-click="$ctrl.updateinfo()">确认修改</button>
+      </div>
+    </div>
+    <p ng-bind="$ctrl.msg"></p>
+  </form>
+</div>
+
