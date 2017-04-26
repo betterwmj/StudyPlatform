@@ -27,7 +27,7 @@ function controller($scope,$rootScope,$element,$state,$cookies,$transitions,http
         $rootScope.studentActive = [false,false,false,false]; 
         $rootScope.studentActive[1] = true;
       break;
-      case "student.onlineQuestion":
+      case "student.question":
         $rootScope.studentActive = [false,false,false,false]; 
         $rootScope.studentActive[2] = true;
       break;
