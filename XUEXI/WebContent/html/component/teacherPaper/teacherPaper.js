@@ -30,25 +30,41 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
 
   vm.createPager = async function(){
     vm.msg = "";
-    let result = await http.post("CreatePaper",vm.paper);
-    if( result === true ){
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "创建试卷成功";}
-        }
-      });
-    }else{
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "试卷创建失败";}
-        }
-      });
+    try {
+      let result = await http.post("CreatePaper",vm.paper);
+      if( result === true ){
+        let dialog = $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "创建试卷成功";}
+          }
+        });
+        dialog.result.then(function(){
+          $state.go("teacher.publishPaper");
+        },function(){
+          $state.go("teacher.publishPaper");
+        });
+      }else{
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "试卷创建失败";}
+          }
+        });
+      }
+    } catch (error) {
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "试卷创建失败";}
+          }
+        });
+    }finally{
+      $scope.$applyAsync(null);
     }
-    $scope.$applyAsync(null);
   };
 
   $scope.$watch('$ctrl.currentType',async ()=>{

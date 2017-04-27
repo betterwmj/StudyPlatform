@@ -12,7 +12,11 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.paperResult = null;
   vm.paperResultList = [];
   vm.$onInit = async function(){
-    vm.paperResult = $stateParams.paperResult;
+    vm.paperResult = {
+      id:$stateParams.resultId,
+      testpaperID:$stateParams.testpaperID,
+      testName:$stateParams.testName,
+    };
     vm.paperResultList = await http.get("GetPaperResultDetail",{
       paperResultID:vm.paperResult.id
     });

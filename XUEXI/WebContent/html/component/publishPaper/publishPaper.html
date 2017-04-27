@@ -15,14 +15,14 @@
       <tbody>
         <tr ng-repeat="paper in $ctrl.papers">
           <td>
-            <a ui-sref="teacher.paperDetail({paper:paper})" ng-bind="paper.testName"></a>
+            <a ui-sref="teacher.paperDetail({testpaperID:paper.testpaperID,testName:paper.testName})" ng-bind="paper.testName"></a>
           </td>
           <td>
             <button ng-if="paper.status === 0" ng-click="$ctrl.publishPaper(paper)">发布</button>
             <span ng-if="paper.status === 1">已发布</span>
           </td>
           <td>
-            <a ng-if="paper.status === 1" ui-sref="teacher.paperResult({paper:paper})">查看</a>
+            <a ng-if="paper.status === 1" ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName})">查看</a>
           </td>
         </tr>
       </tbody>

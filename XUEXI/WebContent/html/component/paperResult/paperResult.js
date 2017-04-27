@@ -12,8 +12,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.paper = null;
   vm.paperResultList = [];
   vm.$onInit = async function(){
-    console.log($stateParams);
-    vm.paper = $stateParams.paper;
+    vm.paper = {
+      testName:$stateParams.testName,
+      testpaperID:$stateParams.testpaperID,
+    }
     if( vm.paper === null || vm.paper.testpaperID === null ){
       return;
     }

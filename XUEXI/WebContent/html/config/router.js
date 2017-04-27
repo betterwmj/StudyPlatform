@@ -301,9 +301,10 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.paperDetail",
-				url: '/paperDetail',
+				url: '/paperDetail/{testpaperID}/{testName}',
 				params:{
-					paper:null
+					testpaperID:null,
+					testName:null,
 				},
 				views:{
 					"head@":{
@@ -319,9 +320,10 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.paperResult",
-				url: '/paperResult',
+				url: '/paperResult/{testpaperID}/{testName}',
 				params:{
-					paper:null
+					testpaperID:null,
+					testName:null,
 				},
 				views:{
 					"head@":{
@@ -337,9 +339,11 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.paperResultDetail",
-				url: '/paperResultDetail',
+				url: '/paperResultDetail/{resultId}/{testpaperID}/{testName}',
 				params:{
-					paperResult:null
+					resultId:null,
+					testpaperID:null,
+					testName:null,
 				},
 				views:{
 					"head@":{

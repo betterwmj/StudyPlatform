@@ -9,10 +9,13 @@ export default function root(app){
 function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
-  vm.paper = null;
+  vm.paper = {};
   vm.paperDetail = null;
   vm.$onInit = async function(){ 
-    vm.paper = $stateParams.paper;
+    vm.paper = {
+      testName:$stateParams.testName,
+      testpaperID:$stateParams.testpaperID,
+    }
     if( vm.paper === null || vm.paper.testpaperID === null ){
       return;
     }
