@@ -1,7 +1,11 @@
 <div>
+  <div class="box top-return">
+    <span ng-bind="$ctrl.paper.testName">学生做试卷</span>
+    <a ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID})" class="btn btn-default ">返回</a>
+  </div>
   <h3>查看学生考试结果详情</h3>
-  <p>得分:<span ng-bind="$ctrl.paper.resultObj.paper.score"></span>,
-    答题时间:<sapn ng-bind="$ctrl.paper.resultObj.paper.time | date:'yyyy-MM-dd HH:mm:ss'"></sapn>
+  <p>得分:<span ng-bind="$ctrl.paperResult.paper.score"></span>,
+    答题时间:<sapn ng-bind="$ctrl.paperResult.paper.time | date:'yyyy-MM-dd HH:mm:ss'"></sapn>
   </p>
   <div ng-repeat="item in $ctrl.resultDetail" class="box-radius">
     <p ng-bind="item.title.title"></p>

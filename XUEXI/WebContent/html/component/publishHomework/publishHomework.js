@@ -10,7 +10,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.$onInit = async function(){
-    vm.homework = $stateParams.homework;
+    vm.homework = {
+      homeId:$stateParams.homeworkId
+    };
     console.log($stateParams);
     vm.classes = await http.get("GetTeacherClasses");
     $scope.$applyAsync(null);

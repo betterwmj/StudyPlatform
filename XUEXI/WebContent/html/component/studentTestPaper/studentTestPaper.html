@@ -1,5 +1,8 @@
 <div>
-  <h3>学生做试卷</h3> 
+  <div class="box top-return">
+    <span ng-bind="$ctrl.paper.testName">学生做试卷</span>
+    <a ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID})" class="btn btn-default ">返回</a>
+  </div>
   <button class="btn btn-default" ng-click="$ctrl.submitResult()">提交答案</button>
   <div class="box-radius">
     <p ng-bind="$ctrl.currQuestion.title"></p>

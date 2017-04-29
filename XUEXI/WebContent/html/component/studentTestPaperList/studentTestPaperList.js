@@ -15,11 +15,14 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.displayPaper = [];
   vm.showFlag = true;
   vm.$onInit = async function(){
-    vm.subject = $stateParams.subject;
-    let rs = await getPaper(0);
+    vm.subject = {
+      SubjectName:$stateParams.SubjectName,
+      SubjectID:$stateParams.SubjectID
+    };
+    let rs = await getPaper();
     $scope.$applyAsync(null);
   }
-  async function  getPaper(isTest){
+  async function  getPaper(){
     vm.papers = await http.get("GetPaper",{
       subjectId:vm.subject.SubjectID,
     });

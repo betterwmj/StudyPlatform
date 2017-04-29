@@ -1,9 +1,13 @@
 <div>
-  <a ui-sref="teacher.homeWorkHistory">返回</a>
-  <p>可以发布的班级:</p>
-  <div ng-repeat="item in $ctrl.classes">
-    <input type="checkbox" ng-model="item.isCheck"><span ng-bind="item.className"></span>
+  <div class="box top-return">
+    <a ui-sref="teacher.homeWorkHistory" class="btn btn-default ">返回</a>
   </div>
-  <button type="button" class="btn btn-default" ng-click="$ctrl.publish()">发布作业</button>
-  <p ng-bind="$ctrl.msg"></p>
+  <div class="box-radius">
+    <p>可以发布的班级:</p>
+    <div ng-repeat="item in $ctrl.classes">
+      <input type="checkbox" ng-model="item.isCheck"><span ng-bind="item.className"></span>
+    </div>
+    <button type="button" class="btn btn-default" ng-click="$ctrl.publish()">发布作业</button>
+    <p ng-bind="$ctrl.msg"></p>
+  </div>
 </div>

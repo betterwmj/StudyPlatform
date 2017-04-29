@@ -1,5 +1,8 @@
 <div>
-  <h3><span ng-bind="$ctrl.subject.SubjectName"></span>的作业列表</h3>
+  <div class="box top-return">
+    <span ng-bind="$ctrl.subject.SubjectName"></span>的作业列表
+    <a ui-sref="student.homework" class="btn btn-default ">返回</a>
+  </div>
   <div>
     <div class="btn-group" role="group" aria-label="...">
       <button type="button" class="btn btn-default" ng-click="$ctrl.changeHomeworkType(true)"
@@ -16,9 +19,9 @@
       <p>完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
       <p>
         <a class="btn btn-default" ng-show="$ctrl.showFlag === true"
-          ui-sref="student.studentHomeworkDetail({homework:item})">完成作业</a>
+          ui-sref="student.studentHomeworkDetail({homeWorkName:item.homeWorkName,homeworkId:item.homeId})">完成作业</a>
         <a class="btn btn-default" ng-show="$ctrl.showFlag === false"
-          ui-sref="student.studentHomeworkResultDetail({homework:item})">查看结果</a>
+          ui-sref="student.studentHomeworkResultDetail({homeworkId:item.homeId})">查看结果</a>
       </p>
     </div>
   </div>

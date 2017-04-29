@@ -41,9 +41,10 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaperList",
-				url: '/studentTestPaperList',
+				url: '/studentTestPaperList/{SubjectName}/{SubjectID}',
 				params:{
-					subject:null
+					SubjectName:null,
+					SubjectID:null
 				},
 				views:{
 					"head@":{
@@ -59,9 +60,12 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaper",
-				url: '/studentTestPaper',
+				url: '/studentTestPaper/{SubjectName}/{SubjectID}/{testpaperID}/{testName}',
 				params:{
-					paper:null
+					SubjectName:null,
+					SubjectID:null,
+					testpaperID:null,
+					testName:null,
 				},
 				views:{
 					"head@":{
@@ -77,9 +81,12 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaperResultDetail",
-				url: '/studentTestPaperResultDetail',
+				url: '/studentTestPaperResultDetail/{SubjectName}/{SubjectID}/{testpaperID}/{paperResultID}',
 				params:{
-					paper:null
+					SubjectName:null,
+					SubjectID:null,
+					testpaperID:null,
+					paperResultID:null
 				},
 				views:{
 					"head@":{
@@ -110,9 +117,10 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentHomeworkList",
-				url: '/studentHomeworkList',
+				url: '/studentHomeworkList/{SubjectName}/{SubjectID}',
 				params:{
-					subject:null
+					SubjectName:null,
+					SubjectID:null,
 				},
 				views:{
 					"head@":{
@@ -128,9 +136,10 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentHomeworkDetail",
-				url: '/studentHomeworkDetail',
+				url: '/studentHomeworkDetail/{homeWorkName}/{homeworkId}',
 				params:{
-					homework:null
+					homeWorkName:null,
+					homeworkId:null
 				},
 				views:{
 					"head@":{
@@ -146,9 +155,9 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentHomeworkResultDetail",
-				url: '/studentHomeworkResultDetail',
+				url: '/studentHomeworkResultDetail/{homeworkId}',
 				params:{
-					homework:null
+					homeworkId:null
 				},
 				views:{
 					"head@":{
@@ -468,9 +477,9 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.publishHomework",
-				url: '/publishHomework',
+				url: '/publishHomework/{homeworkId}',
 				params:{
-					homework:null
+					homeworkId:null
 				},
 				views:{
 					"head@":{
@@ -481,6 +490,25 @@ export function routerConfig($stateProvider){
 					},
 					"content@":{
 						component:"publishHomework"
+					},
+				}
+			},
+			{
+				name:"teacher.teacherHomeworkResultList",
+				url: '/teacherHomeworkResultList/{homeworkId}/{homeWorkName}',
+				params:{
+					homeworkId:null,
+					homeWorkName:null,
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherHomeworkResultList"
 					},
 				}
 			},

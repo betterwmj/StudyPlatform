@@ -9,13 +9,20 @@ export default function root(app){
 function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
   let vm = this;
   vm.msg = "";
+  vm.subject = null;
   vm.paper = null;
   vm.paperDetail = null;
   vm.questionIndex = 0;
   vm.currQuestion = null;
   vm.$onInit = async function(){
-    console.log($stateParams);
-    vm.paper = $stateParams.paper;
+    vm.subject = {
+      SubjectName:$stateParams.SubjectName,
+      SubjectID:$stateParams.SubjectID
+    };
+    vm.paper = {
+      testpaperID:$stateParams.testpaperID,
+      testName:$stateParams.testName
+    };
     vm.paperDetail = await http.get("GetPaperDetail",{
       paperID:vm.paper.testpaperID
     });

@@ -1,4 +1,7 @@
 <div>
+  <div class="box top-return">
+    <a ui-sref="student.homework" class="btn btn-default ">返回</a>
+  </div>
   <div ng-repeat="item in $ctrl.homeworkResultDetail track by $index" class="box-radius">
     <p ng-bind-template="题目:{{$index}} {{item.title.title}}"></p>
     <div ng-if="item.title.type === 1">

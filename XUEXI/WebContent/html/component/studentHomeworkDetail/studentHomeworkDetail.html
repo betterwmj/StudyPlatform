@@ -1,8 +1,11 @@
 <div>
-  <div class="box">
-    <span ng-bind="$ctrl.homework.homeWorkName"></span>
-    <button class="btn btn-default" ng-click="$ctrl.submit()">提交</button>
-    <span ng-bind="$ctrl.msg"></span>
+  <div class="box top-return">
+    <span ng-bind="$ctrl.homework.homeWorkName"></span>的作业列表
+    <div>
+      <button class="btn btn-default" ng-click="$ctrl.submit()">提交</button>
+      <span ng-bind="$ctrl.msg"></span>
+    </div>
+    <a ui-sref="student.homework" class="btn btn-default ">返回</a>
   </div>
   <div class="box-radius">
     <p ng-bind="$ctrl.curr.title"></p>

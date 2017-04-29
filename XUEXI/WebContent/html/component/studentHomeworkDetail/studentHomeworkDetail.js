@@ -12,9 +12,12 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
   vm.msg = "";
   vm.$onInit = async function(){
     console.log($stateParams);
-    vm.homework = $stateParams.homework;
+    vm.homework = {
+      homeWorkName:$stateParams.homeWorkName,
+      homeId:$stateParams.homeworkId,
+    };
     vm.homeDetail = await http.get("GetHomeworkDetail",{
-      homeworkID:$stateParams.homework.homeId
+      homeworkID:vm.homework.homeId
     });
     vm.curr = vm.homeDetail[index];
     $scope.$applyAsync(null);

@@ -16,9 +16,9 @@
       <p>创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
       <p>
         <a class="btn btn-default" ng-show="$ctrl.showFlag === true"
-          ui-sref="student.studentTestPaper({paper:paper})">进行考试</a>
+          ui-sref="student.studentTestPaper({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,testpaperID:paper.testpaperID,testName:paper.testName})">进行考试</a>
         <a class="btn btn-default" ng-show="$ctrl.showFlag === false"
-          ui-sref="student.studentTestPaperResultDetail({paper:paper})">查看结果</a>
+          ui-sref="student.studentTestPaperResultDetail({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,testpaperID:paper.testpaperID,paperResultID:paper.resultObj.paper.id})">查看结果</a>
       </p>
     </div>
   </div>
