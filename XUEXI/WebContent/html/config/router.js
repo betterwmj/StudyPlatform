@@ -513,6 +513,26 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.teacherHomeworkResultDetail",
+				url: '/teacherHomeworkResultDetail/{homeworkId}/{homeWorkName}/{homeworkResultID}',
+				params:{
+					homeworkId:null,
+					homeWorkName:null,
+					homeworkResultID:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherHomeworkResultDetail"
+					},
+				}
+			},
+			{
 				name:"teacher.onlineanswer",
 				url: '/onlineanswer',
 				views:{

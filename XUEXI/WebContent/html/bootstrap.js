@@ -27,6 +27,7 @@ import teacherHomeWorkNavigation from "./component/teacherHomeworkNavigation/tea
 import homeworkCreate from "./component/homeworkCreate/homeworkCreate.js";
 import homeWorkHistory from "./component/homeWorkHistory/homeWorkHistory.js";
 import teacherHomeworkResultList from "./component/teacherHomeworkResultList/teacherHomeworkResultList.js";
+import teacherHomeworkResultDetail from "./component/teacherHomeworkResultDetail/teacherHomeworkResultDetail.js";
 import onlineAnswer from "./component/onlineAnswer/onlineAnswer.js";
 import studentTestPaperResultDetail from "./component/studentTestPaperResultDetail/studentTestPaperResultDetail.js";
 import studentHomework from "./component/studentHomework/studentHomework.js";
@@ -79,6 +80,7 @@ teacherHomeWorkNavigation(app);
 homeworkCreate(app);
 homeWorkHistory(app);
 teacherHomeworkResultList(app);
+teacherHomeworkResultDetail(app);
 onlineAnswer(app);
 studentTestPaperResultDetail(app);
 studentHomework(app);

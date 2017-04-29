@@ -1,0 +1,25 @@
+<div>
+  <div class="box top-return">
+    <span>作业完成情况详情</span>
+    <a ui-sref="teacher.teacherHomeworkResultList({homeworkId:$ctrl.homework.homeworkID,homeWorkName:$ctrl.homework.homeWorkName})" class="btn btn-default">返回</a>
+  </div>
+  <div ng-repeat="item in $ctrl.homeworkResultDetail track by $index" class="box-radius">
+    <p ng-bind-template="题目:{{$index}} {{item.title.title}}"></p>
+    <div ng-if="item.title.type === 1">
+      <p>A.<span ng-bind="$item.title.optionA"></span>&nbsp;&nbsp;</p>
+      <p>B.<span ng-bind="$item.title.optionB"></span>&nbsp;&nbsp;</p>
+      <p>C.<span ng-bind="$item.title.optionC"></span>&nbsp;&nbsp;</p>
+      <p>D.<span ng-bind="$item.title.optionD"></span>&nbsp;&nbsp;</p>
+      <p>正确答案:{{item.title.answer}}</p>
+      <p>学生答案:{{item.HomeResultDetail.answer}}</p>
+    </div>
+    <div ng-if="item.title.type === 2">
+      <p>正确答案:{{item.title.answer}}</p>
+      <p>学生答案:{{item.HomeResultDetail.answer}}</p>
+    </div>
+    <div ng-if="item.title.type === 3">
+      <p>参考答案:{{item.title.answer}}</p>
+      <p>学生答案:{{item.HomeResultDetail.answer}}</p>
+    </div>
+  </div>
+</div>
