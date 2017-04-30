@@ -3,19 +3,27 @@ export let name = "publishHomework";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/publishHomework/publishHomework.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$uibModal",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams){
+function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
   let vm = this;
   vm.msg = "";
   vm.$onInit = async function(){
     vm.homework = {
       homeId:$stateParams.homeworkId
     };
-    console.log($stateParams);
-    vm.classes = await http.get("GetTeacherClasses");
-    $scope.$applyAsync(null);
+    try {
+      vm.classes = await http.get("GetTeacherClasses");
+    } catch (error) {
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "获取教师班级信息异常";}
+        }
+      }); 
+    }
   }
   vm.publish = async function(){
     let data = {
@@ -30,14 +38,30 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     try {
       let result = await http.post("PublishHomework",data);
       if(result === true){
-        vm.msg = "试卷发布成功";
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "作业发布成功";}
+          }
+        });
       }else{
-        vm.msg = "试卷发布失败";
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "作业发布失败";}
+          }
+        }); 
       }
-      $scope.$applyAsync(null);
     } catch (error) {
-      vm.msg = "试卷发布失败";
-      $scope.$applyAsync(null);
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "作业发布失败";}
+        }
+      }); 
     }
   }
 }

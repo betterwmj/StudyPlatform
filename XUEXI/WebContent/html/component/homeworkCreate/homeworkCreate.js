@@ -3,10 +3,10 @@ export let name = "homeworkCreate";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/homeworkCreate/homeworkCreate.html",
-    controller:["$scope","$element","$state",'$cookies',"http",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http){
+function controller($scope,$element,$state,$cookies,http,$uibModal){
   let vm = this;
   vm.types = [
     {label:"选择题",value:1},
@@ -63,16 +63,39 @@ function controller($scope,$element,$state,$cookies,http){
       temp.type = temp.type.value;
       questionList.titles.push(temp);
     });
-    
-    let list = await http.post("AddQuestion",questionList);
-    list.forEach( (item)=>{
-      vm.homework.questions.push({
-        questionID:item.itemId
+    try {
+      let list = await http.post("AddQuestion",questionList);
+      list.forEach( (item)=>{
+        vm.homework.questions.push({
+          questionID:item.itemId
+        });
       });
-    });
-    let rs = await http.post("CreateHomework",vm.homework)
-    if(rs === true){
-      window.alert("创建作业成功");
+      let rs = await http.post("CreateHomework",vm.homework)
+      if(rs === true){
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "创建作业成功";}
+          }
+        });
+      }else{
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "创建作业失败";}
+          }
+        });
+      }
+    } catch (error) {
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "创建作业失败";}
+        }
+      });
     }
   }
 }

@@ -25,7 +25,6 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
   vm.msg = "";
   vm.$onInit = async function(){
     let rs = await getQuestions(1);
-    $scope.$applyAsync(null);
   }
 
   vm.createPager = async function(){
@@ -62,29 +61,36 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
             content:()=>{ return "试卷创建失败";}
           }
         });
-    }finally{
-      $scope.$applyAsync(null);
     }
   };
 
   $scope.$watch('$ctrl.currentType',async ()=>{
       let rs = await getQuestions(vm.currentType.value);
-      $scope.$applyAsync(null);
   },true);
 
   async function getQuestions(value){
-    let result = await http.get("GetQuestions",{
-      type:value
-    });
-    vm.allQuestion = result;
-    mergeData();
-    vm.allQuestion.forEach( (item)=>{
-      if( "score" in item === false ){
-        item.score = 5;
-      }
-    });
-    getData();
-    $scope.$applyAsync(null);
+    try {
+      let result = await http.get("GetQuestions",{
+        type:value
+      });
+      vm.allQuestion = result;
+      mergeData();
+      vm.allQuestion.forEach( (item)=>{
+        if( "score" in item === false ){
+          item.score = 5;
+        }
+      });
+      getData();
+      
+    } catch (error) {
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "获取题目数据异常";}
+        }
+      });
+    }
     return result;
   }
 

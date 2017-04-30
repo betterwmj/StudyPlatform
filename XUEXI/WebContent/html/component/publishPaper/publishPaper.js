@@ -3,16 +3,25 @@ export let name = "publishPaper";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/publishPaper/publishPaper.html",
-    controller:["$scope","$element","$state",'$cookies',"http",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http){
+function controller($scope,$element,$state,$cookies,http,$uibModal){
   let vm = this;
   vm.papers = [];
   vm.msg = "";
   vm.$onInit = async function(){
-    vm.papers = await http.get("GetPaper");
-    $scope.$applyAsync(null);
+    try {
+      vm.papers = await http.get("GetPaper");
+    } catch (error) {
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "获取试卷信息异常";}
+        }
+      });
+    }
   }
 
   vm.publishPaper = async function(paper){
@@ -22,16 +31,31 @@ function controller($scope,$element,$state,$cookies,http){
         paperID:paper.testpaperID
       });
       if( result === true ){
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "发布试卷成功";}
+          }
+        });
         vm.papers = await http.get("GetPaper");
       }else{
-        vm.msg = "发布试卷失败";
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "发布试卷失败";}
+          }
+        });
       }
-      $scope.$applyAsync(null);
     } catch (error) {
-      console.log(error);
-      vm.msg = "发布试卷失败";
-      $scope.$applyAsync(null);
-    }
-    
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "发布试卷失败";}
+        }
+      });
+    }  
   }
 }
