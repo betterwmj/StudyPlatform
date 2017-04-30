@@ -1,8 +1,8 @@
 export default function httpService(app){
-  app.factory("http",["$q","$http","$httpParamSerializerJQLike",serviceFunc]);
+  app.factory("http",["$q","$http","$httpParamSerializerJQLike","$rootScope",serviceFunc]);
 }
 
-function serviceFunc($q,$http,$httpParamSerializerJQLike){
+function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope){
   const baseUrl = "http://192.168.1.101:8080/XUEXI/";
   let service = {
     post:post,
@@ -21,16 +21,21 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike){
         data: data,
         headers:headers
       });
+      let result = response.data;
+      if( result.code === 0 ){
+        deferred.resolve(result.data);
+      }else{
+        deferred.reject(result.message);
+      }
     } catch (error) {
       console.log(error);
       deferred.reject("操作失败");
+    }finally{
+      window.setTimeout(function(){
+        $rootScope.$applyAsync(null);
+      },0);
     }
-    let result = response.data;
-    if( result.code === 0 ){
-      deferred.resolve(result.data);
-    }else{
-      deferred.reject(result.message);
-    }
+    
     return deferred.promise;
   };
 
@@ -44,16 +49,21 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike){
         url: url,
         params: data,
       });
+      let result = response.data;
+      if( result.code === 0 ){
+        deferred.resolve(result.data);
+      }else{
+        deferred.reject(result.message);
+      }
     } catch (error) {
       console.log(error);
       deferred.reject("操作失败");
+    }finally{
+      window.setTimeout(function(){
+        $rootScope.$applyAsync(null);
+      },0);
     }
-    let result = response.data;
-    if( result.code === 0 ){
-      deferred.resolve(result.data);
-    }else{
-      deferred.reject(result.message);
-    }
+    
     return deferred.promise;
   };
   return service;

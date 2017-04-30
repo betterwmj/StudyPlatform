@@ -27,7 +27,17 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       vm.userInfo.userName = userInfo.userName;
       vm.userInfo.password = userInfo.password;
     }
-    vm.subjects = await http.get('GetAllSubject');
+    try {
+      vm.subjects = await http.get('GetAllSubject');
+    } catch (error) {
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "获取课程科目异常";}
+        }
+      });
+    }
   }
 
   async function login(){
@@ -42,7 +52,6 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
     try {
       result = await http.post("Login",userData);
     } catch (error) {
-      //vm.loginResultMsg = error;
       $uibModal.open({
         animation: true,
         component: 'commonDialog',
@@ -50,17 +59,26 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
           content:()=>{ return error;}
         }
       });
-      $scope.$applyAsync(null);
       return;
     }
     if( vm.remember ){
       result.password = vm.userInfo.password;
     }
     if(userData.type === 0 ){
-      let classInfo = await http.get("GetClassNameByClassId",{classID:result.classId});
-      result.classInfo = classInfo;
-      $cookies.putObject("userInfo",result);
-      $state.go("student.test");
+      try {
+          let classInfo = await http.get("GetClassNameByClassId",{classID:result.classId});
+          result.classInfo = classInfo;
+          $cookies.putObject("userInfo",result);
+          $state.go("student.test");
+      } catch (error) {
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "获取学生班级信息异常";}
+          }
+        });
+      }
     }else{
       vm.subjects.forEach( (subject)=>{
         if( subject.SubjectID === result.subjectId){
@@ -70,7 +88,6 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       $cookies.putObject("userInfo",result);
       $state.go("teacher.paper");
     }
-    $scope.$applyAsync(null);
   }
 
   function loginCheck(){
