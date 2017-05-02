@@ -27,24 +27,34 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
     let rs = await getQuestions(1);
   }
 
-  vm.createPager = async function(){
+  vm.createPager = function(){
     vm.msg = "";
-    try {
-      let result = await http.post("CreatePaper",vm.paper);
-      if( result === true ){
-        let dialog = $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "创建试卷成功";}
-          }
-        });
-        dialog.result.then(function(){
-          $state.go("teacher.publishPaper");
-        },function(){
-          $state.go("teacher.publishPaper");
-        });
-      }else{
+    let count = vm.paper.papertitles.length;
+    let totalScore = 0;
+    vm.paper.papertitles.forEach((item)=>{
+      totalScore += item.score;
+    });
+    if( count === 0 || totalScore === 0 ){
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "请选择题目且合理配置试卷分数";}
+        }
+      });
+      return;
+    }
+    let dialog = $uibModal.open({
+      animation: true,
+      component: 'commonDialog',
+      resolve: {
+        content:()=>{ return "确定创建试卷?共"+count+"道题,共"+totalScore+"分";}
+      }
+    });
+    dialog.result.then(async function(){
+      try {
+        let result = await postPager();
+      } catch (error) {
         $uibModal.open({
           animation: true,
           component: 'commonDialog',
@@ -53,24 +63,84 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
           }
         });
       }
-    } catch (error) {
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "试卷创建失败";}
-          }
-        });
-    }
+    },function(){
+
+    });
   };
 
   $scope.$watch('$ctrl.currentType',async ()=>{
       let rs = await getQuestions(vm.currentType.value);
   },true);
 
-  async function getQuestions(value){
+
+
+  vm.pageChanged = function(){
+    getData();
+  };
+
+  vm.append = function(question){
+    if( question.isChecked === true ){
+      vm.paper.papertitles.push({
+        itemId:question.itemId,
+        score:question.score
+      });
+    }else{
+      vm.paper.papertitles = vm.paper.papertitles.filter( (item)=>{
+        return item.itemId !== question.itemId;
+      });
+    }
+  }
+
+  vm.questionScoreChange = function(question){
+    let find = vm.paper.papertitles.find(function(item){
+      return item.itemId === question.itemId;
+    });
+    if( find ){
+      find.score = question.score;
+    }
+  }
+
+  function mergeData(){
+    vm.allQuestion.map( (item)=>{
+      let find = vm.paper.papertitles.find( (tItem)=>{
+        return tItem.itemId === item.itemId
+      });
+      if( find ){
+        item.isChecked = true;
+        item.score = find.score;
+      }
+    });
+  }
+
+  async function postPager(){
     try {
-      let result = await http.get("GetQuestions",{
+      let result = await http.post("CreatePaper",vm.paper);
+      if( result === true ){
+          let dialog = $uibModal.open({
+            animation: true,
+            component: 'commonDialog',
+            resolve: {
+              content:()=>{ return "创建试卷成功";}
+            }
+          });
+          dialog.result.then(function(){
+            $state.go("teacher.publishPaper");
+          },function(){
+            $state.go("teacher.publishPaper");
+          });
+      }else{
+        throw "创建试卷失败"
+      }
+    } catch (error) {
+      console.log(error);
+      throw "创建试卷失败"
+    }
+  }
+
+  async function getQuestions(value){
+    let result = null;
+    try {
+      result = await http.get("GetQuestions",{
         type:value
       });
       vm.allQuestion = result;
@@ -105,34 +175,5 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
       newData.push( vm.allQuestion[i]);
     }
     vm.questions = newData;
-  }
-
-  vm.pageChanged = function(){
-    getData();
-  };
-
-  vm.append = function(question){
-    if( question.isChecked === true ){
-      vm.paper.papertitles.push({
-        itemId:question.itemId,
-        score:question.score
-      });
-    }else{
-      vm.paper.papertitles = vm.paper.papertitles.filter( (item)=>{
-        return item.itemId !== question.itemId;
-      });
-    }
-  }
-
-  function mergeData(){
-    vm.allQuestion.map( (item)=>{
-      let find = vm.paper.papertitles.find( (tItem)=>{
-        return tItem.itemId === item.itemId
-      });
-      if( find ){
-        item.isChecked = true;
-        item.score = find.score;
-      }
-    });
   }
 }

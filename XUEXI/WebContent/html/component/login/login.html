@@ -2,10 +2,10 @@
   <form>
     <h3 class="text-center">登录</h3>
     <div class="form-group">
-      <label class="col-sm-2 control-label">用户名</label>
+      <label class="control-label">用户名</label>
       <span ng-bind="$ctrl.errorMsg.userName" ng-show="$ctrl.errorMsg.userName"
             class="alert alert-warning" role="alert"></span>
-      <div class="col-sm-10">
+      <div>
         <input type="text" class="form-control" placeholder="用户名" ng-model="$ctrl.userInfo.userName">
       </div>
     </div>
@@ -14,7 +14,7 @@
       <label class="col-sm-2 control-label">密码</label>
       <span ng-bind="$ctrl.errorMsg.password" ng-show="$ctrl.errorMsg.password"
             class="alert alert-warning" role="alert"></span>
-      <div class="col-sm-10">
+      <div>
         <input type="password" class="form-control" placeholder="密码" ng-model="$ctrl.userInfo.password">
       </div>
     </div>
@@ -38,10 +38,10 @@
     <div class="form-group">
       <div class="alert alert-danger" role="alert" 
           ng-show="$ctrl.loginResultMsg" ng-bind="$ctrl.loginResultMsg"></div>
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="button" class="btn btn-default" ng-click="$ctrl.login()">登录</button>
-        <a type="button" class="btn btn-default" ui-sref="teacher.register">教师注册</a>
-        <a type="button" class="btn btn-default" ui-sref="student.register">学生注册</a>
+      <div>
+        <button type="button" class="btn btn-warning login-btn"  ng-click="$ctrl.login()">登录</button>
+        <a type="button" class="btn btn-success register-btn" ui-sref="teacher.register">教师注册</a>
+        <a type="button" class="btn btn-success register-btn" ui-sref="student.register">学生注册</a>
       </div>
     </div>
   </form>

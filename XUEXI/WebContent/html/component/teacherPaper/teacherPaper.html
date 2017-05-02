@@ -31,7 +31,7 @@
             <p>正确答案:<span ng-bind="question.answer"></span></p>
             <p>
               <input type="checkbox" ng-model="question.isChecked" ng-click="$ctrl.append(question)">
-              分数:<input type="number" ng-model="question.score">
+              分数:<input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)">
             </p>
             <br>
           </div>
@@ -44,7 +44,7 @@
           <p ng-bind="question.answer"></p>
           <p>
             <input type="checkbox" ng-model="question.isChecked" ng-click="$ctrl.append(question)">
-            分数:<input type="number" ng-model="question.score">
+            分数:<input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)">
           </p>
         </div>
       </div>
