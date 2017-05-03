@@ -24,7 +24,7 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
   };
   vm.homework = {
     name:new Date().toLocaleString(),
-    finishTime:null,
+    finishTime:new Date(),
     questions:[]
   };
   vm.questions = [];
@@ -43,6 +43,9 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
     vm.currentQuestion = vm.questions[vm.currIndex];
   };
   vm.createNextQuestion = function(){
+    if( checkQuestion(vm.currentQuestion) === false){
+      return;
+    }
     ++vm.currIndex;
     if( vm.questions[vm.currIndex] ){
       vm.currentQuestion = vm.questions[vm.currIndex];
@@ -72,12 +75,17 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       });
       let rs = await http.post("CreateHomework",vm.homework)
       if(rs === true){
-        $uibModal.open({
+        let dialog = $uibModal.open({
           animation: true,
           component: 'commonDialog',
           resolve: {
             content:()=>{ return "创建作业成功";}
           }
+        });
+        dialog.result.then(function(){
+          $state.go("teacher.homeWorkHistory");
+        },function(){
+          $state.go("teacher.homeWorkHistory");
         });
       }else{
         $uibModal.open({
@@ -97,5 +105,77 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
         }
       });
     }
+  }
+
+  function checkQuestion(question){
+    let type = question.type.value;
+    let title = question.title.trim();
+    if( title === ""){
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "请输入题目内容";}
+        }
+      });
+      return false;
+    }
+    if( type === 1){
+      let optionA = question.optionA.trim();
+      if( optionA === ""){
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "请输入选项A";}
+          }
+        });
+        return false;
+      }
+      let optionB = question.optionB.trim();
+      if( optionB === ""){
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "请输入选项B";}
+          }
+        });
+        return false;
+      }
+      let optionC = question.optionC.trim();
+      if( optionC === ""){
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "请输入选项C";}
+          }
+        });
+        return false;
+      }
+      let optionD = question.optionD.trim();
+      if( optionD === ""){
+        $uibModal.open({
+          animation: true,
+          component: 'commonDialog',
+          resolve: {
+            content:()=>{ return "请输入选项D";}
+          }
+        });
+        return false;
+      }
+    }
+    if(question.answer.trim() === ""){
+      $uibModal.open({
+        animation: true,
+        component: 'commonDialog',
+        resolve: {
+          content:()=>{ return "请输入答案";}
+        }
+      });
+      return false;
+    }
+    return true;
   }
 }

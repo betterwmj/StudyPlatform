@@ -18,7 +18,7 @@
     <div>
       <div class="form-group">
         <label>
-          <span ng-bind="$ctrl.currIndex+1"></span>题目
+          题目<span ng-bind="$ctrl.currIndex+1"></span>:
         </label>
         <div> 
           <textarea  class="form-control" rows="3" ng-model="$ctrl.currentQuestion.title"></textarea >
@@ -56,10 +56,11 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="button" class="btn btn-default" ng-click="$ctrl.createHomework()">创建作业</button>
+      <div>
+        <p>当前共{{$ctrl.questions.length}}道题</p>
+        <button type="button" class="btn btn-danger" ng-click="$ctrl.createHomework()">创建作业</button>
         <button type="button" class="btn btn-default" ng-click="$ctrl.upItem()">上一题</button>
-        <button type="button" class="btn btn-default" ng-click="$ctrl.createNextQuestion()">创建下一题</button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.createNextQuestion()">创建下一题</button>
       </div>
     </div>
   </form>
