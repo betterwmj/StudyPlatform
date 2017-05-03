@@ -15,6 +15,7 @@ import com.wmj.bean.PaperDetail;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorSubject {
+	
 	/*
 	 * 根据学科id(默认为老师的学科id)和题目类型从数据库获取相应的题目
 	 */
@@ -270,5 +271,43 @@ public class OperatorSubject {
 			JDBCUtil.close(conn, pmt);
 		}
 		return result;
+	}
+	/*
+	 * 得到该老师对应所有学科
+	 */
+	public static  List<Map> getSubjectByTeacherId(int teacherId) throws Exception{
+		
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		List<Map> list = new ArrayList<Map>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			ResultSet rs = null;
+			String sql="select b.*  from teacher_subject_relation as a,subjects as b where a.subjectid = b.SubjectID and a.teacherid =?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setInt(1, teacherId);
+			rs = pmt.executeQuery();
+			 while (rs.next()) {
+			   Map<String,String> title = new HashMap<String,String>();
+			   title.put("SubjectName", rs.getString("SubjectName"));
+			   title.put("SubjectID", rs.getString("SubjectID"));
+               list.add(title);       
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return list;
 	}
 }

@@ -62,9 +62,9 @@ public class CreatePaper extends HttpServlet {
         HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String id= userInfo.get("id");
-        String suid=userInfo.get("subjectId");
         int userId=Integer.parseInt(id);
-        int subjectId=Integer.parseInt(suid);
+       
+        int subjectid=json.getInt("subjectId");
         Paper paper=new Paper(); 
         JSONArray array=json.getJSONArray("papertitles");
         List<PaperDetail> list = new ArrayList<>();
@@ -79,7 +79,7 @@ public class CreatePaper extends HttpServlet {
 //        int userId=json.getInt("id");
 //        int subjectId=json.getInt("suid");
         paper.setTestName(json.getString("papername"));
-        paper.setSubjectID(subjectId);
+        paper.setSubjectID(subjectid);
         paper.setUserId(userId);
         paper.setCreateTime(time);
         boolean resultCode;

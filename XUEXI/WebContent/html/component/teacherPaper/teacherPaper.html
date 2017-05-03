@@ -4,6 +4,12 @@
     <a ui-sref="teacher.paper" class="btn btn-default ">返回</a>
   </div>
   <form>
+   <div class="form-group">
+      <label>选择学科</label>
+      <select class="form-control" ng-model="$ctrl.currentSubject"
+        ng-options="subject as subject.SubjectName for subject in $ctrl.subjectlist">
+      </select>
+    </div>
     <h3>创建试卷</h3>
     <div class="form-group">
       <label>试卷名称</label><span ng-bind="errorMsg.papername"></span>

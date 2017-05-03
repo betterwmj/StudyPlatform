@@ -8,10 +8,6 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,$uibModal,http){
   let vm = this;
-  vm.paper = {
-    papername:new Date().toLocaleString(),
-    papertitles:[]
-  };
   vm.types = [
     {label:"选择题",value:1},
     {label:"判断题",value:2}
@@ -23,14 +19,23 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
   vm.pageItem = 5;
   vm.maxSize = 5;
   vm.msg = "";
+  vm.currentSubject = null;
+  vm.subjectlist =null;
   vm.$onInit = async function(){
-    let rs = await getQuestions(1);
+	  vm.subjectlist = await http.get("GetTeacherSubject");
+      vm.currentSubject = vm.subjectlist[0];
+      let rs=  getQuestions(vm.currentSubject.SubjectID,1);
   }
-
+  vm.paper = {
+    subjectId :null,
+    papername:new Date().toLocaleString(),
+    papertitles:[]
+  };
   vm.createPager = function(){
     vm.msg = "";
     let count = vm.paper.papertitles.length;
     let totalScore = 0;
+    vm.paper.subjectId =vm.currentSubject.SubjectID;
     vm.paper.papertitles.forEach((item)=>{
       totalScore += item.score;
     });
@@ -68,10 +73,9 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
     });
   };
 
-  $scope.$watch('$ctrl.currentType',async ()=>{
-      let rs = await getQuestions(vm.currentType.value);
+  $scope.$watch('vm.currentSubject+$ctrl.currentType',async ()=>{
+      let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
   },true);
-
 
 
   vm.pageChanged = function(){
@@ -114,6 +118,7 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
 
   async function postPager(){
     try {
+     
       let result = await http.post("CreatePaper",vm.paper);
       if( result === true ){
           let dialog = $uibModal.open({
@@ -137,10 +142,11 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
     }
   }
 
-  async function getQuestions(value){
+  async function getQuestions(subjectId,value){
     let result = null;
     try {
       result = await http.get("GetQuestions",{
+    	subjectId:subjectId,
         type:value
       });
       vm.allQuestion = result;

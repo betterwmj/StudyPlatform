@@ -176,8 +176,6 @@ public class OperatorUser {
 				userInfo.put("type", number+"");
 				if(number==0)
 				   userInfo.put("classId", rs.getInt("classid")+"");
-				if(number==1)
-				   userInfo.put("subjectId", rs.getInt("subjectID")+"");
 			}
 			System.out.println(result);
 		} catch (SQLException e) {
