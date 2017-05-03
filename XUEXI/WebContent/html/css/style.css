@@ -55,3 +55,10 @@ login form{
 .teacher-center-page{
   margin-top: 5px;
 }
+.homework-history-page .result-list-btn{
+  margin-left: 45%;
+}
+.student-test-paper-list-page .handel-btn{
+  margin-left: 70%;
+  margin-bottom: 5px;
+}

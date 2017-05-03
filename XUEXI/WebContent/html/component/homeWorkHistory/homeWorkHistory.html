@@ -1,4 +1,4 @@
-<div>
+<div class="homework-history-page">
   <div class="box top-return">
     <span>作业列表</span>
     <a ui-sref="teacher.homework" class="btn btn-default">返回</a>
@@ -11,6 +11,6 @@
         <a ui-sref="teacher.publishHomework({homeworkId:item.homeId})">发布</a>
       </span>
       <span ng-show="item.status === 1">已发布</span>
-      <a ng-show="item.status === 1" ui-sref="teacher.teacherHomeworkResultList({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">查看结果</a>
+      <a ng-show="item.status === 1" class="btn btn-info result-list-btn" ui-sref="teacher.teacherHomeworkResultList({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">查看结果</a>
   </div>
 </div>
