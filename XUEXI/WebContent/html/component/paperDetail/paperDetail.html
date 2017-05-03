@@ -4,17 +4,19 @@
     <a ui-sref="teacher.publishPaper" class="btn btn-default">返回</a>
   </div>
   <div ng-repeat="question in $ctrl.paperDetail" class="box-radius">
-    <p>题号:<span ng-bind="$index+1"></span></p>
-    <p ng-bind="question.title"></p>
+    <p>
+      <span ng-bind="$index+1"></span>.
+      <span ng-bind="question.title"></span>
+    </p>
     <div ng-if="question.type === 1">
       <p>A.<span ng-bind="question.optionA"></span></p>
       <p>B.<span ng-bind="question.optionB"></span></p>
       <p>C.<span ng-bind="question.optionC"></span></p>
       <p>D.<span ng-bind="question.optionD"></span></p>
-      <p>答案:<span ng-bind="question.answer"></span></p>
     </div>
-    <div ng-if="question.type === 2">
-      <p>答案:<span ng-bind="question.answer"></span></p>
-    </div>
+    <p>
+      答案:<span ng-bind="question.answer"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+      分值:<span class="badge" ng-bind="question.score"></span>
+    </p>
   </div>
 </div>
