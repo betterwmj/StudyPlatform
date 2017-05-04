@@ -11,26 +11,13 @@ function controller($scope,$element,$state,$cookies,http){
   vm.msg = "";
   vm.$onInit = async function(){
     vm.userInfo = $cookies.getObject("userInfo");
-    let specialitiesList = await http.get("GetSpecialities");
-    vm.specialitiesList = specialitiesList;
-    vm.currentSpecialities = vm.specialitiesList[0];
+    let classes = await http.get("GetTeacherClasses");
+    vm.classes = classes;
+    vm.currentClass = vm.classes[0];
     let students = await http.get("GetStudents");
     vm.students = students;
     $scope.$applyAsync(null);
   }
-
-  $scope.$watch("$ctrl.currentSpecialities",async function(){
-    if ( !vm.currentSpecialities ){
-      return;
-    }
-    let classes = await http.get("GetClasses",{
-      "spencialitiesID":vm.currentSpecialities.specialitiesId
-    });
-    vm.classes = classes;
-    vm.currentClass = vm.classes[0];
-    $scope.$applyAsync(null);
-  },true);
-
   vm.toAssign = async function(){
     vm.msg = "";
     let data = {
@@ -43,10 +30,16 @@ function controller($scope,$element,$state,$cookies,http){
       }
     });
     let result = await http.post('AssignStudent',data);
-    if( result === true ){
-      vm.msg = "分配班级成功";
-    }else{
+    if(result === true){
+       vm.msg ="分配班级成功";
+    }
+    else if( result === false ){
       vm.msg = "分配班级失败";
+    }else{
+      let students =vm.students.find( (item) =>{
+    	  return result.userID === item.userID;
+      });
+      vm.msg = students.realName+"已加入该班级";
     }
     $scope.$applyAsync(null);
   }

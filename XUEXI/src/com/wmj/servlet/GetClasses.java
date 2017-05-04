@@ -38,10 +38,8 @@ public class GetClasses extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String spencialitiesID=request.getParameter("spencialitiesID");
-		int spencialitiesId=Integer.parseInt(spencialitiesID);
         try {
-        	List<Classes> list = OperatorClass.getClasses(spencialitiesId);
+        	List<Classes> list = OperatorClass.getClasses();
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

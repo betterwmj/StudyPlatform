@@ -15,7 +15,7 @@ import com.wmj.util.JDBCUtil;
 
 public class OperatorClass {
 	/*
-	 * 获取所有未分配班级学生信息
+	 * 获取所有学生信息
 	 */
 	public static List<Students> getStudent() throws Exception{
 		Connection conn = null;
@@ -29,7 +29,7 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from students where classid is NULL ";
+		sql="select * from students";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
@@ -92,9 +92,9 @@ public class OperatorClass {
 	return list;
  }
 	/*
-	 * 根据专业id获取所有班级信息
+	 * 获取所有班级信息
 	 */
-	public static List<Classes> getClasses(int spencialitiesID) throws Exception{
+	public static List<Classes> getClasses() throws Exception{
 		Connection conn = null;
 		List<Classes> list = new ArrayList<Classes>();
 		try {
@@ -106,17 +106,15 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from classes where Spencialities_id=? ";
+		sql="select * from classes  ";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, spencialitiesID);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
 				 Classes classes=new Classes();
 				 classes.setClassId(rs.getInt("ClassID"));
 				 classes.setClassName(rs.getString("ClassName"));
-				 classes.setSpencialities_id(rs.getInt("Spencialities_id"));
                  list.add(classes);
 	         }
 			 
@@ -131,9 +129,9 @@ public class OperatorClass {
 	return list;
 }
 	/*
-	 * 更新学生班级id(老师给学生分班)
+	 * 老师给学生分班
 	 */
-	public static boolean updateClassId(List<Students> list,int classId) throws Exception{
+	public static Object updateClassId(List<Students> list,int classId) throws Exception{
 		
 		Connection conn = null;
 		try {
@@ -146,24 +144,39 @@ public class OperatorClass {
 		PreparedStatement pmt = null; 
 		String sql = "";
 		int resultCount = 0;
+		ResultSet rs=null;
+		int flag=1;
 		try {
 			
 			for(int i=0;i<list.size();i++){
 				Students student=list.get(i);
-				sql="update students set classid=? where UserID=? ";
+				sql ="select * from  student_class_relationship where studentid =? and classid=?";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setInt(1, classId);
-				pmt.setInt(2, student.getUserID());
-				if(pmt.executeUpdate()>0){
-					resultCount++;
+				pmt.setInt(1, student.getUserID());
+				pmt.setInt(2, classId);
+				rs = pmt.executeQuery();
+				if(rs.next()){	
+					flag = 0;
+					return student;	
 				}
 			}
-			if( resultCount == list.size() ){
-				return true;
-			}else{
-				return false;
+			if( flag == 1){
+				for(int i=0;i<list.size();i++){
+					Students student=list.get(i);
+					sql="insert into  student_class_relationship (studentid,classid) values(?,?) ";
+					pmt=JDBCUtil.getPreparedStatement(conn, sql);
+					pmt.setInt(1, student.getUserID());
+					pmt.setInt(2, classId);
+					if(pmt.executeUpdate()>0){
+						resultCount++;
+					}
+				}
+				if( resultCount == list.size() ){
+					return true;
+				}else{
+					return false;
+				}
 			}
-		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
@@ -172,6 +185,7 @@ public class OperatorClass {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
 		}
+		return false;
 }
 	/*
 	 * 老师创建班级
@@ -315,7 +329,6 @@ public class OperatorClass {
 				 Classes classes=new Classes();
 				 classes.setClassId(rs.getInt("ClassID"));
 				 classes.setClassName(rs.getString("ClassName"));
-				 classes.setSpencialities_id(rs.getInt("Spencialities_id"));
                  return classes;
 	         }
 			 

@@ -38,10 +38,10 @@ public class GetSpecialities extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		try {
-			List<Map> list = OperatorSubject.getSpecities();
+			//List<Map> list = OperatorSubject.getSpecities();
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(list);
+			//result.setData(list);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

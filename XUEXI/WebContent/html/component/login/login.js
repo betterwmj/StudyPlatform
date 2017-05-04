@@ -54,20 +54,10 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       result.password = vm.userInfo.password;
     }
     if(userData.type === 0 ){
-      try {
-          let classInfo = await http.get("GetClassNameByClassId",{classID:result.classId});
-          result.classInfo = classInfo;
-          $cookies.putObject("userInfo",result);
-          $state.go("student.test");
-      } catch (error) {
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "获取学生班级信息异常";}
-          }
-        });
-      }
+ 
+      $cookies.putObject("userInfo",result);
+      $state.go("student.test");
+
     }else{
       $cookies.putObject("userInfo",result);
       $state.go("teacher.paper");
