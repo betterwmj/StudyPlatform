@@ -15,23 +15,6 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
     rePassword:"",
     subjectID:"",
   };
-  vm.currentSpecialities = null;
-  vm.$onInit = async function(){
-    try {
-      let specialitiesList = await http.get("GetSpecialities");
-      vm.specialitiesList = specialitiesList;
-      vm.currentSpecialities = vm.specialitiesList[0];
-    } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "获取专业信息异常";}
-        }
-      });
-    }
-  }
-
   vm.register = async function(){
     if( checkRegister() === false ){
       return;
@@ -42,7 +25,6 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
           userName:vm.userInfo.userName,
           realName:vm.userInfo.realName,
           password:vm.userInfo.password,
-          subjectID:vm.currentSubject.SubjectID,
         }),
         {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -60,28 +42,6 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
       });
     }
   }
-
-  $scope.$watch("$ctrl.currentSpecialities",async function(){
-    if ( !vm.currentSpecialities ){
-      return;
-    }
-    try {
-      let subjects = await http.get("GetAllSubject",{
-        "spencialties":vm.currentSpecialities.specialitiesId
-      });
-      vm.subjects = subjects;
-      vm.currentSubject = vm.subjects[0];
-    } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "获取科目信息异常";}
-        }
-      });
-    }
-  },true);
-
   function checkRegister(){
     let msg = "";
     if( vm.userInfo.userName.trim() === ""){
@@ -91,7 +51,7 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
     }else if( vm.userInfo.password.trim() === "" ){
       msg = "请输入密码";
     }else if( vm.userInfo.password !== vm.userInfo.rePassword ){
-      msg = "两次输入密码不一直";
+      msg = "两次输入密码不一样";
     }
     if( msg === ""){
       return true;

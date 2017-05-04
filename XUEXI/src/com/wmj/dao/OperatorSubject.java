@@ -86,9 +86,9 @@ public class OperatorSubject {
 	}
 	
 	/*
-	 * 得到对应专业所有学科下拉框
+	 * 得到所有学科下拉框
 	 */
-	public static  List<Map> getSubject(int spencialtiesId) throws Exception{
+	public static  List<Map> getSubject(int studentId) throws Exception{
 		
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -104,13 +104,13 @@ public class OperatorSubject {
 		try {
 			ResultSet rs = null;
 			String sql="";
-			if(spencialtiesId==-1){
+			if(studentId==-1){
 				sql="select * from subjects";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			}else{
-				sql="select a.SubjectID,SubjectName from subjects as a,subject_spencialities_relationship as b where a.SubjectID=b.subjectId and b.Spencialities_id=?";
+				sql="select a.SubjectID,SubjectName from subjects as a,subject_classes_relationship as b where a.SubjectID=b.subjectId and b.classid=?";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-				pmt.setInt(1, spencialtiesId);
+				pmt.setInt(1, studentId);
 			}	
 			rs = pmt.executeQuery();
 			 while (rs.next()) {

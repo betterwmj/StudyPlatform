@@ -53,7 +53,6 @@ public class OperatorUser {
 					teacher.setUserName(rs.getString("userName"));
 					teacher.setRealName(rs.getString("RealName"));
 					teacher.setPassword(rs.getString("password"));
-					teacher.setSubjectId(rs.getInt("subjectID"));
 					return teacher;
 					
 				}
@@ -118,13 +117,12 @@ public class OperatorUser {
 		PreparedStatement pmt = null; 
 		try {
 		
-            String sql="insert into teachers (userName,RealName,password,subjectID) values(?,?,?,?)";
+            String sql="insert into teachers (userName,RealName,password) values(?,?,?)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			//System.out.print("operatorUser"+subjectName+subjectId);
 			pmt.setString(1, teacher.getUserName());
 			pmt.setString(2, teacher.getRealName());
 			pmt.setString(3, teacher.getPassword());
-			pmt.setInt(4, teacher.getSubjectId());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 			 
@@ -210,7 +208,6 @@ public class OperatorUser {
 			pmt.setString(1, teacher.getUserName());
 			pmt.setString(2, teacher.getRealName());
 			pmt.setString(3, teacher.getPassword());
-			pmt.setInt(4, teacher.getSubjectId());
 			pmt.setInt(5, teacher.getUserID());
 			if(pmt.executeUpdate()>0)
 			   result = true;

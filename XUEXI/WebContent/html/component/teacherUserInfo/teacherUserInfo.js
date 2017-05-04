@@ -9,7 +9,6 @@ export default function root(app){
 function controller($scope,$element,$state,http){
 	let vm=this;
 	vm.$onInit=init();
-	vm.currentSubjectName=null;
 	vm.classes = [];//教授的班级信息
 	async function init(){
 		let userinfo = await http.get("GetUserInfoByName");
@@ -20,9 +19,8 @@ function controller($scope,$element,$state,http){
 		$scope.$applyAsync(null);
 	}
 	async function getSubjectName(){
-		  let result = await http.get("GetAllSubject");
+		  let result = await http.get("GetTeacherSubject");
 		  vm.subject=result;
-		  vm.currentSubjectName = vm.subject[vm.userinfo.subjectId-1];
 		  $scope.$applyAsync(null);
 	}
 	vm.userinfo = {

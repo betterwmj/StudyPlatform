@@ -176,7 +176,7 @@ public class OperatorClass {
 	/*
 	 * 老师创建班级
 	 */
-	public static boolean insertClass(Classes classes,int teacherID) throws Exception{
+	public static boolean insertClass(Classes classes,int teacherID,int subjectId) throws Exception{
 		boolean result=false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -191,30 +191,47 @@ public class OperatorClass {
 		PreparedStatement pmt = null; 
 		try {
 			
-			String sql="select * from classes where ClassName = ? and Spencialities_id=?";
+			String sql="select * from classes where ClassName = ?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 	
 			pmt.setString(1, classes.getClassName());
-			pmt.setInt(2, classes.getSpencialities_id());
 			ResultSet rs=null;
 			rs = pmt.executeQuery();
 			if(rs.next()){
 				return false;
 			}else{
 				int classId=0;
-				String sql2="insert into classes (ClassName,Spencialities_id) values(?,?)";
+				String sql2="insert into classes (ClassName) values(?)";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql2,Statement.RETURN_GENERATED_KEYS); 
 				pmt.setString(1, classes.getClassName());
-				pmt.setInt(2, classes.getSpencialities_id());
 				if(pmt.executeUpdate()>0){
 					rs = pmt.getGeneratedKeys(); //获取结果   
 					if (rs.next()) {
 						classId = rs.getInt(1);//取得ID
-						String sql3="insert into teacherclass_relation (classID,teacherId) values(?,?)";
+						String sql3="insert into teacherclass_relation (classID,teacherId,subjectid) values(?,?,?)";
 						pmt=JDBCUtil.getPreparedStatement(conn, sql3); 
 						pmt.setInt(1, classId);
 						pmt.setInt(2, teacherID);
+						pmt.setInt(3, subjectId);
 						if(pmt.executeUpdate()>0){
-							result=true;
+							String sql4="select * from teacher_subject_relation where teacherid=? and subjectid= ?";
+							pmt=JDBCUtil.getPreparedStatement(conn, sql4); 
+							pmt.setInt(1, teacherID);
+							pmt.setInt(2, subjectId);
+							rs = pmt.executeQuery();
+							if(rs.next()){
+								result = true;
+							}else{
+								String sql5="insert into teacher_subject_relation (teacherid,subjectid) values(?,?)";
+								pmt=JDBCUtil.getPreparedStatement(conn, sql5); 
+								pmt.setInt(1, teacherID);
+								pmt.setInt(2, subjectId);
+								if(pmt.executeUpdate()>0){
+									result = true;
+								}else{
+									result = false;
+								}
+							}
+							
 						}
 						 
 					} else {
@@ -235,50 +252,7 @@ public class OperatorClass {
 		}
 		return result;
 	}
-	/*
-	 * 老师加入班级
-	 */
-	public static boolean insertClass(int classId,int teacherID) throws Exception{
-		boolean result=false;
-		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
-		Connection conn = null;
-		try {
-			conn = JDBCUtil.getConnection();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			throw e1;
-		}
-		PreparedStatement pmt = null; 
-		try {
-					
-			    String sql1="select * from  teacherclass_relation where teacherId=? and classID=?" ;
-			    pmt=JDBCUtil.getPreparedStatement(conn, sql1); 
-			    pmt.setInt(1, teacherID);
-				pmt.setInt(2, classId);
-				ResultSet rs=null;
-				rs = pmt.executeQuery();
-				if(rs.next()){
-					result =false;
-				}else{
-					String sql2="insert into  teacherclass_relation (teacherId,classID) values(?,?)" ;
-					pmt=JDBCUtil.getPreparedStatement(conn, sql2); 
-					pmt.setInt(1, teacherID);
-					pmt.setInt(2, classId);
-					if(pmt.executeUpdate()>0){	
-						result=true;
-					}	 
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-			} finally {
-				// 关闭连接
-				JDBCUtil.close(conn, pmt);
-			}
-			return result;
-	}
+
 	/*
 	 * 根据老师id获取该老师创建的所有班级
 	 */
@@ -304,7 +278,6 @@ public class OperatorClass {
 				 Classes classes=new Classes();
 				 classes.setClassId(rs.getInt("ClassID"));
 				 classes.setClassName(rs.getString("ClassName"));
-				 classes.setSpencialities_id(rs.getInt("Spencialities_id"));
                  list.add(classes);
 	         }
 			 

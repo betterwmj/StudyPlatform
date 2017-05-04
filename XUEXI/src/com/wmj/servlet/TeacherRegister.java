@@ -48,13 +48,10 @@ public class TeacherRegister extends HttpServlet {
 		String name=request.getParameter("userName");
 		String realName=request.getParameter("realName");
 		String password=request.getParameter("password");
-		String subjectIdString=request.getParameter("subjectID");
-		int subjectId=Integer.parseInt(subjectIdString);
 		Teachers teacher=new Teachers();
 		teacher.setUserName(name);
 		teacher.setRealName(realName);
 		teacher.setPassword(password);
-		teacher.setSubjectId(subjectId);
 		try {
 			boolean resultCode=OperatorUser.insertTeacher(teacher);
 			ApiResult result = new ApiResult();

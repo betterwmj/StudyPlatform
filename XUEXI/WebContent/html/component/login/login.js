@@ -27,17 +27,6 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       vm.userInfo.userName = userInfo.userName;
       vm.userInfo.password = userInfo.password;
     }
-    try {
-      vm.subjects = await http.get('GetAllSubject');
-    } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "获取课程科目异常";}
-        }
-      });
-    }
   }
 
   async function login(){
@@ -80,11 +69,6 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
         });
       }
     }else{
-      vm.subjects.forEach( (subject)=>{
-        if( subject.SubjectID === result.subjectId){
-          result.subjectName = subject.SubjectName;
-        }
-      });
       $cookies.putObject("userInfo",result);
       $state.go("teacher.paper");
     }

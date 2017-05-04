@@ -64,7 +64,6 @@ public class UpdateTeacher extends HttpServlet {
 		teacher.setUserName(userName);
 		teacher.setRealName(realName);
 		teacher.setPassword(password);
-		teacher.setSubjectId(subjectId);
 		boolean resultCode;
 		try {
 			resultCode = OperatorUser.updateTeacher(teacher);

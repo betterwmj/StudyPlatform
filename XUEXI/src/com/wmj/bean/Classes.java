@@ -5,7 +5,6 @@ package com.wmj.bean;
 public class Classes {
    private int classId;
    private String className;
-   private  int spencialities_id;
 	public int getClassId() {
 		return classId;
 	}
@@ -17,11 +16,5 @@ public class Classes {
 	}
 	public void setClassName(String className) {
 		this.className = className;
-	}
-	public int getSpencialities_id() {
-		return spencialities_id;
-	}
-	public void setSpencialities_id(int spencialities_id) {
-		this.spencialities_id = spencialities_id;
 	}
 }

@@ -39,19 +39,16 @@ public class CreateClass extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 String cname = request.getParameter("className").trim();
-		 String spencialitiesID = request.getParameter("spencialitiesID").trim();
-	     int spencialitiesId=Integer.parseInt(spencialitiesID);
+		 String subjectID = request.getParameter("subjectID").trim();
+	     int subjectId=Integer.parseInt(subjectID);
 	     HttpSession session = request.getSession();
          Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
          String teacherID= userInfo.get("id");
          int teacherId=Integer.parseInt(teacherID);
-//       String teacherID = request.getParameter("teacherID").trim();
-//	     int teacherId=Integer.parseInt(teacherID);
 	     Classes classes=new Classes();
 		 classes.setClassName(cname);
-		 classes.setSpencialities_id(spencialitiesId);
 	     try {
-	    	    boolean resultCode=OperatorClass.insertClass(classes, teacherId);
+	    	    boolean resultCode=OperatorClass.insertClass(classes, teacherId,subjectId);
 				ApiResult result = new ApiResult();
 				result.setCode(0);
 				result.setData(resultCode);
