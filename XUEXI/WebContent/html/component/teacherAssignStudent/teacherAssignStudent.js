@@ -21,7 +21,7 @@ function controller($scope,$element,$state,$cookies,http){
   vm.toAssign = async function(){
     vm.msg = "";
     let data = {
-      classId:vm.currentClass.classId,
+      classId:vm.currentClass.classes.classId,
       studentIds:[],
     };
     vm.students.forEach( (student)=>{

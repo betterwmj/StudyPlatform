@@ -9,7 +9,7 @@
       <label >选择班级</label>
       <select class="form-control" 
           ng-model="$ctrl.currentClass"
-          ng-options="item as item.className for item in $ctrl.classes">
+          ng-options="item as item.classes.className for item in $ctrl.classes">
       </select>
     </div>
     <div class="form-group">
