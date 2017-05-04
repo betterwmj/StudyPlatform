@@ -15,13 +15,7 @@ function controller($scope,$element,$state,http){
 		let classes = await http.get("GetTeacherClasses");
 		vm.userinfo = userinfo;
 		vm.classes = classes;
-		getSubjectName();
 		$scope.$applyAsync(null);
-	}
-	async function getSubjectName(){
-		  let result = await http.get("GetTeacherSubject");
-		  vm.subject=result;
-		  $scope.$applyAsync(null);
 	}
 	vm.userinfo = {
 		userName:"",

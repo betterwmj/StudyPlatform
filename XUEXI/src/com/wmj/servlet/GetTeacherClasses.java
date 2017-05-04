@@ -45,7 +45,7 @@ public class GetTeacherClasses extends HttpServlet {
 		//String teacherID=request.getParameter("teacherID");
          int teacherId=Integer.parseInt(teacherID);
         try {
-        	List<Classes> list = OperatorClass.getTeacherClasses(teacherId);
+        	List<Map<String,Object>> list = OperatorClass.getTeacherClasses(teacherId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

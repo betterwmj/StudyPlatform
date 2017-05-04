@@ -73,7 +73,7 @@ public class UpdateStudentClassId extends HttpServlet {
         	
         }
         try {
-        	  boolean resultCode=OperatorClass.updateClassId(list,classid);
+        	Object resultCode=OperatorClass.updateClassId(list,classid);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(resultCode);

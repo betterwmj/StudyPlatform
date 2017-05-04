@@ -24,20 +24,12 @@
       </div>
     </div>
     <div class="form-group">
-      <label>所教学科</label>
-      <div class="list-group">
-        <a ng-repeat="item in $ctrl.subject track by $index" href="#"
-          class="list-group-item">
-          <span ng-bind="item.SubjectName"></span>
-        </a>
-      </div> 
-    </div>
-    <div class="form-group">
       <label>教授班级</label>
       <div class="list-group">
         <a ng-repeat="item in $ctrl.classes track by $index" href="#"
           class="list-group-item">
-          <span ng-bind="item.className"></span>
+          <span ng-bind="item.classes.className"></span>
+          <span ng-bind="item.subjectName"></span>
         </a>
       </div> 
     </div>

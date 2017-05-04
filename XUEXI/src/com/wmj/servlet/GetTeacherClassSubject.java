@@ -19,14 +19,14 @@ import net.sf.json.JSONObject;
 /**
  * Servlet implementation class GetClassSubject
  */
-@WebServlet("/GetClassSubject")
-public class GetClassSubject extends HttpServlet {
+@WebServlet("/GetTeacherClassSubject")
+public class GetTeacherClassSubject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetClassSubject() {
+    public GetTeacherClassSubject() {
         super();
         // TODO Auto-generated constructor stub
     }

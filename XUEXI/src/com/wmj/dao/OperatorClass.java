@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import com.wmj.bean.Classes;
 import com.wmj.bean.Students;
@@ -270,9 +271,9 @@ public class OperatorClass {
 	/*
 	 * 根据老师id获取该老师创建的所有班级
 	 */
-	public static List<Classes> getTeacherClasses(int teacherID) throws Exception{
+	public static List<Map<String,Object>> getTeacherClasses(int teacherID) throws Exception{
 		Connection conn = null;
-		List<Classes> list = new ArrayList<Classes>();
+		List<Map<String,Object>> list = new ArrayList();
 		try {
 			conn = JDBCUtil.getConnection();
 		} catch (SQLException e1) {
@@ -282,17 +283,21 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select b.* from teacherclass_relation as  a,classes as b where a.classID=b.ClassID and a.teacherId=? ";
+		sql="select c.*,b.* from teacherclass_relation as  a,classes as b ,subjects as c where a.classID=b.ClassID and a.subjectid = c.SubjectID and a.teacherId=? ";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, teacherID);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
+				 Map<String,Object> classesMap = new HashMap<>();
 				 Classes classes=new Classes();
 				 classes.setClassId(rs.getInt("ClassID"));
 				 classes.setClassName(rs.getString("ClassName"));
-                 list.add(classes);
+				 classesMap.put("classes", classes);
+				 classesMap.put("subjectName", rs.getString("SubjectName"));
+                 list.add(classesMap);
+                
 	         }
 			 
 		} catch (SQLException e) {
