@@ -15,12 +15,13 @@ function controller($scope,$element,$state,$cookies,$stateParams,http){
     $stateParams.testpaperID = parseInt($stateParams.testpaperID);
     vm.subject = {
       SubjectName:$stateParams.SubjectName,
-      SubjectID:$stateParams.SubjectID
+      SubjectID:$stateParams.SubjectID,
+      teacherID :$stateParams.teacherID
     };
-    let paperList = await http.get("GetPaper",{subjectId:vm.subject.SubjectID});
-    vm.paper = paperList.find((item)=>{
-      return item.testpaperID === $stateParams.testpaperID
-    });
+//    let paperList = await http.get("GetPaper",{subjectId:vm.subject.SubjectID});
+//    vm.paper = paperList.find((item)=>{
+//      return item.testpaperID === $stateParams.testpaperID
+//    });
     let paperResultList = await http.get("GetPaperResult");
     vm.paperResult = paperResultList.find((item)=>{
       return item.paper.paperId === $stateParams.testpaperID

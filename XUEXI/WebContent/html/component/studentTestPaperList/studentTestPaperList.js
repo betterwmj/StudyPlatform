@@ -17,7 +17,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.$onInit = async function(){
     vm.subject = {
       SubjectName:$stateParams.SubjectName,
-      SubjectID:$stateParams.SubjectID
+      SubjectID:$stateParams.SubjectID,
+      teacherID :$stateParams.teacherID
     };
     let rs = await getPaper();
     $scope.$applyAsync(null);
@@ -25,6 +26,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   async function  getPaper(){
     vm.papers = await http.get("GetPaper",{
       subjectId:vm.subject.SubjectID,
+      teacherId:vm.subject.teacherID
     });
     vm.papers.forEach( (paper)=>{
       paper.createTime = new Date(paper.createTime.time);

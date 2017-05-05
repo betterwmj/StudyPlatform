@@ -44,7 +44,6 @@ public class OperatorUser {
 					student.setPass(rs.getString("password"));
 					student.setSchool(rs.getString("school"));
 					student.setTelephone(rs.getString("telephone"));
-					student.setClassId(rs.getInt("classid"));
 					return student;
 				}		
 				else {

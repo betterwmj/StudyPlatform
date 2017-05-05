@@ -1,7 +1,7 @@
 <div>
   <div class="box top-return">
     <span ng-bind="$ctrl.paper.testName">学生做试卷</span>
-    <a ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID})" class="btn btn-default ">返回</a>
+    <a ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID})" class="btn btn-default ">返回</a>
   </div>
   <h3>查看学生考试结果详情</h3>
   <p>得分:<span ng-bind="$ctrl.paperResult.paper.score"></span>,

@@ -62,7 +62,7 @@ public class OperatorTestPaper {
 	/*
 	 * 获取该科目的所有试卷
 	 */
-	public static  List<Paper> getTestPaperBySubjectId(int subjectId,int classId) throws Exception{
+	public static  List<Paper> getTestPaperBySubjectId(int subjectId,int teacherId) throws Exception{
 		
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -77,10 +77,10 @@ public class OperatorTestPaper {
 		PreparedStatement pmt = null; 
 		try {
 			ResultSet rs = null;
-			String sql="select distinct(a.TestpaperID), a.* from paper as a,teacherclass_relation as b where a.UserID=b.teacherId and a.status=1 and  a.SubjectID=? and b.classID=?";
+			String sql="select * from paper  where  status=1 and  SubjectID=? and UserID=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, subjectId);
-			pmt.setInt(2, classId);
+			pmt.setInt(2, teacherId);
 			rs = pmt.executeQuery();
 			 while (rs.next()) {
 			   Paper paper=new Paper();

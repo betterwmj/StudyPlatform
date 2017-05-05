@@ -17,7 +17,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
   vm.$onInit = async function(){
     vm.subject = {
       SubjectName:$stateParams.SubjectName,
-      SubjectID:$stateParams.SubjectID
+      SubjectID:$stateParams.SubjectID,
+      teacherID :$stateParams.teacherID
     };
     vm.paper = {
       testpaperID:$stateParams.testpaperID,

@@ -12,7 +12,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.subjects = [];
   vm.$onInit = async function(){
     try {
-      vm.subjects = await http.get("GetClassSubject");
+      vm.subjects = await http.get("GetAllSubject");
     } catch (error) {
       
     }finally{

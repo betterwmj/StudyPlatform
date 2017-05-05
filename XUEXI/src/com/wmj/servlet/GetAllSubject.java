@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
@@ -40,13 +40,18 @@ public class GetAllSubject extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String studentId=request.getParameter("studentId");	
+		HttpSession session = request.getSession();
+        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
+        String typeString= userInfo.get("type");
+        int type=Integer.parseInt(typeString);
 		try {
 			List<Map> list=null;
-			if(studentId==null){
+			if(type==1){
 				list= OperatorSubject.getSubject(-1);
 			}
-			else{		
+			else{	
+				
+		        String studentId= userInfo.get("id");
 				int studentid=Integer.parseInt(studentId);
 				list = OperatorSubject.getSubject(studentid);	
 			}

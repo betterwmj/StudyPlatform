@@ -86,7 +86,7 @@ public class OperatorSubject {
 	}
 	
 	/*
-	 * 得到所有学科下拉框
+	 * 得到所有学科下拉框或对应学生学科
 	 */
 	public static  List<Map> getSubject(int studentId) throws Exception{
 		
@@ -108,15 +108,21 @@ public class OperatorSubject {
 				sql="select * from subjects";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			}else{
-				sql="select a.SubjectID,SubjectName from subjects as a,subject_classes_relationship as b where a.SubjectID=b.subjectId and b.classid=?";
+				sql="select c.classID,c.teacherId, d.* from students as a,student_class_relationship as b,teacherclass_relation as c ,subjects as d "+
+                  "where a.UserID = b.studentid and  b.classid = c.classID  and d.SubjectID = c.subjectid and a.UserID =?";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 				pmt.setInt(1, studentId);
 			}	
 			rs = pmt.executeQuery();
 			 while (rs.next()) {
 			   Map<String,String> title = new HashMap<String,String>();
+			
 			   title.put("SubjectName", rs.getString("SubjectName"));
 			   title.put("SubjectID", rs.getString("SubjectID"));
+			   if(studentId!=-1){
+				   title.put("classId", rs.getInt("classID")+"");
+				   title.put("teacherId", rs.getInt("teacherId")+"");
+			   }
                list.add(title);
           
 	         }

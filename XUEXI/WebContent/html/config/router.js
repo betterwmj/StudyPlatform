@@ -41,10 +41,11 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaperList",
-				url: '/studentTestPaperList/{SubjectName}/{SubjectID}',
+				url: '/studentTestPaperList/{SubjectName}/{SubjectID}/{teacherID}',
 				params:{
 					SubjectName:null,
-					SubjectID:null
+					SubjectID:null,
+					teacherID:null
 				},
 				views:{
 					"head@":{
@@ -60,12 +61,14 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaper",
-				url: '/studentTestPaper/{SubjectName}/{SubjectID}/{testpaperID}/{testName}',
+				url: '/studentTestPaper/{SubjectName}/{SubjectID}/{teacherID}/{testpaperID}/{testName}',
 				params:{
 					SubjectName:null,
 					SubjectID:null,
+					teacherID:null,
 					testpaperID:null,
 					testName:null,
+					
 				},
 				views:{
 					"head@":{
@@ -81,10 +84,11 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaperResultDetail",
-				url: '/studentTestPaperResultDetail/{SubjectName}/{SubjectID}/{testpaperID}/{paperResultID}',
+				url: '/studentTestPaperResultDetail/{SubjectName}/{SubjectID}/{teacherID}/{testpaperID}/{paperResultID}',
 				params:{
 					SubjectName:null,
 					SubjectID:null,
+					teacherID:null,
 					testpaperID:null,
 					paperResultID:null
 				},
