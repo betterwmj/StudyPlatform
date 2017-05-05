@@ -25,7 +25,6 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
   vm.$onInit = async function(){
 	  vm.subjectlist = await http.get("GetTeacherSubject");
       vm.currentSubject = vm.subjectlist[0];
-      let rs=  getQuestions(vm.currentSubject.SubjectID,1);
   }
   vm.paper = {
     subjectId :null,
@@ -36,7 +35,7 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
     vm.msg = "";
     let count = vm.paper.papertitles.length;
     let totalScore = 0;
-    vm.paper.subjectId =vm.currentSubject.SubjectID;
+    vm.paper.subjectId = vm.currentSubject.SubjectID;
     vm.paper.papertitles.forEach((item)=>{
       totalScore += item.score;
     });
@@ -73,12 +72,12 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
 
     });
   };
-
-  $scope.$watch('vm.currentSubject+$ctrl.currentType',async ()=>{
-      let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
-  },true);
-
-
+  vm.getQuestionByType = async function(){
+	  let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+  }
+  vm.getQuestionBySubject =async function(){
+	  let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+  }
   vm.pageChanged = function(){
     getData();
   };

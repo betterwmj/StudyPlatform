@@ -17,7 +17,7 @@ import com.wmj.util.JDBCUtil;
 public class OperatorSubject {
 	
 	/*
-	 * 根据学科id(默认为老师的学科id)和题目类型从数据库获取相应的题目
+	 * 根据学科id和题目类型从数据库获取相应的题目
 	 */
 	public static List<Map> getTitle(int subjectId,int type) throws Exception{
 		Connection conn = null;
@@ -56,32 +56,7 @@ public class OperatorSubject {
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
-		}
-		
-//		if( type.equals("判断题") ){
-//			sql="select a.ItemID,a.title,a.answer from truefalsetitle as a,subjects as b  where a.SubjectID=b.SubjectID and a.SubjectID= ?";
-//			try {
-//				ResultSet rs = null;
-//				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-//				pmt.setInt(1, subjectId);
-//				rs = pmt.executeQuery();
-//				 while (rs.next()) { 
-//				   Map<String,String> title = new HashMap<String,String>();
-//				   title.put("itemId", rs.getInt("ItemID")+"");
-//				   title.put("title", rs.getString("title"));
-//				   title.put("answer", rs.getString("answer"));
-//	               list.add(title);
-//		         }
-//				 
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//				throw e;
-//			} finally {
-//				// 关闭连接
-//				JDBCUtil.close(conn, pmt);
-//			}
-//		}
-		
+		}	
 		return list;
 	}
 	
