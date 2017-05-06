@@ -83,8 +83,8 @@ public class OperatorSubject {
 				sql="select * from subjects";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			}else{
-				sql="select c.classID,c.teacherId, d.* from students as a,student_class_relationship as b,teacherclass_relation as c ,subjects as d "+
-                  "where a.UserID = b.studentid and  b.classid = c.classID  and d.SubjectID = c.subjectid and a.UserID =?";
+				sql="select c.classID,e.userID,e.realName, d.* from students as a,student_class_relationship as b,teacherclass_relation as c ,subjects as d, "
+  +"teachers as e   where a.UserID = b.studentid and  b.classid = c.classID  and d.SubjectID = c.subjectid and c.teacherId = e.userID and a.UserID =?";
 				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 				pmt.setInt(1, studentId);
 			}	
@@ -96,7 +96,8 @@ public class OperatorSubject {
 			   title.put("SubjectID", rs.getString("SubjectID"));
 			   if(studentId!=-1){
 				   title.put("classId", rs.getInt("classID")+"");
-				   title.put("teacherId", rs.getInt("teacherId")+"");
+				   title.put("teacherId", rs.getInt("userID")+"");
+				   title.put("realName", rs.getString("realName"));
 			   }
                list.add(title);
           
