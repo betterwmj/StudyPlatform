@@ -24,7 +24,8 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
   vm.subjectlist =null;
   vm.$onInit = async function(){
 	  vm.subjectlist = await http.get("GetTeacherSubject");
-      vm.currentSubject = vm.subjectlist[0];
+    vm.currentSubject = vm.subjectlist[0];
+    vm.getQuestionByType();
   }
   vm.paper = {
     subjectId :null,
