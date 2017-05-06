@@ -26,7 +26,6 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   async function  getPaper(){
     vm.papers = await http.get("GetPaper",{
       subjectId:vm.subject.SubjectID,
-      teacherId:vm.subject.teacherID
     });
     vm.papers.forEach( (paper)=>{
       paper.createTime = new Date(paper.createTime.time);

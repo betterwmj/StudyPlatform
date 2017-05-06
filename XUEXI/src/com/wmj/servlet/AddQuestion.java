@@ -58,9 +58,8 @@ public class AddQuestion extends HttpServlet {
         HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String id= userInfo.get("id");
-        String suId=userInfo.get("subjectId");
         int teacherId=Integer.parseInt(id);
-        int subjectId=Integer.parseInt(suId);
+        int subjectid=json.getInt("subjectId");
         JSONArray array=json.getJSONArray("titles");
         int resultCount = 0;
         List<Title> list=new ArrayList<>();
@@ -77,7 +76,7 @@ public class AddQuestion extends HttpServlet {
         	title.setTitle(titles);
             title.setType(type);
             title.setAnswer(answer);
-            title.setSubjectId(subjectId);
+            title.setSubjectId(subjectid);
             title.setTeacherId(teacherId);
             try {
 				title = OperatorQuestion.AddQuestion(title);

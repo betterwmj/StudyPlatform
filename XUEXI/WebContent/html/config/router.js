@@ -481,9 +481,10 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.publishHomework",
-				url: '/publishHomework/{homeworkId}',
+				url: '/publishHomework/{homeworkId}/{subjectId}',
 				params:{
-					homeworkId:null
+					homeworkId:null,
+					subjectId:null
 				},
 				views:{
 					"head@":{

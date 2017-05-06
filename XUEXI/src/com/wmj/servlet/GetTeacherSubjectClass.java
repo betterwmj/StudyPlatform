@@ -12,21 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.dao.OperatorSubject;
+import com.wmj.bean.Classes;
+import com.wmj.dao.OperatorClass;
+
 
 import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class GetClassSubject
  */
-@WebServlet("/GetTeacherClassSubject")
-public class GetTeacherClassSubject extends HttpServlet {
+@WebServlet("/GetTeacherSubjectClass")
+public class GetTeacherSubjectClass extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetTeacherClassSubject() {
+    public GetTeacherSubjectClass() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,11 +42,12 @@ public class GetTeacherClassSubject extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 	    HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
-        String classId= userInfo.get("classId");
-        //String classId=request.getParameter("classId");
-        int id=Integer.parseInt(classId);
+        String teacherId= userInfo.get("id");
+        int teacherid=Integer.parseInt(teacherId);
+        String subjectId= request.getParameter("subjectId");
+        int subjectid = Integer.parseInt(subjectId);
 		try {
-			List<Map> list = OperatorSubject.getSubjectByClassId(id);
+			List<Classes> list = OperatorClass.getTeacherSubjectClass(teacherid,subjectid);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

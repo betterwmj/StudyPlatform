@@ -65,9 +65,8 @@ public class CreateHomework extends HttpServlet {
         HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String id= userInfo.get("id");
-        String suId=userInfo.get("subjectId");
+        int subjectid=json.getInt("subjectId");
         int teacherId=Integer.parseInt(id);
-        int subjectId=Integer.parseInt(suId);
         HomeWork home = new HomeWork();
         JSONArray array=json.getJSONArray("questions");
         List<HomeWorkDetail> list = new ArrayList<>();
@@ -93,7 +92,7 @@ public class CreateHomework extends HttpServlet {
 			return;
 		}
         home.setFinishTime(finishTime);
-        home.setSubjectId(subjectId);
+        home.setSubjectId(subjectid);
         home.setTeacherId(teacherId);
         boolean resultCode;
 		try {

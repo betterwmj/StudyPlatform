@@ -62,10 +62,10 @@ public class OperatorTestPaper {
 	/*
 	 * 获取该科目的所有试卷
 	 */
-	public static  List<Paper> getTestPaperBySubjectId(int subjectId,int teacherId) throws Exception{
+	public static  List<Paper> getTestPaperBySubjectId(int subjectId,int studentId) throws Exception{
 		
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
-		Connection conn = null;
+		Connection conn = null;					
 		List<Paper> list = new ArrayList<Paper>();
 		try {
 			conn = JDBCUtil.getConnection();
@@ -77,10 +77,12 @@ public class OperatorTestPaper {
 		PreparedStatement pmt = null; 
 		try {
 			ResultSet rs = null;
-			String sql="select * from paper  where  status=1 and  SubjectID=? and UserID=?";
+			String sql="select DISTINCT a.*,d.classid from paper as a, students as b , student_class_relationship as c, teacherclass_relation as d "
+           +"where  b.UserID = c.studentid and c.classid = d.classID and d.teacherId = a.UserID and a.status=1 and d.subjectid = ? and a.SubjectID=? and b.UserID=? ";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, subjectId);
-			pmt.setInt(2, teacherId);
+			pmt.setInt(2, subjectId);
+			pmt.setInt(3, studentId);
 			rs = pmt.executeQuery();
 			 while (rs.next()) {
 			   Paper paper=new Paper();
@@ -90,9 +92,10 @@ public class OperatorTestPaper {
 			   paper.setUserId(rs.getInt("UserID"));
 			   paper.setStatus(rs.getInt("status"));
 			   paper.setCreateTime(rs.getTimestamp("create_time"));  
-               list.add(paper);
+			   paper.setClassId(rs.getInt("classid"));
+         list.add(paper);
          
-	         }
+	       }
 			 
 		} catch (SQLException e) {
 			e.printStackTrace();

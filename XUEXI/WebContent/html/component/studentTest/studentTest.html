@@ -1,7 +1,7 @@
 <div>
   <h3>可选科目</h3>
   <div class="list-group">
-    <a ng-repeat="item in $ctrl.subjects track by $index" href="#"
+    <a ng-repeat="item in $ctrl.subjects track by $index" href="#" 
        class="list-group-item" 
        ui-sref="student.studentTestPaperList({SubjectName:item.SubjectName,SubjectID:item.SubjectID,teacherID:item.teacherId})"
        style="position: relative;">

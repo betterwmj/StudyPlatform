@@ -14,6 +14,13 @@ public class Paper {
    private int userId;
    private int status;
    private Timestamp createTime;
+   private int classId;
+	public int getClassId() {
+	return classId;
+}
+public void setClassId(int classId) {
+	this.classId = classId;
+}
 	public int getStatus() {
 	return status;
 	}

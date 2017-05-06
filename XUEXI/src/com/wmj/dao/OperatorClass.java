@@ -93,6 +93,45 @@ public class OperatorClass {
 	return list;
  }
 	/*
+	 * 获取该老师该科目所有班级信息
+	 */
+	public static List<Classes> getTeacherSubjectClass(int teacherId,int subjectid) throws Exception{
+		Connection conn = null;
+		List<Classes> list = new ArrayList<Classes>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		sql="select a.* from classes as a,teacherclass_relation as b where a.ClassID =b.classID  and b.teacherId =? and b.subjectid =?;  ";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, teacherId);
+			pmt.setInt(2, subjectid);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+				 Classes classes=new Classes();
+				 classes.setClassId(rs.getInt("ClassID"));
+				 classes.setClassName(rs.getString("ClassName"));
+                 list.add(classes);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+}
+	/*
 	 * 获取所有班级信息
 	 */
 	public static List<Classes> getClasses() throws Exception{

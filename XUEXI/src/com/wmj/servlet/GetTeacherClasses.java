@@ -42,8 +42,7 @@ public class GetTeacherClasses extends HttpServlet {
 		HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String teacherID= userInfo.get("id");
-		//String teacherID=request.getParameter("teacherID");
-         int teacherId=Integer.parseInt(teacherID);
+        int teacherId=Integer.parseInt(teacherID);
         try {
         	List<Map<String,Object>> list = OperatorClass.getTeacherClasses(teacherId);
 			ApiResult result = new ApiResult();

@@ -42,7 +42,6 @@ public class GetHomework extends HttpServlet {
 		HttpSession session = request.getSession();
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
         String type= userInfo.get("type");
-        String classId= userInfo.get("classId");
 //		 String type=request.getParameter("type");
 //         String classId=request.getParameter("classId");
          
@@ -50,10 +49,11 @@ public class GetHomework extends HttpServlet {
          try {
         	 List<HomeWork> list=null;
         	 if(typeId==0){
-    		    int classid=Integer.parseInt(classId);
+    		    String studentId= userInfo.get("id");
+                int studentid=Integer.parseInt(studentId);
              	String subjectId=request.getParameter("subjectId");
              	int Id=Integer.parseInt(subjectId);
-             	list = OperatorHomeWork.getHomeWorkBySubjectId(Id,classid);
+             	list = OperatorHomeWork.getHomeWorkBySubjectId(Id,studentid);
              }
              else{
              	String teacherId= userInfo.get("id");

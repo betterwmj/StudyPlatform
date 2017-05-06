@@ -8,7 +8,7 @@
       计划完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span><br>
       状态:
       <span ng-show="item.status === 0">
-        <a ui-sref="teacher.publishHomework({homeworkId:item.homeId})">发布</a>
+        <a ui-sref="teacher.publishHomework({homeworkId:item.homeId,subjectId:item.subjectId})">发布</a>
       </span>
       <span ng-show="item.status === 1">已发布</span>
       <a ng-show="item.status === 1" class="btn btn-info result-list-btn" ui-sref="teacher.teacherHomeworkResultList({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">查看结果</a>

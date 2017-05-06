@@ -13,8 +13,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
     vm.homework = {
       homeId:$stateParams.homeworkId
     };
+    vm.subjectId = $stateParams.subjectId;
     try {
-      vm.classes = await http.get("GetTeacherClasses");
+      vm.classes = await http.get("GetTeacherSubjectClass",{subjectId:vm.subjectId});
+      
     } catch (error) {
       $uibModal.open({
         animation: true,

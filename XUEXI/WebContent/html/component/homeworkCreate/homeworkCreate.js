@@ -25,15 +25,18 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
   vm.homework = {
     name:new Date().toLocaleString(),
     finishTime:new Date(),
-    questions:[]
+    questions:[],
+    subjectId: null,
   };
   vm.questions = [];
   vm.currentQuestion = Object.assign({},temp);
   vm.currentQuestion.type = vm.types[0];
   vm.questions.push( vm.currentQuestion );
   vm.currIndex = 0;
-  vm.$onInit = function(){
-
+  vm.currentSubject = null;
+  vm.$onInit = async function(){
+	  vm.subjectlist = await http.get("GetTeacherSubject");
+      vm.currentSubject = vm.subjectlist[0];
   };
   vm.upItem = function(){
     if( vm.currIndex === 0) {
@@ -59,7 +62,8 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
 
   vm.createHomework = async function(){
     let questionList = {
-      titles:[]
+      titles:[],
+      subjectId: vm.currentSubject.SubjectID
     };
     vm.questions.forEach( (item)=>{
       let temp = Object.assign({},item);
@@ -70,9 +74,10 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       let list = await http.post("AddQuestion",questionList);
       list.forEach( (item)=>{
         vm.homework.questions.push({
-          questionID:item.itemId
+          questionID:item.itemId,
         });
       });
+      vm.homework.subjectId = vm.currentSubject.SubjectID;
       let rs = await http.post("CreateHomework",vm.homework)
       if(rs === true){
         let dialog = $uibModal.open({
