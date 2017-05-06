@@ -12,17 +12,22 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
 	  vm.$onInit = async function(){
 	    let userinfo = await http.get("GetUserInfoByName");
 	    vm.userinfo = userinfo;
-	    getClassName(vm.userinfo.classId);
+	    let classes = await http.get("GetAllSubject");
+	    vm.classes = classes;
+	    vm.classes.forEach( async (item)=>{
+	    	let result =await http.get("GetClassNameByClassId",{"classID":item.classId});
+	    	item.className=result.className;
+	     });
 	    $scope.$applyAsync(null);
 	  }
-	  async function getClassName(classId){
-			if(!classId){
-				return;
-			}
-		  let result = await http.get("GetClassNameByClassId",{"classID":classId});
-		  vm.userinfo.className=result.className;
-		  $scope.$applyAsync(null);
-	  }
+//	  async function getClassName(classId){
+//			if(!classId){
+//				return;
+//			}
+//		  let result = await http.get("GetClassNameByClassId",{"classID":classId});
+//		  return result;
+//		  $scope.$applyAsync(null);
+//	  }
 	  vm.userinfo = {
 		    userName:"",
 		    realName:"",

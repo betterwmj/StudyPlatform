@@ -7,7 +7,6 @@ public class Students {
 	private String pass;
 	private String school;
 	private String telephone;
-	private int classId;
 	public String getTelephone() {
 		return telephone;
 	}
@@ -45,12 +44,6 @@ public class Students {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getClassId() {
-		return classId;
-	}
-	public void setClassId(int classId) {
-		this.classId = classId;
-	}
-	
+
 	
 }
