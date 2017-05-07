@@ -44,15 +44,15 @@ public class StudentRegister extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String name=request.getParameter("userName");
+		String name=request.getParameter("school_number");
 		String realName=request.getParameter("realName");
 		String password=request.getParameter("password");
 		String school=request.getParameter("school");
 		String phone=request.getParameter("telephone");
 		Students student=new Students();
-		student.setUserName(name);
+		student.setSchool_number(name);
 		student.setRealName(realName);
-		student.setPass(password);
+		student.setPassword(password);
 		student.setSchool(school);
 		student.setTelephone(phone);
 		try {

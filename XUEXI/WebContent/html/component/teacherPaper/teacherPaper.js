@@ -23,9 +23,10 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
   vm.currentSubject = null;
   vm.subjectlist =null;
   vm.$onInit = async function(){
-	  vm.subjectlist = await http.get("GetTeacherSubject");
+	vm.subjectlist = await http.get("GetTeacherSubject");
     vm.currentSubject = vm.subjectlist[0];
-    vm.getQuestionByType();
+    if( vm.subjectlist.length!==0)
+        vm.getQuestionByType();
   }
   vm.paper = {
     subjectId :null,
@@ -74,10 +75,14 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
     });
   };
   vm.getQuestionByType = async function(){
-	  let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+	  if( vm.subjectlist.length!==0){
+		  let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+	  } 
   }
   vm.getQuestionBySubject =async function(){
-	  let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+	  if( vm.subjectlist.length!==0){
+	    let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+	  }
   }
   vm.pageChanged = function(){
     getData();

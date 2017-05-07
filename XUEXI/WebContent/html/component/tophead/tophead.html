@@ -2,9 +2,13 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-      <span ng-if="$ctrl.userInfo.type === '0'">学生:</span>
-      <span ng-if="$ctrl.userInfo.type === '1'">教师:</span>
-      <span ng-bind="$ctrl.userInfo.userName"></span>
+      <p ng-if="$ctrl.userInfo.type === '0'">
+                   学号：<span ng-bind="$ctrl.userInfo.school_number">
+      </p>
+      <p ng-if="$ctrl.userInfo.type === '1'">
+                        工号：<span ng-bind="$ctrl.userInfo.teacher_number">
+      </p>
+               姓名：<span ng-bind="$ctrl.userInfo.realName"></span>
       <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
       <button class="btn btn-danger" type="button" ng-click="$ctrl.logout()" style="float:right;">退出登录</button>
     </div>

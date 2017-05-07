@@ -3,13 +3,13 @@ package com.wmj.bean;
 public class Teachers {
 	private int userID;
 	private String realName;
-	private String userName;
+	private String teacher_number;
 	private String password;
-	public String getUserName() {
-		return userName;
+	public String getTeacher_number() {
+		return teacher_number;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setTeacher_number(String teacher_number) {
+		this.teacher_number = teacher_number;
 	}
 	public String getPassword() {
 		return password;

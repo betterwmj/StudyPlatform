@@ -12,9 +12,9 @@ import com.wmj.util.JDBCUtil;
  */
 public class OperatorUser {
 	/*
-	 * 查询用户名是否重复，返回true，否则返回false //user为需要插入的用户
+	 * 查询用户名是否重复，返回true，否则返回false 
 	 */
-	public static Object getUserInfo(String userName,int type) throws Exception{
+	public static Object getUserInfo(String userNumber,int type) throws Exception{
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
 		try {
@@ -28,20 +28,20 @@ public class OperatorUser {
 		try {
             String sql=null;
 			if(type==0)
-				sql ="select * from students where userName = ? ";
+				sql ="select * from students where school_number = ? ";
 			else 
-				sql ="select * from teachers where userName = ? ";
+				sql ="select * from teachers where teacher_number = ? ";
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setString(1, userName);
+			pmt.setString(1, userNumber);
 			rs = pmt.executeQuery();
 			 if (rs.next()) {
 				if(type==0){
 					Students student=new Students();
 					student.setUserID(rs.getInt("UserID"));
-					student.setUserName(rs.getString("userName"));
-					student.setRealName(rs.getString("RealName"));
-					student.setPass(rs.getString("password"));
+					student.setSchool_number(rs.getString("school_number"));
+					student.setRealName(rs.getString("realName"));
+					student.setPassword(rs.getString("password"));
 					student.setSchool(rs.getString("school"));
 					student.setTelephone(rs.getString("telephone"));
 					return student;
@@ -49,8 +49,8 @@ public class OperatorUser {
 				else {
 					Teachers teacher=new Teachers();
 					teacher.setUserID(rs.getInt("UserID"));
-					teacher.setUserName(rs.getString("userName"));
-					teacher.setRealName(rs.getString("RealName"));
+					teacher.setTeacher_number(rs.getString("teacher_number"));
+					teacher.setRealName(rs.getString("realName"));
 					teacher.setPassword(rs.getString("password"));
 					return teacher;
 					
@@ -67,7 +67,7 @@ public class OperatorUser {
 		return null;
 	}
 	/*
-	 * 学生用户的插入，若插入成功，返回true，否则返回false //user为需要插入的用户
+	 * 学生用户注册，若注册成功，返回true，否则返回false 
 	 */
 	public static boolean insertStudent(Students student) throws Exception{
 		boolean result = false;
@@ -81,18 +81,27 @@ public class OperatorUser {
 			throw e1;
 		}
 		PreparedStatement pmt = null; 
+		ResultSet rs= null;
 		try {
-			
-            String sql="insert into students (userName,RealName,password,school,telephone) values(?,?,?,?,?)";
-			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-			pmt.setString(1, student.getUserName());
+			String sql1="select * from  students where school_number = ? and  realName=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql1); 
+			pmt.setString(1, student.getSchool_number());
 			pmt.setString(2, student.getRealName());
-			pmt.setString(3, student.getPass());
-			pmt.setString(4, student.getSchool());
-			pmt.setString(5, student.getTelephone());
-			if(pmt.executeUpdate()>0)
-			   result = true;
-		    
+	        rs=pmt.executeQuery();
+			if(rs.next()){
+				String sql2="update students set password=?, school=? ,telephone= ? where school_number = ? and  realName=? ";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql2); 
+				pmt.setString(4, student.getSchool_number());
+				pmt.setString(5, student.getRealName());
+				pmt.setString(1, student.getPassword());
+				pmt.setString(2, student.getSchool());
+				pmt.setString(3, student.getTelephone());
+				if(pmt.executeUpdate()>0)
+				   result = true;
+		   }else{
+			   result = false;
+		   }   
+	  
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
@@ -114,17 +123,24 @@ public class OperatorUser {
 			throw e1;
 		}
 		PreparedStatement pmt = null; 
+		ResultSet rs=null;
 		try {
-		
-            String sql="insert into teachers (userName,RealName,password) values(?,?,?)";
-			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-			//System.out.print("operatorUser"+subjectName+subjectId);
-			pmt.setString(1, teacher.getUserName());
+		    String sql1="select * from  teachers where teacher_number = ? and  realName=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql1); 
+			pmt.setString(1, teacher.getTeacher_number());
 			pmt.setString(2, teacher.getRealName());
-			pmt.setString(3, teacher.getPassword());
-			if(pmt.executeUpdate()>0)
-			   result = true;
-			 
+	        rs=pmt.executeQuery();
+			if(rs.next()){
+				String sql="update teachers set password=? where teacher_number = ? and  realName=?";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+				pmt.setString(2, teacher.getTeacher_number());
+				pmt.setString(3, teacher.getRealName());
+				pmt.setString(1, teacher.getPassword());
+				if(pmt.executeUpdate()>0)
+				result = true;
+			}else{
+			   result = false;
+		   }  
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
@@ -134,8 +150,8 @@ public class OperatorUser {
 		}
 		return result;
 	}
-	// 判断用户名密码是否正确，如果正确，返回用户姓名。number标志是老师还是学生
-	public static Map<String,String> isUserPasswordCorrect(String userName, String userPassword,int number) throws Exception {
+	// 判断用户名密码是否正确，如果正确，返回用户信息。type标志是老师还是学生
+	public static Map<String,String> isUserPasswordCorrect(String userNumber, String userPassword,int type) throws Exception {
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
 		try {
@@ -153,14 +169,14 @@ public class OperatorUser {
 		try {
 			/* 设置所需变量 */
 			String sql="";
-			System.out.println("teacher or students"+number+userName);
-			if(number==0)
-				sql ="select * from students where userName = ? and password = ?";
+			System.out.println("teacher or students"+ type+ userNumber);
+			if(type==0)
+				sql ="select * from students where school_number = ? and password = ?";
 			else 
-				sql ="select * from teachers where userName = ? and password = ?";
+				sql ="select * from teachers where teacher_number = ? and password = ?";
 			/* 完成查询 */
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);   
-			pmt.setString(1, userName);
+			pmt.setString(1, userNumber);
 			pmt.setString(2, userPassword);
 			
 			rs = pmt.executeQuery();
@@ -168,8 +184,14 @@ public class OperatorUser {
 			/* 如果查询结果不为空，则登陆成功；否则，登陆失败 */
 			if (rs.next()) {
 				userInfo.put("id", rs.getInt("UserID")+"");
-				userInfo.put("userName", rs.getString("userName"));
-				userInfo.put("type", number+"");
+				if(type==0){
+					userInfo.put("school_number", rs.getString("school_number"));
+				}else{
+					userInfo.put("teacher_number", rs.getString("teacher_number"));
+				}
+				userInfo.put("password", rs.getString("password"));
+				userInfo.put("realName", rs.getString("realName"));
+				userInfo.put("type", type+"");
 			}
 			System.out.println(result);
 		} catch (SQLException e) {
@@ -199,12 +221,12 @@ public class OperatorUser {
 		PreparedStatement pmt = null; 
 		try {
 			
-           String sql="update teachers set userName=? ,realName=?,password=? , subjectID=? where userID=?";
+           String sql="update teachers set teacher_number=? ,realName=?,password=? where userID=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-			pmt.setString(1, teacher.getUserName());
+			pmt.setString(1, teacher.getTeacher_number());
 			pmt.setString(2, teacher.getRealName());
 			pmt.setString(3, teacher.getPassword());
-			pmt.setInt(5, teacher.getUserID());
+			pmt.setInt(4, teacher.getUserID());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 			 
@@ -232,11 +254,11 @@ public class OperatorUser {
 		PreparedStatement pmt = null; 
 		try {
 		
-            String sql="update students set userName=? ,RealName=?,password=?,school=?,telephone=? where UserID=?";
+            String sql="update students set school_number=? ,realName=?,password=?,school=?,telephone=? where UserID=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-			pmt.setString(1, student.getUserName());
+			pmt.setString(1, student.getSchool_number());
 			pmt.setString(2, student.getRealName());
-			pmt.setString(3, student.getPass());
+			pmt.setString(3, student.getPassword());
 			pmt.setString(4, student.getSchool());
 			pmt.setString(5, student.getTelephone());
 			pmt.setInt(6, student.getUserID());

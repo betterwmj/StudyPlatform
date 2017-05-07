@@ -38,7 +38,7 @@ public class OperatorClass {
 			 while (rs.next()) { 
 			   Students student=new Students();
 			   student.setUserID(rs.getInt("UserID"));
-			   student.setUserName(rs.getString("userName"));
+			   student.setSchool_number(rs.getString("school_number"));
 			   student.setRealName(rs.getString("RealName"));
                list.add(student);
 	         }
@@ -76,7 +76,7 @@ public class OperatorClass {
 			 while (rs.next()) { 
 			   Students student=new Students();
 			   student.setUserID(rs.getInt("UserID"));
-			   student.setUserName(rs.getString("userName"));
+			   student.setSchool_number(rs.getString("school_number"));
 			   student.setRealName(rs.getString("RealName"));
 			   student.setSchool(rs.getString("school"));
 			   student.setTelephone(rs.getString("telephone"));
