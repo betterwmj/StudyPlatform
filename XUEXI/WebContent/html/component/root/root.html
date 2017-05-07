@@ -1,5 +1,5 @@
-<div class="container-fluid">
-    <ui-view name="head"></ui-view>
-    <ui-view name="sidebar"></ui-view>
-    <ui-view name="content"></ui-view>
+<div layout="column">
+    <md-toolbar ui-view="head"></md-toolbar>
+    <md-content ui-view="sidebar"></md-content>
+    <md-content ui-view="content"></md-content>
 </div>

@@ -1,12 +1,21 @@
-<div>
-  <h3>可选科目</h3>
-  <div class="list-group">
-    <a ng-repeat="item in $ctrl.subjects track by $index" href="#" 
-       class="list-group-item" 
-       ui-sref="student.studentTestPaperList({SubjectName:item.SubjectName,SubjectID:item.SubjectID,teacherID:item.teacherId})"
-       style="position: relative;">
-       <span ng-bind="item.SubjectName" ></span>
-       <span class="glyphicon glyphicon-menu-right" aria-hidden="true" style="float: right;right: 2%;"></span>
-    </a>
-  </div>
-</div>
+<md-content>
+   <md-card>
+    <md-card-header>
+      <md-card-header-text>
+        可选科目
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-list flex>
+        <div ng-repeat="item in $ctrl.subjects track by $index" ui-sref="student.studentTestPaperList({SubjectName:item.SubjectName,SubjectID:item.SubjectID,teacherID:item.teacherId})">
+          <md-list-item >
+            <div class="md-list-item-text">
+              <span ng-bind="item.SubjectName" ></span>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </div>
+      </md-list>
+    </md-card-content>
+   </md-card>
+</md-content>

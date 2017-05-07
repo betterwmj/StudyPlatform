@@ -1,7 +1,8 @@
 import angular from "angular";
 import angularCookies from "angular-cookies";
 import angularUIRouter from "angular-ui-router";
-import angularUIBootstrap from "angular-ui-bootstrap";
+import ngMaterial from "ngMaterial";
+//import angularUIBootstrap from "angular-ui-bootstrap";
 import root from "./component/root/root.js";
 import commonDialog from "./component/commonDialog/commonDialog.js";
 import login from "./component/login/login.js";
@@ -46,7 +47,7 @@ import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
 export let dependent = [
-  'ngCookies','ui.router','ui.bootstrap','ng',
+  'ngCookies','ui.router','ngMaterial','ng',
 ];
 export let app = angular.module(name,dependent);
 app.config(["$cookiesProvider",function($cookiesProvider){

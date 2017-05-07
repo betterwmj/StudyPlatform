@@ -1,12 +1,14 @@
 export default function httpService(app){
-  app.factory("http",["$q","$http","$httpParamSerializerJQLike","$rootScope",serviceFunc]);
+  app.factory("http",["$q","$http","$httpParamSerializerJQLike","$rootScope","$mdDialog",serviceFunc]);
 }
 
-function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope){
+function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
   const baseUrl = "http://192.168.1.101:8080/XUEXI/";
   let service = {
     post:post,
-    get:get
+    get:get,
+    alert:alert,
+    wait:wait
   };
 
   async function post(url,data,headers){
@@ -66,5 +68,29 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope){
     
     return deferred.promise;
   };
+
+  function alert(config){
+    let parentEle = config.parent;
+    let title = config.title || "提示信息";
+    let content = config.content;
+    let okBtn = config.okBtn || "确定";
+    let event = config.event || null;
+    let alertDialog = $mdDialog.alert()
+      .parent(parentEle)
+      .clickOutsideToClose(false)
+      .title(title)
+      .textContent(content)
+      .ok(okBtn)
+      .targetEvent(event);
+    $mdDialog.show(alertDialog);
+  }
+
+  function wait(parent){
+    return $mdDialog.show({
+      controller: [function(){}],
+      template: '<div layout="column" style="width:100px;"><md-progress-circular md-mode="indeterminate"></md-progress-circular><div>',
+      parent: angular.element(document.body),
+    })
+  }
   return service;
 }

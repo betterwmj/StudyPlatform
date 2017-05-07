@@ -1,8 +1,9 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.homework.homeWorkName"></span>
-    <a ui-sref="teacher.paper" class="btn btn-default ">返回</a>
-  </div>
+<md-content>
+<md-card>
+  <md-button class="md-raised" ui-sref="teacher.paper">返回</md-button>
+</md-card>
+
+  
   <form>
    <div class="form-group">
       <label>选择学科</label>
@@ -63,4 +64,6 @@
     <button type="button" class="btn btn-danger" ng-click="$ctrl.createPager()">创建试卷</button>
     <p ng-bind="$ctrl.msg"></p>
   </form>
-</div>
+
+
+</md-content>

@@ -3,10 +3,10 @@ export let name = "login";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/login/login.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$uibModal){
+function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.userInfo = {
     userName:"",
@@ -33,7 +33,6 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
     if( false === loginCheck() ){
       return;
     }
-    
     let userData = {};
     angular.copy(vm.userInfo,userData);
     userData.type = parseInt(userData.type);
@@ -41,12 +40,8 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
     try {
       result = await http.post("Login",userData);
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return error;}
-        }
+      http.alert({
+        parent:$element,content:"登录失败,"+error
       });
       return;
     }
@@ -54,7 +49,6 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       result.password = vm.userInfo.password;
     }
     if(userData.type === 0 ){
- 
       $cookies.putObject("userInfo",result);
       $state.go("student.test");
 
@@ -65,13 +59,24 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
   }
 
   function loginCheck(){
-    vm.loginResultMsg = false;
-    vm.errorMsg = {
-      userName:false,
-      password:false
-    };
-    if(vm.userInfo.userName === ""){
-      vm.errorMsg.userName = "用户名不能为空";
+    if( !vm.userInfo.userName ){
+      http.alert({
+        parent:$element,content:"用户名不能为空"
+      });
+      return false;
+    }
+    if( !vm.userInfo.password ){
+      http.alert({
+        parent:$element,content:"密码不能为空"
+      });
+      return false;
+    }
+    vm.userInfo.userName = vm.userInfo.userName.trim();
+    vm.userInfo.password = vm.userInfo.password.trim();
+    if(!vm.userInfo.userName || vm.userInfo.userName === ""){
+      http.alert({
+        parent:$element,content:"用户名不能为空"
+      });
       return false;
     }
     if(vm.userInfo.password === ""){

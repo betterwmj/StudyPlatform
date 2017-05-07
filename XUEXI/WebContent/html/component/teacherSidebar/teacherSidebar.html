@@ -1,6 +1,7 @@
-<ul class="nav nav-tabs">
-  <li role="presentation" ui-sref="teacher.paper" ng-class="{'active':$ctrl.isActive[0]}"><a>出试卷</a></li>
-  <li role="presentation" ui-sref="teacher.homework" ng-class="{'active':$ctrl.isActive[1]}"><a>布置作业</a></li>
-  <li role="presentation" ui-sref="teacher.onlineanswer" ng-class="{'active':$ctrl.isActive[2]}"><a>答疑</a></li>
-  <li role="presentation" ui-sref="teacher.center" ng-class="{'active':$ctrl.isActive[3]}"><a>个人中心</a></li>
-</ul>
+
+<md-nav-bar nav-bar-aria-label="navigation links">
+  <md-nav-item md-nav-sref="teacher.paper">出试卷</md-nav-item>
+  <md-nav-item md-nav-sref="teacher.homework">布置作业</md-nav-item>
+  <md-nav-item md-nav-sref="teacher.onlineanswer">答疑</md-nav-item>
+  <md-nav-item md-nav-sref="teacher.center">个人中心</md-nav-item>
+</md-nav-bar>
