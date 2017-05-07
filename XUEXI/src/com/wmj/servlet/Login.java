@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
 			e1.printStackTrace();
 			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("无效的登录参数")).toString());
 		}
-		String name = json.getString("userName");
+		String name = json.getString("user_number");
 		String password = json.getString("password");
 		int type=json.getInt("type");
 		HttpSession session = request.getSession();

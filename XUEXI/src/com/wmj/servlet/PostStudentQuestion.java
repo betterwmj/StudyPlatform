@@ -54,11 +54,11 @@ public class PostStudentQuestion extends HttpServlet {
 		}
 		String title = json.getString("title");
 		String content = json.getString("content");
-		int subjectId=json.getInt("studentId");
+		int sudentId=json.getInt("studentId");
 		int teacherID=json.getInt("teacherID");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		OnlineQuestion question=new OnlineQuestion();
-	    question.setStudentId(subjectId);
+	    question.setStudentId(sudentId);
 	    question.setQuestionTitle(title);
 	    question.setQuestionContent(content);
 	    question.setAnswerId(teacherID);

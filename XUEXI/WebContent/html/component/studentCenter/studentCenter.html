@@ -2,7 +2,7 @@
   <div class="form-group">
     <label >用户名</label>
     <div >
-      <input type="text" class="form-control" ng-model="$ctrl.userinfo.userName">
+      <input type="text" class="form-control" ng-model="$ctrl.userinfo.school_number">
     </div>
   </div>
  <div class="form-group">
@@ -14,15 +14,19 @@
   <div class="form-group">
     <label >密码</label>
     <div >
-      <input type="text" class="form-control" ng-model="$ctrl.userinfo.pass">
+      <input type="text" class="form-control" ng-model="$ctrl.userinfo.password">
     </div>
   </div>
    <div class="form-group">
-    <label >班级</label>
-    <div >
-      <input type="text" class="form-control" ng-model="$ctrl.userinfo.className" disabled>
+      <label>我的班级</label>
+      <div class="list-group">
+        <a ng-repeat="item in $ctrl.classes track by $index" 
+          class="list-group-item">
+          <span ng-bind="item.className"></span>
+          <span ng-bind="item.SubjectName"></span>
+        </a>
+      </div> 
     </div>
-  </div>
   <div class="form-group">
     <label >学校</label>
     <div >

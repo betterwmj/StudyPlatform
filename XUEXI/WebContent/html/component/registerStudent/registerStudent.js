@@ -9,7 +9,7 @@ export default function root(app){
 function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQLike,$uibModal){
   let vm = this;
   vm.userInfo = {
-    userName:"",
+    school_number:"",
     realName:"",
     password:"",
     rePassword:"",
@@ -20,35 +20,73 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
     if( check() === false ){
       return;
     }
+    let userResult =null;
     try {
-      let result = await http.post("StudentRegister",
-        $httpParamSerializerJQLike({
-          userName:vm.userInfo.userName,
-          realName:vm.userInfo.realName,
-          password:vm.userInfo.password,
-          school:vm.userInfo.school,
-          telephone:vm.telephone
-        }),
-        {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        });
-      if( result === true ){
-        $state.go('login');
-      }
-    } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "注册失败,"+error;}
-        }
-      });
-    }
+    	userResult = await http.get("GetUserInfoByName",{user_number: vm.userInfo.school_number,type:0});
+    	if(userResult === null ){
+    		$uibModal.open({
+    	        animation: true,
+    	        component: 'commonDialog',
+    	        resolve: {
+    	          content:()=>{ return "您不是本校学生，无法注册";}
+    	        }
+    	   });
+    	}
+    	else if(userResult.realName !==  vm.userInfo.realName ){
+    		$uibModal.open({
+    	        animation: true,
+    	        component: 'commonDialog',
+    	        resolve: {
+    	          content:()=>{ return "请检查您的真实姓名是否正确";}
+    	        }
+    	   });
+    	}
+    	else if(userResult.password !== "" ){
+    		$uibModal.open({
+    	        animation: true,
+    	        component: 'commonDialog',
+    	        resolve: {
+    	          content:()=>{ return "您已注册，请登录";}
+    	        }
+    	   });
+    	}else{
+    		studentRegister();
+    	}
+     }catch (error) {
+          return;
+     }
+   
   }
-
+  async function studentRegister(){
+	  try {
+	      let result = await http.post("StudentRegister",
+	        $httpParamSerializerJQLike({
+	          school_number:vm.userInfo.school_number,
+	          realName:vm.userInfo.realName,
+	          password:vm.userInfo.password,
+	          school:vm.userInfo.school,
+	          telephone:vm.telephone
+	        }),
+	        {
+	          'Content-Type': 'application/x-www-form-urlencoded'
+	        });
+	      if( result === true ){
+	        $state.go('login');
+	      }
+	    } catch (error) {
+	      $uibModal.open({
+	        animation: true,
+	        component: 'commonDialog',
+	        resolve: {
+	          content:()=>{ return "注册失败,"+error;}
+	        }
+	      });
+	    }
+  }
+  
   function check(){
     let msg = "";
-    if(vm.userInfo.userName.trim() === ""){
+    if(vm.userInfo.school_number.trim() === ""){
       msg = "用户名不能为空";
     }else if(vm.userInfo.realName.trim() === ""){
       msg = "真实姓名不能为空";

@@ -45,11 +45,11 @@ public class TeacherRegister extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String name=request.getParameter("userName");
+		String name=request.getParameter("teacher_number");
 		String realName=request.getParameter("realName");
 		String password=request.getParameter("password");
 		Teachers teacher=new Teachers();
-		teacher.setUserName(name);
+		teacher.setTeacher_number(name);
 		teacher.setRealName(realName);
 		teacher.setPassword(password);
 		try {

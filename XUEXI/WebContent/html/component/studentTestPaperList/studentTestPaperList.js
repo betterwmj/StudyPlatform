@@ -27,6 +27,21 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     vm.papers = await http.get("GetPaper",{
       subjectId:vm.subject.SubjectID,
     });
+    let result =[];
+    for( var i=0 ;i< vm.papers.length;i++ ){
+    	let flag =0;
+    	for(var j=0;j<result.length;j++){
+        	if(result[j].testpaperID ===vm.papers[i].testpaperID){
+        		flag=1;
+        		break;
+        	}
+    	}
+    	if(flag===0){
+    		result.push(vm.papers[i]);
+    	} 	
+    	console.log(result);
+    }
+    vm.papers  = result;
     vm.papers.forEach( (paper)=>{
       paper.createTime = new Date(paper.createTime.time);
     });

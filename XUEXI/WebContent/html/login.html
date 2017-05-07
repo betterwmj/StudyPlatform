@@ -12,9 +12,9 @@
     <h3>登录</h3>
     <form class="form-horizontal">
       <div class="form-group">
-        <label class="col-sm-2 control-label">用户名</label><span ng-bind="errorMsg.userName"></span>
+        <label class="col-sm-2 control-label">用户名</label><span ng-bind="errorMsg.teacher_number"></span>
         <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="用户名" ng-model="userInfo.userName">
+          <input type="text" class="form-control" placeholder="用户名" ng-model="userInfo.teacher_number">
         </div>
       </div>
 
@@ -48,7 +48,7 @@
       app.controller("loginCtrler",["$scope","$http","$q","$httpParamSerializerJQLike",function($scope,$http,$q,$httpParamSerializerJQLike){
         var isSubmitting = false;
         $scope.userInfo = {
-          userName:"",
+          teacher_number:"",
           password:"",
           type:""
         };
@@ -77,10 +77,10 @@
           });
         }
 
-        function checkUserName(){
+        function checkteacher_number(){
           return $q(function(resolve,reject){
             $http.get("/XUEXI/GetUserInfoByName",{
-              params:{"userName":$scope.userInfo.userName,type:0}
+              params:{"teacher_number":$scope.userInfo.teacher_number,type:0}
             })
             .then(function(response){
               var result = response.data;
@@ -123,15 +123,15 @@
         }
         
         function check(){
-            $scope.userInfo.userName = $scope.userInfo.userName.trim();
+            $scope.userInfo.teacher_number = $scope.userInfo.teacher_number.trim();
             $scope.userInfo.realName = $scope.userInfo.realName.trim();
             $scope.userInfo.password = $scope.userInfo.password.trim();
             $scope.userInfo.rePassword = $scope.userInfo.rePassword.trim();
-            if( $scope.userInfo.userName === "" ){
-              $scope.errorMsg.userName = "不能为空";
+            if( $scope.userInfo.teacher_number === "" ){
+              $scope.errorMsg.teacher_number = "不能为空";
               return false;
             }else{
-              $scope.errorMsg.userName = "";
+              $scope.errorMsg.teacher_number = "";
             }
             if( $scope.userInfo.realName === "" ){
               $scope.errorMsg.realName = "不能为空";

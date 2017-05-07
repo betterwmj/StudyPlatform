@@ -10,21 +10,27 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
 	  let vm = this;
 	  vm.msg = "";
 	  vm.$onInit = async function(){
-	    let userinfo = await http.get("GetUserInfoByName");
+		let user= $cookies.getObject("userInfo");
+		let userinfo = await http.get("GetUserInfoByName",{user_number:user.school_number,type:user.type});
 	    vm.userinfo = userinfo;
-	    getClassName(vm.userinfo.classId);
+	    let classes = await http.get("GetAllSubject");
+	    vm.classes = classes;
+	    vm.classes.forEach( async (item)=>{
+	    	let result =await http.get("GetClassNameByClassId",{"classID":item.classId});
+	    	item.className=result.className;
+	     });
 	    $scope.$applyAsync(null);
 	  }
-	  async function getClassName(classId){
-			if(!classId){
-				return;
-			}
-		  let result = await http.get("GetClassNameByClassId",{"classID":classId});
-		  vm.userinfo.className=result.className;
-		  $scope.$applyAsync(null);
-	  }
+//	  async function getClassName(classId){
+//			if(!classId){
+//				return;
+//			}
+//		  let result = await http.get("GetClassNameByClassId",{"classID":classId});
+//		  return result;
+//		  $scope.$applyAsync(null);
+//	  }
 	  vm.userinfo = {
-		    userName:"",
+		    school_number:"",
 		    realName:"",
 		    password:"",
 		    school:"",
@@ -34,7 +40,7 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
 	  
 	  vm.updateinfo=async function(){
 		  let data={
-				"userName" :vm.userinfo.userName,
+				"school_number" :vm.userinfo.school_number,
 				"realName" :vm.userinfo.realName,
 				"password" :vm.userinfo.pass,
 				"school"   :vm.userinfo.school,

@@ -53,7 +53,7 @@ public class UpdateStudent extends HttpServlet {
 			e1.printStackTrace();
 			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("无效的参数")).toString());
 		}
-		String userName = json.getString("userName");
+		String school_number = json.getString("school_number");
 		String realName = json.getString("realName");
 		String password = json.getString("password");
 		String school = json.getString("school");
@@ -61,9 +61,9 @@ public class UpdateStudent extends HttpServlet {
 		int studentId=json.getInt("studentID");
 		Students student=new Students();
 		student.setUserID(studentId);
-		student.setUserName(userName);
+		student.setSchool_number(school_number);
 		student.setRealName(realName);
-		student.setPass(password);
+		student.setPassword(password);
 		student.setSchool(school);
 		student.setTelephone(telephone);
 		boolean resultCode;

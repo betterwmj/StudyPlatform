@@ -38,17 +38,19 @@ public class GetUserInfoByName extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		HttpSession session = request.getSession();
-        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
-        String typeString= userInfo.get("type");
-        String name= userInfo.get("userName");
-		//String type=request.getParameter("type");
-        int type=Integer.parseInt(typeString);
-//		String name=request.getParameter("userName");
-//		String typeString=request.getParameter("type");
-//		int type=Integer.parseInt(typeString);
+//		HttpSession session = request.getSession();
+//        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
+//        String typeString= userInfo.get("type");
+//        String name= userInfo.get("teacher_number");
+//        int type=Integer.parseInt(typeString);
+//		//String type=request.getParameter("type");
+//        //int type=Integer.parseInt(typeString);
+//      //String typeString=request.getParameter("type");
+		String user_number=request.getParameter("user_number");
+		String typeString=request.getParameter("type");
+		int type=Integer.parseInt(typeString);	
 		try {
-			Object userInfos=OperatorUser.getUserInfo(name, type);
+			Object userInfos=OperatorUser.getUserInfo(user_number, type);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(userInfos);

@@ -2,23 +2,22 @@ package com.wmj.bean;
 
 public class Students {
 	private int userID;
-	private String userName;
+	private String school_number;
 	private String realName;
-	private String pass;
+	private String password;
 	private String school;
 	private String telephone;
-	private int classId;
 	public String getTelephone() {
 		return telephone;
 	}
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public String getPass() {
-		return pass;
+	public String getPassword() {
+		return password;
 	}
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public int getUserID() {
@@ -39,18 +38,12 @@ public class Students {
 	public void setSchool(String school) {
 		this.school = school;
 	}
-	public String getUserName() {
-		return userName;
+	public String getSchool_number() {
+		return school_number;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setSchool_number(String school_number) {
+		this.school_number = school_number;
 	}
-	public int getClassId() {
-		return classId;
-	}
-	public void setClassId(int classId) {
-		this.classId = classId;
-	}
-	
+
 	
 }
