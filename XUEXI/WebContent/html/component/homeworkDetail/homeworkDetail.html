@@ -1,22 +1,20 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.homework.homeWorkName"></span>
-    <a ui-sref="teacher.homeWorkHistory" class="btn btn-default ">返回</a>
-  </div>
-  <div ng-repeat="item in $ctrl.homeworkDetail" class="box-radius">
-    <p ng-bind="item.title"></p>
-    <div ng-if="item.type === 1">
-      <p>A.<span ng-bind="item.optionA"></span>&nbsp;&nbsp;</p>
-      <p>B.<span ng-bind="item.optionB"></span>&nbsp;&nbsp;</p>
-      <p>C.<span ng-bind="item.optionC"></span>&nbsp;&nbsp;</p>
-      <p>D.<span ng-bind="item.optionD"></span>&nbsp;&nbsp;</p>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">查看作业详情</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.homeWorkHistory">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card ng-repeat="item in $ctrl.homeworkDetail">
+    <md-card-content>
+      <p ng-bind="item.title"></p>
+      <div ng-if="item.type === 1">
+        <p>A.<span ng-bind="item.optionA"></span>&nbsp;&nbsp;</p>
+        <p>B.<span ng-bind="item.optionB"></span>&nbsp;&nbsp;</p>
+        <p>C.<span ng-bind="item.optionC"></span>&nbsp;&nbsp;</p>
+        <p>D.<span ng-bind="item.optionD"></span>&nbsp;&nbsp;</p>
+      </div>
       <p>正确答案:<span ng-bind="item.answer"></span></p>
-    </div>
-    <div ng-if="item.type === 2">
-      <p>正确答案:<span ng-bind="item.answer"></span></p>
-    </div>
-    <div ng-if="item.type === 3">
-      <p>参考答案:<span ng-bind="item.answer"></span></p>
-    </div>
-  </div>
-</div>
+    </md-card-content>
+  </md-card>
+</md-content>

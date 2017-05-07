@@ -10,18 +10,23 @@ function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.msg = "";
   vm.$onInit = async function(){
-    vm.userInfo = $cookies.getObject("userInfo");
-    let classes = await http.get("GetTeacherClasses");
-    vm.classes = classes;
-    vm.currentClass = vm.classes[0];
-    let students = await http.get("GetStudents");
-    vm.students = students;
-    $scope.$applyAsync(null);
+    try {
+      vm.userInfo = $cookies.getObject("userInfo");
+      vm.classes = await http.get("GetTeacherClasses");
+      if( vm.classes.length > 0){
+        vm.currentClass = vm.classes[0].classes.classId;
+      }
+      vm.students = await http.get("GetStudents");
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"加载数据异常"
+      });
+    }
   }
   vm.toAssign = async function(){
     vm.msg = "";
     let data = {
-      classId:vm.currentClass.classes.classId,
+      classId:vm.currentClass,
       studentIds:[],
     };
     vm.students.forEach( (student)=>{
@@ -31,16 +36,21 @@ function controller($scope,$element,$state,$cookies,http){
     });
     let result = await http.post('AssignStudent',data);
     if(result === true){
-       vm.msg ="分配班级成功";
+      http.alert({
+        parent:$element,content:"分配班级成功"
+      });
     }
     else if( result === false ){
-      vm.msg = "分配班级失败";
+      http.alert({
+        parent:$element,content:"分配班级失败"
+      });
     }else{
       let students =vm.students.find( (item) =>{
     	  return result.userID === item.userID;
       });
-      vm.msg = students.realName+"已加入该班级";
+      http.alert({
+        parent:$element,content:students.realName+"已加入该班级"
+      });
     }
-    $scope.$applyAsync(null);
   }
 }

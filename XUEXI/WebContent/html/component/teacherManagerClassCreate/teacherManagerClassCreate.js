@@ -13,23 +13,37 @@ function controller($scope,$element,$state,$cookies,http){
   };
   vm.msg = "";
   vm.$onInit = async function(){
-    vm.userInfo = $cookies.getObject("userInfo");
-    vm.subjectlist = await http.get("GetAllSubject");
-    vm.currentSubject = vm.subjectlist[0];
-    $scope.$applyAsync(null);
+    try {
+      vm.userInfo = $cookies.getObject("userInfo");
+      vm.subjectlist = await http.get("GetAllSubject");
+      if( vm.subjectlist.length > 0 ){
+        vm.currentSubject = vm.subjectlist[0].SubjectID;
+      }
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"加载数据异常异常"
+      });
+    }
   }
   vm.create = async function(){
-    vm.msg = "";
-    let result = await http.get("CreateClass",{
-      className:vm.classInfo.className,
-      subjectID:vm.currentSubject.SubjectID
-    });
-    console.log(result);
-    if( result === true ){
-      vm.msg = "班级创建成功";
-    }else{
-      vm.msg = "该班级已存在";
+    try {
+      let result = await http.get("CreateClass",{
+        className:vm.classInfo.className,
+        subjectID:vm.currentSubject
+      });
+      if( result === true ){
+        http.alert({
+          parent:$element,content:"班级创建成功"
+        });
+      }else{
+        http.alert({
+          parent:$element,content:"该班级已存在"
+        });
+      }
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"班级创建失败"
+      });
     }
-    $scope.$applyAsync(null);
   }
 }

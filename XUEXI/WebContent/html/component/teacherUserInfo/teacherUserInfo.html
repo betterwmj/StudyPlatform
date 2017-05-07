@@ -1,44 +1,51 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.homework.homeWorkName"></span>
-    <a ui-sref="teacher.center" class="btn btn-default ">返回</a>
-  </div>
-  <form class="box">
-    <h3>老师信息</h3>
-    <div class="form-group">
-      <label >用户名</label>
-      <div >
-        <input type="text" class="form-control" ng-model="$ctrl.userinfo.teacher_number">
-      </div>
-    </div>
-  <div class="form-group">
-      <label >真实名</label>
-      <div >
-        <input type="text" class="form-control" ng-model="$ctrl.userinfo.realName">
-      </div>
-    </div>
-    <div class="form-group">
-      <label >密码</label>
-      <div >
-        <input type="text" class="form-control" ng-model="$ctrl.userinfo.password">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>教授班级</label>
-      <div class="list-group">
-        <a ng-repeat="item in $ctrl.classes track by $index" href="#"
-          class="list-group-item">
-          <span ng-bind="item.classes.className"></span>
-          <span ng-bind="item.subjectName"></span>
-        </a>
-      </div> 
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="button" class="btn btn-default" ng-click="$ctrl.updateinfo()">确认修改</button>
-      </div>
-    </div>
-    <p ng-bind="$ctrl.msg"></p>
-  </form>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">更新教师个人信息</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.center">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>教师信息</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <form name="userInfoForm">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>用户名</label>
+          <input type="text" name="teacher_number" ng-model="$ctrl.userInfo.teacher_number" required>
+          <div ng-messages="userInfoForm.teacher_number.$error">
+            <div ng-message="required">请输入用户名</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>真实姓名</label>
+          <input type="text" name="realName" ng-model="$ctrl.userInfo.realName" required>
+          <div ng-messages="userInfoForm.realName.$error">
+            <div ng-message="required">请输入真实姓名</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>密码</label>
+          <input type="text" name="password" ng-model="$ctrl.userInfo.password" required>
+          <div ng-messages="userInfoForm.password.$error">
+            <div ng-message="required">请输入密码</div>
+          </div>
+        </md-input-container>
+        <!--<md-input-container class="md-block" flex-gt-sm>
+          <label>教授班级</label>
+          <md-select ng-model="size">
+            <md-option ng-repeat="item in $ctrl.classes track by $index" value="{{size}}">
+              <span ng-bind="item.classes.className"></span>
+              <span ng-bind="item.subjectName"></span>
+            </md-option>
+          </md-select>
+        </md-input-container>-->
+      </form>
+    </md-card-content>
+    <md-card-footer>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.updateinfo()">确认修改</md-button>
+    </md-card-footer>
+  </md-card>
+</md-content>
 
