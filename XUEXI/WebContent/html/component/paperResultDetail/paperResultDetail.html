@@ -1,21 +1,33 @@
-<div>
-  <div class="box top-return">
-    <a ui-sref="teacher.paperResult({testpaperID:$ctrl.paperResult.testpaperID,testName:$ctrl.paperResult.testName})" class="btn btn-default ">返回</a>
-  </div>
-  <p>查看学生答题详情</p>
-  <div ng-repeat="item in $ctrl.paperResultList" class="box-radius">
-    <p>题目:<span ng-bind="item.title.title"></span></p>
-    <div ng-if="item.title.type === 1">
-      <p>A.<span ng-bind="item.title.optionA"></span></p>
-      <p>B.<span ng-bind="item.title.optionB"></span></p>
-      <p>C.<span ng-bind="item.title.optionC"></span></p>
-      <p>D.<span ng-bind="item.title.optionD"></span></p>
-      <p>答案:<span ng-bind="item.title.answer"></span></p>
-      <p>学生答案:<span ng-bind="item.paperResultDetail.answer"></span></p>
-    </div>
-    <div ng-if="item.title.type === 2">
-      <p>答案:<span ng-bind="item.title.answer"></span></p>
-      <p>学生答案:<span ng-bind="item.paperResultDetail.answer"></span></p>
-    </div>
-  </div>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">查看学生考试详情</span>
+        <md-button class="md-raised" flex="20"  ui-sref="teacher.paperResult({testpaperID:$ctrl.paperResult.testpaperID,testName:$ctrl.paperResult.testName})">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-content>
+      <md-card ng-repeat="item in $ctrl.paperResultList">
+          <md-card-content>
+            <div>
+                <p>
+                  <span ng-bind="$index+1"></span>&nbsp;&nbsp;
+                  <span ng-bind="item.title.title"></span>
+                </p>
+                <div ng-if="item.title.type === 1">
+                  <p>A.<span ng-bind="item.title.optionA"></span>&nbsp;&nbsp;</p>
+                  <p>B.<span ng-bind="item.title.optionB"></span>&nbsp;&nbsp;</p>
+                  <p>C.<span ng-bind="item.title.optionC"></span>&nbsp;&nbsp;</p>
+                  <p>D.<span ng-bind="item.title.optionD"></span>&nbsp;&nbsp;</p>
+                </div>
+                <p>
+                  答案:<span ng-bind="item.title.answer"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                  分值:<span class="badge" ng-bind="item.title.score"></span>
+                  学生作答:<span ng-bind="item.paperResultDetail.answer"></span>
+                </p>
+            </div>
+          </md-card-content>
+        </md-card>
+    </md-card-content>
+  </md-card>
+</md-content>

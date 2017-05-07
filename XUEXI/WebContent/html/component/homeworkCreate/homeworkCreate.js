@@ -3,10 +3,10 @@ export let name = "homeworkCreate";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/homeworkCreate/homeworkCreate.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$uibModal){
+function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.types = [
     {label:"选择题",value:1},
@@ -14,7 +14,7 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
     {label:"简答题",value:3}
   ];
   let temp = {
-    "type":vm.types[0],
+    "type":vm.types[0].value,
     "title":"",
     "answer":'',
     "optionA":"",
@@ -30,13 +30,15 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
   };
   vm.questions = [];
   vm.currentQuestion = Object.assign({},temp);
-  vm.currentQuestion.type = vm.types[0];
+  vm.currentQuestion.type = vm.types[0].value;
   vm.questions.push( vm.currentQuestion );
   vm.currIndex = 0;
   vm.currentSubject = null;
   vm.$onInit = async function(){
 	  vm.subjectlist = await http.get("GetTeacherSubject");
-      vm.currentSubject = vm.subjectlist[0];
+    if( vm.subjectlist.length > 0 ){
+      vm.currentSubject = vm.subjectlist[0].SubjectID;
+    }
   };
   vm.upItem = function(){
     if( vm.currIndex === 0) {
@@ -54,7 +56,7 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       vm.currentQuestion = vm.questions[vm.currIndex];
     }else{
       let itemTemp = Object.assign({},temp);
-      itemTemp.type = vm.types[0];
+      itemTemp.type = vm.types[0].value;
       vm.questions.push(itemTemp);
       vm.currentQuestion = itemTemp;
     }
@@ -63,11 +65,11 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
   vm.createHomework = async function(){
     let questionList = {
       titles:[],
-      subjectId: vm.currentSubject.SubjectID
+      subjectId: vm.currentSubject
     };
     vm.questions.forEach( (item)=>{
       let temp = Object.assign({},item);
-      temp.type = temp.type.value;
+      temp.type = temp.type;
       questionList.titles.push(temp);
     });
     try {
@@ -77,107 +79,71 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
           questionID:item.itemId,
         });
       });
-      vm.homework.subjectId = vm.currentSubject.SubjectID;
+      vm.homework.subjectId = vm.currentSubject;
       let rs = await http.post("CreateHomework",vm.homework)
       if(rs === true){
-        let dialog = $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "创建作业成功";}
-          }
+        let dialog = http.alert({
+          parent:$element,content:"创建作业成功"
         });
-        dialog.result.then(function(){
+        dialog.then(function(){
           $state.go("teacher.homeWorkHistory");
         },function(){
           $state.go("teacher.homeWorkHistory");
         });
       }else{
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "创建作业失败";}
-          }
+        http.alert({
+          parent:$element,content:"创建作业失败"
         });
       }
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "创建作业失败";}
-        }
+      http.alert({
+        parent:$element,content:"创建作业失败"
       });
     }
   }
 
   function checkQuestion(question){
-    let type = question.type.value;
+    let type = question.type;
     let title = question.title.trim();
     if( title === ""){
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "请输入题目内容";}
-        }
+      http.alert({
+        parent:$element,content:"请输入题目内容"
       });
       return false;
     }
     if( type === 1){
       let optionA = question.optionA.trim();
       if( optionA === ""){
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "请输入选项A";}
-          }
+        http.alert({
+          parent:$element,content:"请输入选项A"
         });
         return false;
       }
       let optionB = question.optionB.trim();
       if( optionB === ""){
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "请输入选项B";}
-          }
+        http.alert({
+          parent:$element,content:"请输入选项B"
         });
         return false;
       }
       let optionC = question.optionC.trim();
       if( optionC === ""){
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "请输入选项C";}
-          }
+        http.alert({
+          parent:$element,content:"请输入选项C"
         });
         return false;
       }
       let optionD = question.optionD.trim();
       if( optionD === ""){
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "请输入选项D";}
-          }
+        http.alert({
+          parent:$element,content:"请输入选项D"
         });
         return false;
       }
     }
-    if(question.answer.trim() === ""){
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "请输入答案";}
-        }
+    if( !question.answer || question.answer.trim() === ""){
+      http.alert({
+          parent:$element,content:"请输入答案"
       });
       return false;
     }

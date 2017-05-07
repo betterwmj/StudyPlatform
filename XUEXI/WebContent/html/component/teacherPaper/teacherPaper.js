@@ -3,17 +3,17 @@ export let name = "teacherPaper";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/teacherPaper/teacherPaper.html",
-    controller:["$scope","$element","$state",'$cookies',"$uibModal","http",controller]
+    controller:["$scope","$element","$state",'$cookies',"http",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,$uibModal,http){
+function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.types = [
     {label:"选择题",value:1},
     {label:"判断题",value:2},
     {label:"简答题",value:3}
   ];
-  vm.currentType = vm.types[0];
+  vm.currentType = 1;
   vm.questions = [];
   vm.allQuestion = [];
   vm.currentPage = 1;
@@ -23,10 +23,11 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
   vm.currentSubject = null;
   vm.subjectlist =null;
   vm.$onInit = async function(){
-	vm.subjectlist = await http.get("GetTeacherSubject");
-    vm.currentSubject = vm.subjectlist[0];
-    if( vm.subjectlist.length!==0)
-        vm.getQuestionByType();
+    vm.subjectlist = await http.get("GetTeacherSubject");
+    if( vm.subjectlist.length !== 0){
+      vm.currentSubject = vm.subjectlist[0].SubjectID;
+      vm.getQuestionByType();
+    }  
   }
   vm.paper = {
     subjectId :null,
@@ -76,7 +77,7 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
   };
   vm.getQuestionByType = async function(){
 	  if( vm.subjectlist.length!==0){
-		  let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+		  let rs = await getQuestions(vm.currentSubject,vm.currentType);
 	  } 
   }
   vm.getQuestionBySubject =async function(){
@@ -165,12 +166,8 @@ function controller($scope,$element,$state,$cookies,$uibModal,http){
       getData();
       
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "获取题目数据异常";}
-        }
+      http.alert({
+        parent:$element,content:"获取题目数据异常"
       });
     }
     return result;

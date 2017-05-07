@@ -1,31 +1,26 @@
-<div class="paper-result-page">
-  <div class="box top-return">
-    <span ng-bind="$ctrl.paper.testName"></span>
-    <a ui-sref="teacher.publishPaper" class="btn btn-default ">返回</a>
-  </div>
-  <div class="box">
-    <table class="table table-striped">
-      <caption>试卷成绩列表</caption>
-      <thead>
-        <tr>
-          <th>学生</th>
-          <th>得分</th>
-          <th>详情</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="item in $ctrl.paperResultList">
-          <td ng-bind="item.studentName">
-            
-          </td>
-          <td>
-            <span ng-bind="item.paper.score"></span>分 
-          </td>
-          <td>
-            <a class="btn btn-info" ui-sref="teacher.paperResultDetail({resultId:item.paper.id,testpaperID:$ctrl.paper.testpaperID,testName:$ctrl.paper.testName})">查看</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">查看试卷:{{$ctrl.paper.testName}}</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.publishPaper">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>试卷成绩列表</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-list flex>
+        <div ng-repeat="item in $ctrl.paperResultList">
+          <md-list-item layout="row">
+            <span ng-bind="item.studentName" flex="30"></span>
+            <span flex="30">{{item.paper.score}}分</span>
+            <md-button class="md-raised" 
+              ui-sref="teacher.paperResultDetail({resultId:item.paper.id,testpaperID:$ctrl.paper.testpaperID,testName:$ctrl.paper.testName})">查看</md-button>
+          </md-list-item>
+          <md-divider></md-divider>
+        </div>
+      </md-list>
+    </md-card-content>
+  </md-card>
+</md-content>

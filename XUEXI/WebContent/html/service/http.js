@@ -82,7 +82,7 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
       .textContent(content)
       .ok(okBtn)
       .targetEvent(event);
-    $mdDialog.show(alertDialog);
+    return $mdDialog.show(alertDialog);
   }
 
   function wait(parent){
