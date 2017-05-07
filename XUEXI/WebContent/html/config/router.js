@@ -586,15 +586,17 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
-				name:"admin ",
+				name:"admin",
 				url:'/admin',
 				abstract:true,
 			},
 			{
-				name:"admin.user",
-				url: '/user',
+				name:"admin.center",
+				url: '/center',
 				views:{
-				
+					"head@":{
+						component:"tophead"
+					},
 					"content@":{
 						component:"adminCenter"
 					}

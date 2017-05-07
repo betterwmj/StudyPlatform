@@ -15,43 +15,7 @@ import com.wmj.bean.Students;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorClass {
-	/*
-	 * 获取所有学生信息
-	 */
-	public static List<Students> getStudent() throws Exception{
-		Connection conn = null;
-		List<Students> list = new ArrayList<Students>();
-		try {
-			conn = JDBCUtil.getConnection();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			throw e1;
-		}
-		PreparedStatement pmt = null; 
-		String sql = "";
-		sql="select * from students";
-		try {
-			ResultSet rs = null;
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			rs = pmt.executeQuery();
-			 while (rs.next()) { 
-			   Students student=new Students();
-			   student.setUserID(rs.getInt("UserID"));
-			   student.setSchool_number(rs.getString("school_number"));
-			   student.setRealName(rs.getString("RealName"));
-               list.add(student);
-	         }
-			 
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			// 关闭连接
-			JDBCUtil.close(conn, pmt);
-		}
-	return list;
- }
+	
 	/*
 	 * 老师获取该班级所有学生信息
 	 */
