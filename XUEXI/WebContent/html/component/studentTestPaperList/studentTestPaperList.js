@@ -15,13 +15,18 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.displayPaper = [];
   vm.showFlag = true;
   vm.$onInit = async function(){
-    vm.subject = {
-      SubjectName:$stateParams.SubjectName,
-      SubjectID:$stateParams.SubjectID,
-      teacherID :$stateParams.teacherID
-    };
-    let rs = await getPaper();
-    $scope.$applyAsync(null);
+    try {
+      vm.subject = {
+        SubjectName:$stateParams.SubjectName,
+        SubjectID:$stateParams.SubjectID,
+        teacherID :$stateParams.teacherID
+      };
+      let rs = await getPaper();
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"初始化页面异常"
+      });
+    }
   }
   async function  getPaper(){
     vm.papers = await http.get("GetPaper",{
