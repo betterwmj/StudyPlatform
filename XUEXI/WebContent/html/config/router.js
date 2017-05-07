@@ -585,6 +585,21 @@ export function routerConfig($stateProvider){
 					},
 				}
 			},
+			{
+				name:"admin ",
+				url:'/admin',
+				abstract:true,
+			},
+			{
+				name:"admin.user",
+				url: '/user',
+				views:{
+				
+					"content@":{
+						component:"adminCenter"
+					}
+				}
+			},
 			
   	];
 	states.forEach( (state)=>{

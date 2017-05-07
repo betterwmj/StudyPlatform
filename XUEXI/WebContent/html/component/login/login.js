@@ -30,48 +30,51 @@ function controller($scope,$element,$state,$cookies,http){
     }
   }
 
-  async function login(){
+    function login(){
       if( false === loginCheck() ){
         return;
       }
       let userData = {};
       angular.copy(vm.userInfo,userData);
       userData.type = parseInt(userData.type);
-      let userResult =null;
-      try {
-        userResult = await http.get("GetUserInfoByName",{user_number: userData.user_number,type:userData.type});
-        if(userResult === null || userResult.password ==="" ){
-          http.alert({
-            parent:$element,content:"该账号未注册，请先注册"
-          });
-          return;
-        }
-      }catch(error){
-        http.alert({
-          parent:$element,content:"检查用户信息失败,"+error
-        });
-        return;
-      }
-      let result = null;
-      try {
-          result = await http.post("Login",userData);
-      } catch (error) {
-          http.alert({
-            parent:$element,content:"登录失败,"+error
-          });
-        return;
-      }
-      if( vm.remember ){
-          result.password = vm.userInfo.password;
-        }
-        if(userData.type === 0 ){
-      
-          $cookies.putObject("userInfo",result);
-          $state.go("student.test");
-
-        }else{
-          $cookies.putObject("userInfo",result);
-          $state.go("teacher.paper");
+//      let userResult =null;
+//      try {
+//        userResult = await http.get("GetUserInfoByName",{user_number: userData.user_number,type:userData.type});
+//        if(userResult === null || userResult.password ==="" ){
+//          http.alert({
+//            parent:$element,content:"该账号未注册，请先注册"
+//          });
+//          return;
+//        }
+//      }catch(error){
+//        http.alert({
+//          parent:$element,content:"检查用户信息失败,"+error
+//        });
+//        return;
+//      }
+//      let result = null;
+//      try {
+//          result = await http.post("Login",userData);
+//      } catch (error) {
+//          http.alert({
+//            parent:$element,content:"登录失败,"+error
+//          });
+//        return;
+//      }
+//      if( vm.remember ){
+//          result.password = vm.userInfo.password;
+//        }
+//        if(userData.type === 0 ){
+//      
+//          $cookies.putObject("userInfo",result);
+//          $state.go("student.test");
+//
+//        }else{
+//          $cookies.putObject("userInfo",result);
+//          $state.go("teacher.paper");
+//        }
+      if(vm.userInfo.type === 2 ){ 
+          $state.go("admin.user");
         }
   }
 

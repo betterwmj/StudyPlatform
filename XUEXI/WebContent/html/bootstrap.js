@@ -43,6 +43,8 @@ import studentHomeworkDetail from "./component/studentHomeworkDetail/studentHome
 import studentOnlineNavigation from "./component/studentOnlineNavigation/studentOnlineNavigation.js";
 import studentPostQuestion from "./component/studentPostQuestion/studentPostQuestion.js";
 import studentQuestionHistory from "./component/studentQuestionHistory/studentQuestionHistory.js";
+
+import adminCenter from "./component/adminCenter/adminCenter.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -92,12 +94,13 @@ studentHomeworkList(app);
 publishHomework(app);
 teacherOnlineAnswerDetail(app);
 studentHomeworkDetail(app);
+studentHomeworkResultDetail(app);
 
 studentOnlineNavigation(app);
 studentPostQuestion(app);
 studentQuestionHistory(app);
 
-studentHomeworkResultDetail(app);
+adminCenter(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
 
