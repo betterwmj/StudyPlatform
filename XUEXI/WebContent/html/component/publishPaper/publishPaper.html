@@ -1,31 +1,31 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.homework.homeWorkName"></span>
-    <a ui-sref="teacher.paper" class="btn btn-default">返回</a>
-  </div>
-  <h3>试卷列表</h3>
-  <table class="table table-striped box" >
-      <thead>
-        <tr>
-          <th>试卷名称</th>
-          <th>发布</th>
-          <th>查看成绩</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="paper in $ctrl.papers">
-          <td>
-            <a ui-sref="teacher.paperDetail({testpaperID:paper.testpaperID,testName:paper.testName})" ng-bind="paper.testName"></a>
-          </td>
-          <td>
-            <button ng-if="paper.status === 0" ng-click="$ctrl.publishPaper(paper)" class="btn btn-danger">发布</button>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">查看试卷</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.paper">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>试卷列表</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-list flex>
+        <div ng-repeat="paper in $ctrl.papers">
+          <md-list-item >
+            <md-button class="md-raised" 
+              ui-sref="teacher.paperDetail({testpaperID:paper.testpaperID,testName:paper.testName})">
+              {{paper.testName}} 
+            </md-button>
+            <md-button class="md-raised" ng-if="paper.status === 0" ui-sref="teacher.register" 
+              ng-click="$ctrl.publishPaper(paper)">发布</md-button>
             <span ng-if="paper.status === 1">已发布</span>
-          </td>
-          <td>
-            <a ng-if="paper.status === 1" ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName})" class="btn btn-info">查看</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p ng-bind="$ctrl.msg"></p>
-</div>
+            <md-button class="md-raised" ng-if="paper.status === 1"
+              ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName})">查看</md-button>
+          </md-list-item>
+          <md-divider></md-divider>
+        </div>
+      </md-list>
+    </md-card-content>
+  </md-card>
+</md-content>

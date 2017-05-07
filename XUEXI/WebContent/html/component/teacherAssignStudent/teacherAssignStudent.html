@@ -1,29 +1,34 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.homework.homeWorkName"></span>
-    <a ui-sref="teacher.center" class="btn btn-default ">返回</a>
-  </div>
-  <form class="box">
-    <h3>分班</h3>
-    <div class="form-group">
-      <label >选择班级</label>
-      <select class="form-control" 
-          ng-model="$ctrl.currentClass"
-          ng-options="item as item.classes.className for item in $ctrl.classes">
-      </select>
-    </div>
-    <div class="form-group">
-      <p>选择学生</p>
-      <span ng-repeat="student in $ctrl.students">
-        <label ng-bind="student.realName"></label>
-        <input type="checkbox" ng-model="student.isCheck">
-      </span>
-    </div>
-    <div class="form-group">
-      <div>
-        <button type="button" class="btn btn-default" ng-click="$ctrl.toAssign()">分配学生</button>
-        <p ng-bind="$ctrl.msg"></p>
-      </div>
-    </div>
-  </form>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">老师分配学生坐在班级</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.center">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>班级和学生信息</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <form name="classForm">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>选择班级</label>
+          <md-select ng-model="$ctrl.currentClass">
+            <md-option ng-repeat="item in $ctrl.classes" ng-value="item.classes.classId">
+              <span ng-bind="item.classes.className"></span>
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <p>选择学生</p>
+          <md-checkbox ng-repeat="student in $ctrl.students" ng-model="student.isCheck" aria-label="student.isCheck">
+            {{student.realName}}
+          </md-checkbox>
+        </md-input-container>
+      </form>
+    </md-card-content>
+    <md-card-footer>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.toAssign()">分配学生</md-button>
+    </md-card-footer>
+  </md-card>
+</md-content>

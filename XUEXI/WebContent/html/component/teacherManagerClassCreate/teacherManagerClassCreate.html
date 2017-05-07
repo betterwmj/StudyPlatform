@@ -1,27 +1,35 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.homework.homeWorkName"></span>
-    <a ui-sref="teacher.center" class="btn btn-default ">返回</a>
-  </div>
-  <form class="box">
-    <h3>创建班级</h3>
-    <div class="form-group">
-      <label >班级名称</label><span ng-bind="errorMsg.classname"></span>
-      <div >
-        <input type="text" class="form-control" placeholder="班级名称" ng-model="$ctrl.classInfo.className">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>选择学科</label><span ng-bind="errorMsg.subject"></span>
-      <select class="form-control" ng-model="$ctrl.currentSubject"
-        ng-options="subject as subject.SubjectName for subject in $ctrl.subjectlist">
-      </select>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="button" class="btn btn-default" ng-click="$ctrl.create()">创建</button>
-        <p ng-bind="$ctrl.msg"></p>
-      </div>
-    </div>
-  </form>
-<div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">创建新的班级</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.center">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>班级信息</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <form name="classForm">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>班级名称</label>
+          <input type="text" name="className" ng-model="$ctrl.classInfo.className" required>
+          <div ng-messages="classForm.className.$error">
+            <div ng-message="required">请输入班级名称</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>选择学科</label>
+          <md-select ng-model="$ctrl.currentSubject">
+            <md-option ng-repeat="subject in $ctrl.subjectlist" ng-value="subject.SubjectID">
+              <span ng-bind="subject.SubjectName"></span>
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </form>
+    </md-card-content>
+    <md-card-footer>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.create()">创建</md-button>
+    </md-card-footer>
+  </md-card>
+</md-content>

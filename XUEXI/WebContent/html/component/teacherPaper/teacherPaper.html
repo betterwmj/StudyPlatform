@@ -1,69 +1,78 @@
 <md-content>
-<md-card>
-  <md-button class="md-raised" ui-sref="teacher.paper">返回</md-button>
-</md-card>
-
-  
-  <form>
-   <div class="form-group">
-      <label>选择学科</label>
-      <select class="form-control" ng-model="$ctrl.currentSubject" ng-change="$ctrl.getQuestionBySubject()"
-        ng-options="subject as subject.SubjectName for subject in $ctrl.subjectlist">
-      </select>
-    </div>
-    <h3>创建试卷</h3>
-    <div class="form-group">
-      <label>试卷名称</label><span ng-bind="errorMsg.papername"></span>
-      <input type="text" class="form-control" placeholder="试卷名称" ng-model="$ctrl.paper.papername">
-    </div>
-    <div class="form-group">
-      <label>选择题目类型</label>
-      <select class="form-control" ng-model="$ctrl.currentType" ng-change="$ctrl.getQuestionByType()"
-        ng-options="item as item.label for item in $ctrl.types">
-      </select>
-    </div>
-    <div class="form-group">
-      <label>备选题目:</label>
-      <div ng-if="$ctrl.currentType.value === 1">
-        <div ng-repeat="question in $ctrl.questions track by $index" class="box-radius">
-          <p>
-            <span ng-bind="$index+1"></span>&nbsp;&nbsp;
-            <span ng-bind="question.title"></span>
-          </p>
-          <div>
-            <p>A.<span ng-bind="question.optionA"></span>&nbsp;&nbsp;</p>
-            <p>B.<span ng-bind="question.optionB"></span>&nbsp;&nbsp;</p>
-            <p>C.<span ng-bind="question.optionC"></span>&nbsp;&nbsp;</p>
-            <p>D.<span ng-bind="question.optionD"></span>&nbsp;&nbsp;</p>
-            <p>正确答案:<span ng-bind="question.answer"></span></p>
-            <p>
-              <input type="checkbox" ng-model="question.isChecked" ng-click="$ctrl.append(question)">
-              分数:<input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)">
-            </p>
-            <br>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">创建试卷</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.paper">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-content>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>选择学科</label>
+          <md-select ng-model="$ctrl.currentSubject" ng-change="$ctrl.getQuestionBySubject()">
+            <md-option ng-repeat="subject in $ctrl.subjectlist" ng-value="subject.SubjectID">
+              {{subject.SubjectName}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>试卷名称</label>
+          <input type="text" name="papername" ng-model="$ctrl.paper.papername" required>
+          <div ng-messages="projectForm.papername.$error">
+            <div ng-message="required">请输入时间名</div>
           </div>
-        </div>
-        
-      </div>
-      <div ng-if="$ctrl.currentType.value === 2" >
-        <div ng-repeat="question in $ctrl.questions track by $index" class="box-radius">
-          <p ng-bind="question.title"></p>
-          <p ng-bind="question.answer"></p>
-          <p>
-            <input type="checkbox" ng-model="question.isChecked" ng-click="$ctrl.append(question)">
-            分数:<input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)">
-          </p>
-        </div>
-      </div>
-      <ul uib-pagination  items-per-page="$ctrl.pageItem" max-size="$ctrl.maxSize"
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>选择题目类型</label>
+          <md-select ng-model="$ctrl.currentType" ng-change="$ctrl.getQuestionByType()">
+            <md-option ng-repeat="item in $ctrl.types" ng-value="item.value">
+              {{item.label}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <label>备选题目:</label>
+        <md-card ng-repeat="question in $ctrl.questions track by $index">
+          <md-card-content>
+            <div ng-if="$ctrl.currentType === 1">
+                <p>
+                  <span ng-bind="$index+1"></span>&nbsp;&nbsp;
+                  <span ng-bind="question.title"></span>
+                </p>
+                <div>
+                  <p>A.<span ng-bind="question.optionA"></span>&nbsp;&nbsp;</p>
+                  <p>B.<span ng-bind="question.optionB"></span>&nbsp;&nbsp;</p>
+                  <p>C.<span ng-bind="question.optionC"></span>&nbsp;&nbsp;</p>
+                  <p>D.<span ng-bind="question.optionD"></span>&nbsp;&nbsp;</p>
+                  <p>正确答案:<span ng-bind="question.answer"></span></p>
+                  <div layout="row">
+                    <md-checkbox ng-model="question.isChecked" ng-click="$ctrl.append(question)" aria-label="check question"></md-checkbox>
+                    <md-input-container>
+                      <label >分数:</label>
+                      <input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)" required>
+                    </md-input-container>
+                  </div>
+                </div>
+            </div>
+            <div ng-if="$ctrl.currentType === 2" >
+                <p ng-bind="question.title"></p>
+                <p ng-bind="question.answer"></p>
+                <div layout="row">
+                  <md-checkbox ng-model="question.isChecked" ng-click="$ctrl.append(question)" aria-label="check question"></md-checkbox>
+                  <md-input-container>
+                    <label >分数:</label>
+                    <input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)" required>
+                  </md-input-container>
+                </div>
+            </div>
+          </md-card-content>
+        </md-card>
+        <ul uib-pagination  items-per-page="$ctrl.pageItem" max-size="$ctrl.maxSize"
             boundary-link-numbers="true" rotate="false" 
             previous-text="上一页" next-text="下一页" 
             total-items="$ctrl.allQuestion.length" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
-    </div>
-    
-    <button type="button" class="btn btn-danger" ng-click="$ctrl.createPager()">创建试卷</button>
-    <p ng-bind="$ctrl.msg"></p>
-  </form>
-
-
+    </md-card-content>
+    <md-card-footer>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.createPager()">创建试卷</md-button>
+    </md-card-footer>
+  </md-card>
 </md-content>

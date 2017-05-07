@@ -3,7 +3,7 @@ export let name = "homeWorkHistory";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/homeWorkHistory/homeWorkHistory.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http",controller]
   });
 }
 function controller($scope,$element,$state,$cookies,http){
@@ -17,12 +17,8 @@ function controller($scope,$element,$state,$cookies,http){
         }
       });
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "获取作业列表异常";}
-        }
+      http.alert({
+        parent:$element,content:"获取作业列表异常"
       });
     }
   }

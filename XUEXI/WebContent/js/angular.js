@@ -12276,10 +12276,10 @@ function $InterpolateProvider() {
      *
      * <example>
      *  <file name="index.html">
-     *    <div ng-init="username='A user'">
-     *      <p ng-init="apptitle='Escaping demo'">{{apptitle}}: \{\{ username = "defaced value"; \}\}
+     *    <div ng-init="school_number='A user'">
+     *      <p ng-init="apptitle='Escaping demo'">{{apptitle}}: \{\{ school_number = "defaced value"; \}\}
      *        </p>
-     *      <p><strong>{{username}}</strong> attempts to inject code which will deface the
+     *      <p><strong>{{school_number}}</strong> attempts to inject code which will deface the
      *        application, but fails to accomplish their task, because the server has correctly
      *        escaped the interpolation start/end markers with REVERSE SOLIDUS U+005C (backslash)
      *        characters.</p>
@@ -22852,7 +22852,7 @@ var ISO_DATE_REGEXP = /^\d{4,}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+(?:[+-
 // Note: We are being more lenient, because browsers are too.
 //   1. Scheme
 //   2. Slashes
-//   3. Username
+//   3. school_number
 //   4. Password
 //   5. Hostname
 //   6. Port
@@ -24453,10 +24453,10 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
          <form name="myForm">
            <label>
               User name:
-              <input type="text" name="userName" ng-model="user.name" required>
+              <input type="text" name="school_number" ng-model="user.name" required>
            </label>
            <div role="alert">
-             <span class="error" ng-show="myForm.userName.$error.required">
+             <span class="error" ng-show="myForm.school_number.$error.required">
               Required!</span>
            </div>
            <label>
@@ -24473,8 +24473,8 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
          </form>
          <hr>
          <tt>user = {{user}}</tt><br/>
-         <tt>myForm.userName.$valid = {{myForm.userName.$valid}}</tt><br/>
-         <tt>myForm.userName.$error = {{myForm.userName.$error}}</tt><br/>
+         <tt>myForm.school_number.$valid = {{myForm.school_number.$valid}}</tt><br/>
+         <tt>myForm.school_number.$error = {{myForm.school_number.$error}}</tt><br/>
          <tt>myForm.lastName.$valid = {{myForm.lastName.$valid}}</tt><br/>
          <tt>myForm.lastName.$error = {{myForm.lastName.$error}}</tt><br/>
          <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
@@ -24485,25 +24485,25 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
       </file>
       <file name="protractor.js" type="protractor">
         var user = element(by.exactBinding('user'));
-        var userNameValid = element(by.binding('myForm.userName.$valid'));
+        var school_numberValid = element(by.binding('myForm.school_number.$valid'));
         var lastNameValid = element(by.binding('myForm.lastName.$valid'));
         var lastNameError = element(by.binding('myForm.lastName.$error'));
         var formValid = element(by.binding('myForm.$valid'));
-        var userNameInput = element(by.model('user.name'));
+        var school_numberInput = element(by.model('user.name'));
         var userLastInput = element(by.model('user.last'));
 
         it('should initialize to model', function() {
           expect(user.getText()).toContain('{"name":"guest","last":"visitor"}');
-          expect(userNameValid.getText()).toContain('true');
+          expect(school_numberValid.getText()).toContain('true');
           expect(formValid.getText()).toContain('true');
         });
 
         it('should be invalid if empty when required', function() {
-          userNameInput.clear();
-          userNameInput.sendKeys('');
+          school_numberInput.clear();
+          school_numberInput.sendKeys('');
 
           expect(user.getText()).toContain('{"last":"visitor"}');
-          expect(userNameValid.getText()).toContain('false');
+          expect(school_numberValid.getText()).toContain('false');
           expect(formValid.getText()).toContain('false');
         });
 
@@ -27017,16 +27017,16 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  * in order to fulfill the validation and a status level of `4xx` in order to reject the validation.
  *
  * ```js
- * ngModel.$asyncValidators.uniqueUsername = function(modelValue, viewValue) {
+ * ngModel.$asyncValidators.uniqueschool_number = function(modelValue, viewValue) {
  *   var value = modelValue || viewValue;
  *
- *   // Lookup user by username
+ *   // Lookup user by school_number
  *   return $http.get('/api/users/' + value).
  *      then(function resolved() {
- *        //username exists, this means validation fails
+ *        //school_number exists, this means validation fails
  *        return $q.reject('exists');
  *      }, function rejected() {
- *        //username does not exist, therefore this validation passes
+ *        //school_number does not exist, therefore this validation passes
  *        return true;
  *      });
  * };
@@ -27985,7 +27985,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
        <div ng-controller="ExampleController">
          <form name="userForm">
            <label>Name:
-             <input type="text" name="userName"
+             <input type="text" name="school_number"
                     ng-model="user.name"
                     ng-model-options="{ getterSetter: true }" />
            </label>
@@ -28122,7 +28122,7 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
       <div ng-controller="ExampleController">
         <form name="userForm">
           <label>Name:
-            <input type="text" name="userName"
+            <input type="text" name="school_number"
                    ng-model="user.name"
                    ng-model-options="{ updateOn: 'blur' }"
                    ng-keyup="cancel($event)" />
@@ -28142,7 +28142,7 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
 
           $scope.cancel = function(e) {
             if (e.keyCode == 27) {
-              $scope.userForm.userName.$rollbackViewValue();
+              $scope.userForm.school_number.$rollbackViewValue();
             }
           };
         }]);
@@ -28179,11 +28179,11 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
       <div ng-controller="ExampleController">
         <form name="userForm">
           <label>Name:
-            <input type="text" name="userName"
+            <input type="text" name="school_number"
                    ng-model="user.name"
                    ng-model-options="{ debounce: 1000 }" />
           </label>
-          <button ng-click="userForm.userName.$rollbackViewValue(); user.name=''">Clear</button>
+          <button ng-click="userForm.school_number.$rollbackViewValue(); user.name=''">Clear</button>
           <br />
         </form>
         <pre>user.name = <span ng-bind="user.name"></span></pre>
@@ -28204,7 +28204,7 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
       <div ng-controller="ExampleController">
         <form name="userForm">
           <label>Name:
-            <input type="text" name="userName"
+            <input type="text" name="school_number"
                    ng-model="user.name"
                    ng-model-options="{ getterSetter: true }" />
           </label>

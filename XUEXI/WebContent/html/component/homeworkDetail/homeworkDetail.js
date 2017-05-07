@@ -8,16 +8,19 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
-
   vm.$onInit = async function(){
-    console.log($stateParams);
-    vm.homework = {
-      homeWorkName:$stateParams.homeWorkName,
-      homeworkId:$stateParams.homeworkId,
-    };
-    vm.homeworkDetail = await http.get("GetHomeworkDetail",{
-      homeworkID:vm.homework.homeworkId
-    });
-    $scope.$applyAsync(null);
+    try {
+      vm.homework = {
+        homeWorkName:$stateParams.homeWorkName,
+        homeworkId:$stateParams.homeworkId,
+      };
+      vm.homeworkDetail = await http.get("GetHomeworkDetail",{
+        homeworkID:vm.homework.homeworkId
+      });
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"获取作业详情异常"
+      });
+    }
   };
 }

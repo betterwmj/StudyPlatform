@@ -3,10 +3,10 @@ export let name = "publishHomework";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/publishHomework/publishHomework.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
+function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.$onInit = async function(){
@@ -16,15 +16,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
     vm.subjectId = $stateParams.subjectId;
     try {
       vm.classes = await http.get("GetTeacherSubjectClass",{subjectId:vm.subjectId});
-      
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "获取教师班级信息异常";}
-        }
-      }); 
+      http.alert({
+        parent:$element,content:"获取教师班级信息异常"
+      });
     }
   }
   vm.publish = async function(){
@@ -40,30 +35,21 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
     try {
       let result = await http.post("PublishHomework",data);
       if(result === true){
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "作业发布成功";}
-          }
+        let dialog = http.alert({
+          arent:$element,content:"作业发布成功"
+        });
+        dialog.then(function(){
+          $state.go("teacher.homeWorkHistory");
         });
       }else{
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "作业发布失败";}
-          }
-        }); 
+        http.alert({
+          arent:$element,content:"作业发布失败"
+        });
       }
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "作业发布失败";}
-        }
-      }); 
+      http.alert({
+        arent:$element,content:"作业发布失败"
+      });
     }
   }
 }

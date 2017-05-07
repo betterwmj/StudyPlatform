@@ -11,16 +11,21 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.homework = null;
   vm.homeworkResultList = [];
   vm.$onInit = async function(){
-    vm.homework = {
-      homeworkID:$stateParams.homeworkId,
-      homeWorkName:$stateParams.homeWorkName,
-    };
-    vm.homeworkResultList = await http.get("GetHomeworkResult",{
-      homeworkID:vm.homework.homeworkID
-    });
-    vm.homeworkResultList.forEach( (item)=>{
-      item.homework.time = new Date(item.homework.time.time);
-    });
-    $scope.$applyAsync(null);
+    try {
+      vm.homework = {
+        homeworkID:$stateParams.homeworkId,
+        homeWorkName:$stateParams.homeWorkName,
+      };
+      vm.homeworkResultList = await http.get("GetHomeworkResult",{
+        homeworkID:vm.homework.homeworkID
+      });
+      vm.homeworkResultList.forEach( (item)=>{
+        item.homework.time = new Date(item.homework.time.time);
+      });
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"获取学生作业情况列表数据异常"
+      });
+    }
   }
 }

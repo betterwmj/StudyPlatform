@@ -18,9 +18,9 @@
 			String rank=request.getParameter("denger");
 			int dnumber;
 			if(rank==null)
-				out.println("ÇëÑ¡ÔñÑ§Éú»òÕß½ÌÊ¦");
+				out.println("ï¿½ï¿½Ñ¡ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½Ê¦");
 			else if(!password.equals(passwords))
-				 out.println("ÃÜÂë²»Ò»ÖÂ");
+				 out.println("ï¿½ï¿½ï¿½ë²»Ò»ï¿½ï¿½");
 			else{
 				dnumber= Integer.parseInt(rank);
 				//Person user = new Person();
@@ -29,10 +29,10 @@
 			//	user.setRank(dnumber);
 		   		//user.setEmail(email);
 		   		 //if(db.insertUser(user)){
-					out.println("×¢²á³É¹¦");
-		   		 %><a href="login.html" target=_red>·µ»ØµÇÂ¼Ò³Ãæ</a><%
+					out.println("×¢ï¿½ï¿½ï¿½É¹ï¿½");
+		   		 %><a href="login.html" target=_red>ï¿½ï¿½ï¿½Øµï¿½Â¼Ò³ï¿½ï¿½</a><%
 				//}else{
-					//out.println("¸ÄÓÃ»§ÃûÒÑ±»×¢²á£¬ÇëÖØÐÂ×¢²á");
+					//out.println("ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ñ±ï¿½×¢ï¿½á£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½");
 				//}
 			}
 		 }
@@ -43,15 +43,15 @@
 			System.out.println(dname+" "+dpassword+" "+dnumber);
 			if (dname.equals("") || dname == null || dpassword == null
 					|| dpassword.equals(""))
-				out.println("ÓÃ»§Ãû»òÕßÃÜÂë²»ÄÜÎª¿Õ");
+				out.println("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Îªï¿½ï¿½");
 			else {
-				//String userNames=db.isUserPasswordCorrect(dname, dpassword, dnumber);
+				//String school_numbers=db.isUserPasswordCorrect(dname, dpassword, dnumber);
 				
-				//if(userNames.equals("") ){
-					//out.println("¸ÃÓÃ»§²»´æÔÚ»òÉí·ÝÑéÖ¤Ê§°Ü");
+				//if(school_numbers.equals("") ){
+					//out.println("ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¤Ê§ï¿½ï¿½");
 					session.setAttribute("isLogin", false);
 				//}else{
-				//ÑéÖ¤³É¹¦¸ù¾ÝÈ¨ÏÞ²»Í¬½øÈë²»Í¬Ò³Ãæ
+				//ï¿½ï¿½Ö¤ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½Þ²ï¿½Í¬ï¿½ï¿½ï¿½ë²»Í¬Ò³ï¿½ï¿½
 			      switch(dnumber){
 			      case 0:
 			    	  %><jsp:forward page="student.jsp"/><% 

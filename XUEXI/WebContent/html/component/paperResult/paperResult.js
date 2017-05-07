@@ -3,10 +3,10 @@ export let name = "paperResult";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/paperResult/paperResult.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
+function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.paper = null;
@@ -24,12 +24,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
         paperID:vm.paper.testpaperID
       });
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "获取试卷作答结果异常";}
-        }
+      http.alert({
+        parent:$element,content:"获取试卷作答结果异常"
       });
     }
   }

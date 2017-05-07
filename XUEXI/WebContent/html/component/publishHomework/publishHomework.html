@@ -1,13 +1,21 @@
-<div>
-  <div class="box top-return">
-    <a ui-sref="teacher.homeWorkHistory" class="btn btn-default ">返回</a>
-  </div>
-  <div class="box-radius">
-    <p>可以发布的班级:</p>
-    <div ng-repeat="item in $ctrl.classes">
-      <input type="checkbox" ng-model="item.isCheck"><span ng-bind="item.className"></span>
-    </div>
-    <button type="button" class="btn btn-default" ng-click="$ctrl.publish()">发布作业</button>
-    <p ng-bind="$ctrl.msg"></p>
-  </div>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">发布作业</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.homeWorkHistory">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>班级列表</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-checkbox ng-model="item.isCheck" aria-label="checked?" ng-repeat="item in $ctrl.classes">
+        {{item.className}}
+      </md-checkbox>
+      <div>
+        <md-button class="md-raised" ng-click="$ctrl.publish()">发布作业</md-button>
+      </div>
+    </md-card-content>
+  </md-card>
+</md-content>
