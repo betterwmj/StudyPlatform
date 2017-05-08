@@ -10,19 +10,21 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.$onInit = async function(){
-   vm.homework = {
-     homeId:parseInt($stateParams.homeworkId)
-   };
-   console.log(vm.homework);
-   vm.homeworkResults = await http.get("GetHomeworkResult");
-   console.log(vm.homeworkResults);
-   vm.homeworkResult = vm.homeworkResults.find((item)=>{
-      return item.homework.homeworkId === vm.homework.homeId;
-   });
-   console.log(vm.homeworkResult);
-   vm.homeworkResultDetail = await http.get("GetHomeworkResultDetail",{
-     homeworkResultID:vm.homeworkResult.homework.id
-   });
-   $scope.$applyAsync(null);
+    try {
+      vm.homework = {
+        homeId:parseInt($stateParams.homeworkId)
+      };
+      vm.homeworkResults = await http.get("GetHomeworkResult");
+      vm.homeworkResult = vm.homeworkResults.find((item)=>{
+          return item.homework.homeworkId === vm.homework.homeId;
+      });
+      vm.homeworkResultDetail = await http.get("GetHomeworkResultDetail",{
+        homeworkResultID:vm.homeworkResult.homework.id
+      });
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"获取学生作业结果详情异常"
+      });
+    }
   } 
 }

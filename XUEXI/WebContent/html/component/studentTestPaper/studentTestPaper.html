@@ -45,7 +45,7 @@
               </div>
               <div ng-if="$ctrl.currQuestion.type === 3">
                 <md-input-container class="md-block" flex-gt-sm>
-                  <label>用户名</label>
+                  <label>答案</label>
                   <input type="text" name="studentAnswer" ng-model="$ctrl.currQuestion.studentAnswer" required>
                   <div ng-messages="oneQuestionForm.studentAnswer.$error">
                     <div ng-message="required">请输入答案</div>

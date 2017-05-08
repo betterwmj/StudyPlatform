@@ -3,24 +3,28 @@ export let name = "studentHomeworkDetail";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/studentHomeworkDetail/studentHomeworkDetail.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
+function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   let index = 0;
-  vm.msg = "";
+  vm.currIndex = 0;
   vm.$onInit = async function(){
-    console.log($stateParams);
-    vm.homework = {
-      homeWorkName:$stateParams.homeWorkName,
-      homeId:$stateParams.homeworkId,
-    };
-    vm.homeDetail = await http.get("GetHomeworkDetail",{
-      homeworkID:vm.homework.homeId
-    });
-    vm.curr = vm.homeDetail[index];
-    $scope.$applyAsync(null);
+    try {
+      vm.homework = {
+        homeWorkName:$stateParams.homeWorkName,
+        homeId:$stateParams.homeworkId,
+      };
+      vm.homeDetail = await http.get("GetHomeworkDetail",{
+        homeworkID:vm.homework.homeId
+      });
+      vm.curr = vm.homeDetail[index];
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"初始化页面异常"
+      });
+    }
   }
   vm.upOrNext = function(type){
     if( type === "up"){
@@ -31,6 +35,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
       index = index < vm.homeDetail.length ? index : --index;
     }
     vm.curr = vm.homeDetail[index];
+    vm.currIndex = index;
   }
 
   vm.submit = async function(){
@@ -48,32 +53,23 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
     try {
       let result = await http.post("SubmitHomework",data);
       if( result === true ){
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "提交作业成功";}
-          }
+        let dialog = http.alert({
+          parent:$element,content:"提交作业成功"
+        });
+        dialog.then(function(){
+          $state.go('student.homework');
+        },function(){
+          $state.go('student.homework');
         });
       }else{
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "提交作业失败";}
-          }
+        http.alert({
+          parent:$element,content:"提交作业失败"
         });
       }
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "提交作业失败";}
-        }
+      http.alert({
+        parent:$element,content:"提交作业失败"
       });
-    }finally{
-      $scope.$applyAsync(null);
     }
   }
 }

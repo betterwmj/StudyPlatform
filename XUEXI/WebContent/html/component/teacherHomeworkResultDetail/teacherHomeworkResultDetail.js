@@ -11,13 +11,18 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.homework = null;
   vm.homeworkResultDetail = [];
   vm.$onInit = async function(){
-    vm.homework = {
-      homeworkID:$stateParams.homeworkId,
-      homeWorkName:$stateParams.homeWorkName,
-    };
-    vm.homeworkResultDetail = await http.get("GetHomeworkResultDetail",{
-      homeworkResultID:$stateParams.homeworkResultID,
-    });
-    $scope.$applyAsync(null);
+    try {
+      vm.homework = {
+        homeworkID:$stateParams.homeworkId,
+        homeWorkName:$stateParams.homeWorkName,
+      };
+      vm.homeworkResultDetail = await http.get("GetHomeworkResultDetail",{
+        homeworkResultID:$stateParams.homeworkResultID,
+      });
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"获取学生作业结果详情异常"
+      });
+    }
   }
 }
