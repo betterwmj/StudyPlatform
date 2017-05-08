@@ -1,11 +1,14 @@
 package com.wmj.servlet;
 
 import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.bean.Students;
@@ -55,8 +58,16 @@ public class StudentRegister extends HttpServlet {
 		student.setPassword(password);
 		student.setSchool(school);
 		student.setTelephone(phone);
+		HttpSession session=request.getSession();
+		Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
+        String typeString= userInfo.get("type");
+        int type=Integer.parseInt(typeString);
 		try {
-			boolean resultCode=OperatorUser.insertStudent(student);
+			boolean resultCode =false;
+			if(type ==2)
+			   resultCode=OperatorUser.addStudent(student);
+			else
+			   resultCode=OperatorUser.insertStudent(student);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(resultCode);

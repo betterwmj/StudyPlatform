@@ -1,6 +1,8 @@
 package com.wmj.dao;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.wmj.bean.Students;
@@ -29,8 +31,8 @@ public class OperatorUser {
             String sql=null;
 			if(type==0)
 				sql ="select * from students where school_number = ? ";
-			else 
-				sql ="select * from teachers where teacher_number = ? ";
+			else if(type==1 || type==2)
+				sql ="select * from teachers where teacher_number = ? "; 
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setString(1, userNumber);
@@ -150,6 +152,70 @@ public class OperatorUser {
 		}
 		return result;
 	}
+	//管理员添加学生
+	public static boolean addStudent(Students student) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			
+				String sql="insert into students (school_number,realName,school,password,telephone) values(?,?,?,?,?) ";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+				pmt.setString(1, student.getSchool_number());
+				pmt.setString(2, student.getRealName());
+				pmt.setString(3, student.getPassword());
+				pmt.setString(4, student.getSchool());
+				pmt.setString(5, student.getTelephone());
+				if(pmt.executeUpdate()>0)
+				   result = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return result;
+	}
+	//管理员添加老师
+		public static boolean addTeachers(Teachers teacher) throws Exception{
+			boolean result = false;
+			 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+			Connection conn = null;
+			try {
+				conn = JDBCUtil.getConnection();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				throw e1;
+			}
+			PreparedStatement pmt = null; 
+			try {
+				
+					String sql="insert into teachers(teacher_number,realName,password) values(?,?,?)";
+					pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+					pmt.setString(1, teacher.getTeacher_number());
+					pmt.setString(2, teacher.getRealName());
+					pmt.setString(3, teacher.getPassword());
+					if(pmt.executeUpdate()>0)
+					   result = true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				// 关闭连接
+				JDBCUtil.close(conn, pmt);
+			}
+			return result;
+		}
 	// 判断用户名密码是否正确，如果正确，返回用户信息。type标志是老师还是学生
 	public static Map<String,String> isUserPasswordCorrect(String userNumber, String userPassword,int type) throws Exception {
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
@@ -172,7 +238,7 @@ public class OperatorUser {
 			System.out.println("teacher or students"+ type+ userNumber);
 			if(type==0)
 				sql ="select * from students where school_number = ? and password = ?";
-			else 
+			else if(type==1 ||type==2)
 				sql ="select * from teachers where teacher_number = ? and password = ?";
 			/* 完成查询 */
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);   
@@ -186,7 +252,7 @@ public class OperatorUser {
 				userInfo.put("id", rs.getInt("UserID")+"");
 				if(type==0){
 					userInfo.put("school_number", rs.getString("school_number"));
-				}else{
+				}else {
 					userInfo.put("teacher_number", rs.getString("teacher_number"));
 				}
 				userInfo.put("password", rs.getString("password"));
@@ -241,6 +307,7 @@ public class OperatorUser {
 	}
 	// 学生个人中心修改个人信息
 	public static boolean updateStudent(Students student) throws Exception{
+
 		boolean result = false;
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -274,4 +341,82 @@ public class OperatorUser {
 		}
 		return result;
 	}
+	/*
+	 * 管理员获取所有学生信息
+	 */
+	public static List<Students> getStudent() throws Exception{
+		Connection conn = null;
+		List<Students> list = new ArrayList<Students>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		sql="select * from students";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+				Students student=new Students();
+				student.setUserID(rs.getInt("UserID"));
+				student.setSchool_number(rs.getString("school_number"));
+				student.setRealName(rs.getString("realName"));
+				student.setPassword(rs.getString("password"));
+				student.setSchool(rs.getString("school"));
+				student.setTelephone(rs.getString("telephone"));
+                list.add(student);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+ }
+	/*
+	 * 管理员获取所有老师信息
+	 */
+	public static List<Teachers> getTeachers() throws Exception{
+		Connection conn = null;
+		List<Teachers> list = new ArrayList<Teachers>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		sql="select * from teachers";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+				Teachers teacher=new Teachers();
+				teacher.setUserID(rs.getInt("UserID"));
+				teacher.setTeacher_number(rs.getString("teacher_number"));
+				teacher.setRealName(rs.getString("realName"));
+				teacher.setPassword(rs.getString("password"));
+                list.add(teacher);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+ }
 }

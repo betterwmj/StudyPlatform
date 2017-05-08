@@ -3,7 +3,6 @@ package com.wmj.servlet;
 import java.io.IOException;
 import java.util.List;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,23 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.Students;
+import com.wmj.bean.Teachers;
 import com.wmj.dao.OperatorUser;
 
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class GetStudents
- * 获取所有未分配班级学生信息
+ * Servlet implementation class GetTeachers
  */
-@WebServlet("/GetStudents")
-public class GetStudents extends HttpServlet {
+@WebServlet("/GetTeachers")
+public class GetTeachers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetStudents() {
+    public GetTeachers() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,7 +38,7 @@ public class GetStudents extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		 try {
-			    List<Students> list = OperatorUser.getStudent();
+			    List<Teachers> list = OperatorUser.getTeachers();
 				ApiResult result = new ApiResult();
 				result.setCode(0);
 				result.setData(list);

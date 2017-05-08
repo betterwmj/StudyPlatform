@@ -7853,8 +7853,8 @@ var getLocals = function (ctx) {
  * ```js
  * MyController.$inject = ['$transition$'];
  * function MyController($transition$) {
- *   var username = $transition$.params().username;
- *   // .. do something with username
+ *   var school_number = $transition$.params().school_number;
+ *   // .. do something with school_number
  * }
  * ```
  *
@@ -7868,7 +7868,7 @@ var getLocals = function (ctx) {
  * function SomeService($http, $stateParams) {
  *   return {
  *     getUser: function() {
- *       return $http.get('/api/users/' + $stateParams.username);
+ *       return $http.get('/api/users/' + $stateParams.school_number);
  *     }
  *   }
  * };
