@@ -15,29 +15,35 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.displayHomeworkList = [];
   vm.showFlag = true;
   vm.$onInit = async function(){
-    vm.subject = {
-      SubjectName:$stateParams.SubjectName,
-      SubjectID:$stateParams.SubjectID
-    };
-    vm.homeworkList = await http.get("GetHomework",{
-      subjectId:vm.subject.SubjectID
-    });
-    vm.homeworkList.forEach( (item)=>{
-      item.finishTime = new Date(item.finishTime.time);
-    });
-    vm.homeworkResults = await http.get("GetHomeworkResult");
-    vm.homeworkList.forEach( (homework)=>{
-      let find = vm.homeworkResults.find( (result)=>{
-        return homework.homeId === result.homework.homeworkId
+    try {
+      vm.subject = {
+        SubjectName:$stateParams.SubjectName,
+        SubjectID:$stateParams.SubjectID
+      };
+      vm.homeworkList = await http.get("GetHomework",{
+        subjectId:vm.subject.SubjectID
       });
-      if( find ){
-        vm.homeworkListFinish.push(homework);
-      }else{
-        vm.homeworkListUnFinish.push(homework);
-      }
-    });
-    vm.displayHomeworkList = vm.homeworkListUnFinish;
-    $scope.$applyAsync(null);
+      vm.homeworkList.forEach( (item)=>{
+        item.finishTime = new Date(item.finishTime.time);
+      });
+      vm.homeworkResults = await http.get("GetHomeworkResult");
+      vm.homeworkList.forEach( (homework)=>{
+        let find = vm.homeworkResults.find( (result)=>{
+          return homework.homeId === result.homework.homeworkId
+        });
+        if( find ){
+          vm.homeworkListFinish.push(homework);
+        }else{
+          vm.homeworkListUnFinish.push(homework);
+        }
+      });
+      vm.displayHomeworkList = vm.homeworkListUnFinish;
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"初始化页面异常"
+      });
+    }
+    
   }
   vm.changeHomeworkType = function(flag){
     vm.showFlag = flag;

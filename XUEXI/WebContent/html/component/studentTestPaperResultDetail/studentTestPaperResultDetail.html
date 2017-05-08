@@ -1,25 +1,33 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.paper.testName">学生做试卷</span>
-    <a ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID})" class="btn btn-default ">返回</a>
-  </div>
-  <h3>查看学生考试结果详情</h3>
-  <p>得分:<span ng-bind="$ctrl.paperResult.paper.score"></span>,
-    答题时间:<sapn ng-bind="$ctrl.paperResult.paper.time | date:'yyyy-MM-dd HH:mm:ss'"></sapn>
-  </p>
-  <div ng-repeat="item in $ctrl.resultDetail" class="box-radius">
-    <p ng-bind="item.title.title"></p>
-    <div ng-if="item.title.type === 1">
-      <p>A.<span ng-bind="item.title.optionA"></span>&nbsp;&nbsp;</p>
-      <p>B.<span ng-bind="item.title.optionB"></span>&nbsp;&nbsp;</p>
-      <p>C.<span ng-bind="item.title.optionC"></span>&nbsp;&nbsp;</p>
-      <p>D.<span ng-bind="item.title.optionD"></span>&nbsp;&nbsp;</p>
-      <p>标准答案:<span ng-bind="item.title.answer"></span>&nbsp;&nbsp;</p>
-      <p>学生答案:<span ng-bind="item.paperResultDetail.answer"></span>&nbsp;&nbsp;</p>
-    </div>
-    <div ng-if="item.title.type === 2">
-      <p>标准答案:<span ng-bind="item.title.answer"></span>&nbsp;&nbsp;</p>
-      <p>学生答案:<span ng-bind="item.paperResultDetail.answer"></span>&nbsp;&nbsp;</p>
-    </div>
-  </div>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">考试结果</span>
+        <md-button class="md-raised" flex="20" ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID})">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>
+        <p>查看学生考试结果详情</p>
+        <p>得分:<span ng-bind="$ctrl.paperResult.paper.score"></span>,
+          答题时间:<sapn ng-bind="$ctrl.paperResult.paper.time | date:'yyyy-MM-dd HH:mm:ss'"></sapn>
+        </p>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-card ng-repeat="item in $ctrl.resultDetail">
+        <md-card-content>
+            <p ng-bind="item.title.title"></p>
+            <div ng-if="item.title.type === 1">
+              <p>A.<span ng-bind="item.title.optionA"></span>&nbsp;&nbsp;</p>
+              <p>B.<span ng-bind="item.title.optionB"></span>&nbsp;&nbsp;</p>
+              <p>C.<span ng-bind="item.title.optionC"></span>&nbsp;&nbsp;</p>
+              <p>D.<span ng-bind="item.title.optionD"></span>&nbsp;&nbsp;</p>
+            </div>
+            <p>标准答案:<span ng-bind="item.title.answer"></span>&nbsp;&nbsp;</p>
+            <p>学生答案:<span ng-bind="item.paperResultDetail.answer"></span>&nbsp;&nbsp;</p>
+        </md-card-content>
+      </md-card>
+    </md-card-content>
+  </md-card>
+</md-content>

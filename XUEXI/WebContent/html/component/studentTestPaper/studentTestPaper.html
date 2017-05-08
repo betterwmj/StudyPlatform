@@ -1,33 +1,64 @@
-<div>
-  <div class="box top-return">
-    <span ng-bind="$ctrl.paper.testName">学生做试卷</span>
-    <a ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID})" class="btn btn-default ">返回</a>
-  </div>
-  <button class="btn btn-default" ng-click="$ctrl.submitResult()">提交答案</button>
-  <div class="box-radius">
-    <p ng-bind="$ctrl.currQuestion.title"></p>
-    <div ng-if="$ctrl.currQuestion.type === 1">
-      <p>A.<span ng-bind="$ctrl.currQuestion.optionA"></span>&nbsp;&nbsp;</p>
-      <p>B.<span ng-bind="$ctrl.currQuestion.optionB"></span>&nbsp;&nbsp;</p>
-      <p>C.<span ng-bind="$ctrl.currQuestion.optionC"></span>&nbsp;&nbsp;</p>
-      <p>D.<span ng-bind="$ctrl.currQuestion.optionD"></span>&nbsp;&nbsp;</p>
-      <p>
-        A<input name="options" type="radio" value="A" ng-model="$ctrl.currQuestion.studentAnswer">
-        B<input name="options" type="radio" value="B" ng-model="$ctrl.currQuestion.studentAnswer">
-        C<input name="options" type="radio" value="C" ng-model="$ctrl.currQuestion.studentAnswer">
-        D<input name="options" type="radio" value="D" ng-model="$ctrl.currQuestion.studentAnswer">
-      </p>
-    </div>
-    <div ng-if="$ctrl.currQuestion.type === 2">
-      <p>
-        对<input name="options" type="radio" value="对" ng-model="$ctrl.currQuestion.studentAnswer">
-        错<input name="options" type="radio" value="错" ng-model="$ctrl.currQuestion.studentAnswer">
-      </p>
-    </div>
-  </div>
-  <div>
-    <button class="btn btn-default" ng-click="$ctrl.changeIndex('up')">上一题</button>
-    <button class="btn btn-default" ng-click="$ctrl.changeIndex('down')">下一题</button>
-    
-  </div>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">答卷,{{$ctrl.paper.testName}}</span>
+        <md-button class="md-raised" flex="20" ui-sref="student.studentTestPaperList({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID})">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>
+        <p>试卷试题,共{{$ctrl.paperDetail.length}}道题,第{{$ctrl.questionIndex+1}}题</p>
+        <md-button class="md-raised md-primary" ng-click="$ctrl.submitResult()">提交答案</md-button>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-card>
+        <md-card-content>
+            <form name="oneQuestionForm">
+              <p ng-bind="$ctrl.currQuestion.title"></p>
+              <div ng-if="$ctrl.currQuestion.type === 1">
+                <md-radio-group ng-model="$ctrl.currQuestion.studentAnswer">
+                  <md-radio-button value="A">
+                    <span>A.<span ng-bind="$ctrl.currQuestion.optionA"></span></span>
+                  </md-radio-button>
+                  <md-radio-button value="B">
+                    <span>B.<span ng-bind="$ctrl.currQuestion.optionB"></span></span>
+                  </md-radio-button>
+                  <md-radio-button value="C">
+                    <span>C.<span ng-bind="$ctrl.currQuestion.optionC"></span></span>
+                  </md-radio-button>
+                  <md-radio-button value="D">
+                    <span>D.<span ng-bind="$ctrl.currQuestion.optionD"></span></span>
+                  </md-radio-button>
+                </md-radio-group>
+              </div>
+              <div ng-if="$ctrl.currQuestion.type === 2">
+                <md-radio-group ng-model="$ctrl.currQuestion.studentAnswer">
+                  <md-radio-button value="correct">
+                    <span>对</span></span>
+                  </md-radio-button>
+                  <md-radio-button value="error">
+                    <span>错<span ng-bind="$ctrl.currQuestion.optionB"></span></span>
+                  </md-radio-button>
+                </md-radio-group>
+              </div>
+              <div ng-if="$ctrl.currQuestion.type === 3">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>用户名</label>
+                  <input type="text" name="studentAnswer" ng-model="$ctrl.currQuestion.studentAnswer" required>
+                  <div ng-messages="oneQuestionForm.studentAnswer.$error">
+                    <div ng-message="required">请输入答案</div>
+                  </div>
+                </md-input-container>
+              </div>
+            </form>
+        </md-card-content>
+      </md-card>
+    </md-card-content>
+    <md-card-footer>
+      <md-button class="md-raised" ng-click="$ctrl.changeIndex('up')">上一题</md-button>
+      <md-button class="md-raised" ng-click="$ctrl.changeIndex('down')">下一题</md-button>
+    </md-card-footer>
+  </md-card>
+</md-content>

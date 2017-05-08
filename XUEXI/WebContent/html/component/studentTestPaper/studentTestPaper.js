@@ -3,10 +3,10 @@ export let name = "studentTestPaper";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/studentTestPaper/studentTestPaper.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal){
+function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.subject = null;
@@ -15,21 +15,26 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
   vm.questionIndex = 0;
   vm.currQuestion = null;
   vm.$onInit = async function(){
-    vm.subject = {
-      SubjectName:$stateParams.SubjectName,
-      SubjectID:$stateParams.SubjectID,
-      teacherID :$stateParams.teacherID
-    };
-    vm.paper = {
-      testpaperID:$stateParams.testpaperID,
-      testName:$stateParams.testName
-    };
-    vm.paperDetail = await http.get("GetPaperDetail",{
-      paperID:vm.paper.testpaperID
-    });
-    vm.currQuestion = vm.paperDetail[0];
-    console.log(vm.paperDetail);
-    $scope.$applyAsync(null);
+    try {
+      let userInfo = $cookies.getObject("userInfo");
+      vm.subject = {
+        SubjectName:$stateParams.SubjectName,
+        SubjectID:$stateParams.SubjectID,
+        teacherID :$stateParams.teacherID
+      };
+      vm.paper = {
+        testpaperID:$stateParams.testpaperID,
+        testName:$stateParams.testName
+      };
+      vm.paperDetail = await http.get("GetPaperDetail",{
+        paperID:vm.paper.testpaperID
+      });
+      vm.currQuestion = vm.paperDetail[0];
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"初始化页面异常"
+      });
+    }
   } 
 
   vm.changeIndex = function(upOrDown){
@@ -46,43 +51,46 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$uibModal)
   }
 
   vm.submitResult = async function(){
-    let userInfo = $cookies.getObject("userInfo");
-    let result = { 
-      "paperID":vm.paper.testpaperID,
-      "studentID":userInfo.id,
-      "score":0,
-      "paperresult":[]
-    };
-    vm.paperDetail.forEach( (item)=>{
-      let studentAnswer = item.studentAnswer;
-      let answer = item.answer;
-      if( studentAnswer === answer ){
-        result.score += item.score;
-      }
-      result.paperresult.push({
-        "questionID":item.itemId,
-   		  "answer":studentAnswer||""
-      });
-      console.log(result);
-    });
     try {
-      let rs = await http.post("SubmitPaper",result);
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "提交答案成功";}
+      let userInfo = $cookies.getObject("userInfo");
+      let result = { 
+        "paperID":vm.paper.testpaperID,
+        "studentID":userInfo.id,
+        "score":0,
+        "paperresult":[]
+      };
+      vm.paperDetail.forEach( (item)=>{
+        let studentAnswer = item.studentAnswer;
+        let answer = item.answer;
+        if( studentAnswer === answer ){
+          result.score += item.score;
         }
+        result.paperresult.push({
+          "questionID":item.itemId,
+          "answer":studentAnswer||""
+        });
+      });
+      let rs = await http.post("SubmitPaper",result);
+      let dialog = http.alert({
+        parent:$element,content:"提交答案成功"
+      });
+      dialog.then(function(){
+        $state.go('student.studentTestPaperList',{
+          SubjectName:vm.subject.SubjectName,
+          SubjectID:vm.subject.SubjectID,
+          teacherID:vm.subject.teacherID
+        });
+      },function(){
+        $state.go('student.studentTestPaperList',{
+          SubjectName:vm.subject.SubjectName,
+          SubjectID:vm.subject.SubjectID,
+          teacherID:vm.subject.teacherID
+        });
       });
     } catch (error) {
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "提交答案失败";}
-        }
+      http.alert({
+        parent:$element,content:"提交答案失败"
       });
     }
-    $scope.$applyAsync(null);
   }
 }

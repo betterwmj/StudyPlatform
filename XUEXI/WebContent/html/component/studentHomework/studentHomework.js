@@ -24,14 +24,13 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       	}
       	if(flag===0){
       		result.push(vm.subjects[i]);
-      	} 	
-      	console.log(result);
+      	}
       }
       vm.subjects  = result;
     } catch (error) {
-      
-    }finally{
-      $scope.$applyAsync(null);
+      http.alert({
+        parent:$element,content:"初始化页面异常"
+      });
     }
   }
 }
