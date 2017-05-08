@@ -30,6 +30,7 @@ function controller($scope,$element,$state,$cookies,http){
 	        vm.userInfo.user_number = userInfo.teacher_number;
 	        vm.userInfo.password = userInfo.password; 
     	}
+      vm.userInfo.type = userInfo.type;
     }
   }
 
