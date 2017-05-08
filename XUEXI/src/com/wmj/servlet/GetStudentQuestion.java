@@ -23,32 +23,34 @@ import net.sf.json.JSONObject;
 @WebServlet("/GetStudentQuestion")
 public class GetStudentQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GetStudentQuestion() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public GetStudentQuestion() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		HttpSession session = request.getSession();
-        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
-        String id= userInfo.get("id");
-		String type= userInfo.get("type");
+		Map<String, String> userInfo = (Map<String, String>) session.getAttribute("userInfo");
+		String id = userInfo.get("id");
+		String type = userInfo.get("type");
 		//String type=request.getParameter("type");
-         int typeId=Integer.parseInt(type);
-        //String id=request.getParameter("userID");
-        int userId=Integer.parseInt(id);
-        try {
-			List<OnlineQuestion> list = OperatorOnline.getOnlineQuestion(userId,typeId);
+		int typeId = Integer.parseInt(type);
+		//String id=request.getParameter("userID");
+		int userId = Integer.parseInt(id);
+		try {
+			List<OnlineQuestion> list = OperatorOnline.getOnlineQuestion(userId, typeId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);
@@ -64,9 +66,11 @@ public class GetStudentQuestion extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

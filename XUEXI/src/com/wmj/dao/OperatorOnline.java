@@ -29,14 +29,17 @@ public class OperatorOnline {
 		String sql = "";
 		if(typeId==0){
 			sql="select * from online_question where student_id =? ";
-			
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, userId);
 		}else{
-			sql="select * from online_question where answer_id =? ";
+			sql="SELECT DISTINCT a.* FROM online_question as a INNER JOIN  online_answer as b ON  a.id = b.online_question_id " 
+             +"WHERE  a.answer_id=? AND b.answer_id=? ";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, userId);
+			pmt.setInt(2, userId);
 		}
 		try {
 			ResultSet rs = null;
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, userId);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
 			   OnlineQuestion question=new OnlineQuestion();
@@ -171,7 +174,7 @@ public class OperatorOnline {
 		return result;
 	}
 	/*
-	 *获取学生某个所在班级的提问
+	 *获取学生或老师某个所在班级的提问
 	 */
 	public static List<OnlineQuestion> getClassOnlineQuestion(int classId) throws Exception{
 		Connection conn = null;
