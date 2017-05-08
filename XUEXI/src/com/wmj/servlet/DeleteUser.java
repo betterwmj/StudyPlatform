@@ -8,24 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.Teachers;
 import com.wmj.dao.OperatorUser;
-import com.wmj.util.JSONUtil;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class UpdateTeacher
+ * Servlet implementation class DeleteUser
  */
-@WebServlet("/UpdateTeacher")
-public class UpdateTeacher extends HttpServlet {
+@WebServlet("/DeleteUser")
+public class DeleteUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateTeacher() {
+    public DeleteUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,36 +32,15 @@ public class UpdateTeacher extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		JSONObject json = null;
-		try {
-			json = JSONUtil.parse(request);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("无效的参数")).toString());
-		}
-		String teacher_number = json.getString("teacher_number");
-		String realName = json.getString("realName");
-		String password = json.getString("password");
-		int teacherID=json.getInt("teacherID");
-		Teachers teacher=new Teachers();
-		teacher.setUserID(teacherID);
-		teacher.setTeacher_number(teacher_number);
-		teacher.setRealName(realName);
-		teacher.setPassword(password);
-		System.out.print(teacher);
+		String typeString= request.getParameter("type");
+		int type =Integer.parseInt(typeString);
+		String userID= request.getParameter("userID");
+		int userId =Integer.parseInt(userID);
 		boolean resultCode;
 		try {
-			resultCode = OperatorUser.updateTeacher(teacher);
+			resultCode = OperatorUser.deleteUser(type, userId);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(resultCode);
@@ -76,7 +52,14 @@ public class UpdateTeacher extends HttpServlet {
 			result.setMessage(e.getMessage());
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		}
-    	
 	}
-	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
 }

@@ -11,6 +11,10 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
   vm.userResult =null;
   vm.isStudent =true;
   vm.isTeacher =false;
+  vm.userinfo =null;
+  vm.isShow =false;
+  vm.isShow2 =false;
+  vm.isShow3 =false;
   vm.types = [
 	    {label:"学生",value:0},
 	    {label:"老师",value:1},
@@ -67,22 +71,34 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
 	  
   }
   vm.addStudent =async function(){
-	  let result= await http.post("StudentRegister",
-	  $httpParamSerializerJQLike({
-		  school_number:vm.school_number,
-          realName:vm.studentRealName,
-        }),
-        {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        });
-	  if(result ===true){
-		  vm.getUser();
-		  alert("添加学生成功");
-	  }
-	  
+	   let userResult = await http.get("GetUserInfoByName",{user_number:vm.school_number,type:0});
+	   if(userResult !== null ){
+		   http.alert({
+				parent:$element,content:"改学号已存在"
+		   });
+	  }else{
+		  let result= await http.post("StudentRegister",
+		  $httpParamSerializerJQLike({
+			  school_number:vm.school_number,
+	          realName:vm.studentRealName,
+	        }),
+	        {
+	          'Content-Type': 'application/x-www-form-urlencoded'
+	        });
+		  if(result ===true){
+			  vm.getUser();
+			  alert("添加学生成功");
+		  }
+	  }	  
   }
   vm.addTeacher =async function(){
-	  let result= await http.post("TeacherRegister",
+	  let userResult = await http.get("GetUserInfoByName",{user_number:vm.teacher_number,type:1});
+	   if(userResult !== null ){
+		   http.alert({
+				parent:$element,content:"改教工号已存在"
+		   });
+	  }else{
+		  let result= await http.post("TeacherRegister",
 		  $httpParamSerializerJQLike({
 			  teacher_number:vm.teacher_number,
 			  realName:vm.teacherRealName,
@@ -94,8 +110,136 @@ function controller($scope,$element,$state,$cookies,http,$httpParamSerializerJQL
 			  alert("添加老师成功");
 			  vm.getUser();
 		  }
+	  }
     }
-   
+  vm.edit = function(user){
+	  vm.userinfo = user;  
+	  if( vm.currentType.value === 0){
+		  vm.isShow =true;
+		  vm.isShow2 =true;
+		  vm.isShow3 =false;
+	  }else{
+		  vm.isShow =false;
+		  vm.isShow2 =true;
+		  vm.isShow3 =true;
+	  }
+	  vm.style={
+          width:"400px",
+          top:"30%",
+          left:"40%",
+	      border:"1px solid #888",
+	      "box-shadow":"1px 1px 10px black",
+	      padding: "10px",
+	      "font-size": "12px",
+	      position: "absolute",
+	      "text-align": "center",
+	      "background": "#fff",
+	       "z-index": 11,
+	      "border-radius":"1px",
+	  }
+	  var popLayer = document.getElementById('popLayer');
+      popLayer.style.width = document.body.clientWidth+"px" ;//浏览器工作区域内页面宽度
+      popLayer.style.height = document.body.clientHeight+"px" ;
+		  
+  }
+  vm.updateStudent = function(){
+	  updateStudentInfo(vm.userinfo);
+	  vm.isShow =false;
+	  vm.isShow2 =false; 
+  }
+  vm.dismiss = function(){
+	  vm.isShow =false;
+	  vm.isShow2 =false;
+	  vm.isShow3 =false;
+	  vm.getUser();
+  }
+  vm.updateTeacher = function(){
+	  updateTeacherInfo(vm.userinfo);
+	  vm.isShow2 =false;
+	  vm.isShow3 =false;
+  }
+  async function updateStudentInfo(userinfo){
+	
+	  try{
+		  let data={
+				"school_number" :userinfo.school_number,
+				"realName" :userinfo.realName,
+				"password" :userinfo.password,
+				"school"   :userinfo.school,
+				"telephone":userinfo.telephone,
+				"studentID":userinfo.userID		
+		  };
+		  let result= await http.post("UpdateStudent",data);
+		  if(result == true){
+				http.alert({
+					parent:$element,content:"修改成功"
+				});
+		  }else{
+				http.alert({
+					parent:$element,content:"修改失败"
+				});
+				vm.getUser();
+		  } 
+		}catch (error) {
+			http.alert({
+				parent:$element,content:"更新信息异常"
+			});
+	   }
+  } 
+  async function updateTeacherInfo(userinfo){
+	    try{
+			let data={
+				"teacher_number":userinfo.teacher_number,
+				"realName" :userinfo.realName,
+				"password" :userinfo.password,
+				"teacherID":userinfo.userID
+			}
+			let result = await http.post("UpdateTeacher",data);
+			if(result == true){
+				http.alert({
+					parent:$element,content:"修改成功"
+				});
+			}else{
+				http.alert({
+					parent:$element,content:"修改失败"   
+				});
+				 vm.getUser();
+			  } 
+			}catch (error) {
+				http.alert({
+					parent:$element,content:"更新信息异常"
+				});
+		   }
+		
+  } 
+  vm.deleteUser= async function(user){  
+	  if(delDialog()==true){
+		  let result= await http.get("DeleteUser",{
+			    type: vm.currentType.value,
+			    userID:user.userID
+		  });
+		  if(result == true){
+				http.alert({
+					parent:$element,content:"删除成功"
+				});
+				vm.getUser();
+		  }else{
+				http.alert({
+					parent:$element,content:"删除失败"
+				});
+				vm.getUser();
+		  } 
+	  }  
+	  
+  } 
+  function delDialog() {
+	  var msg = "您真的确定要删除吗？\n\n请确认！";
+	  if (confirm(msg)==true){
+		  return true;
+	  }else{
+	    return false;
+	 }
+  }
 }
 
   

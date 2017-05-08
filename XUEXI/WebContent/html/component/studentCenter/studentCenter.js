@@ -41,14 +41,12 @@ function controller($scope,$element,$state,$cookies,http){
 //		  return result;
 //		  $scope.$applyAsync(null);
 //	  }
-
-	  
 		vm.updateinfo=async function(){
 				try {
 					let data={
 						"school_number" :vm.userinfo.school_number,
 						"realName" :vm.userinfo.realName,
-						"password" :vm.userinfo.pass,
+						"password" :vm.userinfo.password,
 						"school"   :vm.userinfo.school,
 						"telephone":vm.userinfo.telephone,
 						"studentID":vm.userinfo.userID		
