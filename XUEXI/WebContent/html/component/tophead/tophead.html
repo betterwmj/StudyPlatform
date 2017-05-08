@@ -3,6 +3,7 @@
     <span ng-if="$ctrl.userInfo.type === '0'">学生:</span>
     <span ng-if="$ctrl.userInfo.type === '1'">教师:</span>
     <span ng-bind="$ctrl.userInfo.teacher_number" ng-if="$ctrl.userInfo.type === '1'"></span>
+    <span ng-bind="$ctrl.userInfo.school_number" ng-if="$ctrl.userInfo.type === '0'"></span>
     <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
     <md-button class="md-raised" ng-click="$ctrl.logout()">退出登录</md-button>
 </div>
