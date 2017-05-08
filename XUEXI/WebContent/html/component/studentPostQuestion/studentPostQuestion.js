@@ -3,10 +3,10 @@ export let name = "studentPostQuestion";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/studentPostQuestion/studentPostQuestion.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$uibModal){
+function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.$onInit = init;
   vm.postQuestion = postQuestion;
@@ -16,14 +16,24 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
   vm.currSubject = null;
   vm.currTeacher = null;
   async function init(){
-    let userInfo = $cookies.getObject("userInfo");
-    let subjectTeacherData = await http.get("GetAllSubject");
-    vm.subjectList = dataGroup(subjectTeacherData);
-    vm.currSubject = vm.subjectList[0];
-    vm.currTeacher = vm.currSubject.teacherList[0];
-    $scope.$watch("$ctrl.currSubject",function(){
-      vm.currTeacher = vm.currSubject.teacherList[0];
-    });
+    try {
+      let userInfo = $cookies.getObject("userInfo");
+      let subjectTeacherData = await http.get("GetAllSubject");
+      vm.subjectList = dataGroup(subjectTeacherData);
+      vm.currSubject = vm.subjectList[0].SubjectID;
+      vm.teacherList = vm.subjectList[0].teacherList;
+      vm.currTeacher = vm.teacherList[0].teacherId;
+      $scope.$watch("$ctrl.currSubject",function(){
+        vm.teacherList = vm.subjectList.find( function(item){
+          return item.SubjectID === vm.currSubject
+        }).teacherList;
+        vm.currTeacher = vm.teacherList[0].teacherId;
+      });
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"初始化了页面失败"
+      });
+    }
   }
 
   async function postQuestion(){
@@ -35,13 +45,17 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       title:vm.title,
       content:vm.content,
       studentId:userInfo.id,
-      teacherID:vm.currTeacher.teacherId
+      teacherID:vm.currTeacher
     };
     try {
       let result = await http.post("PostStudentQuestion",question);
-      makeDialog("提交成功");
+      http.alert({
+        parent:$element,content:"提交成功"
+      });
     } catch (error) {
-      makeDialog("提交问题失败");
+      http.alert({
+        parent:$element,content:"提交问题失败"
+      });
     }
   }
 
@@ -50,24 +64,34 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       vm.title = vm.title.trim();
       vm.content = vm.content.trim();
       if( vm.title === "" ){
-        makeDialog("请输入标题");
+        http.alert({
+          parent:$element,content:"请输入标题"
+        });
         return false;
       }
       if( vm.title.length < 5 ){
-        makeDialog("标题不能少于五个字");
+        http.alert({
+          parent:$element,content:"标题不能少于五个字"
+        });
         return false;
       }
       if( vm.content === "" ){
-        makeDialog("请输入内容");
+        http.alert({
+          parent:$element,content:"请输入内容"
+        });
         return false;
       }
       if( vm.content.length < 5 ){
-        makeDialog("标题不能少于五个字");
+        http.alert({
+          parent:$element,content:"标题不能少于五个字"
+        });
         return false;
       }
       return true;
     } catch (error) {
-      makeDialog("数据检查异常");
+      http.alert({
+        parent:$element,content:"数据检查异常"
+      });
       return false;
     }
   }
@@ -94,15 +118,5 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
       });
     });
     return groupList;
-  }
-
-  function makeDialog(text){
-    $uibModal.open({
-      animation: true,
-      component: 'commonDialog',
-      resolve: {
-        content:()=>{ return text;}
-      }
-    });
   }
 }
