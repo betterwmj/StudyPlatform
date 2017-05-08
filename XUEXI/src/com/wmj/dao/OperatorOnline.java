@@ -170,5 +170,45 @@ public class OperatorOnline {
 		}
 		return result;
 	}
-
+	/*
+	 *获取学生某个所在班级的提问
+	 */
+	public static List<OnlineQuestion> getClassOnlineQuestion(int classId) throws Exception{
+		Connection conn = null;
+		List<OnlineQuestion> list = new ArrayList<OnlineQuestion>();
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		sql ="select a.* from online_question as a, teacherclass_relation as b where a.answer_id = b.teacherId and b.classID =?";
+		try {
+			ResultSet rs = null;
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, classId);
+			rs = pmt.executeQuery();
+			 while (rs.next()) { 
+			   OnlineQuestion question=new OnlineQuestion();
+			   question.setId(rs.getInt("id"));
+			   question.setStudentId(rs.getInt("student_id"));
+			   question.setQuestionTitle(rs.getString("questiontitle"));
+			   question.setQuestionContent(rs.getString("questioncontent"));
+			   question.setAnswerId(rs.getInt("answer_id"));
+			   question.setCreateTime(rs.getTimestamp("createtime"));
+               list.add(question);
+	         }
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+	return list;
+   }
 }
