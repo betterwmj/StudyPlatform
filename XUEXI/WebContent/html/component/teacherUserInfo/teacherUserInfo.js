@@ -37,7 +37,6 @@ function controller($scope,$element,$state,$cookies,http){
 				"teacher_number" :vm.userInfo.teacher_number,
 				"realName" :vm.userInfo.realName,
 				"password" :vm.userInfo.password,
-				"subjectID":vm.currentSubjectName.SubjectID,
 				"teacherID":vm.userInfo.userID
 			}
 			let result = await http.post("UpdateTeacher",data);

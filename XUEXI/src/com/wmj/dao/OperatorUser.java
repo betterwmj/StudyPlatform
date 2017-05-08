@@ -382,7 +382,7 @@ public class OperatorUser {
 	return list;
  }
 	/*
-	 * 管理员获取所有老师信息
+	 * 管理员所有老师信息
 	 */
 	public static List<Teachers> getTeachers() throws Exception{
 		Connection conn = null;
@@ -419,4 +419,37 @@ public class OperatorUser {
 		}
 	return list;
  }
+	//管理员删除老师信息
+	public static boolean deleteUser(int type, int userId) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			String sql ="";
+			if(type == 0)
+               sql="delete from students where userID=?";
+			else
+			   sql="delete from teachers where userID=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setInt(1, userId);
+			if(pmt.executeUpdate()>0)
+			   result = true;
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return result;
+	}
 }
