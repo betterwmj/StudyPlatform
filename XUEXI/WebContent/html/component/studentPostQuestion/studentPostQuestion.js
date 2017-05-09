@@ -3,10 +3,10 @@ export let name = "studentPostQuestion";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/studentPostQuestion/studentPostQuestion.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$uibModal",controller]
+    controller:["$scope","$element","$state",'$cookies',"http",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$uibModal){
+function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.$onInit = init;
   vm.postQuestion = postQuestion;
@@ -62,7 +62,7 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
         return false;
       }
       if( vm.content.length < 5 ){
-        makeDialog("标题不能少于五个字");
+        makeDialog("内容不能少于五个字");
         return false;
       }
       return true;
@@ -97,12 +97,8 @@ function controller($scope,$element,$state,$cookies,http,$uibModal){
   }
 
   function makeDialog(text){
-    $uibModal.open({
-      animation: true,
-      component: 'commonDialog',
-      resolve: {
-        content:()=>{ return text;}
-      }
-    });
+	  http.alert({
+          parent:$element,content:text
+      });
   }
 }

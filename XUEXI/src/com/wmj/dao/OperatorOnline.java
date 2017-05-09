@@ -188,11 +188,13 @@ public class OperatorOnline {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql ="select a.* from online_question as a, teacherclass_relation as b where a.answer_id = b.teacherId and b.classID =?";
+		sql ="select a.* from online_question as a, teacherclass_relation as b,student_class_relationship as c "
+      +" where a.answer_id = b.teacherId and a.student_id= c.studentid and b.classID =? and c.classid =?";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, classId);
+			pmt.setInt(2, classId);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
 			   OnlineQuestion question=new OnlineQuestion();
