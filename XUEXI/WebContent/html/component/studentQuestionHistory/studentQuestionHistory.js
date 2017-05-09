@@ -7,14 +7,28 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http){
-	let vm = this;
-  vm.$onInit = async function(){
-    try {
-      vm.questionList = await http.get("GetStudentQuestion");
-    } catch (error) {
-      http.alert({
-        parent:$element,content:"获取历史数据失败"
-      });
-    }
-  };
+   let vm = this;
+   vm.questionsList=null;
+   vm.$onInit = async function(){
+	 getTeacherQuestion();
+  }
+  async function  getTeacherQuestion(){
+		try{	
+			    let result = await http.get("GetStudentQuestion");
+				vm.questionsList = result;
+				vm.questionsList.forEach( async (item)=>{
+				   item.createTime =new Date(item.createTime.time);
+				   let studentInfo = await http.get("GetStudents",{
+						userID:item.studentId
+				   });
+				   if(studentInfo.length!==0)
+				      item.studentName =studentInfo[0].realName;
+		        });
+		  }catch (error) {
+		      http.alert({
+		          parent:$element,content:"获取历史数据失败"
+		        });
+		  }
+			
+	   }
 }

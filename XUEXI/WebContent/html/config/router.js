@@ -196,6 +196,9 @@ export function routerConfig($stateProvider){
 			{
 				name:"student.onlineQuestion",
 				url: '/onlineQuestion',
+				params:{
+					currentClass:null
+				},
 				views:{
 					"head@":{
 						component:"tophead"
@@ -220,6 +223,26 @@ export function routerConfig($stateProvider){
 					},
 					"content@":{
 						component:"studentPostQuestion"
+					}
+				}
+			},
+			{
+				name:"student.studentOnlineAnswerDetail",
+				url: '/studentOnlineAnswerDetail',
+				params:{
+					onlineQuestionsDetail:null,
+					currentClass:null,
+					isHistroy:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"studentOnlineAnswerDetail"
 					}
 				}
 			},

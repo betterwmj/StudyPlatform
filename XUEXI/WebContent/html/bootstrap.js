@@ -45,6 +45,8 @@ import teacherOnlineAnswerDetail from "./component/teacherOnlineAnswerDetail/tea
 import studentHomeworkDetail from "./component/studentHomeworkDetail/studentHomeworkDetail.js";
 import studentOnlineNavigation from "./component/studentOnlineNavigation/studentOnlineNavigation.js";
 import studentPostQuestion from "./component/studentPostQuestion/studentPostQuestion.js";
+
+import studentOnlineAnswerDetail from "./component/studentOnlineAnswerDetail/studentOnlineAnswerDetail.js";
 import studentQuestionHistory from "./component/studentQuestionHistory/studentQuestionHistory.js";
 
 import adminCenter from "./component/adminCenter/adminCenter.js";
@@ -104,7 +106,7 @@ studentHomeworkResultDetail(app);
 studentOnlineNavigation(app);
 studentPostQuestion(app);
 studentQuestionHistory(app);
-
+studentOnlineAnswerDetail(app);
 adminCenter(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
 
