@@ -10,22 +10,22 @@
       <md-card-header-text>试卷列表</md-card-header-text>
     </md-card-header>
     <md-card-content>
-      <md-list flex>
-        <div ng-repeat="paper in $ctrl.papers">
-          <md-list-item >
+      <table>
+        <tr ng-repeat="paper in $ctrl.papers" layout="row">
+          <td flex="60">
             <md-button class="md-raised" 
               ui-sref="teacher.paperDetail({testpaperID:paper.testpaperID,testName:paper.testName})">
               {{paper.testName}} 
             </md-button>
-            <md-button class="md-raised" ng-if="paper.status === 0" ui-sref="teacher.register" 
+          </td>
+          <td>
+            <md-button class="md-raised" ng-if="paper.status === 0"
               ng-click="$ctrl.publishPaper(paper)">发布</md-button>
-            <span ng-if="paper.status === 1">已发布</span>
             <md-button class="md-raised" ng-if="paper.status === 1"
               ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName})">查看</md-button>
-          </md-list-item>
-          <md-divider></md-divider>
-        </div>
-      </md-list>
+          </td>
+        </tr>
+      </table>
     </md-card-content>
   </md-card>
 </md-content>

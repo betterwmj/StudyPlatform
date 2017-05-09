@@ -8,6 +8,7 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
     post:post,
     get:get,
     alert:alert,
+    confirm:confirm,
     wait:wait
   };
 
@@ -83,6 +84,23 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
       .ok(okBtn)
       .targetEvent(event);
     return $mdDialog.show(alertDialog);
+  }
+  
+  function confirm(config){
+    let parentEle = config.parent;
+    let title = config.title || "确认信息";
+    let content = config.content;
+    let okBtn = config.okBtn || "确定";
+    let event = config.event || null;
+    let confirmDialog = $mdDialog.confirm()
+      .parent(parentEle)
+      .clickOutsideToClose(false)
+      .title(title)
+      .textContent(content)
+      .ok(okBtn)
+      .cancel("取消")
+      .targetEvent(event);
+    return $mdDialog.show(confirmDialog);
   }
 
   function wait(parent){

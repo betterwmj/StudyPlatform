@@ -14,15 +14,20 @@ function controller($scope,$element,$state,$cookies,http){
   vm.content = "";
   vm.subjectList = [];
   vm.currSubject = null;
+  vm.currSubjectId = null;
   vm.currTeacher = null;
   async function init(){
     let userInfo = $cookies.getObject("userInfo");
     let subjectTeacherData = await http.get("GetAllSubject");
     vm.subjectList = dataGroup(subjectTeacherData);
     vm.currSubject = vm.subjectList[0];
-    vm.currTeacher = vm.currSubject.teacherList[0];
+    vm.currSubjectId = vm.currSubject.SubjectID;
+    vm.currTeacher = vm.currSubject.teacherList[0].teacherId;
     $scope.$watch("$ctrl.currSubject",function(){
-      vm.currTeacher = vm.currSubject.teacherList[0];
+      vm.currSubject = vm.subjectList.find(function(item){
+        return item.SubjectID === vm.currSubject.SubjectID;
+      });
+      vm.currTeacher = vm.currSubject.teacherList[0].teacherId;;
     });
   }
 
@@ -35,13 +40,15 @@ function controller($scope,$element,$state,$cookies,http){
       title:vm.title,
       content:vm.content,
       studentId:userInfo.id,
-      teacherID:vm.currTeacher.teacherId,
-      subjectID:vm.currSubject.SubjectID
+      teacherID:vm.currTeacher,
+      subjectID:vm.currSubjectId
     };
     try {
       let result = await http.post("PostStudentQuestion",question);
       http.alert({
           parent:$element,content:"提交成功"
+      }).then(function(){
+        $state.go("student.studentQuestionHistory");
       });
     } catch (error) {
     

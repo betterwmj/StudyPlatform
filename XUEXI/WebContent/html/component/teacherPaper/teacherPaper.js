@@ -23,11 +23,18 @@ function controller($scope,$element,$state,$cookies,http){
   vm.currentSubject = null;
   vm.subjectlist =null;
   vm.$onInit = async function(){
-    vm.subjectlist = await http.get("GetTeacherSubject");
-    if( vm.subjectlist.length !== 0){
-      vm.currentSubject = vm.subjectlist[0].SubjectID;
-      vm.getQuestionByType();
-    }  
+    try {
+      vm.subjectlist = await http.get("GetTeacherSubject");
+      if( vm.subjectlist.length !== 0){
+        vm.currentSubject = vm.subjectlist[0].SubjectID;
+        vm.getQuestionByType();
+      }  
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"初始化页面异常"
+      });
+    }
+    
   }
   vm.paper = {
     subjectId :null,
@@ -38,37 +45,32 @@ function controller($scope,$element,$state,$cookies,http){
     vm.msg = "";
     let count = vm.paper.papertitles.length;
     let totalScore = 0;
-    vm.paper.subjectId = vm.currentSubject.SubjectID;
+    vm.paper.subjectId = vm.currentSubject;
     vm.paper.papertitles.forEach((item)=>{
       totalScore += item.score;
     });
     if( count === 0 || totalScore === 0 ){
-      $uibModal.open({
-        animation: true,
-        component: 'commonDialog',
-        resolve: {
-          content:()=>{ return "请选择题目且合理配置试卷分数";}
-        }
+      http.alert({
+        parent:$element,content:"请选择题目且合理配置试卷分数"
       });
       return;
     }
-    let dialog = $uibModal.open({
-      animation: true,
-      component: 'commonDialog',
-      resolve: {
-        content:()=>{ return "确定创建试卷?共"+count+"道题,共"+totalScore+"分";}
-      }
+    let dialog = http.confirm({
+        parent:$element,content:"确定创建试卷?共"+count+"道题,共"+totalScore+"分"
     });
-    dialog.result.then(async function(){
+    dialog.then(async function(){
       try {
-        let result = await postPager();
+        let result = await http.post("CreatePaper",vm.paper);
+        http.alert({
+          parent:$element,content:"创建试卷成功"
+        }).then(function(){
+          $state.go("teacher.publishPaper");
+        },function(){
+          $state.go("teacher.publishPaper");
+        });
       } catch (error) {
-        $uibModal.open({
-          animation: true,
-          component: 'commonDialog',
-          resolve: {
-            content:()=>{ return "试卷创建失败";}
-          }
+        http.alert({
+          parent:$element,content:"创建试卷失败"
         });
       }
     },function(){
@@ -85,7 +87,12 @@ function controller($scope,$element,$state,$cookies,http){
 	    let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
 	  }
   }
-  vm.pageChanged = function(){
+  vm.pageChanged = function(step){
+    let pageCount = Math.ceil(vm.allQuestion.length/vm.pageItem);
+    if( vm.currentPage + step <= 0 || vm.currentPage + step > pageCount ){
+      return;
+    }
+    vm.currentPage = vm.currentPage + step ;
     getData();
   };
 
@@ -121,32 +128,6 @@ function controller($scope,$element,$state,$cookies,http){
         item.score = find.score;
       }
     });
-  }
-
-  async function postPager(){
-    try {
-     
-      let result = await http.post("CreatePaper",vm.paper);
-      if( result === true ){
-          let dialog = $uibModal.open({
-            animation: true,
-            component: 'commonDialog',
-            resolve: {
-              content:()=>{ return "创建试卷成功";}
-            }
-          });
-          dialog.result.then(function(){
-            $state.go("teacher.publishPaper");
-          },function(){
-            $state.go("teacher.publishPaper");
-          });
-      }else{
-        throw "创建试卷失败"
-      }
-    } catch (error) {
-      console.log(error);
-      throw "创建试卷失败"
-    }
   }
 
   async function getQuestions(subjectId,value){

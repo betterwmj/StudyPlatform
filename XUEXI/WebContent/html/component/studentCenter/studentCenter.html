@@ -45,16 +45,13 @@
             <div ng-message="required">电话号码</div>
           </div>
         </md-input-container>
-        <!--<md-input-container class="md-block" flex-gt-sm>
-          <label>教授班级</label>
-          <md-select ng-model="size">
-            <md-option ng-repeat="item in $ctrl.classes track by $index" value="{{size}}">
-              <span ng-bind="item.classes.className"></span>
-              <span ng-bind="item.subjectName"></span>
-            </md-option>
-          </md-select>
-        </md-input-container>-->
       </form>
+      <div>
+        <p>所属班级</p>
+        <span ng-repeat="item in $ctrl.classes">
+          {{item.className}}&nbsp;&nbsp;
+        </span>
+      </div>
     </md-card-content>
     <md-card-footer>
       <md-button class="md-raised md-primary" ng-click="$ctrl.updateinfo()">确认修改</md-button>

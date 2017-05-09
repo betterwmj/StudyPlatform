@@ -45,7 +45,7 @@
                   <p>D.<span ng-bind="question.optionD"></span>&nbsp;&nbsp;</p>
                   <p>正确答案:<span ng-bind="question.answer"></span></p>
                   <div layout="row">
-                    <md-checkbox ng-model="question.isChecked" ng-click="$ctrl.append(question)" aria-label="check question"></md-checkbox>
+                    <md-checkbox ng-model="question.isChecked" ng-change="$ctrl.append(question)" aria-label="check question"></md-checkbox>
                     <md-input-container>
                       <label >分数:</label>
                       <input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)" required>
@@ -57,7 +57,18 @@
                 <p ng-bind="question.title"></p>
                 <p ng-bind="question.answer"></p>
                 <div layout="row">
-                  <md-checkbox ng-model="question.isChecked" ng-click="$ctrl.append(question)" aria-label="check question"></md-checkbox>
+                  <md-checkbox ng-model="question.isChecked" ng-change="$ctrl.append(question)" aria-label="check question"></md-checkbox>
+                  <md-input-container>
+                    <label >分数:</label>
+                    <input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)" required>
+                  </md-input-container>
+                </div>
+            </div>
+            <div ng-if="$ctrl.currentType === 3" >
+                <p ng-bind="question.title"></p>
+                <p ng-bind="question.answer"></p>
+                <div layout="row">
+                  <md-checkbox ng-model="question.isChecked" ng-change="$ctrl.append(question)" aria-label="check question"></md-checkbox>
                   <md-input-container>
                     <label >分数:</label>
                     <input type="number" ng-model="question.score" ng-change="$ctrl.questionScoreChange(question)" required>
@@ -66,10 +77,8 @@
             </div>
           </md-card-content>
         </md-card>
-        <ul uib-pagination  items-per-page="$ctrl.pageItem" max-size="$ctrl.maxSize"
-            boundary-link-numbers="true" rotate="false" 
-            previous-text="上一页" next-text="下一页" 
-            total-items="$ctrl.allQuestion.length" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()"></ul>
+        <md-button class="md-raised" ng-click="$ctrl.pageChanged(-1)">上一页</md-button>
+        <md-button class="md-raised" ng-click="$ctrl.pageChanged(1)">下一页</md-button>
     </md-card-content>
     <md-card-footer>
       <md-button class="md-raised md-primary" ng-click="$ctrl.createPager()">创建试卷</md-button>

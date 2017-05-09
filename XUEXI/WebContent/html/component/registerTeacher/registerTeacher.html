@@ -1,38 +1,48 @@
-<div>
-  <div class="box top-return">
-    <span>返回登录页面</span>
-    <a ui-sref="login" class="btn btn-default">返回</a>
-  </div>
-  <form class="box">
-    <div class="form-group">
-      <label >用户名</label><span ng-bind="errorMsg.teacher_number"></span>
-      <div >
-        <input type="text" class="form-control" placeholder="用户名" ng-model="$ctrl.userInfo.teacher_number">
-      </div>
-    </div>
-    <div class="form-group">
-      <label >真实姓名</label><span ng-bind="errorMsg.realName"></span>
-      <div >
-        <input type="text" class="form-control" placeholder="真实姓名" ng-model="$ctrl.userInfo.realName">
-      </div>
-    </div>
-    <div class="form-group">
-      <label >密码</label><span ng-bind="errorMsg.password"></span>
-      <div >
-        <input type="password" class="form-control" placeholder="密码" ng-model="$ctrl.userInfo.password">
-      </div>
-    </div>
-    <div class="form-group">
-      <label >确认密码</label><span ng-bind="errorMsg.rePassword"></span>
-      <div >
-        <input type="password" class="form-control" placeholder="确认密码" ng-model="$ctrl.userInfo.rePassword">
-      </div>
-    </div>
-     
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="button" class="btn btn-default" ng-click="$ctrl.register()">注册</button>
-      </div>
-    </div>
-  </form>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">返回登录页面</span>
+        <md-button class="md-raised" flex="20" ui-sref="login">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>注册信息</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <form name="registerForm">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>用户名</label>
+          <input type="text" name="teacher_number" ng-model="$ctrl.userInfo.teacher_number" required>
+          <div ng-messages="registerForm.teacher_number.$error">
+            <div ng-message="required">请输入用户名</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>真实姓名</label>
+          <input type="text" name="realName" ng-model="$ctrl.userInfo.realName" required>
+          <div ng-messages="registerForm.realName.$error">
+            <div ng-message="required">请输入真实姓名</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>密码</label>
+          <input type="password" name="password" ng-model="$ctrl.userInfo.password" required>
+          <div ng-messages="registerForm.password.$error">
+            <div ng-message="required">请输入密码</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>确认密码</label>
+          <input type="password" name="rePassword" ng-model="$ctrl.userInfo.rePassword" required>
+          <div ng-messages="registerForm.rePassword.$error">
+            <div ng-message="required">请输入密码</div>
+          </div>
+        </md-input-container>
+      </form>
+    </md-card-content>
+    <md-card-footer>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.register()">注册</md-button>
+    </md-card-footer>
+  </md-card>
+</md-content>
