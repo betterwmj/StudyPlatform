@@ -1,50 +1,22 @@
-<md-content>
-  <md-card>
-    <md-card-content layout="row">
-        <span flex="80">学生提问</span>
-        <md-button class="md-raised" flex="20" ui-sref="student.question">返回</md-button>
-    </md-card-content>
-  </md-card>
-  <md-card>
-    <md-card-header>
-      <md-card-header-text>提问信息</md-card-header-text>
-    </md-card-header>
-    <md-card-content>
-      <form name="question">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>科目</label>
-          <md-select ng-model="$ctrl.currSubject">
-            <md-option ng-repeat="subject in $ctrl.subjectList" ng-value="subject.SubjectID">
-              {{subject.SubjectName}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>教师</label>
-          <md-select ng-model="$ctrl.currTeacher">
-            <md-option ng-repeat="teacher in $ctrl.teacherList" ng-value="teacher.teacherId">
-              {{teacher.teacherName}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>标题</label>
-          <input type="text" name="title" ng-model="$ctrl.title" required>
-          <div ng-messages="question.title.$error">
-            <div ng-message="required">请输入标题</div>
-          </div>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>内容</label>
-          <textarea name="content" ng-model="$ctrl.content" required></textarea>
-          <div ng-messages="question.content.$error">
-            <div ng-message="required">请输入内容</div>
-          </div>
-        </md-input-container>
-      </form>
-    </md-card-content>
-    <md-card-footer>
-      <md-button class="md-raised md-primary" ng-click="$ctrl.postQuestion()">提交问题</md-button>
-    </md-card-footer>
-  </md-card>
-</md-content>
+<div>
+    <span>答疑</span>
+    <a ui-sref="student.question" class="btn btn-default ">返回</a>
+
+        <label>科目</label>
+        <select ng-options="subject.SubjectName for subject in $ctrl.subjectList track by subject.SubjectID" ng-model="$ctrl.currSubject">
+        </select>
+    
+        <label>教师</label>
+        <select class="form-control" ng-options="teacher.teacherName for teacher in $ctrl.currSubject.teacherList track by teacher.teacherId" ng-model="$ctrl.currTeacher">
+        </select>
+     
+      <div >
+        <label>标题</label>
+        <input type="text" placeholder="请输入标题" ng-model="$ctrl.title">
+      </div>
+      <div>
+        <label>内容</label>
+        <textarea  rows="3" ng-model="$ctrl.content"></textarea>
+      </div>
+      <button type="button" class="btn btn-danger" ng-click="$ctrl.postQuestion()">提问</button>
+</div>

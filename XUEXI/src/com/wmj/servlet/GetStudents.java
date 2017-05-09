@@ -39,8 +39,16 @@ public class GetStudents extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		String userId =request.getParameter("userID");
+		System.out.print("userId"+userId);
 		 try {
-			    List<Students> list = OperatorUser.getStudent();
+			    List<Students> list =null;
+			    if(userId !=null){
+			    	int userid = Integer.parseInt(userId);
+			    	list = OperatorUser.getStudent(userid);
+				}else{
+					list = OperatorUser.getStudent(-1);
+				}
 				ApiResult result = new ApiResult();
 				result.setCode(0);
 				result.setData(list);

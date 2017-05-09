@@ -26,8 +26,8 @@ function controller($scope,$element,$state,$cookies,http){
 			vm.classes = classes;
 		} catch (error) {
 			http.alert({
-        parent:$element,content:"加载个人信息异常"
-      });
+               parent:$element,content:"加载个人信息异常"
+            });
 		}		
 	}
 	

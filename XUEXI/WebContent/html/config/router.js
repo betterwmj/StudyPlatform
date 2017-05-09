@@ -538,8 +538,26 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.onlineanswerNavigation",
+				url: '/onlineanswerNavigation',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherOnlineAnswerNavigation"
+					},
+				}
+			},
+			{
 				name:"teacher.onlineanswer",
 				url: '/onlineanswer',
+				params:{
+					currentClass:null
+				},
 				views:{
 					"head@":{
 						component:"tophead"
@@ -556,7 +574,9 @@ export function routerConfig($stateProvider){
 				name:"teacher.onlineAnswerDetail",
 				url: '/onlineAnswerDetail',
 				params:{
-					onlineQuestionsDetail:null
+					onlineQuestionsDetail:null,
+					currentClass:null,
+					isHistroy:null
 				},
 				views:{
 					"head@":{
@@ -567,6 +587,24 @@ export function routerConfig($stateProvider){
 					},
 					"content@":{
 						component:"teacherOnlineAnswerDetail"
+					},
+				}
+			},
+			{
+				name:"teacher.onlineHistoryAnswer",
+				url: '/onlineHistoryAnswer',
+				params:{
+					
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacheronlineHistoryAnswer"
 					},
 				}
 			},

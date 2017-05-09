@@ -3,21 +3,37 @@ export let name = "onlineAnswer";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/onlineAnswer/onlineAnswer.html",
-    controller:["$scope","$element","$state",'$cookies',"http",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http){
+function controller($scope,$element,$state,$cookies,http,$stateParams){
 	let vm = this;
-	vm.onlineQuestions=null;
+	vm.questionsList=null;
+	vm.currentClass =null;
+	vm.getClassQuestion =getClassQuestion;
 	vm.$onInit = async function(){
-	    let result = await http.get("GetStudentQuestion");
-	    vm.onlineQuesions = result;
-	    console.log(result);
-	    $scope.$applyAsync(null);
-//		vm.onlineQuestions.forEach( (item)=>{
-//			item.createTime =new Date(item.createTime.time);
-//		});
-		$scope.$applyAsync(null);
-	}
-
+		let classes = await http.get("GetTeacherClasses");
+		vm.classes = classes;
+		if( $stateParams.currentClass !=null){
+			vm.currentClass = $stateParams.currentClass;
+			getClassQuestion();
+		}
+		
+    }
+    async function  getClassQuestion(){
+	    console.log(vm.currentClass);
+		let result = await http.get("GetClassQuestion",{
+			classID:vm.currentClass
+		});
+		vm.questionsList = result;
+		vm.questionsList.forEach( async (item)=>{
+		   item.createTime =new Date(item.createTime.time);
+		   let studentInfo = await http.get("GetStudents",{
+				userID:item.studentId
+		   });
+		   if(studentInfo.length!==0)
+		      item.studentName =studentInfo[0].realName;
+	    });
+     }
+  
 }

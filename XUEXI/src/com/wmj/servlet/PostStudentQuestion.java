@@ -54,15 +54,17 @@ public class PostStudentQuestion extends HttpServlet {
 		}
 		String title = json.getString("title");
 		String content = json.getString("content");
-		int sudentId=json.getInt("studentId");
+		int studentId=json.getInt("studentId");
 		int teacherID=json.getInt("teacherID");
+		int subjectID=json.getInt("subjectID");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		OnlineQuestion question=new OnlineQuestion();
-	    question.setStudentId(sudentId);
+	    question.setStudentId(studentId);
 	    question.setQuestionTitle(title);
 	    question.setQuestionContent(content);
 	    question.setAnswerId(teacherID);
 	    question.setCreateTime(time);
+	    question.setSubjectId(subjectID);
 		boolean resultCode;
 		try {
 			resultCode = OperatorOnline.insertQuestion(question);

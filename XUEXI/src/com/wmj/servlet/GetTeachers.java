@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
+import com.wmj.bean.Students;
 import com.wmj.bean.Teachers;
 import com.wmj.dao.OperatorUser;
 
@@ -37,8 +38,16 @@ public class GetTeachers extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		String userId =request.getParameter("userID");
+		System.out.print("userId"+userId);
 		 try {
-			    List<Teachers> list = OperatorUser.getTeachers();
+			    List<Teachers> list =null;
+			    if(userId !=null){
+			    	int userid = Integer.parseInt(userId);
+			    	list = OperatorUser.getTeachers(userid);
+				}else{
+					list = OperatorUser.getTeachers(-1);
+				}
 				ApiResult result = new ApiResult();
 				result.setCode(0);
 				result.setData(list);

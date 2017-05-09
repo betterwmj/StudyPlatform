@@ -16,24 +16,14 @@ function controller($scope,$element,$state,$cookies,http){
   vm.currSubject = null;
   vm.currTeacher = null;
   async function init(){
-    try {
-      let userInfo = $cookies.getObject("userInfo");
-      let subjectTeacherData = await http.get("GetAllSubject");
-      vm.subjectList = dataGroup(subjectTeacherData);
-      vm.currSubject = vm.subjectList[0].SubjectID;
-      vm.teacherList = vm.subjectList[0].teacherList;
-      vm.currTeacher = vm.teacherList[0].teacherId;
-      $scope.$watch("$ctrl.currSubject",function(){
-        vm.teacherList = vm.subjectList.find( function(item){
-          return item.SubjectID === vm.currSubject
-        }).teacherList;
-        vm.currTeacher = vm.teacherList[0].teacherId;
-      });
-    } catch (error) {
-      http.alert({
-        parent:$element,content:"初始化了页面失败"
-      });
-    }
+    let userInfo = $cookies.getObject("userInfo");
+    let subjectTeacherData = await http.get("GetAllSubject");
+    vm.subjectList = dataGroup(subjectTeacherData);
+    vm.currSubject = vm.subjectList[0];
+    vm.currTeacher = vm.currSubject.teacherList[0];
+    $scope.$watch("$ctrl.currSubject",function(){
+      vm.currTeacher = vm.currSubject.teacherList[0];
+    });
   }
 
   async function postQuestion(){
@@ -45,16 +35,18 @@ function controller($scope,$element,$state,$cookies,http){
       title:vm.title,
       content:vm.content,
       studentId:userInfo.id,
-      teacherID:vm.currTeacher
+      teacherID:vm.currTeacher.teacherId,
+      subjectID:vm.currSubject.SubjectID
     };
     try {
       let result = await http.post("PostStudentQuestion",question);
       http.alert({
-        parent:$element,content:"提交成功"
+          parent:$element,content:"提交成功"
       });
     } catch (error) {
+    
       http.alert({
-        parent:$element,content:"提交问题失败"
+          parent:$element,content:"提交问题失败"
       });
     }
   }
@@ -65,32 +57,33 @@ function controller($scope,$element,$state,$cookies,http){
       vm.content = vm.content.trim();
       if( vm.title === "" ){
         http.alert({
-          parent:$element,content:"请输入标题"
+            parent:$element,content:"请输入标题"
         });
         return false;
       }
       if( vm.title.length < 5 ){
+   
         http.alert({
-          parent:$element,content:"标题不能少于五个字"
+            parent:$element,content:"标题不能少于五个字"
         });
         return false;
       }
       if( vm.content === "" ){
         http.alert({
-          parent:$element,content:"请输入内容"
+            parent:$element,content:"请输入内容"
         });
         return false;
       }
       if( vm.content.length < 5 ){
         http.alert({
-          parent:$element,content:"标题不能少于五个字"
+            parent:$element,content:"内容不能少于五个字"
         });
         return false;
       }
       return true;
     } catch (error) {
       http.alert({
-        parent:$element,content:"数据检查异常"
+          parent:$element,content:"数据检查异常"+error
       });
       return false;
     }

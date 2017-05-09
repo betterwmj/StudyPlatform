@@ -13,7 +13,7 @@ public class JDBCUtil {
   // 数据库的用户
   private static String user = "root";
   // 数据库用户对用的密码
-  private static String password = "123456";
+  private static String password = "groovy123";
 
   static {
     try {
