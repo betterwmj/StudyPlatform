@@ -1,29 +1,22 @@
 <div>
-  <div class="box top-return">
     <span>答疑</span>
     <a ui-sref="student.question" class="btn btn-default ">返回</a>
-  </div>
-  <div class="box">
-    <form>
-      <div class="form-group">
+
         <label>科目</label>
-        <select class="form-control" ng-options="subject.SubjectName for subject in $ctrl.subjectList track by subject.SubjectID" ng-model="$ctrl.currSubject">
+        <select ng-options="subject.SubjectName for subject in $ctrl.subjectList track by subject.SubjectID" ng-model="$ctrl.currSubject">
         </select>
-      </div>
-      <div class="form-group">
+    
         <label>教师</label>
         <select class="form-control" ng-options="teacher.teacherName for teacher in $ctrl.currSubject.teacherList track by teacher.teacherId" ng-model="$ctrl.currTeacher">
         </select>
-      </div>
-      <div class="form-group">
+     
+      <div >
         <label>标题</label>
-        <input type="text" class="form-control" placeholder="请输入标题" ng-model="$ctrl.title">
+        <input type="text" placeholder="请输入标题" ng-model="$ctrl.title">
       </div>
-      <div class="form-group">
+      <div>
         <label>内容</label>
-        <textarea class="form-control" rows="3" ng-model="$ctrl.content"></textarea>
+        <textarea  rows="3" ng-model="$ctrl.content"></textarea>
       </div>
       <button type="button" class="btn btn-danger" ng-click="$ctrl.postQuestion()">提问</button>
-    </form>
-  </div>
 </div>

@@ -40,9 +40,14 @@ function controller($scope,$element,$state,$cookies,http){
     };
     try {
       let result = await http.post("PostStudentQuestion",question);
-      makeDialog("提交成功");
+      http.alert({
+          parent:$element,content:"提交成功"
+      });
     } catch (error) {
-      makeDialog("提交问题失败");
+    
+      http.alert({
+          parent:$element,content:"提交问题失败"
+      });
     }
   }
 
@@ -51,24 +56,35 @@ function controller($scope,$element,$state,$cookies,http){
       vm.title = vm.title.trim();
       vm.content = vm.content.trim();
       if( vm.title === "" ){
-        makeDialog("请输入标题");
+        http.alert({
+            parent:$element,content:"请输入标题"
+        });
         return false;
       }
       if( vm.title.length < 5 ){
-        makeDialog("标题不能少于五个字");
+   
+        http.alert({
+            parent:$element,content:"标题不能少于五个字"
+        });
         return false;
       }
       if( vm.content === "" ){
-        makeDialog("请输入内容");
+        http.alert({
+            parent:$element,content:"请输入内容"
+        });
         return false;
       }
       if( vm.content.length < 5 ){
-        makeDialog("内容不能少于五个字");
+        http.alert({
+            parent:$element,content:"内容不能少于五个字"
+        });
         return false;
       }
       return true;
     } catch (error) {
-      makeDialog("数据检查异常");
+      http.alert({
+          parent:$element,content:"数据检查异常"+error
+      });
       return false;
     }
   }
@@ -95,11 +111,5 @@ function controller($scope,$element,$state,$cookies,http){
       });
     });
     return groupList;
-  }
-
-  function makeDialog(text){
-	  http.alert({
-          parent:$element,content:text
-      });
   }
 }
