@@ -28,12 +28,12 @@ public class OperatorOnline {
 		PreparedStatement pmt = null; 
 		String sql = "";
 		if(typeId==0){
-			sql="select * from online_question where student_id =? ";
+			sql="select * from online_question where student_id =? order by createtime desc ";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, userId);
 		}else{
 			sql="SELECT DISTINCT a.* FROM online_question as a INNER JOIN  online_answer as b ON  a.id = b.online_question_id " 
-             +"WHERE  a.answer_id=? AND b.answer_id=? ";
+             +"WHERE  a.answer_id=? AND b.answer_id=? order by a.createtime desc";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, userId);
 			pmt.setInt(2, userId);
@@ -76,7 +76,7 @@ public class OperatorOnline {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-	    sql="select * from online_answer where online_question_id=?   ";
+	    sql="select * from online_answer where online_question_id=? order by answertime Asc  ";
 		
 		try {
 			ResultSet rs = null;
@@ -189,7 +189,7 @@ public class OperatorOnline {
 		PreparedStatement pmt = null; 
 		String sql = "";
 		sql ="select a.* from online_question as a, teacherclass_relation as b,student_class_relationship as c "
-      +" where a.answer_id = b.teacherId and a.student_id= c.studentid and b.classID =? and c.classid =?";
+      +" where a.answer_id = b.teacherId and a.student_id= c.studentid and b.classID =? and c.classid =? order by createtime desc";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
