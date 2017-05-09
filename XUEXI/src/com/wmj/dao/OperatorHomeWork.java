@@ -473,4 +473,38 @@ public class OperatorHomeWork {
 		    }
 		    return list;
 		  }
+	  public static boolean teacherEvaluation(int studentId,int homeWorkId,String evaluation) throws Exception {
+			
+			// 数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+			Connection conn = null;
+			try {
+				conn = JDBCUtil.getConnection();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				throw e1;
+			}
+
+			PreparedStatement pmt = null;
+			try {
+			
+				String sql = "UPDATE homework_result SET Evaluation=?"
+                +" where homeworkId=? and student_id=?";
+				pmt = JDBCUtil.getPreparedStatement(conn, sql);
+				pmt.setString(1, evaluation);
+				pmt.setInt(2, homeWorkId);
+				pmt.setInt(3, studentId);
+				if (pmt.executeUpdate() > 0) {
+					return true;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+				// 关闭连接
+				JDBCUtil.close(conn, pmt);
+			}
+			return false;
+		}
 }
