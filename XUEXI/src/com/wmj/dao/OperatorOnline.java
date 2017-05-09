@@ -90,6 +90,7 @@ public class OperatorOnline {
 			   answer.setAnswerId(rs.getInt("answer_id"));
 			   answer.setAnswer(rs.getString("answer"));
 			   answer.setAnswerTime(rs.getTimestamp("answertime"));
+			   answer.setType(rs.getInt("type"));
                list.add(answer);
 	         }
 			 
@@ -119,13 +120,14 @@ public class OperatorOnline {
 		PreparedStatement pmt = null; 
 		try {
 			
-            String sql="insert into online_question (student_id,questiontitle,questioncontent,answer_id,createtime) values(?,?,?,?,?)";
+            String sql="insert into online_question (student_id,questiontitle,questioncontent,answer_id,createtime,subject_id) values(?,?,?,?,?,?)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, question.getStudentId());
 			pmt.setString(2, question.getQuestionTitle());
 			pmt.setString(3, question.getQuestionContent());
 			pmt.setInt(4, question.getAnswerId());
 			pmt.setTimestamp(5, question.getCreateTime());
+			pmt.setInt(6, question.getSubjectId());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 		    
@@ -155,12 +157,13 @@ public class OperatorOnline {
 		PreparedStatement pmt = null; 
 		try {
 			
-            String sql="insert into online_answer (online_question_id,answer_id,answer,answertime) values(?,?,?,?)";
+            String sql="insert into online_answer (online_question_id,answer_id,answer,answertime,type) values(?,?,?,?,?)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, answers.getOnlineQuestionId());
 			pmt.setInt(2, answers.getAnswerId());
 			pmt.setString(3, answers.getAnswer());
 			pmt.setTimestamp(4, answers.getAnswerTime());
+			pmt.setInt(5, answers.getType());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 		    
@@ -189,12 +192,13 @@ public class OperatorOnline {
 		PreparedStatement pmt = null; 
 		String sql = "";
 		sql ="select a.* from online_question as a, teacherclass_relation as b,student_class_relationship as c "
-      +" where a.answer_id = b.teacherId and a.student_id= c.studentid and b.classID =? and c.classid =? order by createtime desc";
+        +" where a.answer_id = b.teacherId and a.student_id= c.studentid "
+        +"and b.subjectid =a.subject_id and b.classID =c.classid  "
+        +"and  b.classID =?  order by a.createtime desc";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, classId);
-			pmt.setInt(2, classId);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
 			   OnlineQuestion question=new OnlineQuestion();

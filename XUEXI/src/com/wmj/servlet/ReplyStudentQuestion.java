@@ -56,12 +56,14 @@ public class ReplyStudentQuestion extends HttpServlet {
 		String answer = json.getString("answer");
 		int questionID=json.getInt("questionID");
 		int answerID=json.getInt("answerID");
+		int type=json.getInt("type");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		OnlineAnswer answers=new OnlineAnswer();
 		answers.setOnlineQuestionId(questionID);
 		answers.setAnswerId(answerID);
 		answers.setAnswer(answer);;
 		answers.setAnswerTime(time);
+		answers.setType(type);
 		boolean resultCode;
 		try {
 			resultCode = OperatorOnline.insertAnswer(answers);

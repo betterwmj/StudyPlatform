@@ -1,7 +1,15 @@
-<div>
-	学生疑问
+     <md-button class="md-raised" flex="20" ui-sref="teacher.onlineanswerNavigation">返回</md-button>
+      <md-input-container class="md-block" flex-gt-sm>
+          <label>选择班级</label>
+          <md-select ng-model="$ctrl.currentClass" ng-change="$ctrl.getClassQuestion()">
+            <md-option ng-repeat="item in $ctrl.classes track by $index" ng-value="item.classes.classId">
+              <span ng-bind="item.classes.className"></span>
+            </md-option>
+          </md-select>
+     </md-input-container>
+    <div>
+	  学生疑问
            <table class="table table-striped">
-                <caption>QuestionList</caption>
                 <thead>
                     <tr>
                     <th>#</th>
@@ -10,14 +18,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="onlineQuesions in $ctrl.onlineQuesions ">
-                        <td ng-bind="onlineQuesions.studentId"></td>
-                      <!--   <td ng-bind="onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td> -->
+                    <tr ng-repeat="onlineQuesions in $ctrl.questionsList track by $index">
+                        <td ng-bind="index"></td>
+                        <td ng-bind="onlineQuesions.studentName"></td>
+                        <td ng-bind="onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td> 
                         <td> 
-                        	<a class="btn btn-default" ui-sref="teacher.onlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions})">查看详情</a>
+                        	<a class="btn btn-default" ui-sref="teacher.onlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':false})">查看详情</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-   <p ng-bind="$ctrl.msg"></p>
 </div>

@@ -56,6 +56,7 @@ public class PostStudentQuestion extends HttpServlet {
 		String content = json.getString("content");
 		int sudentId=json.getInt("studentId");
 		int teacherID=json.getInt("teacherID");
+		int subjectID=json.getInt("subjectID");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		OnlineQuestion question=new OnlineQuestion();
 	    question.setStudentId(sudentId);
@@ -63,6 +64,7 @@ public class PostStudentQuestion extends HttpServlet {
 	    question.setQuestionContent(content);
 	    question.setAnswerId(teacherID);
 	    question.setCreateTime(time);
+	    question.setStudentId(subjectID);
 		boolean resultCode;
 		try {
 			resultCode = OperatorOnline.insertQuestion(question);

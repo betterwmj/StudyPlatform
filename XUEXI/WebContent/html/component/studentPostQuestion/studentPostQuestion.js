@@ -35,7 +35,8 @@ function controller($scope,$element,$state,$cookies,http){
       title:vm.title,
       content:vm.content,
       studentId:userInfo.id,
-      teacherID:vm.currTeacher.teacherId
+      teacherID:vm.currTeacher.teacherId,
+      subjectID:vm.currSubject.SubjectID
     };
     try {
       let result = await http.post("PostStudentQuestion",question);

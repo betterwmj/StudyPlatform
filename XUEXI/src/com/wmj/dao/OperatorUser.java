@@ -344,7 +344,7 @@ public class OperatorUser {
 	/*
 	 * 管理员获取所有学生信息
 	 */
-	public static List<Students> getStudent() throws Exception{
+	public static List<Students> getStudent(int userId) throws Exception{
 		Connection conn = null;
 		List<Students> list = new ArrayList<Students>();
 		try {
@@ -356,10 +356,18 @@ public class OperatorUser {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from students";
+		if(userId ==-1){
+		    sql="select * from students";
+		    pmt=JDBCUtil.getPreparedStatement(conn, sql);
+		 
+		}else{
+			sql="select * from students where UserID=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, userId);
+		}
 		try {
 			ResultSet rs = null;
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
 				Students student=new Students();
@@ -384,7 +392,7 @@ public class OperatorUser {
 	/*
 	 * 管理员所有老师信息
 	 */
-	public static List<Teachers> getTeachers() throws Exception{
+	public static List<Teachers> getTeachers(int userId) throws Exception{
 		Connection conn = null;
 		List<Teachers> list = new ArrayList<Teachers>();
 		try {
@@ -396,10 +404,18 @@ public class OperatorUser {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from teachers";
+		if(userId ==-1){
+			sql="select * from teachers";
+		    pmt=JDBCUtil.getPreparedStatement(conn, sql);
+		 
+		}else{
+			sql="select * from teachers where userID=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, userId);
+		}
+		
 		try {
 			ResultSet rs = null;
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
 			rs = pmt.executeQuery();
 			 while (rs.next()) { 
 				Teachers teacher=new Teachers();
