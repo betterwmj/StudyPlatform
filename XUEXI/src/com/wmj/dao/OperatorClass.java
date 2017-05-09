@@ -190,7 +190,131 @@ public class OperatorClass {
 			JDBCUtil.close(conn, pmt);
 		}
 		return false;
-}
+   }
+	//学生更新班级
+   public static boolean updateStudentClassId(int studentId,int classId) throws Exception{
+		
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		try {
+				sql ="delete  from  student_class_relationship where studentid =? ";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql);
+				pmt.setInt(1, studentId);
+				
+				if(pmt.executeUpdate()>0){	
+					sql="insert into  student_class_relationship (studentid,classid) values(?,?) ";
+					pmt=JDBCUtil.getPreparedStatement(conn, sql);
+					pmt.setInt(1, studentId);
+					pmt.setInt(2, classId);
+					if(pmt.executeUpdate()>0){
+						return true;
+				     }
+			    }		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return false;
+    }
+ //老师删除班级
+   public static boolean deleteTeacherClass(int teacherId,int classId) throws Exception{
+		
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		ResultSet rs=null;
+		try {
+				sql ="select * from teacherclass_relation where subjectid+teacherId in (select subjectid+teacherId  from  teacherclass_relation where teacherId =? and classID=?)";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql);
+				pmt.setInt(1, teacherId);
+				pmt.setInt(2, classId);
+				rs =pmt.executeQuery();
+				int count=0;
+				while(rs.next()){
+					count++; 
+				}
+				System.out.print("count"+count);
+				if(count< 1 || count ==1){
+					sql ="delete  from  teacher_subject_relation where teacherid+subjectid  in (select teacherId+subjectid  from  teacherclass_relation where teacherId =? and classID=?)";
+					pmt=JDBCUtil.getPreparedStatement(conn, sql);
+					pmt.setInt(1, teacherId);
+					pmt.setInt(2, classId);
+					pmt.executeUpdate();
+				}
+				sql ="delete  from  teacherclass_relation where teacherId =? and classID=?";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql);
+				pmt.setInt(1, teacherId);
+				pmt.setInt(2, classId);
+				
+				if(pmt.executeUpdate()>0){	
+					  sql ="delete  from  classes where ClassID=?";
+					  pmt=JDBCUtil.getPreparedStatement(conn, sql);
+					  pmt.setInt(1, classId);
+					  System.out.print("ClassID"+classId);
+					  if(pmt.executeUpdate()>0){	
+						 return true;     
+				       }	    
+			    }		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return false;
+    }
+   //学生退出班级
+   public static boolean deleteStudentClass(int studentId,int classId) throws Exception{
+		
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		String sql = "";
+		try {
+				sql ="delete  from  student_class_relationship where studentid =? and classid=?";
+				pmt=JDBCUtil.getPreparedStatement(conn, sql);
+				pmt.setInt(1, studentId);
+				pmt.setInt(2, classId);
+				if(pmt.executeUpdate()>0){	
+					 return true;     
+			    }		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return false;
+   }
 	/*
 	 * 老师创建班级
 	 */
