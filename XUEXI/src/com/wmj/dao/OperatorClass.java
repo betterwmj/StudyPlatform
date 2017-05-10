@@ -205,19 +205,16 @@ public class OperatorClass {
 		PreparedStatement pmt = null; 
 		String sql = "";
 		try {
-				sql ="delete  from  student_class_relationship where studentid =? ";
-				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setInt(1, studentId);
 				
-				if(pmt.executeUpdate()>0){	
-					sql="insert into  student_class_relationship (studentid,classid) values(?,?) ";
-					pmt=JDBCUtil.getPreparedStatement(conn, sql);
-					pmt.setInt(1, studentId);
-					pmt.setInt(2, classId);
-					if(pmt.executeUpdate()>0){
-						return true;
-				     }
-			    }		
+				
+			sql="insert into  student_class_relationship (studentid,classid) values(?,?) ";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql);
+			pmt.setInt(1, studentId);
+			pmt.setInt(2, classId);
+			if(pmt.executeUpdate()>0){
+				return true;
+	        }	
+			    		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
