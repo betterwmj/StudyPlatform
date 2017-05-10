@@ -19,28 +19,38 @@ function controller($scope, $cookies,$element,$state,http,$stateParams,){
 	    vm.currentClass = $stateParams.currentClass;
 	    vm.isHistroy = $stateParams.isHistroy;
 	    getQuestionReply();
-   }
-   vm.reply=function(){
-	   vm.isShow = true;
-	   vm.msg="";
-   }
-   vm.sure=async function(){	
-	   let userInfo = $cookies.getObject("userInfo");
-	   let data = {
-		  answer:vm.answerContent,
-		  questionID:$stateParams.onlineQuestionsDetail.id,
-		  answerID:userInfo.id,
-		  type:userInfo.type
-	   };
-	   vm.isShow = true;
-	   let result= await http.post('ReplyStudentQuestion',data);
-	   if(result === true){
-		   vm.msg="回复成功";
-		   vm.isShow = false;
-		   getQuestionReply();
-	   }else{
-		   vm.msg="回复失败";
-	   }	  
+	}
+	vm.reply=function(){
+		vm.isShow = true;
+		vm.msg="";
+	}
+	vm.sure=async function(){	
+		let userInfo = $cookies.getObject("userInfo");
+		let data = {
+			answer:vm.answerContent,
+			questionID:$stateParams.onlineQuestionsDetail.id,
+			answerID:userInfo.id,
+			type:userInfo.type
+		};
+		vm.isShow = true;
+		try {
+			let result= await http.post('ReplyStudentQuestion',data);
+			if(result === true){
+				http.alert({
+					parent:$element,content:"回复成功"
+				});
+				vm.isShow = false;
+				getQuestionReply();
+			}else{
+				http.alert({
+					parent:$element,content:"回复失败"
+				});
+			}	
+		} catch (error) {
+			http.alert({
+				parent:$element,content:"回复失败"
+			});
+		}
    }
    async function getQuestionReply(){	
 	   try {
@@ -77,12 +87,10 @@ function controller($scope, $cookies,$element,$state,http,$stateParams,){
 		   }else{
 			   vm.replyList =result;
 		   }
-		   
-		    
 	   }catch (error) {
           http.alert({
-              parent:$element,content:"获取回复失败,"+error
-            });
+						parent:$element,content:"获取回复失败,"+error
+					});
           return;
 	    }
    }
@@ -92,8 +100,5 @@ function controller($scope, $cookies,$element,$state,http,$stateParams,){
 	   }else{
 		   $state.go("teacher.onlineanswer",{currentClass:vm.currentClass});
 	   }
-	   
-	   
    }
-   
 }

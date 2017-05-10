@@ -10,16 +10,17 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
 	let vm = this;
 	vm.questionsList=null;
 	vm.currentClass =null;
-	vm.getClassQuestion =getClassQuestion;
+	vm.getClassQuestion = getClassQuestion;
 	vm.$onInit = async function(){
 		let classes = await http.get("GetTeacherClasses");
 		vm.classes = classes;
 		if( $stateParams.currentClass !=null){
 			vm.currentClass = $stateParams.currentClass;
-			getClassQuestion();
+		}else{
+			vm.currentClass = vm.classes[0].classes.classId
 		}
-		
-    }
+		getClassQuestion();
+	}
     async function  getClassQuestion(){
 	    console.log(vm.currentClass);
 		let result = await http.get("GetClassQuestion",{

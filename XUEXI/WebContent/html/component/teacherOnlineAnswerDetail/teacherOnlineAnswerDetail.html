@@ -1,19 +1,33 @@
-<div>
-        <md-button class="md-raised" flex="20" ng-click="$ctrl.previousPage()" >返回</md-button>
-        <p>标题:
-        <span ng-bind="$ctrl.onlineQuesionsDetail.questionTitle"></span><br>
-        <label>提问者{{$ctrl.onlineQuesionsDetail.studentName}}:</label>
-        <span ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></span><br>
-        <p>回复:
-        <div ng-repeat="reply in $ctrl.replyList">
-            <label>{{reply.realName}}:</label>
-            <span ng-bind="reply.answer"></span>
-                                      回 复 时间<span ng-bind="reply.answerTime|date:'yyyy-MM-dd HH:mm:ss'"></span>
-        </div>
-      <button type="button" class="btn btn-default" ng-click="$ctrl.reply()">回复</button><br>
-      <div ng-show="$ctrl.isShow">
-	      <textarea rows="8" cols="35" ng-model="$ctrl.answerContent"></textarea><br>
-	      <button type="button" class="btn btn-default" ng-click="$ctrl.sure()">确认</button>
-	      <p ng-bind="$ctrl.msg"></p>
-      </div>
- </div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80"></span>
+        <md-button class="md-raised" flex="20" ng-click="$ctrl.previousPage()">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text ng-bind="$ctrl.onlineQuesionsDetail.questionTitle"></md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <label>提问者:{{$ctrl.onlineQuesionsDetail.studentName}}:</label>
+      <p ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></p>
+      <md-list>
+        <label>回复:</label>
+        <md-list-item class="md-3-line" ng-repeat="reply in $ctrl.replyList">
+          <div class="md-list-item-text">
+            <h3>{{$index+1}}.&nbsp;{{reply.answer}}</h3>
+            <h4>{{reply.realName}}</h4>
+            <p>{{reply.answerTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+          </div>
+          <md-divider ></md-divider>
+        </md-list-item>
+      </md-list>
+      <md-button class="md-raised" ng-click="$ctrl.reply()">回复</md-button>
+    </md-card-content>
+    <md-card-footer ng-show="$ctrl.isShow">
+      <textarea rows="8" cols="35" ng-model="$ctrl.answerContent"></textarea>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.sure()">确定</md-button>
+    </md-card-footer>
+  </md-card>
+</md-content>

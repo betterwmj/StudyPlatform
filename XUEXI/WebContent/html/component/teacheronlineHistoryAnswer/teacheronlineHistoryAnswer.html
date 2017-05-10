@@ -1,23 +1,26 @@
-<md-button class="md-raised" flex="20" ui-sref="teacher.onlineanswerNavigation">返回</md-button>
- <div>
-	  历史答疑
-           <table class="table table-striped">
-                <thead>
-                    <tr>
-                    <th>#</th>
-                    <th>学生</th>
-                    <th>时间</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="onlineQuesions in $ctrl.questionsList track by $index">
-                        <td ng-bind="index"></td>
-                        <td ng-bind="onlineQuesions.studentName"></td>
-                        <td ng-bind="onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td> 
-                        <td> 
-                        	<a class="btn btn-default" ui-sref="teacher.onlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':true})">查看详情</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-</div>
+<md-content>
+  <md-card>
+    <md-card-content layout="row">
+        <span flex="80">历史答疑列表</span>
+        <md-button class="md-raised" flex="20" ui-sref="teacher.onlineanswerNavigation">返回</md-button>
+    </md-card-content>
+  </md-card>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>提问信息</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-list>
+        <md-list-item class="md-3-line" ng-repeat="onlineQuesions in $ctrl.questionsList track by $index"
+          ui-sref="teacher.onlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':true})">
+          <div class="md-list-item-text">
+            <h3>{{onlineQuesions.questionTitle}}</h3>
+            <h4>{{onlineQuesions.studentName}}</h4>
+            <p>{{onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+          </div>
+          <md-divider ></md-divider>
+        </md-list-item>
+      </md-list>
+    </md-card-content>
+  </md-card>
+</md-content>

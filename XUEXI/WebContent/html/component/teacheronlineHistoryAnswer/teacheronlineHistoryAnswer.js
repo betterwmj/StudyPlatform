@@ -13,22 +13,22 @@ function controller($scope,$element,$state,$cookies,http){
 	  getTeacherQuestion();
   }
   async function  getTeacherQuestion(){
-	try{	
+		try{	
 		    let result = await http.get("GetStudentQuestion");
-			vm.questionsList = result;
-			vm.questionsList.forEach( async (item)=>{
-			   item.createTime =new Date(item.createTime.time);
-			   let studentInfo = await http.get("GetStudents",{
-					userID:item.studentId
-			   });
-			   if(studentInfo.length!==0)
-			      item.studentName =studentInfo[0].realName;
-	        });
+				vm.questionsList = result;
+				vm.questionsList.forEach( async (item)=>{
+			   	item.createTime =new Date(item.createTime.time);
+			   	let studentInfo = await http.get("GetStudents",{
+						userID:item.studentId
+			   	});
+			   	if(studentInfo.length!==0){
+						item.studentName =studentInfo[0].realName;
+					}
+				});
 	  }catch (error) {
 	      http.alert({
-	          parent:$element,content:"获取历史数据失败"
-	        });
+					parent:$element,content:"获取历史数据失败"
+				});
 	  }
-		
-   }
+	}
 }
