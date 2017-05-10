@@ -15,25 +15,17 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                <th>#</th>
-                <th>学生</th>
-                <th>时间</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="onlineQuesions in $ctrl.questionsList track by $index">
-                    <td ng-bind="index"></td>
-                    <td ng-bind="onlineQuesions.studentName"></td>
-                    <td ng-bind="onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td> 
-                    <td> 
-                        <a class="btn btn-default" ui-sref="student.studentOnlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':false})">查看详情</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <md-list flex>
+            <md-list-item class="md-3-line" ng-repeat="onlineQuesions in $ctrl.questionsList track by $index" ng-click="null"
+                ui-sref="student.studentOnlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':false})">
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{ onlineQuesions.questionTitle }}</h3>
+                    <h4>学生:{{ onlineQuesions.studentName }}</h4>
+                    <p>{{ onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss' }}</p>
+                </div>
+                <md-divider ></md-divider>
+            </md-list-item>
+        </md-list>
     </md-card-content>
   </md-card>
 </md-content>

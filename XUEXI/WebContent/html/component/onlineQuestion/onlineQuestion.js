@@ -3,14 +3,15 @@ export let name = "onlineQuestion";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/onlineQuestion/onlineQuestion.html",
-    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams","$mdColorPalette",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http,$stateParams){
+function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPalette){
 		let vm = this;
 		vm.questionsList=null;
 		vm.currentClass =null;
 		vm.getClassQuestion = getClassQuestion;
+		console.log($mdColorPalette);
 		vm.$onInit = async function(){
 				let classes = await http.get("GetAllSubject");
 				vm.classes = classes;

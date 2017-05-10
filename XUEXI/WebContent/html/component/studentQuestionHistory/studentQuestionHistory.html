@@ -11,22 +11,14 @@
     </md-card-header>
     <md-card-content>
       <md-list>
-        <md-list-item>
-          <div>
-            <a>序号</a>
-            <a>姓名</a>
-            <a>标题</a>
-            <a>时间</a>
-          </div>
-        </md-list-item>
-        <md-list-item ng-repeat="question in $ctrl.questionsList track by $index">
+        <md-list-item class="md-3-line" ng-repeat="question in $ctrl.questionsList track by $index"
+          ui-sref="student.studentOnlineAnswerDetail({'onlineQuestionsDetail':question,'currentClass':$ctrl.currentClass,'isHistroy':true})">
           <div class="md-list-item-text">
-            <a>{{$index+1}}</a>
-            <a>{{question.studentName}}</a>
-            <a>{{question.questionTitle}}</a>
-            <a>{{question.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</a>
-            <a class="btn btn-default" ui-sref="student.studentOnlineAnswerDetail({'onlineQuestionsDetail':question,'currentClass':$ctrl.currentClass,'isHistroy':true})">查看详情</a>
+            <h3>{{question.questionTitle}}</h3>
+            <h4>{{question.studentName}}</h4>
+            <p>{{question.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
           </div>
+          <md-divider ></md-divider>
         </md-list-item>
       </md-list>
     </md-card-content>

@@ -6,7 +6,7 @@ export default function root(app){
     controller:["$scope","$cookies","$element","$state","http","$stateParams",controller]
   });
 }
-function controller($scope, $cookies,$element,$state,http,$stateParams,){
+function controller($scope, $cookies,$element,$state,http,$stateParams){
 	let vm = this;
 	vm.$onInit=init;
 	vm.isShow=false;
@@ -33,41 +33,51 @@ function controller($scope, $cookies,$element,$state,http,$stateParams,){
 		  type:userInfo.type
 	   };
 	   vm.isShow = true;
-	   let result= await http.post('ReplyStudentQuestion',data);
-	   if(result === true){
-		   vm.msg="回复成功";
-		   vm.isShow = false;
-		   getQuestionReply();
-	   }else{
-		   vm.msg="回复失败";
-	   }	  
+		 try {
+			 	let result= await http.post('ReplyStudentQuestion',data);
+				if(result === true){
+					http.alert({
+						parent:$element,content:"回复成功"
+					});
+					vm.isShow = false;
+		   		getQuestionReply();
+				}else{
+					http.alert({
+						parent:$element,content:"回复失败"
+					});
+				}
+		 } catch (error) {
+			 http.alert({
+				parent:$element,content:"回复失败"
+			 });
+		 }
+	     
    }
    async function getQuestionReply(){	
-	   try {
-		   let result= await http.get('getQuestionAnswer',{questionID:vm.onlineQuesionsDetail.id});
-		   vm.replyList =result;
-		   vm.replyList.forEach( async (item)=>{
-			   item.answerTime =new Date(item.answerTime.time);
-			   if(item.type ===0){
-				   let studentInfo = await http.get("GetStudents",{
-						userID:item.answerId
-				   });
-				   if(studentInfo.length!==0)
-				      item.realName =studentInfo[0].realName;
-			   }else{
-				   let teacherInfo = await http.get("GetTeachers",{
-						userID:item.answerId
-				   });
-				   if(teacherInfo.length!==0)
-				      item.realName =teacherInfo[0].realName;
-			   }
-			   
-		    });	    
+			try {
+		   	let result= await http.get('getQuestionAnswer',{questionID:vm.onlineQuesionsDetail.id});
+				vm.replyList =result;
+				vm.replyList.forEach( async (item)=>{
+					item.answerTime =new Date(item.answerTime.time);
+					if(item.type ===0){
+						let studentInfo = await http.get("GetStudents",{
+							userID:item.answerId
+						});
+						if(studentInfo.length!==0)
+								item.realName =studentInfo[0].realName;
+					}else{
+						let teacherInfo = await http.get("GetTeachers",{
+							userID:item.answerId
+						});
+						if(teacherInfo.length!==0)
+								item.realName =teacherInfo[0].realName;
+					}
+				});	    
 	   }catch (error) {
-          http.alert({
-              parent:$element,content:"获取回复失败,"+error
-            });
-          return;
+				http.alert({
+					parent:$element,content:"获取回复失败,"+error
+				});
+				return;
 	    }
    }
    vm.previousPage =function(){
@@ -76,8 +86,5 @@ function controller($scope, $cookies,$element,$state,http,$stateParams,){
 	   }else{
 		   $state.go("student.onlineQuestion",{currentClass:vm.currentClass});
 	   }
-	   
-	   
    }
-   
 }
