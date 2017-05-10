@@ -542,11 +542,13 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.teacherHomeworkResultDetail",
-				url: '/teacherHomeworkResultDetail/{homeworkId}/{homeWorkName}/{homeworkResultID}',
+				url: '/teacherHomeworkResultDetail/{homeworkId}/{homeWorkName}/{homeworkResultID}/{studentName}/{studentId}',
 				params:{
 					homeworkId:null,
 					homeWorkName:null,
-					homeworkResultID:null
+					homeworkResultID:null,
+					studentName:null,
+					studentId:null,
 				},
 				views:{
 					"head@":{

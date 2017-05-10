@@ -48,9 +48,9 @@
       </form>
       <div>
         <p>所属班级</p>
-        <span ng-repeat="item in $ctrl.classes">
+        <md-checkbox ng-repeat="item in $ctrl.classList" ng-model="item.isCheck" aria-label="classes Checkbox" ng-change="$ctrl.updateClass(item)">
           {{item.className}}&nbsp;&nbsp;
-        </span>
+        </md-checkbox>
       </div>
     </md-card-content>
     <md-card-footer>

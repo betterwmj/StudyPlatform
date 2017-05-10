@@ -1,7 +1,7 @@
 <md-content>
   <md-card>
     <md-card-content layout="row">
-        <span flex="80">查看学生作业详情</span>
+        <span flex="80">查看学生-{{$ctrl.homework.studentName}}的作业详情</span>
         <md-button class="md-raised" flex="20"  ui-sref="teacher.teacherHomeworkResultList({homeworkId:$ctrl.homework.homeworkID,homeWorkName:$ctrl.homework.homeWorkName})">返回</md-button>
     </md-card-content>
   </md-card>
@@ -25,5 +25,9 @@
           </md-card-content>
         </md-card>
     </md-card-content>
+    <md-card-footer layout="column">
+      <textarea  rows="3" ng-model="$ctrl.evaluation" name="evaluation"></textarea>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.submitEvaluation()">提交评价</md-button>
+    </md-card-footer>
   </md-card>
 </md-content>

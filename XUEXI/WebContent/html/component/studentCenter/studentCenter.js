@@ -16,6 +16,7 @@ function controller($scope,$element,$state,$cookies,http){
 			telephone:"",
 			studentID:""
 	  };
+		vm.classList = [];
 	  vm.$onInit = async function(){
 			try {
 				let user= $cookies.getObject("userInfo");
@@ -27,20 +28,23 @@ function controller($scope,$element,$state,$cookies,http){
 					let result =await http.get("GetClassNameByClassId",{"classID":item.classId});
 					item.className=result.className;
 				});
+				vm.classList = await http.get("GetClasses");
+				vm.classList.forEach( function(itemClass){
+					let find = vm.classes.find( (ele)=>{
+						return ele.classId == itemClass.classId;
+					});
+					if( find ){
+						itemClass.isCheck = true;
+					}else{
+						itemClass.isCheck = false;
+					}
+				});
 			} catch (error) {
 				http.alert({
 					parent:$element,content:"加载个人信息异常"
 				});
 			}
 	  }
-//	  async function getClassName(classId){
-//			if(!classId){
-//				return;
-//			}
-//		  let result = await http.get("GetClassNameByClassId",{"classID":classId});
-//		  return result;
-//		  $scope.$applyAsync(null);
-//	  }
 		vm.updateinfo=async function(){
 				try {
 					let data={
@@ -66,5 +70,28 @@ function controller($scope,$element,$state,$cookies,http){
 						parent:$element,content:"修改失败"
 					});
 				}
+		}
+
+		vm.updateClass = async function(item){
+			try {
+				let data = {
+					typeId:null,studentId:vm.userinfo.userID,classId:item.classId
+				};
+				data.typeId = item.isCheck === true ? 1 : 0;
+				let result = await http.get("updateStudentClass",data);
+				if( result ){
+					http.alert({
+						parent:$element,content:"更新班级信息成功"
+					});
+				}else{
+					http.alert({
+						parent:$element,content:"更新班级信息失败"
+					});
+				}
+			} catch (error) {
+				http.alert({
+					parent:$element,content:"更新班级信息失败"
+				});
+			}
 		} 
 }
