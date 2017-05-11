@@ -21,19 +21,23 @@
             <div ng-message="required">请输入密码</div>
           </div>
         </md-input-container>
-        <md-radio-group ng-model="$ctrl.userInfo.type">
+        <md-radio-group ng-model="$ctrl.userInfo.type" layout="row">
           <md-radio-button value="1">老师</md-radio-button>
           <md-radio-button value="0">学生</md-radio-button>
           <md-radio-button value="2">管理员</md-radio-button>
         </md-radio-group>
-        <md-checkbox ng-model="$ctrl.remember">记住密码</md-checkbox>
+        <md-input-container>
+            <md-checkbox ng-model="$ctrl.remember">记住密码</md-checkbox>
+        </md-input-container>
       </form>
+      <div layout="column">
+        <md-button class="md-raised md-primary" ng-click="$ctrl.login()">登录</md-button>
+      </div>
+      <div layout="row" layout-align="space-around center">
+        <md-button class="md-raised" ui-sref="teacher.register" >教师注册</md-button>
+        <md-button class="md-raised" ui-sref="student.register" >学生注册</md-button>
+      </div>
     </md-card-content>
-    <md-card-footer>
-      <md-button class="md-raised md-primary" ng-click="$ctrl.login()">登录</md-button>
-      <md-button class="md-raised" ui-sref="teacher.register">教师注册</md-button>
-      <md-button class="md-raised" ui-sref="student.register">学生注册</md-button>
-    </md-card-footer>
   </md-card>
 </md-content>
 
