@@ -13,4 +13,7 @@ function controller($scope,$rootScope,$element,$state){
     $rootScope.studentActive = [true,false,false,false];
     //$state.go("login");
   }
+  $scope.$on("request_back",function(){
+    $scope.$broadcast("ready_back");
+  });
 }

@@ -6,16 +6,12 @@
       </md-card-header-text>
     </md-card-header>
     <md-card-content>
-      <md-list flex>
-        <div ng-repeat="item in $ctrl.subjects track by $index" ui-sref="student.studentTestPaperList({SubjectName:item.SubjectName,SubjectID:item.SubjectID,teacherID:item.teacherId})">
-          <md-list-item >
-            <div class="md-list-item-text">
-              <span ng-bind="item.SubjectName" ></span>
-            </div>
-            <md-divider></md-divider>
-          </md-list-item>
-        </div>
-      </md-list>
+      <md-grid-list md-cols="3" md-gutter="1em" md-row-height="4:3">
+        <md-grid-tile ng-repeat="item in $ctrl.subjects track by $index" md-colors="{background:'light-blue'}"
+          ui-sref="student.studentTestPaperList({SubjectName:item.SubjectName,SubjectID:item.SubjectID,teacherID:item.teacherId})">
+          {{item.SubjectName}}
+        </md-grid-tile>
+      </md-grid-list>
     </md-card-content>
    </md-card>
 </md-content>

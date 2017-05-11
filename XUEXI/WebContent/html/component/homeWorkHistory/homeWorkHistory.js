@@ -7,6 +7,9 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http){
+  $scope.$on("ready_back",function(){
+    $state.go("teacher.homework");
+  });
   let vm = this;
   vm.$onInit = async function(){
     try {

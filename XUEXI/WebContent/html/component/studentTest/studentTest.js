@@ -10,6 +10,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   let vm = this;
   vm.msg = "";
   vm.subjects = [];
+  $scope.$on("ready_back",function(){
+    $state.go("student.studentIndex");
+  });
   vm.$onInit = async function(){
     try {
         vm.subjects = await http.get("GetAllSubject");  
@@ -30,9 +33,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         vm.subjects  = result;
             
     } catch (error) {
-      
-    }finally{
-      $scope.$applyAsync(null);
+        http.alert({
+            parent:$element,content:"初始化页面失败"
+        });
     }
   }
 }

@@ -80,11 +80,12 @@ function controller($scope, $cookies,$element,$state,http,$stateParams){
 				return;
 	    }
    }
-   vm.previousPage =function(){
-	   if(vm.isHistroy === true){
-		   $state.go("student.studentQuestionHistory");
-	   }else{
-		   $state.go("student.onlineQuestion",{currentClass:vm.currentClass});
-	   }
-   }
+
+	$scope.$on("ready_back",function(){
+    	if(vm.isHistroy === true){
+				$state.go("student.studentQuestionHistory");
+			}else{
+				$state.go("student.onlineQuestion",{currentClass:vm.currentClass});
+			}
+	});
 }

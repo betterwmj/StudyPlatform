@@ -53,4 +53,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       vm.displayHomeworkList = vm.homeworkListFinish;
     }
   }
+
+  $scope.$on("ready_back",function(){
+    $state.go("student.homework");
+  });
 }

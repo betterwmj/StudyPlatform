@@ -33,4 +33,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       });
     }
   }
+  $scope.$on("ready_back",function(){
+    $state.go("student.studentIndex");
+  });
 }

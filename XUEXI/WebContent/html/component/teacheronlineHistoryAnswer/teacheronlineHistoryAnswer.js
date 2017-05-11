@@ -7,6 +7,9 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http){
+	$scope.$on("ready_back",function(){
+    $state.go("teacher.onlineanswerNavigation");
+  });
   let vm = this;
   vm.questionsList=null;
   vm.$onInit = async function(){

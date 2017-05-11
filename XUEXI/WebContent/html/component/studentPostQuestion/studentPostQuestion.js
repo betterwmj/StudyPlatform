@@ -119,4 +119,8 @@ function controller($scope,$element,$state,$cookies,http){
     });
     return groupList;
   }
+
+  $scope.$on("ready_back",function(){
+    $state.go("student.question");
+  });
 }

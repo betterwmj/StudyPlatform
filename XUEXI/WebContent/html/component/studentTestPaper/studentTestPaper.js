@@ -93,4 +93,12 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       });
     }
   }
+
+  $scope.$on("ready_back",function(){
+    $state.go("student.studentTestPaperList",{
+      SubjectName:  vm.subject.SubjectName,
+      SubjectID:    vm.subject.SubjectID,
+      teacherID:    vm.subject.teacherID
+    });
+  });
 }

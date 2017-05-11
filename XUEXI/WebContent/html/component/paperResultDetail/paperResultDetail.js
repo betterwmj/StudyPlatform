@@ -7,6 +7,12 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
+  $scope.$on("ready_back",function(){
+    $state.go("teacher.paperResult",{
+      testpaperID:  vm.paperResult.testpaperID,
+      testName:     vm.paperResult.testName
+    });
+  });
   let vm = this;
   vm.msg = "";
   vm.paperResult = null;

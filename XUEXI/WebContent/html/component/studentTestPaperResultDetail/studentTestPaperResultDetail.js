@@ -36,4 +36,12 @@ function controller($scope,$element,$state,$cookies,$stateParams,http){
       });
     }
   }
+
+  $scope.$on("ready_back",function(){
+    $state.go("student.studentTestPaperList",{
+      SubjectName:  vm.subject.SubjectName,
+      SubjectID:    vm.subject.SubjectID,
+      teacherID:    vm.subject.teacherID
+    });
+  });
 }

@@ -17,4 +17,7 @@ function controller($scope,$element,$state,$cookies,http){
     //$cookies.remove("userInfo");
     $state.go("login");
   }
+  vm.goBack = function(){
+    $scope.$emit("request_back");
+  };
 }

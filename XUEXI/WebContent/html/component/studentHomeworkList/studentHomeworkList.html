@@ -1,10 +1,4 @@
 <md-content>
-  <md-card>
-    <md-card-content layout="row">
-        <span flex="80" ng-bind="$ctrl.subject.SubjectName"></span>
-        <md-button class="md-raised" flex="20" ui-sref="student.homework">返回</md-button>
-    </md-card-content>
-  </md-card>
   <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="未作答({{$ctrl.homeworkListUnFinish.length}})">
       <md-content class="md-padding">

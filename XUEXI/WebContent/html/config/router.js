@@ -15,6 +15,18 @@ export function routerConfig($stateProvider){
 				abstract:true,
 			},
 			{
+				name:"student.studentIndex",
+				url: '/studentIndex',
+				views:{
+					"head@":{
+						component:"studentIndexHead"
+					},
+					"content@":{
+						component:"studentIndex"
+					}
+				}
+			},
+			{
 				name:"student.register",
 				url: '/register',
 				views:{
@@ -23,7 +35,6 @@ export function routerConfig($stateProvider){
 					}
 				}
 			},
-			
 			{
 				name:"student.test",
 				url: '/test',
@@ -280,6 +291,18 @@ export function routerConfig($stateProvider){
 				name:"teacher",
 				url: '/teacher',
 				abstract:true,
+			},
+			{
+				name:"teacher.teacherIndex",
+				url: '/teacherIndex',
+				views:{
+					"head@":{
+						component:"teacherIndexHead"
+					},
+					"content@":{
+						component:"teacherIndex"
+					}
+				}
 			},
 			{
 				name:"teacher.register",

@@ -7,6 +7,9 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
+  $scope.$on("ready_back",function(){
+    $state.go("teacher.publishPaper");
+  });
   let vm = this;
   vm.msg = "";
   vm.paper = null;

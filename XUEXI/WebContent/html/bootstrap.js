@@ -7,6 +7,8 @@ import root from "./component/root/root.js";
 import commonDialog from "./component/commonDialog/commonDialog.js";
 import login from "./component/login/login.js";
 import tophead from "./component/tophead/tophead.js";
+import teacherIndex from "./component/teacherIndex/teacherIndex.js";
+import teacherIndexHead from "./component/teacherIndexHead/teacherIndexHead.js";
 import studentSidebar from "./component/studentSidebar/studentSidebar.js";
 import teacherSidebar from "./component/teacherSidebar/teacherSidebar.js";
 import registerStudent from "./component/registerStudent/registerStudent.js"
@@ -33,6 +35,8 @@ import onlineAnswer from "./component/onlineAnswer/onlineAnswer.js";
 import teacherOnlineAnswerNavigation from "./component/teacherOnlineAnswerNavigation/teacherOnlineAnswerNavigation.js";
 import teacheronlineHistoryAnswer from "./component/teacheronlineHistoryAnswer/teacheronlineHistoryAnswer.js";
 
+import studentIndex from "./component/studentIndex/studentIndex.js";
+import studentIndexHead from "./component/studentIndexHead/studentIndexHead.js";
 import studentTestPaperResultDetail from "./component/studentTestPaperResultDetail/studentTestPaperResultDetail.js";
 import studentHomework from "./component/studentHomework/studentHomework.js";
 import studentHomeworkList from "./component/studentHomeworkList/studentHomeworkList.js";
@@ -66,6 +70,8 @@ commonDialog(app);
 root(app);
 login(app);
 tophead(app);
+teacherIndex(app);
+teacherIndexHead(app);
 studentSidebar(app);
 teacherSidebar(app);
 registerTeacher(app);
@@ -92,6 +98,8 @@ teacherOnlineAnswerNavigation(app);
 teacheronlineHistoryAnswer(app);
 teacherUserInfo(app);
 
+studentIndex(app);
+studentIndexHead(app);
 studentTest(app);
 studentTestPaperList(app);
 studentTestPaper(app);

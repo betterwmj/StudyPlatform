@@ -93,5 +93,9 @@ function controller($scope,$element,$state,$cookies,http){
 					parent:$element,content:"更新班级信息失败"
 				});
 			}
-		} 
+		}
+
+		$scope.$on("ready_back",function(){
+			$state.go("student.studentIndex");
+		});
 }

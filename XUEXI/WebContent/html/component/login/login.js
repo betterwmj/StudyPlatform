@@ -72,11 +72,11 @@ function controller($scope,$element,$state,$cookies,http){
         if(userData.type === 0 ){
       
           $cookies.putObject("userInfo",result);
-          $state.go("student.test");
+          $state.go("student.studentIndex");
 
         }else if(userData.type === 1){
           $cookies.putObject("userInfo",result);
-          $state.go("teacher.paper");
+          $state.go("teacher.teacherIndex");
         }else{
         	$cookies.putObject("userInfo",result);
             $state.go("admin.center");

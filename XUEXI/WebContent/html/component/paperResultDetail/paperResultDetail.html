@@ -1,11 +1,5 @@
 <md-content>
   <md-card>
-    <md-card-content layout="row">
-        <span flex="80">查看学生考试详情</span>
-        <md-button class="md-raised" flex="20"  ui-sref="teacher.paperResult({testpaperID:$ctrl.paperResult.testpaperID,testName:$ctrl.paperResult.testName})">返回</md-button>
-    </md-card-content>
-  </md-card>
-  <md-card>
     <md-card-content>
       <md-card ng-repeat="item in $ctrl.paperResultList">
           <md-card-content>

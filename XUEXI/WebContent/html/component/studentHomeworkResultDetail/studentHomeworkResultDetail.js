@@ -26,5 +26,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         parent:$element,content:"获取学生作业结果详情异常"
       });
     }
-  } 
+  }
+
+  $scope.$on("ready_back",function(){
+    $state.go("student.homework");
+  }); 
 }

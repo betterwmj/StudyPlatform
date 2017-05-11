@@ -7,6 +7,9 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http){
+	$scope.$on("ready_back",function(){
+    $state.go("teacher.center");
+  });
 	let vm=this;
 	vm.$onInit=init();
 	vm.classes = [];//教授的班级信息

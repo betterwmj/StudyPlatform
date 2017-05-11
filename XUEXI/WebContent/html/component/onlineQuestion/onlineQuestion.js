@@ -43,4 +43,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 						}
 				});
      }
+
+		$scope.$on("ready_back",function(){
+				$state.go("student.question");
+		});
 }

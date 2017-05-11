@@ -8,4 +8,7 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http){
   let vm = this;
+  $scope.$on("ready_back",function(){
+    $state.go("student.studentIndex");
+  });
 }
