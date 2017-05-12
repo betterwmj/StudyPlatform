@@ -31,7 +31,7 @@ public class OperatorClass {
 		}
 		PreparedStatement pmt = null; 
 		String sql = "";
-		sql="select * from students where classid=? ";
+		sql="select * from students as a , student_class_relationship as b where a.UserID =b.studentid and b.classid =? ";
 		try {
 			ResultSet rs = null;
 			pmt=JDBCUtil.getPreparedStatement(conn, sql);

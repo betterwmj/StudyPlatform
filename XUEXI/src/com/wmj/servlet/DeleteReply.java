@@ -1,6 +1,6 @@
 package com.wmj.servlet;
+
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,20 +8,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.bean.Students;
-import com.wmj.dao.OperatorClass;
+import com.wmj.dao.OperatorOnline;
+
+
 import net.sf.json.JSONObject;
+
 /**
- * Servlet implementation class GetAllClassStudent
+ * Servlet implementation class DeleteReply
  */
-@WebServlet("/GetAllClassStudent")
-public class GetAllClassStudent extends HttpServlet {
+@WebServlet("/DeleteReply")
+public class DeleteReply extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetAllClassStudent() {
+    public DeleteReply() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,17 +35,17 @@ public class GetAllClassStudent extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		String classid=request.getParameter("classId");
-		int id=Integer.parseInt(classid);
-	  try {
-		    List<Students> list = OperatorClass.getClassStudent(id);
+		String ReplyID= request.getParameter("ReplyID");
+		int replyID =Integer.parseInt(ReplyID);
+		boolean resultCode;
+		try {
+			resultCode = OperatorOnline.deleteReply(replyID);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			result.setData(list);
+			result.setData(resultCode);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			ApiResult result = new ApiResult();
 			result.setCode(-1);
 			result.setMessage(e.getMessage());

@@ -42,6 +42,7 @@ public class StudentRegister extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
@@ -60,8 +61,13 @@ public class StudentRegister extends HttpServlet {
 		student.setTelephone(phone);
 		HttpSession session=request.getSession();
 		Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
-        String typeString= userInfo.get("type");
-        int type=Integer.parseInt(typeString);
+        int type =-1;
+        if(userInfo ==null){
+        	type =1;
+        }else{
+        	String typeString= userInfo.get("type");
+        	type=Integer.parseInt(typeString);
+        }  
 		try {
 			boolean resultCode =false;
 			if(type ==2)

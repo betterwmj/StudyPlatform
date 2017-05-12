@@ -220,4 +220,35 @@ public class OperatorOnline {
 		}
 	return list;
    }
+	//删除回复
+	public static boolean deleteReply(int replyId) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			String sql ="";
+			
+            sql="delete from online_answer where id=?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setInt(1, replyId);
+			if(pmt.executeUpdate()>0)
+			   result = true;
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return result;
+	}
 }

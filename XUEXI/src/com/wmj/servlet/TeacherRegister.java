@@ -57,8 +57,13 @@ public class TeacherRegister extends HttpServlet {
 		teacher.setPassword(password);
 		HttpSession session=request.getSession();
 		Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
-        String typeString= userInfo.get("type");
-        int type=Integer.parseInt(typeString);
+		int type =-1;
+        if(userInfo ==null){
+        	type =1;
+        }else{
+        	String typeString= userInfo.get("type");
+        	type=Integer.parseInt(typeString);
+        }  
 		try {
 			boolean resultCode =false;
 			if(type ==2)

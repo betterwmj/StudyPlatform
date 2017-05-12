@@ -16,6 +16,9 @@ function controller($scope,$element,$state,$cookies,http){
   vm.$onInit = async function(){
     try {
       vm.papers = await http.get("GetPaper");
+      vm.papers.forEach( (item)=>{
+    	  item.createTime =new Date(item.createTime.time);
+      });
     } catch (error) {
       http.alert({
         parent:$element,content:"获取试卷信息异常"
