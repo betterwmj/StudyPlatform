@@ -4,7 +4,7 @@
       <md-card-header-text>试卷题目:</md-card-header-text>
     </md-card-header>
     <md-card-content>
-      <md-card ng-repeat="question in $ctrl.paperDetail">
+      <md-card ng-repeat="question in $ctrl.paperDetail" md-colors="::{background: '{{question.color}}'}">
           <md-card-content>
             <div>
                 <p>

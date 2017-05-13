@@ -13,15 +13,15 @@
             </md-button>
           </td>
           <td>
-            <md-button class="md-raised" ng-if="paper.status === 0"
-              ng-click="$ctrl.publishPaper(paper)">发布</md-button>
-            <md-button class="md-raised" ng-if="paper.status === 1"
+            <md-button class="md-raised" ng-if="paper.status === 0" md-colors="::{background: '{{paper.color}}'}"
+              ng-click="$ctrl.publishPaper(paper)" >发布</md-button>
+            <md-button class="md-raised" ng-if="paper.status === 1" md-colors="::{background: '{{paper.color}}'}"
               ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName})">查看</md-button>
             <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">生成试卷</md-button>
           </td>
         </tr>
       </table>
-      <a href="{{$ctrl.paperLink}}" download="a.txt" ng-show="$ctrl.isDownload">下载试卷</a>
+      <a ng-href="{{$ctrl.paperLink}}" download="a.txt" id="download_paper" style="display:none;">下载试卷</a>
     </md-card-content>
   </md-card>
 </md-content>

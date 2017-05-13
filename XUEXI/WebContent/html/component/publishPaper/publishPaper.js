@@ -21,6 +21,7 @@ function controller($scope,$element,$state,$cookies,http){
       vm.papers.forEach( (item)=>{
     	  item.createTime =new Date(item.createTime.time);
       });
+      setColor();
     } catch (error) {
       http.alert({
         parent:$element,content:"获取试卷信息异常"
@@ -49,13 +50,24 @@ function controller($scope,$element,$state,$cookies,http){
       });
     }  
   }
+
+
+  function setColor(){
+    vm.papers.forEach( (item)=>{
+      item.color = http.getColor();
+    });
+  }
+
   vm.downloadPaper =async function(paperId){
 	  let result = await http.get("DownLoadPaper",{paperID:paperId});
 	  vm.paperLink = result;
 	  http.alert({
 			parent:$element,content:"试卷生成成功，文件路径如下：\n" +  vm.paperLink + "\n"
-			
-	  });
-	  vm.isDownload =true;  
+	  }).then(function(){
+        let downLink = document.getElementById("download_paper");
+        let event = document.createEvent("MouseEvents"); 
+        event.initEvent("click", false, false); 
+        downLink.dispatchEvent(event);
+    });
   }
 }
