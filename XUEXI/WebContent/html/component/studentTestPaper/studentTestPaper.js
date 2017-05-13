@@ -59,11 +59,13 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         "score":0,
         "paperresult":[]
       };
+      let correctAnswer =0;
       vm.paperDetail.forEach( (item)=>{
         let studentAnswer = item.studentAnswer;
         let answer = item.answer;
         if( studentAnswer === answer ){
           result.score += item.score;
+          correctAnswer=correctAnswer+1;
         }
         result.paperresult.push({
           "questionID":item.itemId,
@@ -71,22 +73,40 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         });
       });
       let rs = await http.post("SubmitPaper",result);
-      let dialog = http.alert({
-        parent:$element,content:"提交答案成功"
-      });
-      dialog.then(function(){
-        $state.go('student.studentTestPaperList',{
-          SubjectName:vm.subject.SubjectName,
-          SubjectID:vm.subject.SubjectID,
-          teacherID:vm.subject.teacherID
-        });
-      },function(){
-        $state.go('student.studentTestPaperList',{
-          SubjectName:vm.subject.SubjectName,
-          SubjectID:vm.subject.SubjectID,
-          teacherID:vm.subject.teacherID
-        });
-      });
+      let correctPercent =Math.round(correctAnswer/vm.paperDetail.length* 100);
+      let infor= "";
+      if(correctPercent <20){
+    	  infor= "测试结果不妙，别灰心继续努力哦！";
+      }else if(correctPercent <60){
+    	  infor= "革命尚未成功！";
+      }else if(correctPercent <80) {
+    	  infor= "还需更上一层楼！";
+      }else if(correctPercent <90){
+    	  infor= "good！";
+      }
+      if(rs===true){
+    	  let dialog = http.alert({
+    	        parent:$element,content:"提交答案成功! \n" +"正确率"+correctPercent+"% \n" +infor
+    	      });
+    	      dialog.then(function(){
+    	        $state.go('student.studentTestPaperList',{
+    	          SubjectName:vm.subject.SubjectName,
+    	          SubjectID:vm.subject.SubjectID,
+    	          teacherID:vm.subject.teacherID
+    	        });
+    	      },function(){
+    	        $state.go('student.studentTestPaperList',{
+    	          SubjectName:vm.subject.SubjectName,
+    	          SubjectID:vm.subject.SubjectID,
+    	          teacherID:vm.subject.teacherID
+    	        });
+    	      });
+      }else{
+    	  http.alert({
+    	        parent:$element,content:"提交答案失败"
+    	   });
+      }
+          
     } catch (error) {
       http.alert({
         parent:$element,content:"提交答案失败"
