@@ -9,13 +9,13 @@ export default function root(app){
 function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.$onInit = init;
-  vm.postQuestion = postQuestion;
   vm.title = "";
   vm.content = "";
   vm.subjectList = [];
   vm.currSubject = null;
   vm.currSubjectId = null;
   vm.currTeacher = null;
+  vm.imgUrl=null;
   async function init(){
     let userInfo = $cookies.getObject("userInfo");
     let subjectTeacherData = await http.get("GetAllSubject");
@@ -32,9 +32,13 @@ function controller($scope,$element,$state,$cookies,http){
       if(vm.currSubject!=null)
         vm.currTeacher = vm.currSubject.teacherList[0].teacherId;;
     });
+    setTimeout(function(){
+        let imgInputs = findImgInput();
+        imgInputs.eq(0).bind("change",onSelectImg);
+    },0);
   }
 
-  async function postQuestion(){
+  async function postQuestions(){
     if( checkQuestion() === false ){
       return;
     }
@@ -42,6 +46,7 @@ function controller($scope,$element,$state,$cookies,http){
     let question = {
       title:vm.title,
       content:vm.content,
+      img:vm.imgUrl,
       studentId:userInfo.id,
       teacherID:vm.currTeacher,
       subjectID:vm.currSubjectId
@@ -122,7 +127,57 @@ function controller($scope,$element,$state,$cookies,http){
     });
     return groupList;
   }
-
+  function findImgInput(){
+      return angular.element(document.getElementsByClassName("js_product_imgs"));
+  }
+  function onSelectImg(event){
+      let parentElement=event.target.parentNode;
+      let img=null;
+      for(let i=0;i<parentElement.children.length;i++){
+          if(parentElement.children[i].nodeName==="IMG"){
+              img=parentElement.children[i];
+          }
+      }
+      let files=event.target.files;
+      if( files.length === 0 ){
+          img.src="";
+          return;
+      }
+      let file = files[0];
+      let reader = new FileReader();
+      reader.onload = function(e) { 
+          img.src = e.target.result;
+      }; 
+      reader.readAsDataURL(file);
+  }
+  vm.postQuestion = async function(){
+	   let imgs=[];
+      imgs = findImgInput();
+      let file=[];
+      for(var i=0;i<imgs.length;i++){
+          if(imgs[i].files[0]!==undefined){
+               file.push(imgs[i].files[0]);
+          } 
+      }
+      let formData = new FormData();
+      for(var i=0;i<file.length;i++){
+          formData.append("img"+i,file[i]);
+      } 
+	   try {
+		   if(file.length!=0){
+			   let imgResult = await http.submitForm("UploadImage",formData);
+			   vm.imgUrl =imgResult;
+			}
+		   postQuestions();
+	   } catch (error) {
+		   console.log(error); 
+		   http.alert({
+		          parent:$element,content:"上传图片失败"
+		   });
+		  
+	   }
+      
+  }
   $scope.$on("ready_back",function(){
     $state.go("student.question");
   });
