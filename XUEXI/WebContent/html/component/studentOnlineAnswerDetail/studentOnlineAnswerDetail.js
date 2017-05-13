@@ -80,7 +80,28 @@ function controller($scope, $cookies,$element,$state,http,$stateParams){
 				return;
 	    }
    }
-
+   vm.deleleReply = async function(replyId,answerId){
+		  let userinfo = $cookies.getObject("userInfo");
+		  if(parseInt("10", userinfo.id) === answerId){
+			  let dialog = http.confirm({
+		            parent:$element,content:"是否删除?"
+	         });
+	          dialog.then(async function(){
+	        	  let result= await http.get('DeleteReply',{ReplyID:replyId});
+				   if(result === true){
+					 
+					   getQuestionReply();
+				   }else{
+					   
+					   http.alert({
+							parent:$element,content:"删除失败"
+					   });
+				  }	 
+	        },function(){
+	          
+	        }); 
+		}
+	 }
 	$scope.$on("ready_back",function(){
     	if(vm.isHistroy === true){
 				$state.go("student.studentQuestionHistory");
