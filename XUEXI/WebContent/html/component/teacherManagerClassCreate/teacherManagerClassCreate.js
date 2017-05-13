@@ -58,12 +58,11 @@ function controller($scope,$element,$state,$cookies,http){
 	   }
   }
   vm.deleteClass =async function(classId){
-	   
-	     let dialog = http.confirm({
-	            parent:$element,content:"是否删除?"
-          });
-          dialog.then(async function(){
-        	 let userInfo = $cookies.getObject("userInfo");
+	    let dialog = http.confirm({
+          parent:$element,content:"是否删除?"
+	    });
+	    dialog.then(async function(){
+	    	 let userInfo = $cookies.getObject("userInfo");
  		     let result = await http.get("DeleteTeacherClass",{
  		    	 teacherId:userInfo.id,
  		    	 classId:classId
@@ -80,10 +79,9 @@ function controller($scope,$element,$state,$cookies,http){
  			        parent:$element,content:"删除失败！"
  			    });       
  		      }
-          },function(){
-            
-          });
-	    	 
+	    },function(){
+	      
+	    });	    	 
 }
   function checkClass(className){
 	  if(className === null || className ===undefined ||className ==="" ){ 
