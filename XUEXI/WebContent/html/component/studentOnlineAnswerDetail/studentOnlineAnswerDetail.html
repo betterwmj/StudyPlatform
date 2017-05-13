@@ -6,7 +6,7 @@
     <md-card-content>
       <label>提问者:{{$ctrl.onlineQuesionsDetail.studentName}}:</label>
       <p ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></p>
-         <img width="50" height ="50" ng-show="$ctrl.onlineQuesionsDetail.img!==null&&$ctrl.onlineQuesionsDetail.img!=''" ng-attr-src="{{$ctrl.onlineQuesionsDetail.img}}" alt=""/> 
+         <img width="30" height ="30" ng-show="$ctrl.onlineQuesionsDetail.img!==null&&$ctrl.onlineQuesionsDetail.img!=''" ng-click="$ctrl.goToImgUrl($ctrl.onlineQuesionsDetail.img)"   ng-attr-src="{{$ctrl.onlineQuesionsDetail.img}}" alt=""/> 
       <md-list>
         <label>回复:</label>
         <md-list-item class="md-3-line" ng-repeat="reply in $ctrl.replyList" >
