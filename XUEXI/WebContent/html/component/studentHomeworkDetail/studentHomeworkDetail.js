@@ -74,6 +74,14 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   }
 
   $scope.$on("ready_back",function(){
-    $state.go("student.homework");
+	let dialog = http.confirm({
+          parent:$element,content:"您当前正在做作业，如果离开本页面，作业将不会被保留，请先提交！"
+    });
+    dialog.then(async function(){
+    	 $state.go("student.homework");
+    },function(){
+      
+    });
+   
   });
 }
