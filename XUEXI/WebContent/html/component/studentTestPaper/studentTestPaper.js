@@ -85,7 +85,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     	  infor= "good！";
       }
       if(rs===true){
-    	  let dialog = http.alert({
+    	    let dialog = http.alert({
     	        parent:$element,content:"提交答案成功! \n" +"正确率"+correctPercent+"% \n" +infor
     	      });
     	      dialog.then(function(){
@@ -115,10 +115,18 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   }
 
   $scope.$on("ready_back",function(){
-    $state.go("student.studentTestPaperList",{
-      SubjectName:  vm.subject.SubjectName,
-      SubjectID:    vm.subject.SubjectID,
-      teacherID:    vm.subject.teacherID
+	let dialog = http.confirm({
+          parent:$element,content:"您当前正在做试卷，如果离开本页面，测试将放弃！"
     });
-  });
+    dialog.then(async function(){
+    	 $state.go("student.studentTestPaperList",{
+    	      SubjectName:  vm.subject.SubjectName,
+    	      SubjectID:    vm.subject.SubjectID,
+    	      teacherID:    vm.subject.teacherID
+    	 });
+    },function(){
+      
+    });
+   
+    });
 }
