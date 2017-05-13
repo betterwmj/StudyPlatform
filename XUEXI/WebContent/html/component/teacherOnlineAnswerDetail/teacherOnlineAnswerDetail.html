@@ -15,7 +15,7 @@
             <h4>{{reply.realName}}</h4>
              <img width="20" height ="20" ng-show="reply.img!==null&&reply.img!==''" ng-click="$ctrl.goToImgUrl(reply.img)"  ng-attr-src="{{reply.img}}" alt=""/> 
             <p>{{reply.answerTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
-              <span class="icon icon-trash" ng-show="$ctrl.userinfoId===reply.answerId" ng-click="$ctrl.deleleReply(reply.id,reply.answerId)"></span>
+             <img src="images/trash.png" ng-show="$ctrl.userinfoId===reply.answerId" ng-click="$ctrl.deleleReply(reply.id,reply.answerId)"></img>
           </div>
           <md-divider ></md-divider>
         </md-list-item>
