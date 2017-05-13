@@ -54,6 +54,7 @@ public class ReplyStudentQuestion extends HttpServlet {
 			response.getWriter().append( JSONObject.fromObject(ApiResult.fail("无效的参数")).toString());
 		}
 		String answer = json.getString("answer");
+		String img = json.getString("img");
 		int questionID=json.getInt("questionID");
 		int answerID=json.getInt("answerID");
 		int type=json.getInt("type");
@@ -61,7 +62,8 @@ public class ReplyStudentQuestion extends HttpServlet {
 		OnlineAnswer answers=new OnlineAnswer();
 		answers.setOnlineQuestionId(questionID);
 		answers.setAnswerId(answerID);
-		answers.setAnswer(answer);;
+		answers.setAnswer(answer);
+		answers.setImg(img);
 		answers.setAnswerTime(time);
 		answers.setType(type);
 		boolean resultCode;

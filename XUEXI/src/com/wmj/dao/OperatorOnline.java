@@ -47,6 +47,7 @@ public class OperatorOnline {
 			   question.setStudentId(rs.getInt("student_id"));
 			   question.setQuestionTitle(rs.getString("questiontitle"));
 			   question.setQuestionContent(rs.getString("questioncontent"));
+			   question.setImg(rs.getString("img"));
 			   question.setAnswerId(rs.getInt("answer_id"));
 			   question.setCreateTime(rs.getTimestamp("createtime"));
                list.add(question);
@@ -88,6 +89,7 @@ public class OperatorOnline {
 			   answer.setId(rs.getInt("id"));
 			   answer.setOnlineQuestionId(rs.getInt("online_question_id"));
 			   answer.setAnswerId(rs.getInt("answer_id"));
+			   answer.setImg(rs.getString("img"));
 			   answer.setAnswer(rs.getString("answer"));
 			   answer.setAnswerTime(rs.getTimestamp("answertime"));
 			   answer.setType(rs.getInt("type"));
@@ -158,13 +160,14 @@ public class OperatorOnline {
 		PreparedStatement pmt = null; 
 		try {
 			
-            String sql="insert into online_answer (online_question_id,answer_id,answer,answertime,type) values(?,?,?,?,?)";
+            String sql="insert into online_answer (online_question_id,answer_id,img,answer,answertime,type) values(?,?,?,?,?,?)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, answers.getOnlineQuestionId());
 			pmt.setInt(2, answers.getAnswerId());
-			pmt.setString(3, answers.getAnswer());
-			pmt.setTimestamp(4, answers.getAnswerTime());
-			pmt.setInt(5, answers.getType());
+			pmt.setString(4, answers.getAnswer());
+			pmt.setString(3, answers.getImg());
+			pmt.setTimestamp(5, answers.getAnswerTime());
+			pmt.setInt(6, answers.getType());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 		    
@@ -207,6 +210,7 @@ public class OperatorOnline {
 			   question.setStudentId(rs.getInt("student_id"));
 			   question.setQuestionTitle(rs.getString("questiontitle"));
 			   question.setQuestionContent(rs.getString("questioncontent"));
+			   question.setImg(rs.getString("img"));
 			   question.setAnswerId(rs.getInt("answer_id"));
 			   question.setCreateTime(rs.getTimestamp("createtime"));
                list.add(question);

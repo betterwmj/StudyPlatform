@@ -11,7 +11,14 @@ public class OnlineAnswer {
   private int answerId;
   private String answer;
   private Timestamp answerTime;
-  private int type;
+  private String img;
+  public String getImg() {
+	return img;
+}
+public void setImg(String img) {
+	this.img = img;
+}
+private int type;
 	public int getType() {
 	return type;
 }
