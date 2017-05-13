@@ -17,7 +17,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 				vm.classes = classes;
 				vm.classes.forEach( async (item)=>{
 						let result =await http.get("GetClassNameByClassId",{"classID":item.classId});
-						item.className=result.className;
+						if(result!=null)
+						  item.className=result.className;
 				});
 				
 				if( $stateParams.currentClass !=null){
@@ -25,7 +26,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 				}else if( vm.classes && vm.classes.length > 0){
 						vm.currentClass = vm.classes[0].classId;
 				}
-				getClassQuestion();
+				if(vm.currentClass!=null)
+				   getClassQuestion();
 		}
     async function  getClassQuestion(){
 				console.log(vm.currentClass);
