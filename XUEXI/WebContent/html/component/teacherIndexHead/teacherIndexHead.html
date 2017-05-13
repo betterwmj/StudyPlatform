@@ -1,5 +1,5 @@
-<div>
-    <span>教师:</span>
-    <span ng-bind="$ctrl.userInfo.teacher_number"></span>
+<div layout="row" layout-align="center center">
+    <span flex="20">教师:<span ng-bind="$ctrl.userInfo.teacher_number"></span></span>
+    <span flex="25"></span>
     <md-button class="md-raised" ng-click="$ctrl.logout()">退出登录</md-button>
 </div>

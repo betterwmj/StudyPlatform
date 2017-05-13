@@ -19,6 +19,7 @@ function controller($scope,$element,$state,$cookies,http){
       vm.papers.forEach( (item)=>{
     	  item.createTime =new Date(item.createTime.time);
       });
+      setColor();
     } catch (error) {
       http.alert({
         parent:$element,content:"获取试卷信息异常"
@@ -46,5 +47,11 @@ function controller($scope,$element,$state,$cookies,http){
         parent:$element,content:"发布试卷失败"
       });
     }  
+  }
+
+  function setColor(){
+    vm.papers.forEach( (item)=>{
+      item.color = http.getColor();
+    });
   }
 }

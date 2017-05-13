@@ -9,7 +9,8 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
     get:get,
     alert:alert,
     confirm:confirm,
-    wait:wait
+    wait:wait,
+    getColor:getColor
   };
 
   async function post(url,data,headers){
@@ -109,6 +110,18 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
       template: '<div layout="column" style="width:100px;"><md-progress-circular md-mode="indeterminate"></md-progress-circular><div>',
       parent: angular.element(document.body),
     })
+  }
+
+  const colors  = [
+    "pink-200","purple-200","deep-purple-200","indigo-200","blue-400","light-blue-A200"
+  ];
+
+  /**
+   * 随机获取一个颜色
+   */
+  function getColor(){
+    let r = Math.round(Math.random()*(colors.length-1));
+    return colors[r];
   }
   return service;
 }

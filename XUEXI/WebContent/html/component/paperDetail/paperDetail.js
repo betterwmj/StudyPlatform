@@ -26,10 +26,17 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       vm.paperDetail = await http.get("GetPaperDetail",{
         paperID:vm.paper.testpaperID
       });
+      setColor();
     } catch (error) {
       http.alert({
         parent:$element,content:"获取试卷详情异常"
       });
     }
+  }
+
+  function setColor(){
+    vm.paperDetail.forEach( (item)=>{
+      item.color = http.getColor();
+    });
   }
 }
