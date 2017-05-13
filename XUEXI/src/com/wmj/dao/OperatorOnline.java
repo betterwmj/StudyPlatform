@@ -120,14 +120,15 @@ public class OperatorOnline {
 		PreparedStatement pmt = null; 
 		try {
 			
-            String sql="insert into online_question (student_id,questiontitle,questioncontent,answer_id,createtime,subject_id) values(?,?,?,?,?,?)";
+            String sql="insert into online_question (student_id,questiontitle,questioncontent,img,answer_id,createtime,subject_id) values(?,?,?,?,?,?,?)";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, question.getStudentId());
 			pmt.setString(2, question.getQuestionTitle());
 			pmt.setString(3, question.getQuestionContent());
-			pmt.setInt(4, question.getAnswerId());
-			pmt.setTimestamp(5, question.getCreateTime());
-			pmt.setInt(6, question.getSubjectId());
+			pmt.setString(4, question.getImg());
+			pmt.setInt(5, question.getAnswerId());
+			pmt.setTimestamp(6, question.getCreateTime());
+			pmt.setInt(7, question.getSubjectId());
 			if(pmt.executeUpdate()>0)
 			   result = true;
 		    

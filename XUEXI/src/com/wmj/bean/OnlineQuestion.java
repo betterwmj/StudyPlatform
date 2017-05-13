@@ -10,7 +10,14 @@ public class OnlineQuestion {
   private String questionContent;
   private int answerId;
   private Timestamp createTime;
-  private int subjectId;
+  private String img;
+  public String getImg() {
+	return img;
+}
+public void setImg(String img) {
+	this.img = img;
+}
+private int subjectId;
 	public int getSubjectId() {
 	return subjectId;
 }

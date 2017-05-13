@@ -76,8 +76,9 @@ public class UploadImage extends HttpServlet {
 			}
 			// 4、是：解析request对象的正文内容List<FileItem>
 			List<FileItem> items = upload.parseRequest(request);
-			String savePath = getServletContext().getRealPath("/upload");
+			String savePath = getServletContext().getRealPath("/upload/");
 			Iterator<FileItem> iter = items.iterator();
+			String newFileName="";
 			System.out.println("上传的文件地址：" + savePath);
 			while (iter.hasNext()) {
 				FileItem item = iter.next();
@@ -88,7 +89,7 @@ public class UploadImage extends HttpServlet {
 
 					String fileName = item.getName();
 					fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
-					String newFileName = fileName;
+					newFileName = fileName;
 					System.out.println("上传的文件名是：" + newFileName);
 					InputStream in = item.getInputStream();
 					OutputStream out = new FileOutputStream(savePath + newFileName);
@@ -97,15 +98,25 @@ public class UploadImage extends HttpServlet {
 					while ((len = in.read(b)) != -1) {
 						out.write(b, 0, len);
 					}
+					System.out.println(BaseUrl.url+"/upload/"+newFileName);
 					in.close();
 					out.close();
 					item.delete();// 删除临时文件
+					File file=new File(savePath + newFileName);
+					ApiResult result = new ApiResult();
+					if(file.exists()){
+						result.setCode(0);
+						result.setData(BaseUrl.url+"/upload/"+newFileName);
+						
+					}else{
+						result.setCode(-1);
+						result.setMessage("上传失败");
+						
+					}
+					response.getWriter().append(JSONObject.fromObject(result).toString());
 				}
 			}
-			ApiResult result = new ApiResult();
-			result.setCode(0);
-			result.setData(null);
-			response.getWriter().append(JSONObject.fromObject(result).toString());
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

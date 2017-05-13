@@ -54,6 +54,7 @@ public class PostStudentQuestion extends HttpServlet {
 		}
 		String title = json.getString("title");
 		String content = json.getString("content");
+		String img = json.getString("img");
 		int studentId=json.getInt("studentId");
 		int teacherID=json.getInt("teacherID");
 		int subjectID=json.getInt("subjectID");
@@ -62,6 +63,7 @@ public class PostStudentQuestion extends HttpServlet {
 	    question.setStudentId(studentId);
 	    question.setQuestionTitle(title);
 	    question.setQuestionContent(content);
+	    question.setImg(img);
 	    question.setAnswerId(teacherID);
 	    question.setCreateTime(time);
 	    question.setSubjectId(subjectID);
