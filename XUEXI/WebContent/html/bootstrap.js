@@ -34,6 +34,7 @@ import teacherHomeworkResultDetail from "./component/teacherHomeworkResultDetail
 import onlineAnswer from "./component/onlineAnswer/onlineAnswer.js";
 import teacherOnlineAnswerNavigation from "./component/teacherOnlineAnswerNavigation/teacherOnlineAnswerNavigation.js";
 import teacheronlineHistoryAnswer from "./component/teacheronlineHistoryAnswer/teacheronlineHistoryAnswer.js";
+import teacherClassStudent from "./component/teacherClassStudent/teacherClassStudent.js";
 
 import studentIndex from "./component/studentIndex/studentIndex.js";
 import studentIndexHead from "./component/studentIndexHead/studentIndexHead.js";
@@ -97,6 +98,8 @@ teacherOnlineAnswerDetail(app);
 teacherOnlineAnswerNavigation(app);
 teacheronlineHistoryAnswer(app);
 teacherUserInfo(app);
+teacherClassStudent(app);
+
 
 studentIndex(app);
 studentIndexHead(app);

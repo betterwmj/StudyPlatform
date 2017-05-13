@@ -19,6 +19,8 @@ function controller($scope,$element,$state,$cookies,http){
     try {
       vm.userInfo = $cookies.getObject("userInfo");
       vm.subjectlist = await http.get("GetAllSubject");
+      let classes = await http.get("GetTeacherClasses");
+	  vm.classes = classes;
       if( vm.subjectlist.length > 0 ){
         vm.currentSubject = vm.subjectlist[0].SubjectID;
       }
@@ -29,24 +31,64 @@ function controller($scope,$element,$state,$cookies,http){
     }
   }
   vm.create = async function(){
-    try {
-      let result = await http.get("CreateClass",{
-        className:vm.classInfo.className,
-        subjectID:vm.currentSubject
-      });
-      if( result === true ){
-        http.alert({
-          parent:$element,content:"班级创建成功"
-        });
-      }else{
-        http.alert({
-          parent:$element,content:"该班级已存在"
-        });
-      }
-    } catch (error) {
-      http.alert({
-        parent:$element,content:"班级创建失败"
-      });
-    }
+	  if( checkClass(vm.classInfo.className) ===true){
+		  try {
+		      let result = await http.get("CreateClass",{
+		        className:vm.classInfo.className,
+		        subjectID:vm.currentSubject
+		      });
+		      if( result === true ){
+		        http.alert({
+		          parent:$element,content:"班级创建成功"
+		        });
+		      }else{
+		        http.alert({
+		          parent:$element,content:"该班级已存在"
+		        });
+		      }
+		    } catch (error) {
+		      http.alert({
+		        parent:$element,content:"班级创建失败"
+		      });
+		    }
+	  }else{
+	    	 http.alert({
+			        parent:$element,content:"班级名不能为空！"
+			  });
+	   }
+  }
+  vm.deleteClass =async function(classId){
+	    let dialog = http.confirm({
+          parent:$element,content:"是否删除?"
+	    });
+	    dialog.then(async function(){
+	    	 let userInfo = $cookies.getObject("userInfo");
+ 		     let result = await http.get("DeleteTeacherClass",{
+ 		    	 teacherId:userInfo.id,
+ 		    	 classId:classId
+ 		      });
+ 		      if( result === true ){
+ 		      
+ 		       http.alert({
+			        parent:$element,content:"班级删除成功！"
+			    });
+ 		        let classes = await http.get("GetTeacherClasses");
+ 		  	    vm.classes = classes;
+ 		      }else{
+ 		    	 http.alert({
+ 			        parent:$element,content:"删除失败！"
+ 			    });       
+ 		      }
+	    },function(){
+	      
+	    });	    	 
+}
+  function checkClass(className){
+	  if(className === null || className ===undefined ||className ==="" ){ 
+	    	 return false;
+	   }  else{
+		    return true;
+	   }
+	  
   }
 }

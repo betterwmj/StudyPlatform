@@ -50,7 +50,7 @@ public class GetAllSubject extends HttpServlet {
 				list= OperatorSubject.getSubject(-1);
 			}
 			else{	
-				
+				//list= OperatorSubject.getSubject(-1);
 		        String studentId= userInfo.get("id");
 				int studentid=Integer.parseInt(studentId);
 				list = OperatorSubject.getSubject(studentid);	

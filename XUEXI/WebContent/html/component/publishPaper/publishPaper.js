@@ -13,6 +13,8 @@ function controller($scope,$element,$state,$cookies,http){
   let vm = this;
   vm.papers = [];
   vm.msg = "";
+  vm.paperLink = null;
+  vm.isDownload =false;
   vm.$onInit = async function(){
     try {
       vm.papers = await http.get("GetPaper");
@@ -49,9 +51,23 @@ function controller($scope,$element,$state,$cookies,http){
     }  
   }
 
+
   function setColor(){
     vm.papers.forEach( (item)=>{
       item.color = http.getColor();
+    });
+  }
+
+  vm.downloadPaper =async function(paperId){
+	  let result = await http.get("DownLoadPaper",{paperID:paperId});
+	  vm.paperLink = result;
+	  http.alert({
+			parent:$element,content:"试卷生成成功，文件路径如下：\n" +  vm.paperLink + "\n"
+	  }).then(function(){
+        let downLink = document.getElementById("download_paper");
+        let event = document.createEvent("MouseEvents"); 
+        event.initEvent("click", false, false); 
+        downLink.dispatchEvent(event);
     });
   }
 }

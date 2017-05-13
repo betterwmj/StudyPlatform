@@ -17,9 +17,11 @@
               ng-click="$ctrl.publishPaper(paper)" >发布</md-button>
             <md-button class="md-raised" ng-if="paper.status === 1" md-colors="::{background: '{{paper.color}}'}"
               ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName})">查看</md-button>
+            <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">生成试卷</md-button>
           </td>
         </tr>
       </table>
+      <a ng-href="{{$ctrl.paperLink}}" download="a.txt" id="download_paper" style="display:none;">下载试卷</a>
     </md-card-content>
   </md-card>
 </md-content>

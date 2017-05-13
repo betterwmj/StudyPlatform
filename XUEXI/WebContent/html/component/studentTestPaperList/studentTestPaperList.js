@@ -14,6 +14,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.paperFinish = [];
   vm.displayPaper = [];
   vm.showFlag = true;
+  vm.paperLink = null;
+  vm.isDownload =false;
   vm.$onInit = async function(){
     try {
       vm.subject = {
@@ -75,7 +77,15 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       vm.displayPaper = vm.paperFinish;
     }
   }
-
+  vm.downloadPaper =async function(paperId){
+	  let result = await http.get("DownLoadPaper",{paperID:paperId});
+	  vm.paperLink = result;
+	  http.alert({
+			parent:$element,content:"试卷生成成功，文件路径如下：\n" +  vm.paperLink + "\n"
+			
+	  });
+	  vm.isDownload =true;  
+  }
   $scope.$on("ready_back",function(){
     $state.go("student.test");
   });

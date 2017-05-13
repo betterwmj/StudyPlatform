@@ -26,4 +26,16 @@
       <md-button class="md-raised md-primary" ng-click="$ctrl.create()">创建</md-button>
     </md-card-footer>
   </md-card>
+   <md-list>
+        <label>所在班级</label>
+        <md-list-item class="md-3-line" ng-repeat="item in $ctrl.classes">
+          <div class="md-list-item-text">
+            <h3>班级名{{item.classes.className}}</h3>
+            <h3>科目{{item.subjectName}}</h3>
+            <md-button class="md-raised md-primary" ui-sref="teacher.classStudent({classId:item.classes.classId})">查看详情</md-button>
+            <md-button class="md-raised md-primary" ng-click="$ctrl.deleteClass(item.classes.classId)">删除</md-button>
+          </div>
+          <md-divider ></md-divider>
+        </md-list-item>
+   </md-list>
 </md-content>
