@@ -50,10 +50,10 @@ public class GetAllSubject extends HttpServlet {
 				list= OperatorSubject.getSubject(-1);
 			}
 			else{	
-				list= OperatorSubject.getSubject(-1);
-//		        String studentId= userInfo.get("id");
-//				int studentid=Integer.parseInt(studentId);
-//				list = OperatorSubject.getSubject(studentid);	
+				//list= OperatorSubject.getSubject(-1);
+		        String studentId= userInfo.get("id");
+				int studentid=Integer.parseInt(studentId);
+				list = OperatorSubject.getSubject(studentid);	
 			}
 			ApiResult result = new ApiResult();
 			result.setCode(0);

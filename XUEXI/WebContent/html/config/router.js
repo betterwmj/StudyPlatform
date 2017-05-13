@@ -481,6 +481,24 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.classStudent",
+				url: '/classStudent/{classId}',
+				params:{
+					classId:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherClassStudent"
+					},
+				}
+			},
+			{
 				name:"teacher.homework",
 				url: '/homework',
 				views:{
