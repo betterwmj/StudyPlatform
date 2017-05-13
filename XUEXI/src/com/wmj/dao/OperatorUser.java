@@ -357,7 +357,7 @@ public class OperatorUser {
 		PreparedStatement pmt = null; 
 		String sql = "";
 		if(userId ==-1){
-		    sql="select * from students";
+		    sql="select * from students ";
 		    pmt=JDBCUtil.getPreparedStatement(conn, sql);
 		 
 		}else{
