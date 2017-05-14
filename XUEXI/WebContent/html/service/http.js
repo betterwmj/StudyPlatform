@@ -11,7 +11,8 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
     confirm:confirm,
     wait:wait,
     submitForm:submitForm,
-    imgDialog:imgDialog
+    imgDialog:imgDialog,
+    getColor:getColor
   };
 
   async function submitForm(url,data){
@@ -159,6 +160,18 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
     $scope.ok = function(){
       $mdDialog.hide();
     }
+  }
+
+  const colors  = [
+    "pink-200","purple-200","deep-purple-200","indigo-200","blue-400","light-blue-A200"
+  ];
+
+  /**
+   * 随机获取一个颜色
+   */
+  function getColor(){
+    let r = Math.round(Math.random()*(colors.length-1));
+    return colors[r];
   }
   return service;
 }

@@ -1,9 +1,10 @@
-<div layout="row" layout-align="center center">
-    <span flex="20"  ng-click="$ctrl.goBack()">返回</span>
-    <span flex="25"></span>
-    <span ng-if="$ctrl.userInfo.type === '0'">学生:</span>
-    <span ng-if="$ctrl.userInfo.type === '1'">教师:</span>
-    <span ng-bind="$ctrl.userInfo.teacher_number" ng-if="$ctrl.userInfo.type === '1'"></span>
-    <span ng-bind="$ctrl.userInfo.school_number" ng-if="$ctrl.userInfo.type === '0'"></span>
+<div layout="row" layout-align="space-around center">
+    <span ></span>
+    <span   ng-click="$ctrl.goBack()">
+        <md-icon md-svg-src="./fonts/ic_keyboard_backspace_white_24px.svg" aria-label="goback"></md-icon>
+    </span>
+    <span ></span>
+    <span ng-if="$ctrl.userInfo.type === '0'">学生:{{$ctrl.userInfo.school_number}}</span>
+    <span ng-if="$ctrl.userInfo.type === '1'">教师:{{$ctrl.userInfo.teacher_number}}</span>
     <md-button class="md-raised" ng-click="$ctrl.logout()">退出登录</md-button>
 </div>
