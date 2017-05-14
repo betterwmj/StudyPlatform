@@ -6,33 +6,40 @@
     <md-card-content>
       <label>提问者:{{$ctrl.onlineQuesionsDetail.studentName}}:</label>
       <p ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></p>
-         <img width="30" height ="30" ng-show="$ctrl.onlineQuesionsDetail.img!==null&&$ctrl.onlineQuesionsDetail.img!=''" ng-click="$ctrl.goToImgUrl($ctrl.onlineQuesionsDetail.img)"   ng-attr-src="{{$ctrl.onlineQuesionsDetail.img}}" alt=""/> 
+      <img width="30" height="30" ng-show="$ctrl.onlineQuesionsDetail.img!==null&&$ctrl.onlineQuesionsDetail.img!=''" ng-click="$ctrl.goToImgUrl($ctrl.onlineQuesionsDetail.img)"
+        ng-attr-src="{{$ctrl.onlineQuesionsDetail.img}}" alt="" />
       <md-list>
         <label>回复:</label>
-        <md-list-item class="md-3-line" ng-repeat="reply in $ctrl.replyList" >
+        <md-list-item class="md-3-line" ng-repeat="reply in $ctrl.replyList">
           <div class="md-list-item-text">
             <h3>{{$index+1}}.&nbsp;{{reply.answer}}</h3>
             <h4>{{reply.realName}}</h4>
-             <img width="20" height ="20" ng-show="reply.img!==null&&reply.img!==''" ng-attr-src="{{reply.img}}"  ng-click="$ctrl.goToImgUrl(reply.img)"  alt=""/> 
+            <img width="20" height="20" ng-show="reply.img!==null&&reply.img!==''" ng-attr-src="{{reply.img}}" ng-click="$ctrl.goToImgUrl(reply.img)"
+              alt="" />
             <p>{{reply.answerTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
-           
-             <img src="images/trash.png" ng-show="$ctrl.userinfoId===reply.answerId" ng-click="$ctrl.deleleReply(reply.id,reply.answerId)"></img>
+
+            <img src="images/trash.png" ng-show="$ctrl.userinfoId===reply.answerId" ng-click="$ctrl.deleleReply(reply.id,reply.answerId)"></img>
           </div>
-          <md-divider ></md-divider>
+          <md-divider></md-divider>
         </md-list-item>
       </md-list>
-      <md-button class="md-raised" ng-click="$ctrl.reply()">回复</md-button>
+      <md-button class="md-raised" ng-click="$ctrl.showReply()">回复</md-button>
+      <form ng-show="$ctrl.isShow" name="replyForm">
+        <md-input-container class="md-block" flex-gt-sm>
+          <img width="200" height="150" ng-attr-src="{{img.src}}" alt="" class="js_reply_img_preview" />
+          <input type="file" accept="image/*" class="js_reply_imgs">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>内容</label>
+          <textarea rows="5" ng-model="$ctrl.answerContent" name="answerContent" required></textarea>
+          <div ng-messages="replyForm.answerContent.$error">
+            <div ng-message="required">请输入内容</div>
+          </div>
+        </md-input-container>
+      </form>
     </md-card-content>
-     <div   ng-show="$ctrl.isShow">
-                    <span class="label">图片</span>
-                    <span class="file clearfix">
-                            <input type="file" accept="image/*"  class="js_product_imgs">
-                            <img width="80" height ="100" ng-attr-src="{{img.src}}" alt=""/>        
-                    </span>
-            </div>
     <md-card-footer ng-show="$ctrl.isShow">
-      <textarea rows="8" cols="35" ng-model="$ctrl.answerContent"></textarea>
-      <md-button class="md-raised md-primary" ng-click="$ctrl.sure()">确定</md-button>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.reply()">确定</md-button>
     </md-card-footer>
   </md-card>
 </md-content>
