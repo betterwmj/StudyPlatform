@@ -84,8 +84,13 @@ function controller($scope, $cookies, $element, $state, http, $stateParams) {
 			if (result === true) {
 				http.alert({
 					parent: $element, content: "回复成功"
+				})
+				.then(function(){
+					vm.answerContent = "";
+					imgInput.value = "";
+					document.getElementsByClassName("js_reply_img_preview")[0].src = "";
+					vm.isShow = false;
 				});
-				vm.isShow = false;
 				getQuestionReply();
 			} else {
 				http.alert({
