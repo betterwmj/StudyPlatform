@@ -9,8 +9,39 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
     get:get,
     alert:alert,
     confirm:confirm,
-    wait:wait
+    wait:wait,
+    submitForm:submitForm,
+    imgDialog:imgDialog
   };
+
+  async function submitForm(url,data){
+     url = baseUrl + url;
+     let deferred = $q.defer();
+     let response = null;
+     try {
+        response = await $http({
+          method: 'POST',
+          url: url,
+          data: data,
+          headers: { 'Content-Type': undefined},
+          transformRequest: angular.identity
+        });
+        let result = response.data;
+        if( result.code === 0 ){
+          deferred.resolve(result.data);
+        }else{
+          deferred.reject(result.message);
+        }
+      } catch (error) {
+        console.log(error);
+        deferred.reject("操作失败");
+      }finally{
+        window.setTimeout(function(){
+          $rootScope.$applyAsync(null);
+        },0);
+     }
+     return deferred.promise;
+  }
 
   async function post(url,data,headers){
     url = baseUrl + url;
@@ -109,6 +140,22 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
       template: '<div layout="column" style="width:100px;"><md-progress-circular md-mode="indeterminate"></md-progress-circular><div>',
       parent: angular.element(document.body),
     })
+  }
+
+  function imgDialog(imgUrl){
+    return $mdDialog.show({
+      controller: ["$scope","$mdDialog","imgUrl",imgDialogCtrler],
+      templateUrl:"./component/ImgDialog/ImgDialog.html",
+      parent: angular.element(document.body),
+      locals: { imgUrl: imgUrl }
+    })
+  }
+
+  function imgDialogCtrler($scope,$mdDialog,imgUrl){
+    $scope.imgUrl = imgUrl;
+    $scope.ok = function(){
+      $mdDialog.hide();
+    }
   }
   return service;
 }

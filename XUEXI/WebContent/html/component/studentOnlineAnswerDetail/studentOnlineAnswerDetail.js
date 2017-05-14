@@ -83,7 +83,8 @@ function controller($scope, $cookies,$element,$state,http,$stateParams){
 	      
 	  }
 	  vm.goToImgUrl=function(img){
-		  window.open(img);
+		  //window.open(img);
+		  http.imgDialog(img);
 	  }
     async function reply(){	
 	   let userInfo = $cookies.getObject("userInfo");

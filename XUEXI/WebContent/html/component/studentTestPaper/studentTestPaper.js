@@ -115,7 +115,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   }
 
   $scope.$on("ready_back",function(){
-	let dialog = http.confirm({
+	  let dialog = http.confirm({
           parent:$element,content:"您当前正在做试卷，如果离开本页面，测试将放弃！"
     });
     dialog.then(async function(){
