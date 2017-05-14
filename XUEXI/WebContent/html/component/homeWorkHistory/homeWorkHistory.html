@@ -1,26 +1,19 @@
 <md-content>
-  <md-card>
-    <md-card-header>
-      <md-card-header-text>作业信息</md-card-header-text>
-    </md-card-header>
+  <h4>作业列表</h4>
+  <md-card ng-repeat="item in $ctrl.homeworks">
     <md-card-content>
-      <md-card ng-repeat="item in $ctrl.homeworks">
-        <md-card-content>
-          名称:<md-button class="md-raised" 
-              ui-sref="teacher.homeworkDetail({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">
-              {{item.homeWorkName}} 
-          </md-button>
-          <p>计划完成时间:{{item.finishTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
-          <span ng-show="item.status === 0">
-            <md-button class="md-raised" ui-sref="teacher.publishHomework({homeworkId:item.homeId,subjectId:item.subjectId})">发布</md-button>
-          </span>
-          <span ng-show="item.status === 1">已发布</span>
-          <md-button class="md-raised" ng-show="item.status === 1"
-              ui-sref="teacher.teacherHomeworkResultList({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">
-              查看结果
-          </md-button>
-        </md-card-content>
-      </md-card>
+      名称:<md-button class="md-raised md-primary"  
+          ui-sref="teacher.homeworkDetail({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">
+          <span><md-icon md-svg-src="./fonts/ic_pageview_white_24px.svg" aria-label="createPager"></md-icon>{{item.homeWorkName}}</span> 
+      </md-button>
+      <p>计划完成时间:{{item.finishTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+      <span ng-show="item.status === 0">
+        <md-button class="md-raised" ui-sref="teacher.publishHomework({homeworkId:item.homeId,subjectId:item.subjectId})">发布</md-button>
+      </span>
+      <md-button class="md-raised" ng-show="item.status === 1"
+          ui-sref="teacher.teacherHomeworkResultList({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">
+          查看结果
+      </md-button>
     </md-card-content>
   </md-card>
 </md-content>

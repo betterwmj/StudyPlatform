@@ -89,9 +89,19 @@
           </div>
           <div>
             <p>当前共{{$ctrl.questions.length}}道题</p>
-            <md-button class="md-raised md-primary" ng-click="$ctrl.createHomework()">创建作业</md-button>
-            <md-button class="md-raised" ng-click="$ctrl.upItem()">上一题</md-button>
-            <md-button class="md-raised" ng-click="$ctrl.createNextQuestion()">创建下一题</md-button>
+            <div layout="row" layout-align="space-around center">
+              <md-button class="md-raised" ng-click="$ctrl.upItem()">
+                <span><md-icon md-svg-src="./fonts/ic_credit_card_black_24px.svg" aria-label="upItem"></md-icon>上一题</span>
+              </md-button>
+              <md-button class="md-raised" ng-click="$ctrl.createNextQuestion()">
+                <span><md-icon md-svg-src="./fonts/ic_skip_next_black_24px.svg" aria-label="createNextQuestion"></md-icon>下一题</span>
+              </md-button>
+            </div>
+            <div layout="row" layout-fill>
+               <md-button class="md-raised md-primary" ng-click="$ctrl.createHomework()" flex="100">
+                 <span><md-icon md-svg-src="./fonts/ic_credit_card_white_24px.svg" aria-label="createPager"></md-icon>创建作业</span>
+              </md-button>
+            </div>
           </div>
         </form>
     </md-card-content>

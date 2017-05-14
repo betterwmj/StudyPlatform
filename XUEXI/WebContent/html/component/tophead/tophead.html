@@ -1,8 +1,8 @@
 <div layout="row" layout-align="space-around center">
     <span ></span>
-    <span   ng-click="$ctrl.goBack()">
+    <md-button ng-click="$ctrl.goBack()">
         <md-icon md-svg-src="./fonts/ic_keyboard_backspace_white_24px.svg" aria-label="goback"></md-icon>
-    </span>
+    </md-button>
     <span ></span>
     <span ng-if="$ctrl.userInfo.type === '0'">学生:{{$ctrl.userInfo.school_number}}</span>
     <span ng-if="$ctrl.userInfo.type === '1'">教师:{{$ctrl.userInfo.teacher_number}}</span>
