@@ -16,6 +16,7 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
 
   async function submitForm(url,data){
      url = baseUrl + url;
+     url += "?_t="+Date.now();
      let deferred = $q.defer();
      let response = null;
      try {
@@ -45,6 +46,7 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
 
   async function post(url,data,headers){
     url = baseUrl + url;
+    url += "?_t="+Date.now();
     headers = headers || {};
     let deferred = $q.defer();
     let response = null;
@@ -75,6 +77,7 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
 
   async function get(url,data){
     url = baseUrl + url;
+    url += "?_t="+Date.now();
     let deferred = $q.defer();
     let response = null;
     try {
@@ -133,11 +136,11 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
       .targetEvent(event);
     return $mdDialog.show(confirmDialog);
   }
-
-  function wait(parent){
+  
+  function wait(){
     return $mdDialog.show({
       controller: [function(){}],
-      template: '<div layout="column" style="width:100px;"><md-progress-circular md-mode="indeterminate"></md-progress-circular><div>',
+      templateUrl:"./component/ImgDialog/loadDailog.html",
       parent: angular.element(document.body),
     })
   }

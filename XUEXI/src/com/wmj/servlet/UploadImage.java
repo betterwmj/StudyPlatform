@@ -89,6 +89,7 @@ public class UploadImage extends HttpServlet {
 
 					String fileName = item.getName();
 					fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
+					fileName = System.currentTimeMillis()+"_"+fileName;
 					newFileName = fileName;
 					System.out.println("上传的文件名是：" + newFileName);
 					InputStream in = item.getInputStream();
