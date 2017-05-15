@@ -4,6 +4,7 @@ export function routerConfig($stateProvider){
 				name: 'login',
 				url: '/login',
 				views:{
+				 
 					"content":{
 						component:"login"
 					}
@@ -151,10 +152,12 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentHomeworkDetail",
-				url: '/studentHomeworkDetail/{homeWorkName}/{homeworkId}',
+				url: '/studentHomeworkDetail/{homeWorkName}/{homeworkId}/{SubjectID}/{SubjectName}',
 				params:{
 					homeWorkName:null,
-					homeworkId:null
+					homeworkId:null,
+					SubjectID:null,
+					SubjectName:null
 				},
 				views:{
 					"head@":{
@@ -172,7 +175,9 @@ export function routerConfig($stateProvider){
 				name:"student.studentHomeworkResultDetail",
 				url: '/studentHomeworkResultDetail/{homeworkId}',
 				params:{
-					homeworkId:null
+					homeworkId:null,
+					SubjectID:null,
+					SubjectName:null
 				},
 				views:{
 					"head@":{

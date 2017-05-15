@@ -17,8 +17,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.$onInit = async function(){
     try {
       vm.subject = {
-        SubjectName:$stateParams.SubjectName,
-        SubjectID:$stateParams.SubjectID
+	        SubjectName:$stateParams.SubjectName,
+	        SubjectID:$stateParams.SubjectID
       };
       vm.homeworkList = await http.get("GetHomework",{
         subjectId:vm.subject.SubjectID

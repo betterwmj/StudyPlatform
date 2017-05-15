@@ -79,18 +79,6 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   }
   vm.downloadPaper =async function(paperId){
 
-	  let result = await http.get("DownLoadPaper",{paperID:paperId});
-	  vm.paperLink = result;
-	  http.alert({
-			parent:$element,content:"试卷生成成功，文件路径如下：\n" +  vm.paperLink + "\n"
-			
-	  }).then(function(){
-	        let downLink = document.getElementById("download_paper");
-	        let event = document.createEvent("MouseEvents"); 
-	        event.initEvent("click", false, false); 
-	        downLink.dispatchEvent(event);
-	  });
-	 
 
     try {
       let result = await http.get("DownLoadPaper",{paperID:paperId});

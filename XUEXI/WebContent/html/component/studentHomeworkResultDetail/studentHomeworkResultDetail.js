@@ -11,6 +11,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.msg = "";
   vm.$onInit = async function(){
     try {
+     vm.subject = {
+	        SubjectName:$stateParams.SubjectName,
+	        SubjectID:$stateParams.SubjectID
+     };
       vm.homework = {
         homeId:parseInt($stateParams.homeworkId)
       };
@@ -29,6 +33,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   }
 
   $scope.$on("ready_back",function(){
-    $state.go("student.homework");
+  
+    $state.go("student.studentHomeworkList",{
+    	SubjectName:$stateParams.SubjectName,
+        SubjectID:$stateParams.SubjectID
+      });
   }); 
 }

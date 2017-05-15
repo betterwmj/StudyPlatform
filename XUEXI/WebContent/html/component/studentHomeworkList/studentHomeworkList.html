@@ -22,7 +22,7 @@
             <p>完成时间:<span ng-bind="item.finishTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
             <p>
               <md-button class="md-raised md-primary" 
-                ui-sref="student.studentHomeworkResultDetail({homeworkId:item.homeId})">查看结果</md-button>
+                ui-sref="student.studentHomeworkResultDetail({homeworkId:item.homeId,SubjectID:$ctrl.subject.SubjectID,SubjectName:$ctrl.subject.SubjectName})">查看结果</md-button>
             </p>
           </md-card-content>
         </md-card>
