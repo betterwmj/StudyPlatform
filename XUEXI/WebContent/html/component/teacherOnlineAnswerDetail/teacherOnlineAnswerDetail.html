@@ -1,25 +1,53 @@
-<md-content>
+ <div flex-xs flex-gt-xs="50" layout="column">
   <md-card>
     <md-card-header>
-      <md-card-header-text ng-bind="$ctrl.onlineQuesionsDetail.questionTitle"></md-card-header-text>
+         <md-card-avatar>
+            <img src="images/og.png"/>
+          </md-card-avatar>
+         <md-card-header-text>
+                <span class="md-title">{{$ctrl.onlineQuesionsDetail.studentName}}</span>
+                <span class="md-subhead">{{$ctrl.onlineQuesionsDetail.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+         </md-card-header-text>
     </md-card-header>
-    <md-card-content>
-      <label>提问者:{{$ctrl.onlineQuesionsDetail.studentName}}:</label>
-      <p ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></p>
-       <img width="50" height ="50" ng-show="$ctrl.onlineQuesionsDetail.img!==null&&$ctrl.onlineQuesionsDetail.img!=''" ng-click="$ctrl.goToImgUrl($ctrl.onlineQuesionsDetail.img)"  ng-attr-src="{{$ctrl.onlineQuesionsDetail.img}}" alt=""/> 
-      <md-list>
-        <label>回复:</label>
-        <md-list-item class="md-3-line" ng-repeat="reply in $ctrl.replyList">
-          <div class="md-list-item-text">
-            <h3>{{$index+1}}.&nbsp;{{reply.answer}}</h3>
-            <h4>{{reply.realName}}</h4>
-             <img width="20" height ="20" ng-show="reply.img!==null&&reply.img!==''" ng-click="$ctrl.goToImgUrl(reply.img)"  ng-attr-src="{{reply.img}}" alt=""/> 
-            <p>{{reply.answerTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
-             <img src="images/trash.png" ng-show="$ctrl.userinfoId===reply.answerId" ng-click="$ctrl.deleleReply(reply.id,reply.answerId)"></img>
-          </div>
-          <md-divider ></md-divider>
-        </md-list-item>
-      </md-list>
+      <md-card-content>
+	       <span ng-bind="$ctrl.onlineQuesionsDetail.questionContent"></span>
+	       <img width="300" height ="100" ng-show="$ctrl.onlineQuesionsDetail.img!==null&&$ctrl.onlineQuesionsDetail.img!=''" ng-click="$ctrl.goToImgUrl($ctrl.onlineQuesionsDetail.img)"  ng-attr-src="{{$ctrl.onlineQuesionsDetail.img}}" alt=""/> 
+      </md-card-content>
+       </md-card>  
+        <md-card>
+        <md-card-content>
+         <md-tabs md-dynamic-height md-border-bottom>
+          <md-tab label="同学回复">	        
+		      <md-list>
+		        <md-list-item class="md-3-line" ng-repeat="reply in $ctrl.replyList" ng-show="reply.type ===0">
+		           <img ng-src="images/oh.png" class="md-avatar" />
+		          <div class="md-list-item-text">
+		            <p>{{reply.realName}}</p>
+		            <h3>{{reply.answer}}</h3>        
+		             <img width="20" height ="20" ng-show="reply.img!==null&&reply.img!==''" ng-click="$ctrl.goToImgUrl(reply.img)"  ng-attr-src="{{reply.img}}" alt=""/> 
+		            <p>{{reply.answerTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+		            
+		          </div>
+		          <md-divider ></md-divider>
+		        </md-list-item>
+		      </md-list>
+		  </md-tab>
+		   <md-tab label="我的回复">	        
+		      <md-list>
+		        <md-list-item class="md-3-line" ng-repeat="reply in $ctrl.replyList" ng-show="reply.type ===1">
+		         <img ng-src="images/oh.png" class="md-avatar" />
+		          <div class="md-list-item-text">
+		             <p>{{reply.realName}}</p>
+		             <h3>{{reply.answer}}</h3>  
+		             <img width="20" height ="20" ng-show="reply.img!==null&&reply.img!==''" ng-click="$ctrl.goToImgUrl(reply.img)"  ng-attr-src="{{reply.img}}" alt=""/> 
+		            <p>{{reply.answerTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>   
+		          </div>
+		           <img src="images/trash.png" ng-show="$ctrl.userinfoId===reply.answerId" ng-click="$ctrl.deleleReply(reply.id,reply.answerId)"></img>
+		          <md-divider ></md-divider>
+		        </md-list-item>
+		      </md-list>
+		  </md-tab>
+     </md-tabs>
       <md-button class="md-raised" ng-click="$ctrl.showReply()">回复</md-button>
       <form ng-show="$ctrl.isShow" name="replyForm">
         <md-input-container class="md-block" flex-gt-sm>
@@ -38,5 +66,6 @@
     <md-card-footer ng-show="$ctrl.isShow">
       <md-button class="md-raised md-primary" ng-click="$ctrl.postReply()">确定</md-button>
     </md-card-footer>
-  </md-card>
-</md-content>
+      <md-card-content>
+      </md-card>
+
