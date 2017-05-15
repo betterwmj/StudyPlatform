@@ -14,8 +14,14 @@ function controller($scope,$rootScope,$element,$state,$transitions){
     //$state.go("login");
   }
   $scope.$on("request_back",function(){
-    $scope.$broadcast("ready_back");
+      $scope.$broadcast("ready_back");
   });
+  $scope.$on("test",function(){
+	   $scope.$broadcast("testpaper");
+  });
+  $scope.$on("homepage_back",function(){
+	   $scope.$broadcast("home_back");
+ });
   
   // $transitions.onBefore({ to: 'student.studentTestPaperList',from:'student.studentTestPaper' },function(trans){
   //     console.log(trans);

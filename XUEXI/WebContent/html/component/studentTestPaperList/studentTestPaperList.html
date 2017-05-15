@@ -9,10 +9,6 @@
             <p>
               <md-button class="md-raised md-primary" 
                 ui-sref="student.studentTestPaper({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID,testpaperID:paper.testpaperID,testName:paper.testName})">进行考试</md-button>
-
-              <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">生成试卷</md-button>
-               <a ng-href="{{$ctrl.paperLink}}" download="a.txt" id="download_paper" style="display:none;">下载试卷</a>
-
               <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">
                 <span><md-icon md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper"></md-icon>生成试卷</span>
               </md-button>

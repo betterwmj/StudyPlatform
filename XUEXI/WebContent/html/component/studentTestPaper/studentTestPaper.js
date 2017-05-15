@@ -15,7 +15,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   vm.questionIndex = 0;
   vm.currQuestion = null;
   vm.$onInit = async function(){
-    try {
+	  $scope.$emit("test");
+	  try {
       let userInfo = $cookies.getObject("userInfo");
       vm.subject = {
         SubjectName:$stateParams.SubjectName,
@@ -124,6 +125,18 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     	      SubjectID:    vm.subject.SubjectID,
     	      teacherID:    vm.subject.teacherID
     	 });
+    },function(){
+      
+    });
+   
+    });
+   
+    $scope.$on("home_back",function(){
+	  let dialog = http.confirm({
+          parent:$element,content:"您当前正在做试卷，如果离开本页面，测试将放弃！"
+    });
+    dialog.then(async function(){
+    	  $state.go("student.studentIndex");
     },function(){
       
     });

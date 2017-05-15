@@ -8,15 +8,24 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http){
   let vm = this;
-
+  let isTest =false;
   vm.$onInit = function(){
-    vm.userInfo = $cookies.getObject("userInfo");
+      vm.userInfo = $cookies.getObject("userInfo");
   }
 
   vm.goBack = function(){
-	    $scope.$emit("request_back");
-	  };
-	  vm.goHomePage =function(){
-		 $state.go("student.studentIndex");
+	   $scope.$emit("request_back");
+  };
+  $scope.$on("testpaper",function(){
+	  isTest =true;
+  });
+  vm.goHomePage =function(){
+	  if(isTest ===true){
+		  $scope.$emit("homepage_back");
+	  }else{
+		  $state.go("student.studentIndex");
 	  }
+	  
+  }
+  
 }
