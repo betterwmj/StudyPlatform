@@ -102,7 +102,7 @@ public class UploadImage extends HttpServlet {
 					System.out.println(BaseUrl.url+"/upload/"+newFileName);
 					in.close();
 					out.close();
-					item.delete();// 删除临时文件
+					
 					File file=new File(savePath + newFileName);
 					ApiResult result = new ApiResult();
 					if(file.exists()){
