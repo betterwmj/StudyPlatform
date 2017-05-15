@@ -55,6 +55,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 						pageItems:vm.pageItems
 				});
 				vm.questionsList = result;
+				if(result.length===0){
+					vm.questionsList.totalpage=0;
+				}
 				if(result.length !==0){
 					 vm.questionsList.totalpage =Math.ceil(result[0].count/vm.pageItems);
 				     vm.questionsList.forEach( async (item)=>{

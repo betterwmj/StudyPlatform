@@ -41,8 +41,12 @@ public class getQuestionAnswer extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
         String questionID=request.getParameter("questionID");
         int questionId=Integer.parseInt(questionID);
+        String currentPage=request.getParameter("currentPage");
+        int currentpage=Integer.parseInt(currentPage);
+        String PageItems=request.getParameter("pageItems");
+        int pageItems=Integer.parseInt(PageItems);
         try {
-			List<OnlineAnswer> list = OperatorOnline.getQuestionAnswer(questionId);
+			List<OnlineAnswer> list = OperatorOnline.getQuestionAnswer(questionId,currentpage,pageItems);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

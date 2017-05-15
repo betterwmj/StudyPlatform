@@ -26,7 +26,7 @@
           <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousPage()" ng-disabled="$ctrl.currentPage===1">
            <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
           </md-button>
-          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentPage===$ctrl.questionsList.totalpage">
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentPage===$ctrl.questionsList.totalpage || $ctrl.questionsList.totalpage===0">
              <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
           </md-button>
             <span>{{$ctrl.currentPage}}/{{$ctrl.questionsList.totalpage}}</span>

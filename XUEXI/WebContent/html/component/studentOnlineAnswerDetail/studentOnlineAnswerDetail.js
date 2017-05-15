@@ -17,6 +17,11 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 	vm.imgUrl = null;
 	vm.userinfo = null;
 	vm.reply = reply;
+	vm.currentReplyPage =1;
+	vm.replyPageItem=7;
+	vm.previousPage =previousPage;
+	vm.nextPage =nextPage;
+	
 	function init() {
 		vm.onlineQuesionsDetail = $stateParams.onlineQuestionsDetail;
 		vm.currentClass = $stateParams.currentClass;
@@ -30,6 +35,14 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 		let imgInput = document.getElementsByClassName("js_reply_imgs")[0];
 		angular.element(imgInput).bind("change", onSelectImg);
 	}
+	function previousPage(){
+		vm.currentReplyPage--;
+		getQuestionReply();
+	}
+	function nextPage(){
+		vm.currentReplyPage++;
+		getQuestionReply();
+	}	
 	vm.showReply = function () {
 		vm.isShow = !vm.isShow;
 		vm.msg = "";
@@ -114,24 +127,35 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 	}
 	async function getQuestionReply() {
 		try {
-			let result = await http.get('getQuestionAnswer', { questionID: vm.onlineQuesionsDetail.id });
+			let result = await http.get('getQuestionAnswer', { 
+				questionID: vm.onlineQuesionsDetail.id,
+				currentPage:vm.currentReplyPage,
+				pageItems:vm.replyPageItem
+		    });
 			vm.replyList = result;
-			vm.replyList.forEach(async (item) => {
-				item.answerTime = new Date(item.answerTime.time);
-				if (item.type === 0) {
-					let studentInfo = await http.get("GetStudents", {
-						userID: item.answerId
-					});
-					if (studentInfo.length !== 0)
-						item.realName = studentInfo[0].realName;
-				} else {
-					let teacherInfo = await http.get("GetTeachers", {
-						userID: item.answerId
-					});
-					if (teacherInfo.length !== 0)
-						item.realName = teacherInfo[0].realName;
-				}
-			});
+			if(result.length===0){
+				vm.replyList.totalReplypage=0;
+			}
+			if(result.length!==0){
+				vm.replyList.totalReplypage =Math.ceil(result[0].count/vm.replyPageItem);
+				vm.replyList.forEach(async (item) => {
+					item.answerTime = new Date(item.answerTime.time);
+					if (item.type === 0) {
+						let studentInfo = await http.get("GetStudents", {
+							userID: item.answerId
+						});
+						if (studentInfo.length !== 0)
+							item.realName = studentInfo[0].realName;
+					} else {
+						let teacherInfo = await http.get("GetTeachers", {
+							userID: item.answerId
+						});
+						if (teacherInfo.length !== 0)
+							item.realName = teacherInfo[0].realName;
+					}
+				});
+		    }
+			
 		} catch (error) {
 			http.alert({
 				parent: $element, content: "获取回复失败," + error

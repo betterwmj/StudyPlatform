@@ -84,7 +84,7 @@ public class OperatorOnline {
 	/*
 	 *根据问题id获取所有回复
 	 */
-	public static List<OnlineAnswer> getQuestionAnswer(int questionId) throws Exception{
+	public static List<OnlineAnswer> getQuestionAnswer(int questionId,int currentpage,int pageItems) throws Exception{
 		Connection conn = null;
 		List<OnlineAnswer> list = new ArrayList<OnlineAnswer>();
 		try {
@@ -94,15 +94,26 @@ public class OperatorOnline {
 			e1.printStackTrace();
 			throw e1;
 		}
-		PreparedStatement pmt = null; 
-		String sql = "";
-	    sql="select * from online_answer where online_question_id=? order by answertime Asc  ";
-		
+		int start=(currentpage-1)*pageItems;
+		int end=pageItems;
+		PreparedStatement pmt1 = null; 
+		PreparedStatement pmt2 = null; 
+		String sql1 = "";
+		String sql2 = "";
+	    sql1="select * from online_answer where online_question_id=? order by answertime Asc  ";
+	    sql2=sql1+" limit "+start+","+end+" ";
 		try {
 			ResultSet rs = null;
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, questionId);
-			rs = pmt.executeQuery();
+			pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+			pmt1.setInt(1, questionId);
+			rs = pmt1.executeQuery();
+			int count=0;
+			while(rs.next()){
+				count++;
+			}
+			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+			pmt2.setInt(1, questionId);
+			rs = pmt2.executeQuery();
 			 while (rs.next()) { 
 			   OnlineAnswer answer=new OnlineAnswer();
 			   answer.setId(rs.getInt("id"));
@@ -112,6 +123,7 @@ public class OperatorOnline {
 			   answer.setAnswer(rs.getString("answer"));
 			   answer.setAnswerTime(rs.getTimestamp("answertime"));
 			   answer.setType(rs.getInt("type"));
+			   answer.setCount(count);
                list.add(answer);
 	         }
 			 
@@ -120,7 +132,8 @@ public class OperatorOnline {
 			throw e;
 		} finally {
 			// 关闭连接
-			JDBCUtil.close(conn, pmt);
+			JDBCUtil.close(conn, pmt1);
+			JDBCUtil.close(conn, pmt2);
 		}
 	return list;
    }
