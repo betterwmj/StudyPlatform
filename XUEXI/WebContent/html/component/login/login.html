@@ -34,8 +34,12 @@
         <md-button class="md-raised md-primary" ng-click="$ctrl.login()">登录</md-button>
       </div>
       <div layout="row" layout-align="space-around center">
-        <md-button class="md-raised" ui-sref="teacher.register" >教师注册</md-button>
-        <md-button class="md-raised" ui-sref="student.register" >学生注册</md-button>
+        <md-button class="md-raised" ui-sref="teacher.register">
+          <span><md-icon md-svg-src="./fonts/ic_perm_contact_calendar_black_24px.svg" aria-label="teacher.register"></md-icon>教师注册</span>
+        </md-button>
+        <md-button class="md-raised" ui-sref="student.register">
+          <span><md-icon md-svg-src="./fonts/ic_perm_contact_calendar_black_24px.svg" aria-label="student.register"></md-icon>学生注册</span>
+        </md-button>
       </div>
     </md-card-content>
   </md-card>

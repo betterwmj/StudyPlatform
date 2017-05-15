@@ -7,10 +7,16 @@
             <p>试卷名称:<span ng-bind="paper.testName"></span></p>
             <p>创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
             <p>
-              <md-button class="md-raised" 
+              <md-button class="md-raised md-primary" 
                 ui-sref="student.studentTestPaper({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID,testpaperID:paper.testpaperID,testName:paper.testName})">进行考试</md-button>
+
               <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">生成试卷</md-button>
                <a ng-href="{{$ctrl.paperLink}}" download="a.txt" id="download_paper" style="display:none;">下载试卷</a>
+
+              <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">
+                <span><md-icon md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper"></md-icon>生成试卷</span>
+              </md-button>
+
             </p>
           </md-card-content>
         </md-card>
@@ -19,18 +25,25 @@
     <md-tab label="已作答({{$ctrl.paperFinish.length}})">
       <md-content class="md-padding">
         <md-card ng-repeat="paper in $ctrl.paperFinish" class="box-radius">
-          <dmd-card-content>
+          <md-card-content>
             <p>试卷名称:<span ng-bind="paper.testName"></span></p>
             <p>创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
             <p>
-              <md-button class="md-raised" 
+              <md-button class="md-raised md-primary" 
                 ui-sref="student.studentTestPaperResultDetail({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID,testpaperID:paper.testpaperID,paperResultID:paper.resultObj.paper.id})">查看结果</md-button>
+
               <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">生成试卷</md-button>
               <a ng-href="{{$ctrl.paperLink}}" download="a.txt" id="download_paper" style="display:none;">下载试卷</a>
+
+              <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">
+                <span><md-icon md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper"></md-icon>生成试卷</span>
+              </md-button>
+
             </p>
           </md-card-content>
         </md-card>
       </md-content>
     </md-tab>
   </md-tabs>
+  <a ng-href="{{$ctrl.paperLink}}" download="paper.txt" id="download_paper" style="display:none;">下载试卷</a>
 </md-content>

@@ -78,6 +78,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     }
   }
   vm.downloadPaper =async function(paperId){
+
 	  let result = await http.get("DownLoadPaper",{paperID:paperId});
 	  vm.paperLink = result;
 	  http.alert({
@@ -90,8 +91,32 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
 	        downLink.dispatchEvent(event);
 	  });
 	 
+
+    try {
+      let result = await http.get("DownLoadPaper",{paperID:paperId});
+      vm.paperLink = result;
+      http.alert({
+        parent:$element,content:"试卷生成成功，文件路径如下：\n" +  vm.paperLink + "\n"
+      })
+      .then(function(){
+          let downLink = document.getElementById("download_paper");
+          let event = document.createEvent("MouseEvents"); 
+          event.initEvent("click", false, false); 
+          downLink.dispatchEvent(event);
+      });
+    } catch (error) {
+      http.alert({
+        parent:$element,content:"生成试卷异常"
+      });
+    }
+	  
+
   }
   $scope.$on("ready_back",function(){
     $state.go("student.test");
   });
+
+  vm.openMenu = function($mdMenu, ev){
+    $mdMenu.open(ev);
+  }
 }

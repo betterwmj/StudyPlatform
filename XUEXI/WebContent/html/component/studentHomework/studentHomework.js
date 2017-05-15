@@ -27,6 +27,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       	}
       }
       vm.subjects  = result;
+      setColor();
     } catch (error) {
       http.alert({
         parent:$element,content:"初始化页面异常"
@@ -36,4 +37,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   $scope.$on("ready_back",function(){
     $state.go("student.studentIndex");
   });
+  function setColor(){
+    vm.subjects.forEach(function(item){
+      item.color = http.getColor();
+    });
+  }
 }

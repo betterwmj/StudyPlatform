@@ -31,11 +31,17 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         	console.log(result);
         }
         vm.subjects  = result;
-            
+        setColor();
     } catch (error) {
         http.alert({
             parent:$element,content:"初始化页面失败"
         });
     }
+  }
+
+  function setColor(){
+    vm.subjects.forEach(function(item){
+      item.color = http.getColor();
+    });
   }
 }

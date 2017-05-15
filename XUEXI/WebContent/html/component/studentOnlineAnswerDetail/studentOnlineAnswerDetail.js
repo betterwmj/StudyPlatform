@@ -3,10 +3,10 @@ export let name = "studentOnlineAnswerDetail";
 export default function root(app) {
 	app.component(name, {
 		templateUrl: "./component/studentOnlineAnswerDetail/studentOnlineAnswerDetail.html",
-		controller: ["$scope", "$cookies", "$element", "$state", "http", "$stateParams", controller]
+		controller: ["$scope", "$cookies", "$element", "$state", "http", "$stateParams","$mdDialog", controller]
 	});
 }
-function controller($scope, $cookies, $element, $state, http, $stateParams) {
+function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDialog) {
 	let vm = this;
 	vm.$onInit = init;
 	vm.isShow = false;
@@ -58,6 +58,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams) {
 			});
 			return;
 		}
+		http.wait();
 		let data = {
 			answer: vm.answerContent,
 			questionID: $stateParams.onlineQuestionsDetail.id,
@@ -73,8 +74,9 @@ function controller($scope, $cookies, $element, $state, http, $stateParams) {
 				let imgResult = await http.submitForm("UploadImage", formData);
 				data.img = imgResult;
 			} catch (error) {
+				$mdDialog.hide();
 				http.alert({
-				parent: $element, content: "图片上传失败"
+					parent: $element, content: "图片上传失败"
 				});
 				return;
 			}
@@ -82,6 +84,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams) {
 		try {
 			let result = await http.post('ReplyStudentQuestion', data);
 			if (result === true) {
+				$mdDialog.hide();
 				http.alert({
 					parent: $element, content: "回复成功"
 				})
@@ -93,11 +96,13 @@ function controller($scope, $cookies, $element, $state, http, $stateParams) {
 				});
 				getQuestionReply();
 			} else {
+				$mdDialog.hide();
 				http.alert({
 					parent: $element, content: "回复失败"
 				});
 			}
 		} catch (error) {
+			$mdDialog.hide();
 			http.alert({
 				parent: $element, content: "回复失败"
 			});

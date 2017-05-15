@@ -3,10 +3,10 @@ export let name = "studentPostQuestion";
 export default function root(app) {
   app.component(name, {
     templateUrl: "./component/studentPostQuestion/studentPostQuestion.html",
-    controller: ["$scope", "$element", "$state", '$cookies', "http", controller]
+    controller: ["$scope", "$element", "$state", '$cookies', "http","$mdDialog", controller]
   });
 }
-function controller($scope, $element, $state, $cookies, http) {
+function controller($scope, $element, $state, $cookies, http,$mdDialog) {
   let vm = this;
   vm.$onInit = init;
   vm.title = "";
@@ -41,6 +41,7 @@ function controller($scope, $element, $state, $cookies, http) {
     if (checkQuestion() === false) {
       return;
     }
+    http.wait();
     let userInfo = $cookies.getObject("userInfo");
     let question = {
       title: vm.title,
@@ -62,17 +63,20 @@ function controller($scope, $element, $state, $cookies, http) {
         http.alert({
           parent: $element, content: "图片上传失败"
         });
+        $mdDialog.hide();
         return;
       }
     }
     try {
       let result = await http.post("PostStudentQuestion", question);
+      $mdDialog.hide();
       http.alert({
         parent: $element, content: "提交成功"
       }).then(function () {
         $state.go("student.studentQuestionHistory");
       });
     } catch (error) {
+      $mdDialog.hide();
       http.alert({
         parent: $element, content: "提交问题失败"
       });
