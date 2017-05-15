@@ -16,10 +16,17 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 	vm.isHistroy = null;
 	vm.imgUrl = null;
 	vm.postReply = postReply;
+	vm.currentReplyPage =1;
+	vm.replyPageItem=7;
+	vm.previousPage =previousPage;
+	vm.nextPage =nextPage;
 	function init() {
 		vm.onlineQuesionsDetail = $stateParams.onlineQuestionsDetail;
 		vm.currentClass = $stateParams.currentClass;
 		vm.isHistroy = $stateParams.isHistroy;
+		vm.currentPage = $stateParams.currentPage;
+		vm.pageItems = $stateParams.pageItems;
+		vm.totalpage = $stateParams.totalpage;
 		vm.userinfo = $cookies.getObject("userInfo");
 		vm.userinfoId = parseInt("10", vm.userinfo.id);
 		getQuestionReply();
@@ -34,6 +41,14 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 		http.imgDialog(img);
 		//window.open(img);
 	}
+	function previousPage(){
+		vm.currentReplyPage--;
+		getQuestionReply();
+	}
+	function nextPage(){
+		vm.currentReplyPage++;
+		getQuestionReply();
+	}	
 	async function postReply() {
 		let content = vm.answerContent;
 		if (content === null || content === "" || content === undefined) {
@@ -96,42 +111,38 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 
 	async function getQuestionReply() {
 		try {
-			let result = await http.get('getQuestionAnswer', { questionID: vm.onlineQuesionsDetail.id });
-			vm.replyList = result;
-			vm.replyList.forEach(async (item) => {
-				item.answerTime = new Date(item.answerTime.time);
-				if (item.type === 0) {
-					let studentInfo = await http.get("GetStudents", {
-						userID: item.answerId
-					});
-					if (studentInfo.length !== 0)
-						item.realName = studentInfo[0].realName;
-				} else {
-					let teacherInfo = await http.get("GetTeachers", {
-						userID: item.answerId
-					});
-					if (teacherInfo.length !== 0)
-						item.realName = teacherInfo[0].realName;
-				}
-
-			});
-			if (vm.isHistroy === true) {
-				let userInfo = $cookies.getObject("userInfo");
-				let newReplyList = [];
-				let id = parseInt(userInfo.id);
-				vm.replyList.forEach((item) => {
-					if (id === item.answerId && item.type === 1) {
-						newReplyList.push(item);
-					}
-					if (vm.onlineQuesionsDetail.studentId === item.answerId && item.type === 0) {
-						newReplyList.push(item);
-					}
-
+			let result = await http.get('getQuestionAnswer', {
+				questionID: vm.onlineQuesionsDetail.id ,
+				currentPage:vm.currentReplyPage,
+				pageItems:vm.replyPageItem
 				});
-				vm.replyList = newReplyList;
-			} else {
-				vm.replyList = result;
+			vm.replyList = result;
+			if(result.length===0){
+				vm.replyList.totalReplypage=0;
 			}
+			if(result.length!==0){
+				vm.replyList.totalReplypage =Math.ceil(result[0].count/vm.replyPageItem);
+				vm.replyList.forEach(async (item) => {
+					item.answerTime = new Date(item.answerTime.time);
+					if (item.type === 0) {
+						let studentInfo = await http.get("GetStudents", {
+							userID: item.answerId
+						});
+						if (studentInfo.length !== 0)
+							item.realName = studentInfo[0].realName;
+					} else {
+						let teacherInfo = await http.get("GetTeachers", {
+							userID: item.answerId
+						});
+						if (teacherInfo.length !== 0)
+							item.realName = teacherInfo[0].realName;
+					}
+	
+				});
+			
+			
+			}
+			
 		} catch (error) {
 			http.alert({
 				parent: $element, content: "获取回复失败," + error
@@ -177,9 +188,19 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 	}
 	$scope.$on("ready_back", function () {
 		if (vm.isHistroy === true) {
-			$state.go("teacher.onlineHistoryAnswer");
+			$state.go("teacher.onlineHistoryAnswer",{
+				currentPage : vm.currentPage,
+			    pageItems :   vm.pageItems ,
+			    totalpage :   vm.totalpage
+			});
+			
 		} else {
-			$state.go("teacher.onlineanswer", { currentClass: vm.currentClass });
+			$state.go("teacher.onlineanswer", {
+				currentClass: vm.currentClass,
+				currentPage : vm.currentPage,
+			    pageItems :   vm.pageItems ,
+			    totalpage :   vm.totalpage
+			});
 		}
 	});
 }

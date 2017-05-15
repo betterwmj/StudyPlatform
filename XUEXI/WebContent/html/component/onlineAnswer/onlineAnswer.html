@@ -14,7 +14,7 @@
         </md-input-container>
         <md-list>
             <md-list-item class="md-3-line" ng-repeat="onlineQuesions in $ctrl.questionsList track by $index"
-                ui-sref="teacher.onlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':false})">
+                ui-sref="teacher.onlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':false,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.questionsList.totalpage})">
              <img ng-src="images/og.png" class="md-avatar" />
             <div class="md-list-item-text">
                 <p>{{onlineQuesions.studentName}}</p>
@@ -25,5 +25,14 @@
             </md-list-item>
         </md-list>
     </md-card-content>
+     <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousPage()" ng-disabled="$ctrl.currentPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentPage===$ctrl.questionsList.totalpage || $ctrl.questionsList.totalpage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+            <span>{{$ctrl.currentPage}}/{{$ctrl.questionsList.totalpage}}</span>
+      </md-card-actions>
   </md-card>
 </md-content>

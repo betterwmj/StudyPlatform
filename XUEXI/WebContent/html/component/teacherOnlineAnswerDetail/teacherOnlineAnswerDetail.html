@@ -48,6 +48,15 @@
 		      </md-list>
 		  </md-tab>
      </md-tabs>
+       <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousPage()" ng-disabled="$ctrl.currentReplyPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentReplyPage===$ctrl.replyList.totalReplypage || $ctrl.replyList.totalReplypage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+            <span>{{$ctrl.currentReplyPage}}/{{$ctrl.replyList.totalReplypage}}</span>
+        </md-card-actions>
       <md-button class="md-raised" ng-click="$ctrl.showReply()">回复</md-button>
       <form ng-show="$ctrl.isShow" name="replyForm">
         <md-input-container class="md-block" flex-gt-sm>
