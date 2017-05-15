@@ -83,8 +83,13 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
 	  http.alert({
 			parent:$element,content:"试卷生成成功，文件路径如下：\n" +  vm.paperLink + "\n"
 			
+	  }).then(function(){
+	        let downLink = document.getElementById("download_paper");
+	        let event = document.createEvent("MouseEvents"); 
+	        event.initEvent("click", false, false); 
+	        downLink.dispatchEvent(event);
 	  });
-	  vm.isDownload =true;  
+	 
   }
   $scope.$on("ready_back",function(){
     $state.go("student.test");

@@ -120,5 +120,11 @@ studentQuestionHistory(app);
 studentOnlineAnswerDetail(app);
 adminCenter(app);
 app.config(["$stateProvider",settingRouter.routerConfig]);
-
-
+app.config(function($mdThemingProvider) {
+	  $mdThemingProvider
+	    .theme('default')
+	    .primaryPalette('blue')
+	    .accentPalette('blue')
+	    .warnPalette('red')
+	    .backgroundPalette('grey');
+});
