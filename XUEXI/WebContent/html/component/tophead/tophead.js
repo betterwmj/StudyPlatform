@@ -13,11 +13,10 @@ function controller($scope,$element,$state,$cookies,http){
     vm.userInfo = $cookies.getObject("userInfo");
   }
 
-  vm.logout = function(){
-    //$cookies.remove("userInfo");
-    $state.go("login");
-  }
   vm.goBack = function(){
-    $scope.$emit("request_back");
-  };
+	    $scope.$emit("request_back");
+	  };
+	  vm.goHomePage =function(){
+		 $state.go("student.studentIndex");
+	  }
 }

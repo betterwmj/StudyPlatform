@@ -1,10 +1,16 @@
-<div layout="row" layout-align="space-around center">
-    <span ></span>
-    <md-button ng-click="$ctrl.goBack()">
-        <md-icon md-svg-src="./fonts/ic_keyboard_backspace_white_24px.svg" aria-label="goback"></md-icon>
-    </md-button>
-    <span ></span>
-    <span ng-if="$ctrl.userInfo.type === '0'">学生:{{$ctrl.userInfo.school_number}}</span>
-    <span ng-if="$ctrl.userInfo.type === '1'">教师:{{$ctrl.userInfo.teacher_number}}</span>
-    <md-button class="md-raised" ng-click="$ctrl.logout()">退出登录</md-button>
-</div>
+
+<div class="md-toolbar-tools">
+      <md-button
+        class="md-icon-button"
+        aria-label="Settings"
+        ng-click="$ctrl.goBack()">
+        <md-icon md-svg-icon="images/ic_arrow_back_24px.svg"></md-icon>
+      </md-button>
+      <span flex></span>
+      <md-button
+        class="md-icon-button"
+        aria-label="More"
+        ng-click="$ctrl.goHomePage()">
+        <md-icon md-svg-icon="images/ic_home_24px.svg"></md-icon>
+      </md-button>
+    </div>

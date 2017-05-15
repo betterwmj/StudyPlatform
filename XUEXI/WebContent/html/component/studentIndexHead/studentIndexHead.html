@@ -1,6 +1,12 @@
-<div  layout="row" layout-align="space-around center">
-    <span ng-if="$ctrl.userInfo.type === '0'">
-        学生:<span ng-bind="$ctrl.userInfo.school_number"></span>
-    </span>
-    <md-button class="md-raised" ng-click="$ctrl.logout()">退出登录</md-button>
-</div>
+
+<div class="md-toolbar-tools">
+  <span flex="40"></span>
+  <h4 flex="30"> 学习 </h4>
+   <span flex></span>
+  <md-button class="md-icon-button"
+       aria-label="Settings"
+       ng-click="$ctrl.logout()">
+       <md-icon md-svg-icon="images/ic_exit_to_app_24px.svg"></md-icon>
+   </md-button>
+	   
+ </div>

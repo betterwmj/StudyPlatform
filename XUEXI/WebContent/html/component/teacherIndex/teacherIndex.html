@@ -1,14 +1,18 @@
 <md-grid-list md-cols="2" md-gutter="2em" md-row-height="4:3">
-  <md-grid-tile  md-colors="{background: 'blue'}" ui-sref="teacher.paper">
-    <span><md-icon md-svg-src="./fonts/ic_description_white_24px.svg" aria-label="teacher.paper"></md-icon>出试卷</span>
+  <md-grid-tile  ui-sref="teacher.paper">
+      <img src="images/test1.png" width="70" height="70"></img><br>
+        <md-grid-tile-footer><h3>测试</h3></md-grid-tile-footer>
   </md-grid-tile>
-  <md-grid-tile  md-colors="{background: 'purple'}" ui-sref="teacher.homework">
-    <span><md-icon md-svg-src="./fonts/ic_receipt_white_24px.svg" aria-label="teacher.homework"></md-icon>布置作业</span>
+  <md-grid-tile   ui-sref="teacher.homework">
+    <img src="images/icon_note.png" width="70" height="70"></img><br>
+      <md-grid-tile-footer><h3>布置作业 </h3></md-grid-tile-footer>
   </md-grid-tile>
-  <md-grid-tile  md-colors="{background: 'teal'}" ui-sref="teacher.onlineanswerNavigation">
-    <span><md-icon md-svg-src="./fonts/ic_help_outline_white_24px.svg" aria-label="onlineanswerNavigation"></md-icon>答疑</span>
+  <md-grid-tile   ui-sref="teacher.onlineanswerNavigation">
+     <img src="images/girl.png" width="70" height="70"></img><br>
+  <md-grid-tile-footer><h3>答疑   </h3></md-grid-tile-footer>
   </md-grid-tile>
-  <md-grid-tile  md-colors="{background: 'amber'}" ui-sref="teacher.center">
-    <span><md-icon md-svg-src="./fonts/ic_account_circle_white_24px.svg" aria-label="teacher.center"></md-icon>个人中心</span>
+  <md-grid-tile   ui-sref="teacher.center">
+    <img src="images/class_detail_member.png" width="70" height="70"></img><br>
+   <md-grid-tile-footer><h3>个人中心  </h3></md-grid-tile-footer>
   </md-grid-tile>
 </md-grid-list>
