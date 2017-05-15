@@ -76,7 +76,8 @@ public class UploadImage extends HttpServlet {
 			}
 			// 4、是：解析request对象的正文内容List<FileItem>
 			List<FileItem> items = upload.parseRequest(request);
-			String savePath = getServletContext().getRealPath("/upload/");
+			//String savePath = getServletContext().getRealPath("/upload/");
+			String savePath =  "D:\\软件程序\\JDK\\apache-tomcat-8.5.13\\wtpwebapps\\XUEXI\\upload\\";
 			Iterator<FileItem> iter = items.iterator();
 			String newFileName="";
 			System.out.println("上传的文件地址：" + savePath);
@@ -92,6 +93,7 @@ public class UploadImage extends HttpServlet {
 					fileName = System.currentTimeMillis()+"_"+fileName;
 					newFileName = fileName;
 					System.out.println("上传的文件名是：" + newFileName);
+					System.out.println("上传的文件名是：" + savePath+newFileName);
 					InputStream in = item.getInputStream();
 					OutputStream out = new FileOutputStream(savePath + newFileName);
 					byte b[] = new byte[1024];
