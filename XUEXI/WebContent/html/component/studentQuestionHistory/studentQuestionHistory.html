@@ -7,9 +7,10 @@
       <md-list>
         <md-list-item class="md-3-line" ng-repeat="question in $ctrl.questionsList track by $index"
           ui-sref="student.studentOnlineAnswerDetail({'onlineQuestionsDetail':question,'currentClass':$ctrl.currentClass,'isHistroy':true})">
+         <img ng-src="images/og.png" class="md-avatar" />
           <div class="md-list-item-text">
-            <h3>{{question.questionTitle}}</h3>
-            <h4>{{question.studentName}}</h4>
+            <p>{{question.studentName}}</p>
+            <h3>{{question.questionTitle}}</h3>      
             <p>{{question.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
           </div>
           <md-divider ></md-divider>

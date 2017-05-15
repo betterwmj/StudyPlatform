@@ -12,9 +12,10 @@
         <md-list flex>
             <md-list-item class="md-3-line" ng-repeat="onlineQuesions in $ctrl.questionsList track by $index" ng-click="null"
                 ui-sref="student.studentOnlineAnswerDetail({'onlineQuestionsDetail':onlineQuesions,'currentClass':$ctrl.currentClass,'isHistroy':false})">
+                 <img ng-src="images/og.png" class="md-avatar" />
                 <div class="md-list-item-text" layout="column">
+                    <p>{{ onlineQuesions.studentName }}</p>
                     <h3>{{ onlineQuesions.questionTitle }}</h3>
-                    <h4>学生:{{ onlineQuesions.studentName }}</h4>
                     <p>{{ onlineQuesions.createTime|date:'yyyy-MM-dd HH:mm:ss' }}</p>
                 </div>
                 <md-divider ></md-divider>
