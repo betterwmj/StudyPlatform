@@ -49,8 +49,12 @@ public class GetStudentQuestion extends HttpServlet {
 		int typeId = Integer.parseInt(type);
 		//String id=request.getParameter("userID");
 		int userId = Integer.parseInt(id);
+	    String currentPage=request.getParameter("currentPage");
+	    int currentpage=Integer.parseInt(currentPage);
+	    String PageItems=request.getParameter("pageItems");
+	    int pageItems=Integer.parseInt(PageItems);
 		try {
-			List<OnlineQuestion> list = OperatorOnline.getOnlineQuestion(userId, typeId);
+			List<OnlineQuestion> list = OperatorOnline.getOnlineQuestion(userId, typeId,currentpage,pageItems);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

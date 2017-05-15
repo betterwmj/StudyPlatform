@@ -15,7 +15,7 @@ public class OperatorOnline {
 	/*
 	 *根据老师id或者学生id获取
 	 */
-	public static List<OnlineQuestion> getOnlineQuestion(int userId ,int typeId) throws Exception{
+	public static List<OnlineQuestion> getOnlineQuestion(int userId ,int typeId,int currentpage,int pageItems) throws Exception{
 		Connection conn = null;
 		List<OnlineQuestion> list = new ArrayList<OnlineQuestion>();
 		try {
@@ -26,21 +26,38 @@ public class OperatorOnline {
 			throw e1;
 		}
 		PreparedStatement pmt = null; 
-		String sql = "";
+		int start=(currentpage-1)*pageItems;
+		int end=pageItems;
+		PreparedStatement pmt1 = null; 
+		PreparedStatement pmt2 = null; 
+		String sql1 = "";
+		String sql2 = "";
 		if(typeId==0){
-			sql="select * from online_question where student_id =? order by createtime desc ";
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, userId);
+			sql1="select * from online_question where student_id =? order by createtime desc ";
+			sql2=sql1+" limit "+start+","+end+" ";
+			pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+			pmt1.setInt(1, userId);
+			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+			pmt2.setInt(1, userId);
 		}else{
-			sql="SELECT DISTINCT a.* FROM online_question as a INNER JOIN  online_answer as b ON  a.id = b.online_question_id " 
+			sql1="SELECT DISTINCT a.* FROM online_question as a INNER JOIN  online_answer as b ON  a.id = b.online_question_id " 
              +"WHERE  a.answer_id=? AND b.answer_id=? order by a.createtime desc";
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, userId);
-			pmt.setInt(2, userId);
+			sql2=sql1+" limit "+start+","+end+" ";
+			pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+			pmt1.setInt(1, userId);
+			pmt1.setInt(2, userId);
+			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+			pmt2.setInt(1, userId);
+			pmt2.setInt(2, userId);
 		}
 		try {
 			ResultSet rs = null;
-			rs = pmt.executeQuery();
+			rs = pmt1.executeQuery();
+			int count=0;
+			while(rs.next()){
+				count++;
+			}
+			rs = pmt2.executeQuery();
 			 while (rs.next()) { 
 			   OnlineQuestion question=new OnlineQuestion();
 			   question.setId(rs.getInt("id"));
@@ -50,6 +67,7 @@ public class OperatorOnline {
 			   question.setImg(rs.getString("img"));
 			   question.setAnswerId(rs.getInt("answer_id"));
 			   question.setCreateTime(rs.getTimestamp("createtime"));
+			   question.setCount(count);
                list.add(question);
 	         }
 			 
@@ -58,7 +76,8 @@ public class OperatorOnline {
 			throw e;
 		} finally {
 			// 关闭连接
-			JDBCUtil.close(conn, pmt);
+			JDBCUtil.close(conn, pmt1);
+			JDBCUtil.close(conn, pmt2);
 		}
 	return list;
    }

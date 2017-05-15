@@ -271,6 +271,11 @@ export function routerConfig($stateProvider){
 			{
 				name:"student.studentQuestionHistory",
 				url: '/studentQuestionHistory',
+				params:{
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
+				},
 				views:{
 					"head@":{
 						component:"tophead"

@@ -163,7 +163,12 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 	}
 	$scope.$on("ready_back", function () {
 		if (vm.isHistroy === true) {
-			$state.go("student.studentQuestionHistory");
+			$state.go("student.studentQuestionHistory",{
+				currentPage : vm.currentPage,
+			    pageItems :   vm.pageItems ,
+			    totalpage :   vm.totalpage
+			});
+			
 		} else {
 			$state.go("student.onlineQuestion", { 
 				currentClass: vm.currentClass ,
