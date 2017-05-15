@@ -213,7 +213,10 @@ export function routerConfig($stateProvider){
 				name:"student.onlineQuestion",
 				url: '/onlineQuestion',
 				params:{
-					currentClass:null
+					currentClass:null,
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
 				},
 				views:{
 					"head@":{
@@ -248,7 +251,10 @@ export function routerConfig($stateProvider){
 				params:{
 					onlineQuestionsDetail:null,
 					currentClass:null,
-					isHistroy:null
+					isHistroy:null,
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
 				},
 				views:{
 					"head@":{

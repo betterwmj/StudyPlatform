@@ -62,8 +62,8 @@ public class UploadImage extends HttpServlet {
 
 			// 1、创建工厂类：DiskFileItemFactory
 			DiskFileItemFactory factory = new DiskFileItemFactory();
+			//String tempDir = getServletContext().getRealPath("/WEB-INF/tempFile");
 			String tempDir = getServletContext().getRealPath("/WEB-INF/tempFile");
-
 			factory.setRepository(new File(tempDir));// 设置临时文件存放目录
 			// 2、创建核心解析类：ServletFileUpload
 			ServletFileUpload upload = new ServletFileUpload(factory);
@@ -77,7 +77,7 @@ public class UploadImage extends HttpServlet {
 			// 4、是：解析request对象的正文内容List<FileItem>
 			List<FileItem> items = upload.parseRequest(request);
 			//String savePath = getServletContext().getRealPath("/upload/");
-			String savePath =  "D:\\软件程序\\JDK\\apache-tomcat-8.5.13\\wtpwebapps\\XUEXI\\upload\\";
+			String savePath =  "D:\\软件程序\\JDK\\apache-tomcat-8.5.13\\webapps\\XUEXI\\upload\\";
 			Iterator<FileItem> iter = items.iterator();
 			String newFileName="";
 			System.out.println("上传的文件地址：" + savePath);

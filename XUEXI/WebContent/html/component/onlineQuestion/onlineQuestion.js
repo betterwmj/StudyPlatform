@@ -12,8 +12,13 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 		vm.currentClass =null;
 		vm.getClassQuestion = getClassQuestion;
 		console.log($mdColorPalette);
+		vm.currentPage=1;
+		vm.pageItems =7;
+		vm.previousPage =previousPage;
+		vm.nextPage =nextPage;
 		vm.$onInit = async function(){
-				let classes = await http.get("GetAllSubject");
+			    
+			    let classes = await http.get("GetAllSubject");
 				vm.classes = classes;
 				vm.classes.forEach( async (item)=>{
 						let result =await http.get("GetClassNameByClassId",{"classID":item.classId});
@@ -23,19 +28,36 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 				
 				if( $stateParams.currentClass !=null){
 						vm.currentClass = $stateParams.currentClass;
+						 vm.currentPage = $stateParams.currentPage;
+					     vm.pageItems = $stateParams.pageItems;
+					     vm.totalpage = $stateParams.totalpage;
+						
 				}else if( vm.classes && vm.classes.length > 0){
 						vm.currentClass = vm.classes[0].classId;
 				}
-				if(vm.currentClass!=null)
-				   getClassQuestion();
+				if(vm.currentClass!=null){
+				   getClassQuestion();  
+				}
 		}
-    async function  getClassQuestion(){
+		function previousPage(){
+			vm.currentPage--;
+			getClassQuestion();
+		}
+		function nextPage(){
+			vm.currentPage++;
+			getClassQuestion();
+		}	
+         async function  getClassQuestion(){
 				console.log(vm.currentClass);
 				let result = await http.get("GetClassQuestion",{
-						classID:vm.currentClass
+						classID:vm.currentClass,
+						currentPage:vm.currentPage,
+						pageItems:vm.pageItems
 				});
 				vm.questionsList = result;
-				vm.questionsList.forEach( async (item)=>{
+				if(result.length !==0){
+					 vm.questionsList.totalpage =Math.ceil(result[0].count/vm.pageItems);
+				     vm.questionsList.forEach( async (item)=>{
 						item.createTime =new Date(item.createTime.time);
 						let studentInfo = await http.get("GetStudents",{
 							userID:item.studentId
@@ -43,8 +65,10 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 						if(studentInfo.length!==0){
 							item.studentName =studentInfo[0].realName;
 						}
-				});
-     }
+		            });
+				}
+			
+        }
 
 		$scope.$on("ready_back",function(){
 				$state.go("student.question");

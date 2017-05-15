@@ -41,8 +41,12 @@ public class GetClassQuestion extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		String classId=request.getParameter("classID");
         int classid=Integer.parseInt(classId);
+        String currentPage=request.getParameter("currentPage");
+        int currentpage=Integer.parseInt(currentPage);
+        String PageItems=request.getParameter("pageItems");
+        int pageItems=Integer.parseInt(PageItems);
         try {
-			List<OnlineQuestion> list = OperatorOnline.getClassOnlineQuestion(classid);
+			List<OnlineQuestion> list = OperatorOnline.getClassOnlineQuestion(classid,currentpage,pageItems);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

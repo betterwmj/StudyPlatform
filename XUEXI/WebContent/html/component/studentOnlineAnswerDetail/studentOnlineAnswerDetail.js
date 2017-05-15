@@ -21,6 +21,9 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 		vm.onlineQuesionsDetail = $stateParams.onlineQuestionsDetail;
 		vm.currentClass = $stateParams.currentClass;
 		vm.isHistroy = $stateParams.isHistroy;
+		vm.currentPage = $stateParams.currentPage;
+		vm.pageItems = $stateParams.pageItems;
+		vm.totalpage = $stateParams.totalpage;
 		vm.userinfo = $cookies.getObject("userInfo");
 		vm.userinfoId = parseInt("10", vm.userinfo.id);
 		getQuestionReply();
@@ -162,7 +165,12 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 		if (vm.isHistroy === true) {
 			$state.go("student.studentQuestionHistory");
 		} else {
-			$state.go("student.onlineQuestion", { currentClass: vm.currentClass });
+			$state.go("student.onlineQuestion", { 
+				currentClass: vm.currentClass ,
+				currentPage : vm.currentPage,
+			    pageItems :   vm.pageItems ,
+			    totalpage :   vm.totalpage
+		  });
 		}
 	});
 }

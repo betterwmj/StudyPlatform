@@ -11,7 +11,14 @@ public class OnlineQuestion {
   private int answerId;
   private Timestamp createTime;
   private String img;
-  public String getImg() {
+  private int count;
+  public int getCount() {
+	return count;
+}
+public void setCount(int count) {
+	this.count = count;
+}
+public String getImg() {
 	return img;
 }
 public void setImg(String img) {

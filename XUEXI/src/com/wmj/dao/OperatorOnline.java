@@ -183,7 +183,7 @@ public class OperatorOnline {
 	/*
 	 *获取学生或老师某个所在班级的提问
 	 */
-	public static List<OnlineQuestion> getClassOnlineQuestion(int classId) throws Exception{
+	public static List<OnlineQuestion> getClassOnlineQuestion(int classId,int currentpage,int pageItems) throws Exception{
 		Connection conn = null;
 		List<OnlineQuestion> list = new ArrayList<OnlineQuestion>();
 		try {
@@ -193,17 +193,34 @@ public class OperatorOnline {
 			e1.printStackTrace();
 			throw e1;
 		}
-		PreparedStatement pmt = null; 
-		String sql = "";
-		sql ="select a.* from online_question as a, teacherclass_relation as b,student_class_relationship as c "
-        +" where a.answer_id = b.teacherId and a.student_id= c.studentid "
-        +"and b.subjectid =a.subject_id and b.classID =c.classid  "
-        +"and  b.classID =?  order by a.createtime desc";
+		int start=(currentpage-1)*pageItems;
+		int end=pageItems;
+		PreparedStatement pmt1 = null; 
+		PreparedStatement pmt2 = null; 
+		String sql1 = "";
+		String sql2 = "";
+		
+		sql1 ="select  a.* from online_question as a, teacherclass_relation as b,student_class_relationship as c "
+		        +" where a.answer_id = b.teacherId and a.student_id= c.studentid "
+		        +"and b.subjectid =a.subject_id and b.classID =c.classid  "
+		        +"and  b.classID =?  order by a.createtime desc";
+		
+		sql2=sql1+" limit "+start+","+end+" ";
+		
+		System.out.print(sql1);
+		System.out.print(sql2);
 		try {
 			ResultSet rs = null;
-			pmt=JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, classId);
-			rs = pmt.executeQuery();
+			pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+			pmt1.setInt(1, classId);
+			rs = pmt1.executeQuery();
+			int count=0;
+			while(rs.next()){
+				count++;
+			}
+			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+			pmt2.setInt(1, classId);
+			rs = pmt2.executeQuery();
 			 while (rs.next()) { 
 			   OnlineQuestion question=new OnlineQuestion();
 			   question.setId(rs.getInt("id"));
@@ -213,6 +230,7 @@ public class OperatorOnline {
 			   question.setImg(rs.getString("img"));
 			   question.setAnswerId(rs.getInt("answer_id"));
 			   question.setCreateTime(rs.getTimestamp("createtime"));
+			   question.setCount(count);
                list.add(question);
 	         }
 			 
@@ -221,7 +239,7 @@ public class OperatorOnline {
 			throw e;
 		} finally {
 			// 关闭连接
-			JDBCUtil.close(conn, pmt);
+			JDBCUtil.close(conn, pmt1);
 		}
 	return list;
    }
