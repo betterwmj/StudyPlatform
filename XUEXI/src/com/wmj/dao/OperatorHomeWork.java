@@ -131,7 +131,7 @@ public class OperatorHomeWork {
 	/*
 	 * 获取该老师所创建的所有作业根据老师id
 	 */
-	public static List<HomeWork> getHomeWorkByTeacherId(int teacherId) throws Exception {
+	public static List<HomeWork> getHomeWorkByTeacherId(int teacherId,int currentpage,int pageItems) throws Exception {
 
 		// 数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -143,13 +143,26 @@ public class OperatorHomeWork {
 			e1.printStackTrace();
 			throw e1;
 		}
-		PreparedStatement pmt = null;
+		int start=(currentpage-1)*pageItems;
+		int end=pageItems;
+		PreparedStatement pmt1 = null; 
+		PreparedStatement pmt2 = null; 
+		String sql1 = "";
+		String sql2 = "";		
 		try {
 			ResultSet rs = null;
-			String sql = "select * from  homeworks where teacherID=?";
-			pmt = JDBCUtil.getPreparedStatement(conn, sql);
-			pmt.setInt(1, teacherId);
-			rs = pmt.executeQuery();
+			sql1 = "select * from  homeworks where teacherID=?";
+			sql2=sql1+" limit "+start+","+end+" ";
+				pmt1=JDBCUtil.getPreparedStatement(conn, sql1); 
+				pmt1.setInt(1, teacherId);
+				rs = pmt1.executeQuery();
+				int count=0;
+				while(rs.next()){
+					count++;
+				}
+			pmt2 = JDBCUtil.getPreparedStatement(conn, sql2);
+			pmt2.setInt(1, teacherId);
+			rs = pmt2.executeQuery();
 			while (rs.next()) {
 				HomeWork home = new HomeWork();
 				home.setHomeId(rs.getInt("HomeworkID"));
@@ -159,6 +172,7 @@ public class OperatorHomeWork {
 				home.setFinishTime(rs.getTimestamp("Finishtime"));
 				home.setStatus(rs.getInt("status"));
 				home.setTime(rs.getTimestamp("time"));
+				home.setCount(count);
 				list.add(home);
 
 			}
@@ -168,7 +182,8 @@ public class OperatorHomeWork {
 			throw e;
 		} finally {
 			// 关闭连接
-			JDBCUtil.close(conn, pmt);
+			JDBCUtil.close(conn, pmt1);
+			JDBCUtil.close(conn, pmt2);
 		}
 		return list;
 	}

@@ -8,7 +8,12 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
   $scope.$on("ready_back",function(){
-    $state.go("teacher.homeWorkHistory");
+    $state.go("teacher.homeWorkHistory",{
+    	currentPage : vm.currentPage,
+	    pageItems :   vm.pageItems ,
+	    totalpage :   vm.totalpage
+    });
+    
   });
   let vm = this;
   vm.$onInit = async function(){
@@ -17,6 +22,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         homeWorkName:$stateParams.homeWorkName,
         homeworkId:$stateParams.homeworkId,
       };
+      vm.currentPage = $stateParams.currentPage;
+      vm.pageItems = $stateParams.pageItems;
+      vm.totalpage = $stateParams.totalpage;
       vm.homeworkDetail = await http.get("GetHomeworkDetail",{
         homeworkID:vm.homework.homeworkId
       });

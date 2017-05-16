@@ -533,7 +533,10 @@ export function routerConfig($stateProvider){
 				url: '/homeworkDetail/{homeworkId}/{homeWorkName}',
 				params:{
 					homeWorkName:null,
-					homeworkId:null
+					homeworkId:null,
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
 				},
 				views:{
 					"head@":{
@@ -628,6 +631,12 @@ export function routerConfig($stateProvider){
 			{
 				name:"teacher.homeWorkHistory",
 				url: '/homeWorkHistory',
+				params:{
+					
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
+				},
 				views:{
 					"head@":{
 						component:"tophead"
@@ -661,10 +670,13 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.teacherHomeworkResultList",
-				url: '/teacherHomeworkResultList/{homeworkId}/{homeWorkName}',
+				url: '/teacherHomeworkResultList',
 				params:{
 					homeworkId:null,
 					homeWorkName:null,
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
 				},
 				views:{
 					"head@":{
