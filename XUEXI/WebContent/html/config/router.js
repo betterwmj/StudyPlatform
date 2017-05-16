@@ -530,7 +530,7 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.homeworkDetail",
-				url: '/homeworkDetail/{homeworkId}/{homeWorkName}',
+				url: '/homeworkDetail',
 				params:{
 					homeWorkName:null,
 					homeworkId:null,
@@ -651,10 +651,14 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"teacher.publishHomework",
-				url: '/publishHomework/{homeworkId}/{subjectId}',
+				url: '/publishHomework',
 				params:{
 					homeworkId:null,
-					subjectId:null
+					subjectId:null,
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
+					
 				},
 				views:{
 					"head@":{

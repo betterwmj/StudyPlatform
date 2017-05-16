@@ -8,7 +8,12 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
   $scope.$on("ready_back",function(){
-    $state.go("teacher.homeWorkHistory");
+    $state.go("teacher.homeWorkHistory",{
+    	currentPage : vm.currentPage,
+	    pageItems :   vm.pageItems ,
+	    totalpage :   vm.totalpage
+    });
+    
   });
   let vm = this;
   vm.msg = "";
@@ -16,6 +21,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     vm.homework = {
       homeId:$stateParams.homeworkId
     };
+    vm.currentPage = $stateParams.currentPage;
+    vm.pageItems = $stateParams.pageItems;
+    vm.totalpage = $stateParams.totalpage;
     vm.subjectId = $stateParams.subjectId;
     try {
       vm.classes = await http.get("GetTeacherSubjectClass",{subjectId:vm.subjectId});
@@ -42,7 +50,12 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
           arent:$element,content:"作业发布成功"
         });
         dialog.then(function(){
-          $state.go("teacher.homeWorkHistory");
+          $state.go("teacher.homeWorkHistory",{
+        	 currentPage : vm.currentPage,
+      	    pageItems :   vm.pageItems ,
+      	    totalpage :   vm.totalpage
+          });
+          
         });
       }else{
         http.alert({
