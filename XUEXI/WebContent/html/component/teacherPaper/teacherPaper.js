@@ -25,6 +25,10 @@ function controller($scope,$element,$state,$cookies,http){
   vm.msg = "";
   vm.currentSubject = null;
   vm.subjectlist =null;
+  vm.currentPage=1;
+  vm.pageItems =5;
+  vm.previousPage =previousPage;
+  vm.nextPage =nextPage;
   vm.$onInit = async function(){
     try {
       vm.subjectlist = await http.get("GetTeacherSubject");
@@ -80,24 +84,24 @@ function controller($scope,$element,$state,$cookies,http){
 
     });
   };
+ function previousPage(){
+		vm.currentPage--;
+		getQuestions();
+	}
+	function nextPage(){
+		vm.currentPage++;
+		getQuestions();
+	}	
   vm.getQuestionByType = async function(){
 	  if( vm.subjectlist.length!==0){
-		  let rs = await getQuestions(vm.currentSubject,vm.currentType);
+		  let rs = await getQuestions();
 	  } 
   }
   vm.getQuestionBySubject =async function(){
 	  if( vm.subjectlist.length!==0){
-	    let rs = await getQuestions(vm.currentSubject.SubjectID,vm.currentType.value);
+	    let rs = await getQuestions();
 	  }
   }
-  vm.pageChanged = function(step){
-    let pageCount = Math.ceil(vm.allQuestion.length/vm.pageItem);
-    if( vm.currentPage + step <= 0 || vm.currentPage + step > pageCount ){
-      return;
-    }
-    vm.currentPage = vm.currentPage + step ;
-    getData();
-  };
 
   vm.append = function(question){
     if( question.isChecked === true ){
@@ -133,21 +137,29 @@ function controller($scope,$element,$state,$cookies,http){
     });
   }
 
-  async function getQuestions(subjectId,value){
+  async function getQuestions(){
     let result = null;
-    try {
+   try {
       result = await http.get("GetQuestions",{
-    	subjectId:subjectId,
-        type:value
+    	subjectId:vm.currentSubject,
+        type:vm.currentType,
+        currentPage:vm.currentPage,
+		pageItems:vm.pageItems
+        
       });
       vm.allQuestion = result;
+      if(vm.allQuestion.length===0){
+    	  vm.allQuestion.totalpage=0;
+		}
+      if( vm.allQuestion.length!==0){
+    	  vm.allQuestion.totalpage =Math.ceil(vm.allQuestion[0].count/vm.pageItems);
+      }
       mergeData();
       vm.allQuestion.forEach( (item)=>{
         if( "score" in item === false ){
           item.score = 5;
         }
       });
-      getData();
       
     } catch (error) {
       http.alert({
@@ -157,16 +169,4 @@ function controller($scope,$element,$state,$cookies,http){
     return result;
   }
 
-  function getData(){
-    let newData = [];
-    let start = (vm.currentPage-1)*vm.pageItem;
-    for(let i = start; i < start+vm.pageItem; ++i){
-      if( i >= vm.allQuestion.length ){
-        vm.questions = newData;
-        return;
-      }
-      newData.push( vm.allQuestion[i]);
-    }
-    vm.questions = newData;
-  }
 }

@@ -25,7 +25,7 @@
           </md-select>
         </md-input-container>
         <label>备选题目:</label>
-        <md-card ng-repeat="question in $ctrl.questions track by $index">
+        <md-card ng-repeat="question in $ctrl.allQuestion track by $index">
           <md-card-content>
             <div ng-if="$ctrl.currentType === 1">
                 <p>
@@ -71,8 +71,15 @@
             </div>
           </md-card-content>
         </md-card>
-        <md-button class="md-raised" ng-click="$ctrl.pageChanged(-1)">上一页</md-button>
-        <md-button class="md-raised" ng-click="$ctrl.pageChanged(1)">下一页</md-button>
+          <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousPage()" ng-disabled="$ctrl.currentPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentPage===$ctrl.allQuestion.totalpage || $ctrl.allQuestion.totalpage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+            <span>{{$ctrl.currentPage}}/{{$ctrl.allQuestion.totalpage}}</span>
+      </md-card-actions>
     </md-card-content>
     <md-card-footer>
       <md-button class="md-raised md-primary" ng-click="$ctrl.createPager()">
