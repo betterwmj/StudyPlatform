@@ -1,23 +1,32 @@
 <md-content>
   <h4>试卷列表</h4>
-  <md-card ng-repeat="paper in $ctrl.papers">
-    <md-card-content>
+  <md-card >
+    <md-card-content ng-repeat="paper in $ctrl.papers">
       <md-button class="md-raised" layout="row"
-          ui-sref="teacher.paperDetail({testpaperID:paper.testpaperID,testName:paper.testName})">
+          ui-sref="teacher.paperDetail({testpaperID:paper.testpaperID,testName:paper.testName,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.papers.totalpage})">
           {{paper.testName}} 
       </md-button>
       <div layout="row" layout-align="space-around center">
         <md-button class="md-raised md-primary" ng-if="paper.status === 0" 
           ng-click="$ctrl.publishPaper(paper)" >发布</md-button>
         <md-button class="md-raised md-primary" ng-if="paper.status === 1" 
-          ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName})">
+          ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.papers.totalpage})">
           <span><md-icon md-svg-src="./fonts/ic_pageview_white_24px.svg" aria-label="downloadPaper"></md-icon>查看</span></md-button>
         <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">
           <span><md-icon md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper"></md-icon>生成试卷</span>
         </md-button>
       </div>
     </md-card-content>
+       <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousPage()" ng-disabled="$ctrl.currentPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentPage===$ctrl.papers.totalpage || $ctrl.papers.totalpage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+            <span>{{$ctrl.currentPage}}/{{$ctrl.papers.totalpage}}</span>
+      </md-card-actions>
   </md-card>
   <a ng-href="{{$ctrl.paperLink}}" download="a.txt" id="download_paper" style="display:none;">下载试卷</a>
-  </md-card>
+
 </md-content>

@@ -27,7 +27,7 @@ public class OperatorNews {
 		PreparedStatement pmt2 = null; 
 		String sql1 = "";
 		String sql2 = "";		
-		sql1 ="select * from school_news";	
+		sql1 ="select * from school_news order by createtime desc";	
 		sql2=sql1+" limit "+start+","+end+" ";
 		try {
 			ResultSet rs = null;

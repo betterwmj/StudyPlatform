@@ -19,7 +19,7 @@ public class OperatorTestPaper {
 	/*
 	 * 获取该老师所创建的所有试卷
 	 */
-	public static  List<Paper> getTestPaperByTeacherId(int teacherId) throws Exception{
+	public static  List<Paper> getTestPaperByTeacherId(int teacherId,int currentpage,int pageItems) throws Exception{
 		
 		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
 		Connection conn = null;
@@ -31,15 +31,27 @@ public class OperatorTestPaper {
 			e1.printStackTrace();
 			throw e1;
 		}
-		PreparedStatement pmt = null; 
-		String sql = "";
+		int start=(currentpage-1)*pageItems;
+		int end=pageItems;
+		PreparedStatement pmt1 = null; 
+		PreparedStatement pmt2 = null; 
+		String sql1 = "";
+		String sql2 = "";		
 		
 		try {
 			ResultSet rs = null;
-		    sql="select * from  paper where UserID=?";
-			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
-			pmt.setInt(1, teacherId);
-			rs = pmt.executeQuery();
+		    sql1="select * from  paper where UserID=?";
+		    sql2=sql1+" limit "+start+","+end+" ";
+			pmt1=JDBCUtil.getPreparedStatement(conn, sql1); 
+			pmt1.setInt(1, teacherId);
+			rs = pmt1.executeQuery();
+			int count=0;
+			while(rs.next()){
+				count++;
+			}
+			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+			pmt2.setInt(1, teacherId);
+			rs = pmt2.executeQuery();
 			 while (rs.next()) {
 			   Paper paper=new Paper();
 			   paper.setTestpaperID(rs.getInt("TestpaperID"));
@@ -48,6 +60,7 @@ public class OperatorTestPaper {
 			   paper.setUserId(rs.getInt("UserID"));
 			   paper.setStatus(rs.getInt("status"));
 			   paper.setCreateTime(rs.getTimestamp("create_time"));
+			   paper.setCount(count);
                list.add(paper);
          
 	         }
@@ -57,7 +70,8 @@ public class OperatorTestPaper {
 			throw e;
 		} finally {
 			// 关闭连接
-			JDBCUtil.close(conn, pmt);
+			JDBCUtil.close(conn, pmt1);
+			JDBCUtil.close(conn, pmt2);
 			
 		}
 		return list;

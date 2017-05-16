@@ -7,8 +7,16 @@ export default function root(app){
   });
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
-	$scope.$on("ready_back",function(){
-        $state.go("student.studentIndex");
+	 let useinfo=$cookies.getObject("userInfo");
+	  
+	 $scope.$on("ready_back",function(){
+       
+        if(useinfo.type ===0){
+        	 $state.go("student.studentIndex");
+   	    }else{
+   	        $state.go("teacher.teacherIndex");
+   	    }
+        
     });
 	let vm = this;
 	vm.newsList=null;

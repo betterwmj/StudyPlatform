@@ -3,17 +3,27 @@
   <md-card ng-repeat="item in $ctrl.homeworks">
     <md-card-content>
       名称:<md-button class="md-raised md-primary"  
-          ui-sref="teacher.homeworkDetail({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">
+          ui-sref="teacher.homeworkDetail({homeworkId:item.homeId,homeWorkName:item.homeWorkName,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.homeworks.totalpage})">
           <span><md-icon md-svg-src="./fonts/ic_pageview_white_24px.svg" aria-label="createPager"></md-icon>{{item.homeWorkName}}</span> 
       </md-button>
       <p>计划完成时间:{{item.finishTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
       <span ng-show="item.status === 0">
-        <md-button class="md-raised" ui-sref="teacher.publishHomework({homeworkId:item.homeId,subjectId:item.subjectId})">发布</md-button>
+        <md-button class="md-raised" ui-sref="teacher.publishHomework({homeworkId:item.homeId,subjectId:item.subjectId,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.homeworks.totalpage})">发布</md-button>
       </span>
       <md-button class="md-raised" ng-show="item.status === 1"
-          ui-sref="teacher.teacherHomeworkResultList({homeworkId:item.homeId,homeWorkName:item.homeWorkName})">
+          ui-sref="teacher.teacherHomeworkResultList({homeworkId:item.homeId,homeWorkName:item.homeWorkName,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.homeworks.totalpage})">
           查看结果
       </md-button>
     </md-card-content>
+    
   </md-card>
+     <div layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousPage()" ng-disabled="$ctrl.currentPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentPage===$ctrl.homeworks.totalpage || $ctrl.homeworks.totalpage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+            <span>{{$ctrl.currentPage}}/{{$ctrl.homeworks.totalpage}}</span>
+      </div>
 </md-content>

@@ -3,10 +3,10 @@ export let name = "publishPaper";
 export default function root(app){
   app.component(name,{
     templateUrl:"./component/publishPaper/publishPaper.html",
-    controller:["$scope","$element","$state",'$cookies',"http",controller]
+    controller:["$scope","$element","$state",'$cookies',"http","$stateParams",controller]
   });
 }
-function controller($scope,$element,$state,$cookies,http){
+function controller($scope,$element,$state,$cookies,http,$stateParams){
   $scope.$on("ready_back",function(){
     $state.go("teacher.paper");
   });
@@ -15,20 +15,49 @@ function controller($scope,$element,$state,$cookies,http){
   vm.msg = "";
   vm.paperLink = null;
   vm.isDownload =false;
+  vm.currentPage=1;
+  vm.pageItems =7;
+  vm.previousPage =previousPage;
+  vm.nextPage =nextPage;
+  vm.getPaper=getPaper;
   vm.$onInit = async function(){
-    try {
-      vm.papers = await http.get("GetPaper");
-      vm.papers.forEach( (item)=>{
-    	  item.createTime =new Date(item.createTime.time);
-      });
-      setColor();
-    } catch (error) {
-      http.alert({
-        parent:$element,content:"获取试卷信息异常"
-      });
-    }
+	  if( $stateParams.currentPage !=null){
+			 vm.currentPage = $stateParams.currentPage;
+		     vm.pageItems = $stateParams.pageItems;
+		     vm.totalpage = $stateParams.totalpage;
+	  }
+	  getPaper();
   }
-
+  function previousPage(){
+		vm.currentPage--;
+		getPaper();
+   }
+  function nextPage(){
+		vm.currentPage++;
+		getPaper();
+	}	
+  async function getPaper(){
+	  try {
+	      vm.papers = await http.get("GetPaper", {
+	    	    currentPage:vm.currentPage,
+				pageItems:vm.pageItems
+	      });
+	      vm.papers.forEach( (item)=>{
+	    	  item.createTime =new Date(item.createTime.time);
+	      });
+	      if(vm.papers.length===0){
+				vm.papers.totalpage=0;
+		   }
+	      if(vm.papers.length!==0){
+				vm.papers.totalpage=Math.ceil(vm.papers[0].count/vm.pageItems);
+		   }
+	    } catch (error) {
+	      http.alert({
+	        parent:$element,content:"获取试卷信息异常"
+	      });
+	    }
+  }
+ 
   vm.publishPaper = async function(paper){
     try {
       let result = await http.get("PublishPaper",{
@@ -49,13 +78,6 @@ function controller($scope,$element,$state,$cookies,http){
         parent:$element,content:"发布试卷失败"
       });
     }  
-  }
-
-
-  function setColor(){
-    vm.papers.forEach( (item)=>{
-      item.color = http.getColor();
-    });
   }
 
   vm.downloadPaper =async function(paperId){

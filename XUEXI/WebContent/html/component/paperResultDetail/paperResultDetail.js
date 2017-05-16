@@ -10,7 +10,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   $scope.$on("ready_back",function(){
     $state.go("teacher.paperResult",{
       testpaperID:  vm.paperResult.testpaperID,
-      testName:     vm.paperResult.testName
+      testName:     vm.paperResult.testName,
     });
   });
   let vm = this;

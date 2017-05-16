@@ -46,6 +46,14 @@ public class GetHomework extends HttpServlet {
 //         String classId=request.getParameter("classId");
          
          int typeId=Integer.parseInt(type);
+         String currentPage=request.getParameter("currentPage");
+         int currentpage =0;
+         if(currentPage!=null)
+              currentpage=Integer.parseInt(currentPage);
+         String PageItems=request.getParameter("pageItems");
+         int pageItems=0;
+         if(PageItems!=null)
+            pageItems=Integer.parseInt(PageItems);
          try {
         	 List<HomeWork> list=null;
         	 if(typeId==0){
@@ -59,7 +67,7 @@ public class GetHomework extends HttpServlet {
              	String teacherId= userInfo.get("id");
             	//String teacherId=request.getParameter("teacherId");
              	int Id=Integer.parseInt(teacherId);
-                list = OperatorHomeWork.getHomeWorkByTeacherId(Id);
+                list = OperatorHomeWork.getHomeWorkByTeacherId(Id,currentpage,pageItems);
              }
 				ApiResult result = new ApiResult();
 				result.setCode(0);

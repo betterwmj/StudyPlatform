@@ -43,8 +43,12 @@ public class GetQuestions extends HttpServlet {
         int subjectid=Integer.parseInt(subjectId);
 	    String type= request.getParameter("type");
 	    int typeid=Integer.parseInt(type);
+	    String currentPage=request.getParameter("currentPage");
+        int currentpage=Integer.parseInt(currentPage);
+        String PageItems=request.getParameter("pageItems");
+        int pageItems=Integer.parseInt(PageItems);
 	    try {
-			List<Map> list =  OperatorSubject.getTitle(subjectid, typeid);
+			List<Map> list =  OperatorSubject.getTitle(subjectid, typeid,currentpage,pageItems);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

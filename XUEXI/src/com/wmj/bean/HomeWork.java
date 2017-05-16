@@ -14,6 +14,13 @@ public class HomeWork {
    private int subjectId;
    private Timestamp finishTime;
    private int status;
+   private int count;
+	public int getCount() {
+	return count;
+}
+public void setCount(int count) {
+	this.count = count;
+}
 	public String getHomeWorkName() {
 		return homeWorkName;
 	}

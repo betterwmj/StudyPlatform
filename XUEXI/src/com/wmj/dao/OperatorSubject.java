@@ -19,7 +19,7 @@ public class OperatorSubject {
 	/*
 	 * 根据学科id和题目类型从数据库获取相应的题目
 	 */
-	public static List<Map> getTitle(int subjectId,int type) throws Exception{
+	public static List<Map> getTitle(int subjectId,int type,int currentpage,int pageItems) throws Exception{
 		Connection conn = null;
 		List<Map> list = new ArrayList<Map>();
 		try {
@@ -29,15 +29,28 @@ public class OperatorSubject {
 			e1.printStackTrace();
 			throw e1;
 		}
-		PreparedStatement pmt = null; 
-		String sql = "";
+		int start=(currentpage-1)*pageItems;
+		int end=pageItems;
+		PreparedStatement pmt1 = null; 
+		PreparedStatement pmt2 = null; 
+		String sql1 = "";
+		String sql2 = "";
 		try {
-			    sql="select ItemID,title,optionA,optionB,optionC,optionD,answer from title where SubjectID=? and type=?";
+			    sql1="select ItemID,title,optionA,optionB,optionC,optionD,answer from title where SubjectID=? and type=?";
+			    sql2=sql1+" limit "+start+","+end+" ";
 				ResultSet rs = null;
-				pmt=JDBCUtil.getPreparedStatement(conn, sql);
-				pmt.setInt(1, subjectId);
-				pmt.setInt(2, type);
-				rs = pmt.executeQuery();
+				pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+				pmt1.setInt(1, subjectId);
+				pmt1.setInt(2, type);
+				rs = pmt1.executeQuery();
+				int count=0;
+				while(rs.next()){
+					count++;
+				}
+				pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+				pmt2.setInt(1, subjectId);
+				pmt2.setInt(2, type);
+				rs = pmt2.executeQuery();
 				 while (rs.next()) { 
 				   Map<String,String> title = new HashMap<String,String>();
 				   title.put("itemId", rs.getInt("ItemID")+"");
@@ -47,6 +60,7 @@ public class OperatorSubject {
 				   title.put("optionC", rs.getString("optionC"));
 				   title.put("optionD", rs.getString("optionD"));
 				   title.put("answer", rs.getString("answer"));
+				   title.put("count", count+"");
 	               list.add(title);
 		         }
 				 
@@ -55,7 +69,8 @@ public class OperatorSubject {
 			throw e;
 		} finally {
 			// 关闭连接
-			JDBCUtil.close(conn, pmt);
+			JDBCUtil.close(conn, pmt1);
+			JDBCUtil.close(conn, pmt2);
 		}	
 		return list;
 	}
