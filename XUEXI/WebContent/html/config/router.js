@@ -53,11 +53,15 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaperList",
-				url: '/studentTestPaperList/{SubjectName}/{SubjectID}/{teacherID}',
+				url: '/studentTestPaperList/{SubjectName}/{SubjectID}/{teacherID}/{currentUnfinishPage}/{pageItems}/{currentFinishPage}',
 				params:{
 					SubjectName:null,
 					SubjectID:null,
-					teacherID:null
+					teacherID:null,
+					currentUnfinishPage:null,
+					pageItems:null,
+					currentFinishPage:null
+
 				},
 				views:{
 					"head@":{
@@ -73,14 +77,16 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaper",
-				url: '/studentTestPaper/{SubjectName}/{SubjectID}/{teacherID}/{testpaperID}/{testName}',
+				url: '/studentTestPaper/{SubjectName}/{SubjectID}/{teacherID}/{testpaperID}/{testName}/{currentUnfinishPage}/{pageItems}',
 				params:{
 					SubjectName:null,
 					SubjectID:null,
 					teacherID:null,
 					testpaperID:null,
 					testName:null,
-					
+					currentUnfinishPage:null,
+					pageItems:null
+				
 				},
 				views:{
 					"head@":{
@@ -96,13 +102,16 @@ export function routerConfig($stateProvider){
 			},
 			{
 				name:"student.studentTestPaperResultDetail",
-				url: '/studentTestPaperResultDetail/{SubjectName}/{SubjectID}/{teacherID}/{testpaperID}/{paperResultID}',
+				url: '/studentTestPaperResultDetail/{SubjectName}/{SubjectID}/{teacherID}/{testpaperID}/{paperResultID}/{pageItems}/{currentFinishPage}',
 				params:{
 					SubjectName:null,
 					SubjectID:null,
 					teacherID:null,
 					testpaperID:null,
-					paperResultID:null
+					paperResultID:null,
+					pageItems:null,
+					currentFinishPage:null
+				
 				},
 				views:{
 					"head@":{

@@ -18,6 +18,9 @@ function controller($scope,$element,$state,$cookies,$stateParams,http){
         SubjectID:$stateParams.SubjectID,
         teacherID :$stateParams.teacherID
       };
+      vm.currentFinishPage=$stateParams.currentFinishPage;
+      vm.pageItems=$stateParams.pageItems;
+     
   //    let paperList = await http.get("GetPaper",{subjectId:vm.subject.SubjectID});
   //    vm.paper = paperList.find((item)=>{
   //      return item.testpaperID === $stateParams.testpaperID
@@ -41,7 +44,9 @@ function controller($scope,$element,$state,$cookies,$stateParams,http){
     $state.go("student.studentTestPaperList",{
       SubjectName:  vm.subject.SubjectName,
       SubjectID:    vm.subject.SubjectID,
-      teacherID:    vm.subject.teacherID
+      teacherID:    vm.subject.teacherID,
+      currentFinishPage:vm.currentFinishPage,
+      pageItems:vm.pageItems
     });
   });
 }

@@ -27,6 +27,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         testpaperID:$stateParams.testpaperID,
         testName:$stateParams.testName
       };
+      vm.currentUnfinishPage=$stateParams.currentUnfinishPage;
+      vm.pageItems=$stateParams.pageItems;
+      
       vm.paperDetail = await http.get("GetPaperDetail",{
         paperID:vm.paper.testpaperID
       });
@@ -93,13 +96,18 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     	        $state.go('student.studentTestPaperList',{
     	          SubjectName:vm.subject.SubjectName,
     	          SubjectID:vm.subject.SubjectID,
-    	          teacherID:vm.subject.teacherID
+    	          teacherID:vm.subject.teacherID,
+    	          currentUnfinishPage:vm.currentUnfinishPage,
+    	          pageItems:vm.pageItems
+    	   
     	        });
     	      },function(){
     	        $state.go('student.studentTestPaperList',{
     	          SubjectName:vm.subject.SubjectName,
     	          SubjectID:vm.subject.SubjectID,
-    	          teacherID:vm.subject.teacherID
+    	          teacherID:vm.subject.teacherID,
+    	          currentUnfinishPage:vm.currentUnfinishPage,
+    	          pageItems:vm.pageItems
     	        });
     	      });
       }else{
@@ -123,7 +131,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     	 $state.go("student.studentTestPaperList",{
     	      SubjectName:  vm.subject.SubjectName,
     	      SubjectID:    vm.subject.SubjectID,
-    	      teacherID:    vm.subject.teacherID
+    	      teacherID:    vm.subject.teacherID,
+    	      currentUnfinishPage:vm.currentUnfinishPage,
+	          pageItems:vm.pageItems
     	 });
     },function(){
       

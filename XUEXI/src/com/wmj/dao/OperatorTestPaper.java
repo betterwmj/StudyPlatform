@@ -32,9 +32,11 @@ public class OperatorTestPaper {
 			throw e1;
 		}
 		PreparedStatement pmt = null; 
+		String sql = "";
+		
 		try {
 			ResultSet rs = null;
-			String sql="select * from  paper where UserID=?";
+		    sql="select * from  paper where UserID=?";
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, teacherId);
 			rs = pmt.executeQuery();
@@ -56,11 +58,12 @@ public class OperatorTestPaper {
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
+			
 		}
 		return list;
 	}
-	/*
-	 * 获取该科目的所有试卷
+	/* 
+	 * 获取该科目的所有试卷(学生)
 	 */
 	public static  List<Paper> getTestPaperBySubjectId(int subjectId,int studentId) throws Exception{
 		
@@ -75,10 +78,12 @@ public class OperatorTestPaper {
 			throw e1;
 		}
 		PreparedStatement pmt = null; 
+		String sql = "";
 		try {
 			ResultSet rs = null;
-			String sql="select DISTINCT a.*,d.classid from paper as a, students as b , student_class_relationship as c, teacherclass_relation as d "
-           +"where  b.UserID = c.studentid and c.classid = d.classID and d.teacherId = a.UserID and a.status=1 and d.subjectid = ? and a.SubjectID=? and b.UserID=? ";
+			 sql="select DISTINCT a.*,d.classid from paper as a, students as b , student_class_relationship as c, teacherclass_relation as d "
+           +"where  b.UserID = c.studentid and c.classid = d.classID and d.teacherId = a.UserID and a.status=1 and d.subjectid = ? and a.SubjectID=? and b.UserID=? order by create_time desc ";
+		
 			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
 			pmt.setInt(1, subjectId);
 			pmt.setInt(2, subjectId);
@@ -93,8 +98,7 @@ public class OperatorTestPaper {
 			   paper.setStatus(rs.getInt("status"));
 			   paper.setCreateTime(rs.getTimestamp("create_time"));  
 			   paper.setClassId(rs.getInt("classid"));
-         list.add(paper);
-         
+               list.add(paper);      
 	       }
 			 
 		} catch (SQLException e) {
@@ -103,6 +107,7 @@ public class OperatorTestPaper {
 		} finally {
 			// 关闭连接
 			JDBCUtil.close(conn, pmt);
+			
 		}
 		return list;
 	}

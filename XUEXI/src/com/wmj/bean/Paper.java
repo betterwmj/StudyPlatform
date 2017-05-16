@@ -15,6 +15,7 @@ public class Paper {
    private int status;
    private Timestamp createTime;
    private int classId;
+ 
 	public int getClassId() {
 	return classId;
 }
