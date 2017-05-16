@@ -193,7 +193,7 @@ public class OperatorHomeWork {
 			ResultSet rs = null;
 			String sql = "select a.* from  homeworks as a, students as b, student_class_relationship as c,homework_class_relation as d "
 			+ "where b.UserID = c.studentid and c.classid = d.classID and d.HomeworkID =a.HomeworkID"
-			+" and a.SubjectID=? and b.UserID =? and a.status=1";
+			+" and a.SubjectID=? and b.UserID =? and a.status=1 order by Finishtime desc ";
 			pmt = JDBCUtil.getPreparedStatement(conn, sql);
 			pmt.setInt(1, subjectId);
 			pmt.setInt(2, studentId);

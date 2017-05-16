@@ -15,6 +15,8 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
 	        SubjectName:$stateParams.SubjectName,
 	        SubjectID:$stateParams.SubjectID
      };
+     vm.currentFinishPage=$stateParams.currentFinishPage;
+     vm.pageItems=$stateParams.pageItems;
       vm.homework = {
         homeId:parseInt($stateParams.homeworkId)
       };
@@ -36,7 +38,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
   
     $state.go("student.studentHomeworkList",{
     	SubjectName:$stateParams.SubjectName,
-        SubjectID:$stateParams.SubjectID
+        SubjectID:$stateParams.SubjectID,
+        currentFinishPage:vm.currentFinishPage,
+        pageItems:vm.pageItems
       });
   }); 
 }

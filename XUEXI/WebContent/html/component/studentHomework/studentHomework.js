@@ -14,6 +14,11 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     try {
       vm.subjects = await http.get("GetAllSubject");
       let result =[];
+      vm.subject = {
+	        SubjectName:$stateParams.SubjectName,
+	        SubjectID:$stateParams.SubjectID,
+    	      
+    	};
       for( var i=0 ;i< vm.subjects.length;i++ ){
       	let flag =0;
       	for(var j=0;j<result.length;j++){
@@ -35,7 +40,11 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     }
   }
   $scope.$on("ready_back",function(){
-    $state.go("student.studentIndex");
+	  $state.go("student.studentHomeworkList",{
+		  SubjectName:vm.subject.SubjectName,
+          SubjectID:vm.subject.SubjectID,
+     
+	     });
   });
   function setColor(){
     vm.subjects.forEach(function(item){

@@ -16,6 +16,13 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         homeWorkName:$stateParams.homeWorkName,
         homeId:$stateParams.homeworkId,
       };
+      vm.subject = {
+	        SubjectName:$stateParams.SubjectName,
+	        SubjectID:$stateParams.SubjectID,
+    	       
+     };
+      vm.currentUnfinishPage=$stateParams.currentUnfinishPage;
+      vm.pageItems=$stateParams.pageItems;
       vm.homeDetail = await http.get("GetHomeworkDetail",{
         homeworkID:vm.homework.homeId
       });
@@ -78,7 +85,12 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
           parent:$element,content:"您当前正在做作业，如果离开本页面，作业将不会被保留，请先提交！"
     });
     dialog.then(async function(){
-    	 $state.go("student.homework");
+    	 $state.go("student.studentHomeworkList",{
+    		 SubjectName:vm.subject.SubjectName,
+	          SubjectID:vm.subject.SubjectID,
+	          currentUnfinishPage:vm.currentUnfinishPage,
+	          pageItems:vm.pageItems
+    	  });
     },function(){
       
     });
