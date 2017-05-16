@@ -1,0 +1,8 @@
+项目js文件打包用配置
+1.将该文件夹整体复制至其它目录(非eclipse项目下的目录即可),        例如:C://打包用配置
+2.运行npm install
+3.将StudyPlatform\XUEXI\WebContent\html下的文件(除package.json)复制到新的目录下
+4.运行npm run webpack
+5.会在dist目录下生成两个打包后的js文件
+6.在index.html页面中,移除其它js文件引用,添加打包后的文件引用，参考html/dist.html
+	
