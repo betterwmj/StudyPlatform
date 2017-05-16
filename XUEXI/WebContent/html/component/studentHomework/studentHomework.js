@@ -40,11 +40,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     }
   }
   $scope.$on("ready_back",function(){
-	  $state.go("student.studentHomeworkList",{
-		  SubjectName:vm.subject.SubjectName,
-          SubjectID:vm.subject.SubjectID,
-     
-	     });
+	  $state.go("student.studentIndex");
   });
   function setColor(){
     vm.subjects.forEach(function(item){

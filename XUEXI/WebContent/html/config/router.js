@@ -313,6 +313,51 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+
+				name:"student.news",
+				url: '/news',
+				params:{
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"schoolNews"
+
+					}
+				}
+			},
+			{
+
+				name:"student.newsDetail",
+				url: '/newsDetail',
+				params:{
+					newsDetail:null,
+					currentPage:null,
+					pageItems:null,
+					totalpage:null
+				},
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"schoolNewsDetail"
+
+					}
+				}
+			},
+			{
 				name:"student.center",
 				url: '/center',
 				views:{
@@ -754,6 +799,7 @@ export function routerConfig($stateProvider){
 					}
 				}
 			},
+			
 			
   	];
 	states.forEach( (state)=>{

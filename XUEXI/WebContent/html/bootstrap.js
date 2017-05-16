@@ -55,6 +55,9 @@ import studentOnlineAnswerDetail from "./component/studentOnlineAnswerDetail/stu
 import studentQuestionHistory from "./component/studentQuestionHistory/studentQuestionHistory.js";
 
 import adminCenter from "./component/adminCenter/adminCenter.js";
+
+import schoolNews from "./component/schoolNews/schoolNews.js";
+import schoolNewsDetail from "./component/schoolNewsDetail/schoolNewsDetail.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -67,6 +70,8 @@ app.config(["$cookiesProvider",function($cookiesProvider){
   curr += 1000*60*60*24*120;//120天cookie过期
   $cookiesProvider.defaults.expires = new Date(curr);
 }]);
+schoolNews(app);
+schoolNewsDetail(app);
 commonDialog(app);
 root(app);
 login(app);
