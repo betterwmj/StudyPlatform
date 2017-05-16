@@ -44,6 +44,14 @@ public class GetPaper extends HttpServlet {
         Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");	
         String type= userInfo.get("type");
         int typeId=Integer.parseInt(type);
+        String currentPage=request.getParameter("currentPage");
+        int currentpage =0;
+        if(currentPage!=null)
+             currentpage=Integer.parseInt(currentPage);
+        String PageItems=request.getParameter("pageItems");
+        int pageItems=0;
+        if(PageItems!=null)
+           pageItems=Integer.parseInt(PageItems);
         try {
         	 List<Paper> list=null;
         	 if(typeId==0){
@@ -57,7 +65,7 @@ public class GetPaper extends HttpServlet {
              	String teacherId= userInfo.get("id");
             	//String teacherId=request.getParameter("teacherId");
              	int Id=Integer.parseInt(teacherId);
-                list = OperatorTestPaper.getTestPaperByTeacherId(Id);
+                list = OperatorTestPaper.getTestPaperByTeacherId(Id,currentpage,pageItems);
              }
 				ApiResult result = new ApiResult();
 				result.setCode(0);

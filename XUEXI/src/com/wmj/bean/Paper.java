@@ -15,7 +15,14 @@ public class Paper {
    private int status;
    private Timestamp createTime;
    private int classId;
+   private int count;
  
+	public int getCount() {
+	return count;
+}
+public void setCount(int count) {
+	this.count = count;
+}
 	public int getClassId() {
 	return classId;
 }

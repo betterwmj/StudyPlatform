@@ -8,8 +8,13 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
   $scope.$on("ready_back",function(){
-    $state.go("teacher.publishPaper");
-  });
+	    $state.go("teacher.publishPaper",{
+	    	currentPage : vm.currentPage,
+		    pageItems :   vm.pageItems ,
+		    totalpage :   vm.totalpage
+	    });
+	    
+	  });
   let vm = this;
   vm.msg = "";
   vm.paper = null;
@@ -19,6 +24,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       testName:$stateParams.testName,
       testpaperID:$stateParams.testpaperID,
     }
+    vm.currentPage = $stateParams.currentPage;
+    vm.pageItems = $stateParams.pageItems;
+    vm.totalpage = $stateParams.totalpage;
     if( vm.paper === null || vm.paper.testpaperID === null ){
       return;
     }

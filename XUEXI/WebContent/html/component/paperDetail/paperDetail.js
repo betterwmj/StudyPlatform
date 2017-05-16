@@ -8,7 +8,12 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
   $scope.$on("ready_back",function(){
-    $state.go("teacher.publishPaper");
+    $state.go("teacher.publishPaper",{
+    	currentPage : vm.currentPage,
+	    pageItems :   vm.pageItems ,
+	    totalpage :   vm.totalpage
+    });
+    
   });
   let vm = this;
   vm.msg = "";
@@ -19,6 +24,9 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       testName:$stateParams.testName,
       testpaperID:$stateParams.testpaperID,
     }
+    vm.currentPage = $stateParams.currentPage;
+	vm.pageItems = $stateParams.pageItems;
+	vm.totalpage = $stateParams.totalpage;
     if( vm.paper === null || vm.paper.testpaperID === null ){
       return;
     }
@@ -26,7 +34,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
       vm.paperDetail = await http.get("GetPaperDetail",{
         paperID:vm.paper.testpaperID
       });
-      setColor();
+    
     } catch (error) {
       http.alert({
         parent:$element,content:"获取试卷详情异常"
@@ -34,9 +42,5 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
     }
   }
 
-  function setColor(){
-    vm.paperDetail.forEach( (item)=>{
-      item.color = http.getColor();
-    });
-  }
+
 }
