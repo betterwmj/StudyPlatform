@@ -62,6 +62,13 @@ function controller($scope,$element,$state,$cookies,http){
       });
       return;
     }
+    if(totalScore!==100){
+    	http.alert({
+            parent:$element,content:"试卷总分需为100分!,目前为"+totalScore+"分"
+        });
+    	 return;
+    }
+    
     let dialog = http.confirm({
         parent:$element,content:"确定创建试卷?共"+count+"道题,共"+totalScore+"分"
     });
