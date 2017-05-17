@@ -35,6 +35,7 @@ import onlineAnswer from "./component/onlineAnswer/onlineAnswer.js";
 import teacherOnlineAnswerNavigation from "./component/teacherOnlineAnswerNavigation/teacherOnlineAnswerNavigation.js";
 import teacheronlineHistoryAnswer from "./component/teacheronlineHistoryAnswer/teacheronlineHistoryAnswer.js";
 import teacherClassStudent from "./component/teacherClassStudent/teacherClassStudent.js";
+import teacherUploadFile from "./component/teacherUploadFile/teacherUploadFile.js";
 
 import studentIndex from "./component/studentIndex/studentIndex.js";
 import studentIndexHead from "./component/studentIndexHead/studentIndexHead.js";
@@ -91,6 +92,9 @@ teacherManagerClassCreate(app);
 teacherAssignStudent(app);
 teacherPaper(app);
 teacherPaperNavigation(app);
+teacherUploadFile(app);
+
+
 publishPaper(app);
 paperResult(app);
 httpService(app);

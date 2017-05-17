@@ -616,6 +616,21 @@ export function routerConfig($stateProvider){
 				}
 			},
 			{
+				name:"teacher.teacherUploadFile",
+				url: '/teacherUploadFile',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"teacherSidebar"
+					},
+					"content@":{
+						component:"teacherUploadFile"
+					},
+				}
+			},
+			{
 				name:"teacher.homework",
 				url: '/homework',
 				views:{
