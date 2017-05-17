@@ -58,6 +58,8 @@ import adminCenter from "./component/adminCenter/adminCenter.js";
 
 import schoolNews from "./component/schoolNews/schoolNews.js";
 import schoolNewsDetail from "./component/schoolNewsDetail/schoolNewsDetail.js";
+
+import courceRescource from "./component/courceRescource/courceRescource.js";
 import httpService from "./service/http.js";
 import * as settingRouter from "./config/router.js";
 export let name = "app";
@@ -70,6 +72,7 @@ app.config(["$cookiesProvider",function($cookiesProvider){
   curr += 1000*60*60*24*120;//120天cookie过期
   $cookiesProvider.defaults.expires = new Date(curr);
 }]);
+courceRescource(app);
 schoolNews(app);
 schoolNewsDetail(app);
 commonDialog(app);

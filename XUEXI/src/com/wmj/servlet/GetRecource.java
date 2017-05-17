@@ -2,7 +2,6 @@ package com.wmj.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,21 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wmj.bean.ApiResult;
-import com.wmj.dao.OperatorSubject;
+import com.wmj.bean.CourseRescoure;
+
+import com.wmj.dao.OperatorCourseResource;
+
 
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class GetSpecialities
+ * Servlet implementation class GetRecource
  */
-@WebServlet("/GetSpecialities")
-public class GetSpecialities extends HttpServlet {
+@WebServlet("/GetRecource")
+public class GetRecource extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetSpecialities() {
+    public GetRecource() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,11 +39,15 @@ public class GetSpecialities extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		try {
-			//List<Map> list = OperatorSubject.getSpecities();
+        String currentPage=request.getParameter("currentPage");
+        int currentpage=Integer.parseInt(currentPage);
+        String PageItems=request.getParameter("pageItems");
+        int pageItems=Integer.parseInt(PageItems);
+        try {
+			List<CourseRescoure> list = OperatorCourseResource.getRecource(currentpage,pageItems);
 			ApiResult result = new ApiResult();
 			result.setCode(0);
-			//result.setData(list);
+			result.setData(list);
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -51,7 +57,6 @@ public class GetSpecialities extends HttpServlet {
 			result.setMessage(e.getMessage());
 			response.getWriter().append(JSONObject.fromObject(result).toString());
 		}
-	
 	}
 
 	/**

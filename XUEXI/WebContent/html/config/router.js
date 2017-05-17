@@ -336,6 +336,23 @@ export function routerConfig($stateProvider){
 			},
 			{
 
+				name:"student.courceRescource",
+				url: '/courceRescource',
+				views:{
+					"head@":{
+						component:"tophead"
+					},
+					"sidebar@":{
+						component:"studentSidebar"
+					},
+					"content@":{
+						component:"courceRescource"
+
+					}
+				}
+			},
+			{
+
 				name:"student.newsDetail",
 				url: '/newsDetail',
 				params:{

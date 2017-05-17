@@ -3,7 +3,7 @@ export default function httpService(app){
 }
 
 function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
-  const baseUrl = "http://192.168.1.101:8080/XUEXI/";
+  const baseUrl = "http://192.168.191.4:8080/XUEXI/";
   let service = {
     post:post,
     get:get,
@@ -11,7 +11,8 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
     confirm:confirm,
     wait:wait,
     submitForm:submitForm,
-    imgDialog:imgDialog
+    imgDialog:imgDialog,
+    getColor:getColor
   };
 
   async function submitForm(url,data){
@@ -45,6 +46,7 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
 
   async function post(url,data,headers){
     url = baseUrl + url;
+    url += "?_t="+Date.now();
     headers = headers || {};
     let deferred = $q.defer();
     let response = null;
@@ -75,6 +77,7 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
 
   async function get(url,data){
     url = baseUrl + url;
+    url += "?_t="+Date.now();
     let deferred = $q.defer();
     let response = null;
     try {
@@ -133,11 +136,11 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
       .targetEvent(event);
     return $mdDialog.show(confirmDialog);
   }
-
-  function wait(parent){
+  
+  function wait(){
     return $mdDialog.show({
       controller: [function(){}],
-      template: '<div layout="column" style="width:100px;"><md-progress-circular md-mode="indeterminate"></md-progress-circular><div>',
+      templateUrl:"./component/ImgDialog/loadDailog.html",
       parent: angular.element(document.body),
     })
   }
@@ -156,6 +159,18 @@ function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
     $scope.ok = function(){
       $mdDialog.hide();
     }
+  }
+
+  const colors  = [
+    "pink-200","purple-200","deep-purple-200","indigo-200","blue-400","light-blue-A200"
+  ];
+
+  /**
+   * 随机获取一个颜色
+   */
+  function getColor(){
+    let r = Math.round(Math.random()*(colors.length-1));
+    return colors[r];
   }
   return service;
 }
