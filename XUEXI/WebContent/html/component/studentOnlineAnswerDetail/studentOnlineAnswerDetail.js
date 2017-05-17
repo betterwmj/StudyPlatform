@@ -30,7 +30,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 		vm.pageItems = $stateParams.pageItems;
 		vm.totalpage = $stateParams.totalpage;
 		vm.userinfo = $cookies.getObject("userInfo");
-		vm.userinfoId = parseInt("10", vm.userinfo.id);
+		vm.userinfoId = parseInt(vm.userinfo.id);
 		getQuestionReply();
 		let imgInput = document.getElementsByClassName("js_reply_imgs")[0];
 		angular.element(imgInput).bind("change", onSelectImg);
@@ -165,7 +165,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams,$mdDi
 	}
 	vm.deleleReply = async function (replyId, answerId) {
 		let userinfo = $cookies.getObject("userInfo");
-		if (parseInt("10", userinfo.id) === answerId) {
+		if (parseInt(userinfo.id) === answerId) {
 			let dialog = http.confirm({
 				parent: $element, content: "是否删除?"
 			});

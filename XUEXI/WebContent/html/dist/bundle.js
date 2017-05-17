@@ -4371,7 +4371,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams, $mdD
 		vm.pageItems = $stateParams.pageItems;
 		vm.totalpage = $stateParams.totalpage;
 		vm.userinfo = $cookies.getObject("userInfo");
-		vm.userinfoId = parseInt("10", vm.userinfo.id);
+		vm.userinfoId = parseInt(vm.userinfo.id);
 		getQuestionReply();
 		var imgInput = document.getElementsByClassName("js_reply_imgs")[0];
 		angular.element(imgInput).bind("change", onSelectImg);
@@ -4416,7 +4416,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams, $mdD
 						case 0:
 							userinfo = $cookies.getObject("userInfo");
 
-							if (parseInt("10", userinfo.id) === answerId) {
+							if (parseInt(userinfo.id) === answerId) {
 								dialog = http.confirm({
 									parent: $element, content: "是否删除?"
 								});
@@ -6833,7 +6833,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams, $mdD
 		vm.pageItems = $stateParams.pageItems;
 		vm.totalpage = $stateParams.totalpage;
 		vm.userinfo = $cookies.getObject("userInfo");
-		vm.userinfoId = parseInt("10", vm.userinfo.id);
+		vm.userinfoId = parseInt( vm.userinfo.id);
 		getQuestionReply();
 		var imgInput = document.getElementsByClassName("js_reply_imgs")[0];
 		angular.element(imgInput).bind("change", onSelectImg);
@@ -6864,7 +6864,7 @@ function controller($scope, $cookies, $element, $state, http, $stateParams, $mdD
 						case 0:
 							userinfo = $cookies.getObject("userInfo");
 
-							if (parseInt("10", userinfo.id) === answerId) {
+							if (parseInt( userinfo.id) === answerId) {
 								dialog = http.confirm({
 									parent: $element, content: "是否删除?"
 								});

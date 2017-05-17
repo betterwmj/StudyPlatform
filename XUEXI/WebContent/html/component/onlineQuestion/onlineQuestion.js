@@ -11,7 +11,6 @@ function controller($scope,$element,$state,$cookies,http,$stateParams,$mdColorPa
 		vm.questionsList=null;
 		vm.currentClass =null;
 		vm.getClassQuestion = getClassQuestion;
-		console.log($mdColorPalette);
 		vm.currentPage=1;
 		vm.pageItems =7;
 		vm.previousPage =previousPage;

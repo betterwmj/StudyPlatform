@@ -8,12 +8,11 @@ export default function root(app){
 }
 function controller($scope,$element,$state,$cookies,http,$stateParams){
 	 let useinfo=$cookies.getObject("userInfo");
-	  
 	 $scope.$on("ready_back",function(){
        
-        if(useinfo.type ===0){
+        if( useinfo.type==="0"){
         	 $state.go("student.studentIndex");
-   	    }else{
+   	    }else if(useinfo.type==="1"){
    	        $state.go("teacher.teacherIndex");
    	    }
         
