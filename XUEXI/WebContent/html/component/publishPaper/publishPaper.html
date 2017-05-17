@@ -12,6 +12,7 @@
         <md-button class="md-raised md-primary" ng-if="paper.status === 1" 
           ui-sref="teacher.paperResult({testpaperID:paper.testpaperID,testName:paper.testName,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.papers.totalpage})">
           <span><md-icon md-svg-src="./fonts/ic_pageview_white_24px.svg" aria-label="downloadPaper"></md-icon>查看</span></md-button>
+          <span><md-button ng-click="$ctrl.deletePaper(paper.testpaperID)"></md-button>删除</span>
         <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">
           <span><md-icon md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper"></md-icon>生成试卷</span>
         </md-button>

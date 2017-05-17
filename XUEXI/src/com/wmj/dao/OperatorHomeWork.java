@@ -151,7 +151,7 @@ public class OperatorHomeWork {
 		String sql2 = "";		
 		try {
 			ResultSet rs = null;
-			sql1 = "select * from  homeworks where teacherID=?";
+			sql1 = "select * from  homeworks where teacherID=? order by time desc";
 			sql2=sql1+" limit "+start+","+end+" ";
 				pmt1=JDBCUtil.getPreparedStatement(conn, sql1); 
 				pmt1.setInt(1, teacherId);

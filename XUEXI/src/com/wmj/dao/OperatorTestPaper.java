@@ -40,7 +40,7 @@ public class OperatorTestPaper {
 		
 		try {
 			ResultSet rs = null;
-		    sql1="select * from  paper where UserID=?";
+		    sql1="select * from  paper where UserID=? order by create_time desc";
 		    sql2=sql1+" limit "+start+","+end+" ";
 			pmt1=JDBCUtil.getPreparedStatement(conn, sql1); 
 			pmt1.setInt(1, teacherId);

@@ -40,14 +40,14 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
 	  try {
 	      vm.papers = await http.get("GetPaper", {
 	    	    currentPage:vm.currentPage,
-				pageItems:vm.pageItems
+				    pageItems:vm.pageItems
 	      });
 	      vm.papers.forEach( (item)=>{
 	    	  item.createTime =new Date(item.createTime.time);
 	      });
 	      if(vm.papers.length===0){
-				vm.papers.totalpage=0;
-		   }
+				  vm.papers.totalpage=0;
+		    }
 	      if(vm.papers.length!==0){
 				vm.papers.totalpage=Math.ceil(vm.papers[0].count/vm.pageItems);
 		   }
@@ -57,7 +57,30 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
 	      });
 	    }
   }
- 
+  vm.deletePaper =async function(paperId){
+	  let dialog = http.confirm({
+			parent: $element, content: "是否删除该试卷?"
+		});
+		dialog.then(async function () {
+
+			let result = await http.get("DeletePaper",{
+		    	 paperID:paperId
+		      });
+		      if( result === true ){
+		        http.alert({
+		            parent:$element,content:"试卷删除成功"
+		         });
+		        getPaper();
+		      }else{
+		     
+		        http.alert({
+		            parent:$element,content:"删除失败"
+		         });
+		      }
+		}, function () {
+
+		});
+  }
   vm.publishPaper = async function(paper){
     try {
       let result = await http.get("PublishPaper",{
@@ -67,7 +90,7 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         http.alert({
           parent:$element,content:"发布试卷成功"
         });
-        vm.papers = await http.get("GetPaper");
+       	getPaper();
       }else{
         http.alert({
           parent:$element,content:"发布试卷失败"
