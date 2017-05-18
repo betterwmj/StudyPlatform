@@ -30,11 +30,12 @@ function controller($scope,$rootScope,$element,$state,$cookies,$transitions,http
 		       let formData = new FormData();
 		       for(var i=0;i<file.length;i++){
 		           formData.append("uploadFile"+i,file[i]);
+		           formData.append("isImg",false);
 		       } 
 			   try {
 
 				   if(file.length!=0){
-					   let result = await http.submitForm("UploadImage",formData,{     
+					   let result = await http.submitForm("UploadFile",formData,{     
 		                    progress: 
 		                      function(e){
 			                        if (e.lengthComputable) {

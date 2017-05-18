@@ -34,14 +34,14 @@ import net.sf.json.JSONObject;
 /**
  * Servlet implementation class UploadImage
  */
-@WebServlet("/UploadImage")
-public class UploadImage extends HttpServlet {
+@WebServlet("/UploadFile")
+public class UploadFile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public UploadImage() {
+	public UploadFile() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -83,6 +83,7 @@ public class UploadImage extends HttpServlet {
 			if (!isMultipart) {
 				return;
 			}
+
 			List<FileItem> items = upload.parseRequest(request);
 			
 			//String savePath = getServletContext().getRealPath("/upload/");
@@ -116,9 +117,17 @@ public class UploadImage extends HttpServlet {
 					File file=new File(savePath + fileName);
 					ApiResult result = new ApiResult();
 					if(file.exists()){
-					
+						
+					    Timestamp time = new Timestamp(System.currentTimeMillis());
+						CourseRescoure course =new CourseRescoure();
+						course.setUploadId(userid);
+						course.setFileName(fileName);
+						course.setUpload_name(realName);
+				        course.setFileUrl(BaseUrl.url+"/upload/"+fileName);
+				        course.setCreateTime(time);
+				        boolean resultInsert = OperatorCourseResource.insertRecource(course);
 				        result.setCode(0);
-						result.setData(BaseUrl.url+"/upload/"+fileName);
+						result.setData(resultInsert);
 						
 					}else{
 						result.setCode(-1);
