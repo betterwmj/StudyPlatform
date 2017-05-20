@@ -30,13 +30,14 @@ module.exports = {
             'bluebird':         path.resolve(__dirname, './jslib/bluebird.min.js'),
             'angular':          path.resolve(__dirname, './jslib/angular-index.js'),
             'angular-cookies':  path.resolve(__dirname, './jslib/angular-cookies.min.js'),
-            'angular-ui-router':        path.resolve(__dirname, './jslib/angular-ui-router.min.js'),
+            'angular-ui-router':        path.resolve(__dirname, './jslib/angular-ui-router.js'),
             'ngMaterial':       path.resolve(__dirname, './jslib/angular-material-index.js'),
         }
     },
     plugins:[
-		/*
+		
 		new UglifyJSPlugin({
+			mangle		  : false,
             sequences     : true,  // join consecutive statemets with the “comma operator”
             properties    : true,  // optimize property access: a["foo"] → a.foo
             dead_code     : true,  // discard unreachable code
@@ -57,7 +58,7 @@ module.exports = {
             warnings      : true,  // warn about potentially dangerous optimizations/code
             global_defs   : {}     // global definitions
         }),
-        */
+        
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             filename: "vendor.bundle.js"
