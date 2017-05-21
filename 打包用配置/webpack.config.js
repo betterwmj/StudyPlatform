@@ -6,7 +6,8 @@ let CompressionPlugin = require("compression-webpack-plugin");
 module.exports = {
     entry:{
         main:'./bootstrap.js',
-        vendor: ['bluebird','angular', 'angular-ui-router','ngMaterial','angular-cookies'],
+        vendor: ['bluebird','angular', 'angular-ui-router','ngMaterial','angular-cookies'],//手机端配置
+		//vendor: ['angular', 'angular-ui-router','angular-cookies','angular-ui-bootstrap'],//pc端配置
     },
     output: {
         filename: 'bundle.js',
@@ -28,11 +29,12 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'bluebird':         path.resolve(__dirname, './jslib/bluebird.min.js'),
-            'angular':          path.resolve(__dirname, './jslib/angular-index.js'),
-            'angular-cookies':  path.resolve(__dirname, './jslib/angular-cookies.min.js'),
-            'angular-ui-router':        path.resolve(__dirname, './jslib/angular-ui-router.js'),
-            'ngMaterial':       path.resolve(__dirname, './jslib/angular-material-index.js'),
+            'bluebird':         	path.resolve(__dirname, './jslib/bluebird.min.js'),
+            'angular':          	path.resolve(__dirname, './jslib/angular-index.js'),
+            'angular-cookies':  	path.resolve(__dirname, './jslib/angular-cookies.min.js'),
+            'angular-ui-router':    path.resolve(__dirname, './jslib/angular-ui-router.js'),
+            'ngMaterial':       	path.resolve(__dirname, './jslib/angular-material-index.js'),
+			"angular-ui-bootstrap":	path.resolve(__dirname, "./jslib/ui-bootstrap-tpls.js"),
         }
     },
     plugins:[

@@ -43,9 +43,9 @@ public class GzipFilter implements Filter {
 		String fileName = url.substring(url.lastIndexOf("/")+1);
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
+		resp = (HttpServletResponse) response;
 		if( fileName.contains("js") ){
 			resp.setContentType("text/javascript");
-			resp.addHeader("Content-Type", "text/javascript");
 		}
 	}
 
