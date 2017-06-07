@@ -49,6 +49,9 @@ function controller($scope, $element, $state, $cookies, http) {
 		}
 	}
 	vm.updateinfo = async function () {
+		 if( check() === false ){
+		      return;
+		 }
 		try {
 			let data = {
 				"school_number": vm.userinfo.school_number,
@@ -104,7 +107,49 @@ function controller($scope, $element, $state, $cookies, http) {
 			});
 		}
 	}
+	 function check(){
+		    if( !vm.userinfo.school_number || vm.userinfo.school_number.trim() === ""){
+						http.alert({
+							parent:$element,content:"用户名不能为空"
+						});
+						return false;
+				}
+				vm.userinfo.school_number = vm.userinfo.school_number.trim();
 
+				if( !vm.userinfo.realName || vm.userinfo.realName.trim() === ""){
+						http.alert({
+							parent:$element,content:"真实姓名不能为空"
+						});
+						return false;
+				}
+				vm.userinfo.realName = vm.userinfo.realName.trim();
+
+				if( !vm.userinfo.password || vm.userinfo.password.trim() === ""){
+						http.alert({
+							parent:$element,content:"密码不能为空"
+						});
+						return false;
+				}
+				vm.userinfo.password = vm.userinfo.password.trim();
+
+				if( !vm.userinfo.school || vm.userinfo.school.trim() === ""){
+						http.alert({
+							parent:$element,content:"学校不能为空"
+						});
+						return false;
+				}
+				vm.userinfo.school = vm.userinfo.school.trim();
+
+				if( !vm.userinfo.telephone || vm.userinfo.telephone.trim() === ""){
+						http.alert({
+							parent:$element,content:"手机号不能为空"
+						});
+						return false;
+				}
+				vm.userinfo.telephone = vm.userinfo.telephone.trim();
+
+				return true;
+		  }
 	$scope.$on("ready_back", function () {
 		$state.go("student.studentIndex");
 	});
