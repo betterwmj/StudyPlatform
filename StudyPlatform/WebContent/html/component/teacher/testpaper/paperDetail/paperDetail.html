@@ -1,0 +1,29 @@
+<md-content>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>试卷题目:</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-card ng-repeat="question in $ctrl.paperDetail">
+          <md-card-content>
+            <div>
+                <p>
+                  <span ng-bind="$index+1"></span>&nbsp;&nbsp;
+                  <span ng-bind="question.title"></span>
+                </p>
+                <div ng-if="question.type === 1">
+                  <p>A.<span ng-bind="question.optionA"></span>&nbsp;&nbsp;</p>
+                  <p>B.<span ng-bind="question.optionB"></span>&nbsp;&nbsp;</p>
+                  <p>C.<span ng-bind="question.optionC"></span>&nbsp;&nbsp;</p>
+                  <p>D.<span ng-bind="question.optionD"></span>&nbsp;&nbsp;</p>
+                </div>
+                <p>
+                                     答案:<span ng-bind="question.answer"></span>
+                                分值:<span  ng-bind="question.score"></span>
+                </p>
+            </div>
+          </md-card-content>
+        </md-card>
+    </md-card-content>
+  </md-card>
+</md-content>

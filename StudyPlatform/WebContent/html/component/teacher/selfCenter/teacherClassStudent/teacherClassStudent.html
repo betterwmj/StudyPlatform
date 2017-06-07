@@ -1,0 +1,24 @@
+
+<md-content>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text> 
+         <div layout="row" layout-align="begin">
+           <p>学号-</p>
+            <p>姓名-</p>
+            <p>手机号</p>
+             </div>
+          <md-divider ></md-divider>  </md-card-header-text>
+    </md-card-header>
+   <md-list>
+        <md-list-item class="md-3-line" ng-repeat="item in $ctrl.classStudent">
+            <p>{{item.school_number}}</p>
+            <p>{{item.realName}}</p>
+            <p>{{item.telephone}}</p><br>
+            <md-button class="md-icon-button" ng-click="$ctrl.deleteStudent(item.userID)">
+            <md-icon md-svg-icon="images/ic_remove_circle_24px.svg" style="color:grey;"></md-icon></md-button>
+          <md-divider ></md-divider>
+        </md-list-item>
+   </md-list>
+    </md-card>
+</md-content>

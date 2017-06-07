@@ -1,0 +1,17 @@
+<md-content>
+   <md-card>
+    <md-card-header>
+      <md-card-header-text>
+        <span><md-icon md-svg-src="./fonts/ic_subject_black_24px.svg" aria-label="subject"></md-icon>可选科目</span>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-grid-list md-cols="3" md-gutter="1em" md-row-height="4:3">
+        <md-grid-tile ng-repeat="item in $ctrl.subjects track by $index"  
+          ui-sref="student.studentTestPaperList({SubjectName:item.SubjectName,SubjectID:item.SubjectID,teacherID:item.teacherId})">
+          {{item.SubjectName}}
+        </md-grid-tile>
+      </md-grid-list>
+    </md-card-content>
+   </md-card>
+</md-content>

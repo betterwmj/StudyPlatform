@@ -1,0 +1,10 @@
+<md-content>
+  <md-card ng-repeat="result in $ctrl.homeworkResultList">
+    <md-card-content>
+      <p>学生:{{result.studentName}}</p>
+      <p>作答时间:{{result.homework.time|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+      <p>结果:{{result.homework.evaluation}}</p>
+      <md-button class="md-raised" ui-sref="teacher.teacherHomeworkResultDetail({homeworkId:$ctrl.homework.homeworkID,homeWorkName:$ctrl.homework.homeWorkName,homeworkResultID:result.homework.id,studentName:result.studentName,studentId:result.homework.studentId})">作答详情</md-button>
+    </md-card-content>
+  </md-card>
+</md-content>

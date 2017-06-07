@@ -1,0 +1,15 @@
+<md-content>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>班级列表</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-checkbox ng-model="item.isCheck" aria-label="checked?" ng-repeat="item in $ctrl.classes">
+        {{item.className}}
+      </md-checkbox>
+      <div>
+        <md-button class="md-raised" ng-click="$ctrl.publish()">发布作业</md-button>
+      </div>
+    </md-card-content>
+  </md-card>
+</md-content>

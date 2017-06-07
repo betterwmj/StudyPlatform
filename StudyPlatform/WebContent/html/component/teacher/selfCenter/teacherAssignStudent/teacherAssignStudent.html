@@ -1,0 +1,39 @@
+<md-content>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>班级和学生信息</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <form name="classForm">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>选择班级</label>
+          <md-select ng-model="$ctrl.currentClass">
+            <md-option ng-repeat="item in $ctrl.classes" ng-value="item.classes.classId">
+              <span ng-bind="item.classes.className"></span>
+            </md-option>
+          </md-select>
+        </md-input-container>
+         <md-input-container md-no-float class="md-block">
+                <input ng-model="$ctrl.user_number" type="text" placeholder="学号">
+                
+                 <md-icon ng-click="$ctrl.search()" md-svg-icon="images/ic_search_24px.svg" style="color:grey;display:inline-block;"></md-icon>
+               </md-input-container>       
+        <md-input-container class="md-block" flex-gt-sm>
+       
+          <md-list>
+            <md-list-item  ng-repeat="student in $ctrl.students">
+                    <md-checkbox  ng-model="student.isCheck" aria-label="student.isCheck"></md-checkbox>
+                       <p>{{student.realName}}</p>
+                      <p>{{student.school_number}}</p>                     
+              <md-divider ></md-divider>
+           </md-list-item>
+        </md-list>
+          
+        </md-input-container>
+      </form>
+    </md-card-content>
+    <md-card-footer>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.toAssign()">分配学生</md-button>
+    </md-card-footer>
+  </md-card>
+</md-content>

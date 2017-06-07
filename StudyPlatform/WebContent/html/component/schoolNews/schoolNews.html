@@ -1,0 +1,30 @@
+<md-content>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>校园动态</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="news in $ctrl.newsList track by $index"
+                ui-sref="student.newsDetail({'newsDetail':news,currentPage:$ctrl.currentPage,pageItems:$ctrl.pageItems,totalpage:$ctrl.newsList.totalpage})">
+             <img width="80" height="80" ng-show="news.img!==null&&$news.img!=''" 
+	        ng-attr-src="{{news.img}}" alt="" />
+            <div class="md-list-item-text">
+                <h3>{{news.newsTitle}}</h3> 
+                <p>{{news.creatTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+            </div>
+            <md-divider ></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+     <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousPage()" ng-disabled="$ctrl.currentPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextPage()" ng-disabled="$ctrl.currentPage===$ctrl.newsList.totalpage || $ctrl.newsList.totalpage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+            <span>{{$ctrl.currentPage}}/{{$ctrl.newsList.totalpage}}</span>
+      </md-card-actions>
+  </md-card>
+</md-content>

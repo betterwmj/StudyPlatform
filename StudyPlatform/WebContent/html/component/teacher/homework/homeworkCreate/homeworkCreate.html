@@ -1,0 +1,110 @@
+<md-content>
+  <md-card>
+    <md-card-content>
+        <form name="homeworkForm">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>选择学科</label>
+            <md-select ng-model="$ctrl.currentSubject">
+              <md-option ng-repeat="subject in $ctrl.subjectlist" ng-value="subject.SubjectID">
+                {{subject.SubjectName}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>作业名称</label>
+            <input type="text" name="homeworkName" ng-model="$ctrl.homework.name" required>
+            <div ng-messages="homeworkForm.homeworkName.$error">
+              <div ng-message="required">请输入作业名称</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>完成时间</label>
+            <md-datepicker ng-model="$ctrl.homework.finishTime" md-placeholder="完成时间"></md-datepicker>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>题目类型</label>
+            <md-select ng-model="$ctrl.currentQuestion.type">
+              <md-option ng-repeat="item in $ctrl.types" ng-value="item.value">
+                {{item.label}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>题目</label>
+            <input type="text" name="title" ng-model="$ctrl.currentQuestion.title" required>
+            <div ng-messages="homeworkForm.title.$error">
+              <div ng-message="required">请输入题目</div>
+            </div>
+          </md-input-container>
+          <div ng-if="$ctrl.currentQuestion.type===1">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>选项A</label>
+              <input type="text" name="optionA" ng-model="$ctrl.currentQuestion.optionA" required>
+              <div ng-messages="homeworkForm.optionA.$error">
+                <div ng-message="required">请输入选项A</div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>选项B</label>
+              <input type="text" name="optionB" ng-model="$ctrl.currentQuestion.optionB" required>
+              <div ng-messages="homeworkForm.optionB.$error">
+                <div ng-message="required">请输入选项B</div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>选项C</label>
+              <input type="text" name="optionC" ng-model="$ctrl.currentQuestion.optionC" required>
+              <div ng-messages="homeworkForm.optionC.$error">
+                <div ng-message="required">请输入选项C</div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>选项D</label>
+              <input type="text" name="optionD" ng-model="$ctrl.currentQuestion.optionD" required>
+              <div ng-messages="homeworkForm.optionD.$error">
+                <div ng-message="required">请输入选项D</div>
+              </div>
+            </md-input-container>
+            <md-radio-group ng-model="$ctrl.currentQuestion.answer" layout="row">
+              <md-radio-button value="A">A</md-radio-button>
+              <md-radio-button value="B">B</md-radio-button>
+              <md-radio-button value="C">C</md-radio-button>
+              <md-radio-button value="D">D</md-radio-button>
+            </md-radio-group>
+          </div>
+          <div ng-if="$ctrl.currentQuestion.type===2" >
+            <md-radio-group ng-model="$ctrl.currentQuestion.answer" layout="row">
+              <md-radio-button value="correct">对</md-radio-button>
+              <md-radio-button value="error">错</md-radio-button>
+            </md-radio-group>
+          </div>
+          <div ng-if="$ctrl.currentQuestion.type===3">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>参考答案</label>
+                <input type="text" name="answer" ng-model="$ctrl.currentQuestion.answer" required>
+                <div ng-messages="homeworkForm.answer.$error">
+                  <div ng-message="required">请输入答案</div>
+                </div>
+              </md-input-container>
+          </div>
+          <div>
+            <p>当前共{{$ctrl.questions.length}}道题</p>
+            <div layout="row" layout-align="space-around center">
+              <md-button class="md-raised" ng-click="$ctrl.upItem()">
+                <span><md-icon md-svg-src="images/ic_skip_previous_24px.svg" aria-label="upItem"></md-icon>上一题</span>
+              </md-button>
+              <md-button class="md-raised" ng-click="$ctrl.createNextQuestion()">
+                <span><md-icon md-svg-src="images/ic_skip_next_black_24px.svg" aria-label="createNextQuestion"></md-icon>下一题</span>
+              </md-button>
+            </div>
+            <div layout="row" layout-fill>
+               <md-button class="md-raised md-primary" ng-click="$ctrl.createHomework()" flex="100">
+                                                   创建作业
+              </md-button>
+            </div>
+          </div>
+        </form>
+    </md-card-content>
+  </md-card>
+</md-content>
+

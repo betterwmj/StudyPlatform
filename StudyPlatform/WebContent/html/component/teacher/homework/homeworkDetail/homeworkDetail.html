@@ -1,0 +1,14 @@
+<md-content>
+  <md-card ng-repeat="item in $ctrl.homeworkDetail">
+    <md-card-content>
+      <p ng-bind="item.title"></p>
+      <div ng-if="item.type === 1">
+        <p>A.<span ng-bind="item.optionA"></span>&nbsp;&nbsp;</p>
+        <p>B.<span ng-bind="item.optionB"></span>&nbsp;&nbsp;</p>
+        <p>C.<span ng-bind="item.optionC"></span>&nbsp;&nbsp;</p>
+        <p>D.<span ng-bind="item.optionD"></span>&nbsp;&nbsp;</p>
+      </div>
+      <p>正确答案:<span ng-bind="item.answer"></span></p>
+    </md-card-content>
+  </md-card>
+</md-content>

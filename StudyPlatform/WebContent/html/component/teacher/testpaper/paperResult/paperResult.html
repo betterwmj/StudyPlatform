@@ -1,0 +1,20 @@
+<md-content>
+  <md-card>
+    <md-card-header>
+      <md-card-header-text>试卷成绩列表</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+      <md-list flex>
+        <div ng-repeat="item in $ctrl.paperResultList">
+          <md-list-item layout="row">
+            <span ng-bind="item.studentName" flex="30"></span>
+            <span flex="30">{{item.paper.score}}分</span>
+            <md-button class="md-raised" 
+              ui-sref="teacher.paperResultDetail({resultId:item.paper.id,testpaperID:$ctrl.paper.testpaperID,testName:$ctrl.paper.testName})">查看</md-button>
+          </md-list-item>
+          <md-divider></md-divider>
+        </div>
+      </md-list>
+    </md-card-content>
+  </md-card>
+</md-content>

@@ -1,0 +1,61 @@
+<md-content>
+  <md-tabs md-dynamic-height md-border-bottom md-selected="$ctrl.selectedIndex">
+    <md-tab label="未作答({{$ctrl.paperUnfinishTemp.length}})" >
+      <md-content class="md-padding">
+        <md-card ng-repeat="paper in $ctrl.paperUnfinish" class="box-radius">
+          <md-card-content>
+            <p>试卷名称:<span ng-bind="paper.testName"></span></p>
+            <p>创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
+            <p>
+              <md-button class="md-raised md-primary" 
+                ui-sref="student.studentTestPaper({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID,testpaperID:paper.testpaperID,testName:paper.testName,currentUnfinishPage:$ctrl.currentUnfinishPage,pageItems:$ctrl.pageItems})">进行考试</md-button>
+              <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">
+                <span><md-icon md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper"></md-icon>生成试卷</span>
+              </md-button>
+
+            </p>
+          </md-card-content>
+        </md-card>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousUnfinishPage()" ng-disabled="$ctrl.currentUnfinishPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextUnfinishPage()" ng-disabled="$ctrl.currentUnfinishPage===$ctrl.paperUnfinishTemp.totalpage || $ctrl.paperUnfinishTemp.totalpage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+           <span>{{$ctrl.currentUnfinishPage}}/{{$ctrl.paperUnfinishTemp.totalpage}}</span>
+     </md-card-actions>
+      </md-content>
+    </md-tab>
+    <md-tab label="已作答({{$ctrl.paperFinishTemp.length}})" >
+      <md-content class="md-padding">
+        <md-card ng-repeat="paper in $ctrl.paperFinish" class="box-radius">
+          <md-card-content>
+            <p>试卷名称:<span ng-bind="paper.testName"></span></p>
+            <p>创建时间:<span ng-bind="paper.createTime | date:'yyyy-MM-dd HH:mm:ss'"></span></p>
+            <p>
+              <md-button class="md-raised md-primary" 
+                ui-sref="student.studentTestPaperResultDetail({SubjectName:$ctrl.subject.SubjectName,SubjectID:$ctrl.subject.SubjectID,teacherID:$ctrl.subject.teacherID,testpaperID:paper.testpaperID,paperResultID:paper.resultObj.paper.id,currentFinishPage:$ctrl.currentFinishPage,pageItems:$ctrl.pageItems})">查看结果</md-button>
+     
+              <md-button class="md-raised"  ng-click="$ctrl.downloadPaper(paper.testpaperID)">
+                <span><md-icon md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper"></md-icon>生成试卷</span>
+              </md-button>
+
+            </p>
+          </md-card-content>
+        </md-card>
+          <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" aria-label="previous" ng-click="$ctrl.previousFinishPage()" ng-disabled="$ctrl.currentFinishPage===1">
+           <md-icon md-svg-icon="images/ic_first_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="next" ng-click="$ctrl.nextFinishPage()" ng-disabled="$ctrl.currentFinishPage===$ctrl.paperFinishTemp.totalpage || $ctrl.paperFinishTemp.totalpage===0">
+             <md-icon md-svg-icon="images/ic_last_page_24px.svg" style="color:green;"></md-icon>
+          </md-button>
+            <span>{{$ctrl.currentFinishPage}}/{{$ctrl.paperFinishTemp.totalpage}}</span>
+     </md-card-actions>
+      </md-content>
+    </md-tab>
+  </md-tabs>
+  
+  <a ng-href="{{$ctrl.paperLink}}" download="paper.txt" id="download_paper" style="display:none;">下载试卷</a>
+</md-content>

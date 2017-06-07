@@ -1,0 +1,23 @@
+<md-content>
+  <md-card>
+    <md-card-content>
+      <md-card ng-repeat="item in $ctrl.homeworkResultDetail track by $index">
+          <md-card-content>
+            <div>
+                <p ng-bind-template="题目:{{$index}} {{item.title.title}}"></p>
+                <div ng-if="item.title.type === 1">
+                  <p>A.<span ng-bind="item.title.optionA"></span>&nbsp;&nbsp;</p>
+                  <p>B.<span ng-bind="item.title.optionB"></span>&nbsp;&nbsp;</p>
+                  <p>C.<span ng-bind="item.title.optionC"></span>&nbsp;&nbsp;</p>
+                  <p>D.<span ng-bind="item.title.optionD"></span>&nbsp;&nbsp;</p>
+                </div>
+                <p>
+                  参考答案:<span ng-bind="item.title.answer"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                  学生作答:<span ng-bind="item.HomeResultDetail.answer"></span>
+                </p>
+            </div>
+          </md-card-content>
+        </md-card>
+    </md-card-content>
+  </md-card>
+</md-content>
