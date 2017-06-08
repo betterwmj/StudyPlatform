@@ -13,9 +13,6 @@
           <md-input-container class="md-block" flex-gt-sm>
             <label>作业名称</label>
             <input type="text" name="homeworkName" ng-model="$ctrl.homework.name" required>
-            <div ng-messages="homeworkForm.homeworkName.$error">
-              <div ng-message="required">请输入作业名称</div>
-            </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>完成时间</label>
@@ -32,38 +29,26 @@
           <md-input-container class="md-block" flex-gt-sm>
             <label>题目</label>
             <input type="text" name="title" ng-model="$ctrl.currentQuestion.title" required>
-            <div ng-messages="homeworkForm.title.$error">
-              <div ng-message="required">请输入题目</div>
-            </div>
           </md-input-container>
           <div ng-if="$ctrl.currentQuestion.type===1">
             <md-input-container class="md-block" flex-gt-sm>
               <label>选项A</label>
-              <input type="text" name="optionA" ng-model="$ctrl.currentQuestion.optionA" required>
-              <div ng-messages="homeworkForm.optionA.$error">
-                <div ng-message="required">请输入选项A</div>
-              </div>
+              <input type="text" name="optionA" ng-model="$ctrl.currentQuestion.optionA" required>  
             </md-input-container>
             <md-input-container class="md-block" flex-gt-sm>
               <label>选项B</label>
               <input type="text" name="optionB" ng-model="$ctrl.currentQuestion.optionB" required>
-              <div ng-messages="homeworkForm.optionB.$error">
-                <div ng-message="required">请输入选项B</div>
-              </div>
+         
             </md-input-container>
             <md-input-container class="md-block" flex-gt-sm>
               <label>选项C</label>
               <input type="text" name="optionC" ng-model="$ctrl.currentQuestion.optionC" required>
-              <div ng-messages="homeworkForm.optionC.$error">
-                <div ng-message="required">请输入选项C</div>
-              </div>
+       
             </md-input-container>
             <md-input-container class="md-block" flex-gt-sm>
               <label>选项D</label>
               <input type="text" name="optionD" ng-model="$ctrl.currentQuestion.optionD" required>
-              <div ng-messages="homeworkForm.optionD.$error">
-                <div ng-message="required">请输入选项D</div>
-              </div>
+             
             </md-input-container>
             <md-radio-group ng-model="$ctrl.currentQuestion.answer" layout="row">
               <md-radio-button value="A">A</md-radio-button>
@@ -82,9 +67,7 @@
               <md-input-container class="md-block" flex-gt-sm>
                 <label>参考答案</label>
                 <input type="text" name="answer" ng-model="$ctrl.currentQuestion.answer" required>
-                <div ng-messages="homeworkForm.answer.$error">
-                  <div ng-message="required">请输入答案</div>
-                </div>
+            
               </md-input-container>
           </div>
           <div>

@@ -35,6 +35,9 @@ function controller($scope,$element,$state,$cookies,http){
 	}
 	
 	vm.updateinfo=async function(){
+		if( check() === false ){
+			return;
+		}
 		try {
 			let data={
 				"teacher_number" :vm.userInfo.teacher_number,
@@ -57,6 +60,50 @@ function controller($scope,$element,$state,$cookies,http){
 					parent:$element,content:"更新信息异常"
 				});
 		}
+	}
+	function check(){
+		if( !vm.userInfo.teacher_number ){
+			http.alert({
+				parent:$element,content:"请输入用户名"
+			});
+			return false;
+		}
+		vm.userInfo.teacher_number = vm.userInfo.teacher_number.trim();
+		if( vm.userInfo.teacher_number === ""){
+			http.alert({
+				parent:$element,content:"请输入用户名"
+			});
+			return false;
+		}
+		if( !vm.userInfo.realName ){
+			http.alert({
+				parent:$element,content:"请输入姓名"
+			});
+			return false;
+		}
+		vm.userInfo.realName = vm.userInfo.realName.trim();
+		if( vm.userInfo.realName === ""){
+			http.alert({
+				parent:$element,content:"请输入姓名"
+			});
+			return false;
+		}
+
+		if( !vm.userInfo.password ){
+			http.alert({
+				parent:$element,content:"请输入密码"
+			});
+			return false;
+		}
+		vm.userInfo.password = vm.userInfo.password.trim();
+		if( vm.userInfo.password === ""){
+			http.alert({
+				parent:$element,content:"请输入密码"
+			});
+			return false;
+		}
+
+		return true;
 	}
 }
  

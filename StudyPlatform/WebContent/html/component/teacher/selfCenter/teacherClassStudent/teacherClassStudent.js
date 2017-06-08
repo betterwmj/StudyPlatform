@@ -29,11 +29,11 @@ function controller($scope,$element,$state,$cookies,http,$stateParams){
         });
         dialog.then(async function(){
         	 let result =await http.get("updateStudentClass",{
-       		  studentId:userId,
-       		  classId:classId,
-       		  typeId:0
-	       		  
-	       	  });
+	       		  studentId:userId,
+	       		  classId:classId,
+	       		  typeId:0
+       		  
+       	      });
 	       	  if(result ===true){
 	       		  http.alert({
 	       		        parent:$element,content:"删除成功"

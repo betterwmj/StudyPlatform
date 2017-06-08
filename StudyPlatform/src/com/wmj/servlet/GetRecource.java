@@ -2,12 +2,14 @@ package com.wmj.servlet;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wmj.bean.ApiResult;
 import com.wmj.bean.CourseRescoure;
@@ -43,8 +45,20 @@ public class GetRecource extends HttpServlet {
         int currentpage=Integer.parseInt(currentPage);
         String PageItems=request.getParameter("pageItems");
         int pageItems=Integer.parseInt(PageItems);
+    	HttpSession session = request.getSession();
+        Map<String,String> userInfo=(Map<String, String>) session.getAttribute("userInfo");
+        String type= userInfo.get("type");    
+        int typeId=Integer.parseInt(type);
+        String teacherID= userInfo.get("id");
+        int teacherId=Integer.parseInt(teacherID);
         try {
-			List<CourseRescoure> list = OperatorCourseResource.getRecource(currentpage,pageItems);
+        	List<CourseRescoure> list =null;
+        	if(typeId ==0){
+        		list = OperatorCourseResource.getRecource(currentpage,pageItems,-1);
+			}
+        	else{
+        		list = OperatorCourseResource.getRecource(currentpage,pageItems,teacherId);
+        	}
 			ApiResult result = new ApiResult();
 			result.setCode(0);
 			result.setData(list);

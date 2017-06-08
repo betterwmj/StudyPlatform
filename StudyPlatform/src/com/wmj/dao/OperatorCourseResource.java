@@ -11,7 +11,7 @@ import com.wmj.bean.CourseRescoure;
 import com.wmj.util.JDBCUtil;
 
 public class OperatorCourseResource {
-	public static List<CourseRescoure> getRecource(int currentpage,int pageItems) throws Exception{
+	public static List<CourseRescoure> getRecource(int currentpage,int pageItems,int teacherId) throws Exception{
 		Connection conn = null;
 		List<CourseRescoure> list = new ArrayList<CourseRescoure>();
 		try {
@@ -26,18 +26,29 @@ public class OperatorCourseResource {
 		PreparedStatement pmt1 = null; 
 		PreparedStatement pmt2 = null; 
 		String sql1 = "";
-		String sql2 = "";		
-		sql1 ="select * from course_resource order by upload_time desc";	
-		sql2=sql1+" limit "+start+","+end+" ";
+		String sql2 = "";	
+		if(teacherId==-1){
+			sql1 ="select * from course_resource order by upload_time desc";
+			pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+			sql2=sql1+" limit "+start+","+end+" ";
+			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+		}else{
+			sql1 ="select * from course_resource where uploader_id =? order by upload_time desc";
+			pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+			pmt1.setInt(1, teacherId);
+			sql2=sql1+" limit "+start+","+end+" ";
+			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+			pmt2.setInt(1, teacherId);
+		}	
 		try {
 			ResultSet rs = null;
-			pmt1=JDBCUtil.getPreparedStatement(conn, sql1);
+			
 			rs = pmt1.executeQuery();
 			int count=0;
 			while(rs.next()){
 				count++;
 			}
-			pmt2=JDBCUtil.getPreparedStatement(conn, sql2);
+			
 			rs = pmt2.executeQuery();
 			 while (rs.next()) { 
 			   CourseRescoure course =new CourseRescoure();
@@ -86,6 +97,36 @@ public class OperatorCourseResource {
 			if(pmt.executeUpdate()>0)
 			   result = true;
 		    
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 关闭连接
+			JDBCUtil.close(conn, pmt);
+		}
+		return result;
+	}
+	//老师删除资源
+	public static boolean deleteSource(int sourceId) throws Exception{
+		boolean result = false;
+		 //数据库连接的获取的操作，对用的是自己封装的一个util包中的类进行的操作
+		Connection conn = null;
+		try {
+			conn = JDBCUtil.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
+		PreparedStatement pmt = null; 
+		try {
+			String sql ="";			
+            sql="delete  from course_resource where id =?";
+			pmt=JDBCUtil.getPreparedStatement(conn, sql); 
+			pmt.setInt(1, sourceId);
+			if(pmt.executeUpdate()>0)
+			   result = true;
+			 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;

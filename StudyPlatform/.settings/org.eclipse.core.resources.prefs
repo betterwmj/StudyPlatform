@@ -4,6 +4,7 @@ encoding//WebContent/html/component=UTF-8
 encoding//WebContent/html/component/ImgDialog/ImgDialog.html=UTF-8
 encoding//WebContent/html/component/adminCenter/adminCenter.html=UTF-8
 encoding//WebContent/html/component/commonDialog/commonDialog.html=UTF-8
+encoding//WebContent/html/component/courceRescource/courceRescource.html=UTF-8
 encoding//WebContent/html/component/login=UTF-8
 encoding//WebContent/html/component/login/login.html=UTF-8
 encoding//WebContent/html/component/registerStudent/registerStudent.html=UTF-8
@@ -40,6 +41,7 @@ encoding//WebContent/html/component/teacher/selfCenter/teacherManagerClassCreate
 encoding//WebContent/html/component/teacher/selfCenter/teacherUserInfo/teacherUserInfo.html=UTF-8
 encoding//WebContent/html/component/teacher/teacherIndex/teacherIndex.html=UTF-8
 encoding//WebContent/html/component/teacher/teacherIndexHead/teacherIndexHead.html=UTF-8
+encoding//WebContent/html/component/teacher/teacherUploadFile/teacherUploadFile.html=UTF-8
 encoding//WebContent/html/component/teacher/testpaper/paperDetail/paperDetail.html=UTF-8
 encoding//WebContent/html/component/teacher/testpaper/paperResult/paperResult.html=UTF-8
 encoding//WebContent/html/component/teacher/testpaper/paperResultDetail/paperResultDetail.html=UTF-8

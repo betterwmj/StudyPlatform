@@ -3,7 +3,7 @@ export default function httpService(app){
 }
 
 function serviceFunc($q,$http,$httpParamSerializerJQLike,$rootScope,$mdDialog){
-  const baseUrl = "http://192.168.191.3:8080/StudyPlatform/";
+  const baseUrl = "http://192.168.191.5:8080/StudyPlatform/";
   let service = {
     post:post,
     get:get,

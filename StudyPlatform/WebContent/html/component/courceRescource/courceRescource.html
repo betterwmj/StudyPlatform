@@ -14,11 +14,10 @@
             <p>{{recource.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
           </div>
           <span>
-          <md-icon style="color: greenyellow;" md-svg-src="./fonts/ic_file_download_black_24px.svg" aria-label="downloadPaper" ng-click="$ctrl.download()">下载
+          <md-icon style="color:grey;" md-svg-src="images/ic_file_download_black_24px.svg" aria-label="downloadPaper" ng-click="$ctrl.download()">下载
          </span>
         <a ng-href="{{recource.fileUrl}}" download="{{recource.fileName}}" id="download_paper" 
-
-style="display:none;">down</a>
+   style="display:none;">down</a>
           <md-divider ></md-divider>
         </md-list-item>
       </md-list>

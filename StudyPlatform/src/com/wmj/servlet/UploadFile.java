@@ -86,7 +86,8 @@ public class UploadFile extends HttpServlet {
 			//String savePath = getServletContext().getRealPath("/upload/");
 			//String savePath =  "D:\\软件程序\\JDK\\apache-tomcat-8.5.13\\webapps\\StudyPlatform\\upload\\";
 			
-			String savePath =  "D:\\work\\StudyPlatform\\StudyPlatform\\WebContent\\upload\\";
+			//String savePath =  "D:\\work\\StudyPlatform\\StudyPlatform\\WebContent\\upload\\";
+			String savePath =  "D:\\images";
 			Iterator<FileItem> iter = items.iterator();
 
 			System.out.println("上传的文件地址：" + savePath);
